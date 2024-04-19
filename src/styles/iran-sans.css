@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'IRANSansWeb';
+    src:  url('../assets/fonts/iran-sans/IRANSansWeb.woff2') format('woff2');
+    font-weight: normal;
+    font-display: fallback;
+}
+
+@font-face {
+    font-family: 'IRANSansWeb';
+    src:  url('../assets/fonts/iran-sans/IRANSansWeb_Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-display: fallback;
+}
