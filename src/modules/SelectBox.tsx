@@ -4,9 +4,9 @@ import Select from 'react-select';
 // modules
 import Typography from "@/modules/Typography.tsx";
 
-const SelectBox = ({name , label, value , options, onChange , error, touched}) => {
+const SelectBox = ({name, label, value, options , placeholder, onChange, error, touched, startAdornment, endAdornment}) => {
     return (
-        <div className="flex flex-column justify-start items-start w-full gap-2">
+        <div className="d-flex flex-column justify-content-start align-items-start w-100 gap-2">
             {
                 label && (
                     <Typography
@@ -20,18 +20,19 @@ const SelectBox = ({name , label, value , options, onChange , error, touched}) =
                 )
             }
 
-            {/*<input*/}
-            {/*    name={name}*/}
-            {/*    id={name}*/}
-            {/*    type="text"*/}
-            {/*    className="form-control form-control-lg form-control-solid"*/}
-            {/*    value={value}*/}
-            {/*    onChange={onChange}*/}
-            {/*/>*/}
+            <div className='position-relative w-100'>
+                {startAdornment && startAdornment}
 
-            <Select
-                options={options}
-            />
+                <Select
+                    name={name}
+                    options={options}
+                    value={value}
+                    placeholder={placeholder}
+                    onChange={(newValue) => onChange(newValue)}
+                />
+
+                {endAdornment && endAdornment}
+            </div>
 
             {
                 error && touched && (

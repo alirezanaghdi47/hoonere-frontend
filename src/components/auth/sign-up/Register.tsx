@@ -21,7 +21,7 @@ const Authentication = ({goToNextStep}) => {
                 size="xl"
                 isBold
                 color="dark"
-                className="mb-4"
+                className="mb-5"
             >
                 عضویت
             </Typography>
@@ -72,7 +72,7 @@ const VerifyCode = ({goToNextStep , goToPrevStep}) => {
                 size="xl"
                 isBold
                 color="dark"
-                className="mb-4"
+                className="mb-5"
             >
                 عضویت
             </Typography>
@@ -120,7 +120,7 @@ const Form = ({goToPrevStep}) => {
                 size="xl"
                 isBold
                 color="dark"
-                className="mb-4"
+                className="mb-5"
             >
                 عضویت
             </Typography>

@@ -6,7 +6,7 @@ import ToastProvider from "@/providers/ToastProvider.tsx";
 import "@/styles/bootstrap.css";
 import "@/styles/font-awesome.css";
 import "@/styles/iran-sans.css";
-import "@/styles/tailwind.css";
+import "@/styles/global.scss";
 
 const App = () => {
     return (

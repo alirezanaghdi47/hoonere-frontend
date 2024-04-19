@@ -1,13 +1,14 @@
 // libraries
 import {Link} from "react-router-dom";
+import classNames from "classnames";
 
 const Button = ({
                     children,
-                    size,
-                    isBold,
-                    isDense,
-                    fullWidth,
-                    direction,
+                    size = "md",
+                    isBold = false,
+                    isDense = false,
+                    fullWidth = false,
+                    direction = "center",
                     color,
                     bgColor,
                     textColor,
@@ -20,7 +21,18 @@ const Button = ({
     return href ? (
         <Link
             to={href}
-            className={`flex items-center btn btn-${color} btn-bg-${bgColor} btn-color-${textColor} ${isDense ? "btn-link" : ""} btn-${size} ${direction === "start" ? "justify-start" : direction === "end" ? "justify-end" : "justify-center"} ${fullWidth ? "w-full" : ""} ${isBold ? "fw-bold" : ""} ${props.className}`}
+            className={classNames("d-flex align-items-center btn", props.className, {
+                [`btn-${color}`]: true,
+                [`btn-bg-${bgColor}`]: true,
+                [`btn-color-${textColor}`]: true,
+                [`btn-${size}`]: true,
+                "btn-link": isDense,
+                "justify-content-center": direction === "center",
+                "justify-content-start": direction === "start",
+                "justify-content-end": direction === "end",
+                "w-100": fullWidth,
+                "fw-bold": isBold
+            })}
             onClick={onClick}
         >
             {startIcon &&
@@ -30,7 +42,18 @@ const Button = ({
         </Link>
     ) : (
         <button
-            className={`flex items-center btn btn-${color} btn-bg-${bgColor} btn-color-${textColor} ${isDense ? "btn-link" : ""} btn-${size} ${direction === "start" ? "justify-start" : direction === "end" ? "justify-end" : "justify-center"} ${fullWidth ? "w-full" : ""} ${isBold ? "fw-bold" : ""} ${props.className}`}
+            className={classNames("d-flex align-items-center btn", props.className, {
+                [`btn-${color}`]: true,
+                [`btn-bg-${bgColor}`]: true,
+                [`btn-color-${textColor}`]: true,
+                [`btn-${size}`]: true,
+                "btn-link": isDense,
+                "justify-content-center": direction === "center",
+                "justify-content-start": direction === "start",
+                "justify-content-end": direction === "end",
+                "w-100": fullWidth,
+                "fw-bold": isBold
+            })}
             onClick={onClick}
         >
             {startIcon &&

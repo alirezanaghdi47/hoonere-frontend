@@ -1,7 +1,18 @@
 // libraries
 import {Link} from "react-router-dom";
 
-const IconButton = ({icon, size, color, isDense, bgColor, textColor, circle, href, onClick, ...props}) => {
+const IconButton = ({
+                        icon,
+                        size,
+                        color,
+                        isDense,
+                        bgColor,
+                        textColor,
+                        circle,
+                        href,
+                        onClick,
+                        ...props
+                    }) => {
     return href ? (
         <Link
             to={href}

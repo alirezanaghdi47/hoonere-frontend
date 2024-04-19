@@ -6,7 +6,19 @@ import {useCountdown} from 'usehooks-ts';
 import Button from "@/modules/Button.tsx";
 import Typography from "@/modules/Typography.tsx";
 
-const CodeInput = ({name, label, value, placeholder, onChange, onResend, error, touched, theme}) => {
+const CodeInput = ({
+                       name,
+                       label,
+                       value,
+                       placeholder,
+                       onChange,
+                       onResend,
+                       error,
+                       touched,
+                       theme,
+                       startAdornment,
+                       endAdornment
+                   }) => {
     const [count, {startCountdown, resetCountdown}] = useCountdown({
         countStart: 120,
         intervalMs: 1000,
@@ -23,7 +35,7 @@ const CodeInput = ({name, label, value, placeholder, onChange, onResend, error, 
     }, []);
 
     return (
-        <div className="flex flex-column justify-start items-start w-full gap-2">
+        <div className="d-flex flex-column justify-content-start align-items-start w-100 gap-2">
             <div className={`d-flex justify-content-${label ? "between" : "end"} align-items-center w-100`}>
                 {
                     label && (
@@ -69,15 +81,21 @@ const CodeInput = ({name, label, value, placeholder, onChange, onResend, error, 
                 }
             </div>
 
-            <input
-                name={name}
-                id={name}
-                type="text"
-                placeholder={placeholder}
-                className={`form-control form-control-lg ${theme === "solid" ? "form-control-solid" : ""}`}
-                value={value}
-                onChange={onChange}
-            />
+            <div className='position-relative w-100'>
+                {startAdornment && startAdornment}
+
+                <input
+                    name={name}
+                    id={name}
+                    type="text"
+                    placeholder={placeholder}
+                    className={`form-control form-control-lg ${theme === "solid" ? "form-control-solid" : ""}`}
+                    value={value}
+                    onChange={onChange}
+                />
+
+                {endAdornment && endAdornment}
+            </div>
 
             {
                 error && touched && (

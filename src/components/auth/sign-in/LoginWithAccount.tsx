@@ -1,4 +1,5 @@
 // libraries
+import {useNavigate} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 import { useMediaQuery } from 'usehooks-ts';
@@ -23,6 +24,7 @@ import useAuthStore from "@/stores/authStore.ts";
 import {LoginSchema} from "@/utils/validations.ts";
 
 const LoginWithAccount = ({setMobileWay}) => {
+    const navigate = useNavigate();
     const {token , login , logout} = useAuthStore();
     const isMobile = useMediaQuery('(max-width: 576px)');
 
@@ -31,7 +33,7 @@ const LoginWithAccount = ({setMobileWay}) => {
         onSuccess: async (data) => {
             if (data.status === "success") {
                 toast.success(data.message);
-                router.replace("/auth/sign-in");
+                navigate("/auth/sign-in");
             } else {
                 toast.error(data.message);
             }
@@ -62,7 +64,7 @@ const LoginWithAccount = ({setMobileWay}) => {
                 size="xl"
                 isBold
                 color="dark"
-                className="mb-4"
+                className="mb-5"
             >
                 ورود
             </Typography>

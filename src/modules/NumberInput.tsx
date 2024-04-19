@@ -3,7 +3,7 @@ import Typography from "@/modules/Typography.tsx";
 
 const NumberInput = ({name, label, value, placeholder, onChange, error, touched, theme}) => {
     return (
-        <div className="flex flex-column justify-start items-start w-full gap-2">
+        <div className="d-flex flex-column justify-content-start align-items-start w-100 gap-2">
             {
                 label && (
                     <Typography

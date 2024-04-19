@@ -19,7 +19,7 @@ const Authentication = ({unSetMobileWay , goToNextStep}) => {
                 size="xl"
                 isBold
                 color="dark"
-                className="mb-4"
+                className="mb-5"
             >
                 ورود
             </Typography>
@@ -72,7 +72,7 @@ const VerifyCode = ({goToPrevStep}) => {
                 size="xl"
                 isBold
                 color="dark"
-                className="mb-4"
+                className="mb-5"
             >
                 ورود
             </Typography>

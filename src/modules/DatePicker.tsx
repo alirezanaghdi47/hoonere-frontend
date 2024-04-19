@@ -7,9 +7,9 @@ import Typography from "@/modules/Typography.tsx";
 // styles
 import "react-datepicker/dist/react-datepicker.min.css";
 
-const DatePicker2 = ({name , label, value, onChange , error, touched}) => {
+const DatePicker2 = ({name, label, value, placeholder ,onChange, error, touched, startAdornment, endAdornment}) => {
     return (
-        <div className="flex flex-column justify-start items-start w-full gap-2">
+        <div className="d-flex flex-column justify-content-start align-items-start w-100 gap-2">
             {
                 label && (
                     <Typography
@@ -23,19 +23,18 @@ const DatePicker2 = ({name , label, value, onChange , error, touched}) => {
                 )
             }
 
-            <DatePicker
-                value={value}
-                onChange={(date) => console.log(date)}
-            />
+            <div className='position-relative w-100'>
+                {startAdornment && startAdornment}
 
-            {/*<input*/}
-            {/*    name={name}*/}
-            {/*    id={name}*/}
-            {/*    type="text"*/}
-            {/*    className="form-control form-control-lg form-control-solid"*/}
-            {/*    value={value}*/}
-            {/*    onChange={onChange}*/}
-            {/*/>*/}
+                <DatePicker
+                    name={name}
+                    value={value}
+                    placeholder={placeholder}
+                    onChange={(date) => onChange(date)}
+                />
+
+                {endAdornment && endAdornment}
+            </div>
 
             {
                 error && touched && (
