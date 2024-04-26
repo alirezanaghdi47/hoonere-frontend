@@ -10,6 +10,7 @@ const Button = ({
                     fullWidth = false,
                     direction = "center",
                     color,
+                    activeColor,
                     bgColor,
                     textColor,
                     href,
@@ -21,12 +22,13 @@ const Button = ({
     return href ? (
         <Link
             to={href}
-            className={classNames("d-flex align-items-center btn", props.className, {
+            className={classNames("position-relative d-flex align-items-center btn", props.className, {
                 [`btn-${color}`]: true,
+                [`btn-active-${activeColor}`]: true,
                 [`btn-bg-${bgColor}`]: true,
                 [`btn-color-${textColor}`]: true,
                 [`btn-${size}`]: true,
-                "btn-link": isDense,
+                "btn-link text-nowrap": isDense,
                 "justify-content-center": direction === "center",
                 "justify-content-start": direction === "start",
                 "justify-content-end": direction === "end",
@@ -42,8 +44,9 @@ const Button = ({
         </Link>
     ) : (
         <button
-            className={classNames("d-flex align-items-center btn", props.className, {
+            className={classNames("position-relative d-flex align-items-center btn", props.className, {
                 [`btn-${color}`]: true,
+                [`btn-active-${activeColor}`]: true,
                 [`btn-bg-${bgColor}`]: true,
                 [`btn-color-${textColor}`]: true,
                 [`btn-${size}`]: true,

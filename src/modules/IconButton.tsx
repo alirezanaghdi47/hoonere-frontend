@@ -2,31 +2,33 @@
 import {Link} from "react-router-dom";
 
 const IconButton = ({
-                        icon,
-                        size,
+                        size = "md",
                         color,
+                        activeColor,
                         isDense,
                         bgColor,
                         textColor,
-                        circle,
                         href,
                         onClick,
+                        children,
                         ...props
                     }) => {
     return href ? (
         <Link
+            {...props}
             to={href}
-            className={`btn btn-icon btn-${color} btn-bg-${bgColor} btn-color-${textColor} ${isDense ? "btn-link" : ""} btn-${size} ${props.className}`}
+            className={`position-relative btn btn-icon btn-${color} btn-active-${activeColor} btn-bg-${bgColor} btn-color-${textColor} ${isDense ? "btn-link" : ""} btn-${size} ${props.className}`}
             onClick={onClick}
         >
-            <i className={`${size === "lg" ? "fs-3" : size === "sm" ? "fs-5" : "fs-4"} ${icon}`}/>
+            {children}
         </Link>
     ) : (
         <button
-            className={`btn btn-icon btn-${color} btn-bg-${bgColor} btn-color-${textColor} ${isDense ? "btn-link" : ""} btn-${size} ${props.className}`}
+            {...props}
+            className={`position-relative btn btn-icon btn-${color} btn-active-${activeColor} btn-bg-${bgColor} btn-color-${textColor} ${isDense ? "btn-link" : ""} btn-${size} ${props.className}`}
             onClick={onClick}
         >
-            <i className={`${size === "lg" ? "fs-3" : size === "sm" ? "fs-5" : "fs-4"} ${icon}`}/>
+            {children}
         </button>
     )
 }

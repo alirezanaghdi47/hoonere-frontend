@@ -1,0 +1,44 @@
+.szh-menu {
+  background-color: var(--bs-body-bg) !important;
+  border-radius: 8px !important;
+  box-shadow: var(--bs-box-shadow-sm) !important;
+  padding: 8px !important;
+  color: var(--bs-body-color) !important;
+
+  &__item {
+    background: var(--bs-body-bg) !important;
+    color: var(--bs-dark) !important;
+    font-size: 0.95rem !important;
+    border-radius: 8px !important;
+    padding: 8px !important;
+
+    &--type-radio , &--type-checkbox {
+      &::before {
+        content: none !important;
+      }
+
+      &.szh-menu__item--checked {
+        background: var(--bs-success) !important;
+        color: var(--bs-light) !important;
+      }
+    }
+
+    &--hover {
+      background: var(--bs-gray-200) !important;
+      color: var(--bs-success) !important;
+    }
+
+    &--submenu {
+      position: relative !important;
+
+      &::after {
+        font-family: "Font Awesome\ 6 Pro" !important;
+        content: "\f053" !important;
+        position: absolute !important;
+        font-size: 0.95rem !important;
+        right: calc(100% - 16px) !important;
+        color: var(--bs-dark) !important;
+      }
+    }
+  }
+}

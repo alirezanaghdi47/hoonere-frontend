@@ -1,51 +1,31 @@
 // libraries
 import Select from 'react-select';
 
-// modules
-import Typography from "@/modules/Typography.tsx";
+// styles
+import "@/styles/modules/select-box.scss";
 
-const SelectBox = ({name, label, value, options , placeholder, onChange, error, touched, startAdornment, endAdornment}) => {
+const SelectBox = ({name, value, options, isSearchable = false, isMulti = false, placeholder, onChange}) => {
     return (
-        <div className="d-flex flex-column justify-content-start align-items-start w-100 gap-2">
-            {
-                label && (
-                    <Typography
-                        variant="label"
-                        color="gray-700"
-                        size="xs"
-                        isBold
-                    >
-                        {label}
-                    </Typography>
+        <Select
+            name={name}
+            options={options}
+            isSearchable={isSearchable}
+            components={{
+                IndicatorSeparator: () => null,
+                DropdownIndicator: () => <i className="far fa-chevron-down fs-6 mb-2"/>,
+                NoOptionsMessage: () => (
+                    <div className="d-flex justify-content-center align-items-center w-100 py-8">
+                        <span className="fs-7 fw-bold text-gray-500">داده ای یافت نشد</span>
+                    </div>
                 )
-            }
-
-            <div className='position-relative w-100'>
-                {startAdornment && startAdornment}
-
-                <Select
-                    name={name}
-                    options={options}
-                    value={value}
-                    placeholder={placeholder}
-                    onChange={(newValue) => onChange(newValue)}
-                />
-
-                {endAdornment && endAdornment}
-            </div>
-
-            {
-                error && touched && (
-                    <Typography
-                        variant="p"
-                        color="danger"
-                        size="xs"
-                    >
-                        {error}
-                    </Typography>
-                )
-            }
-        </div>
+            }}
+            className="react-select__container"
+            classNamePrefix="react-select"
+            placeholder={placeholder ? placeholder : ""}
+            value={value}
+            onChange={onChange}
+            isMulti={isMulti}
+        />
     )
 }
 

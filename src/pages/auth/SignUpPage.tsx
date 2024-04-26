@@ -1,5 +1,5 @@
 // components
-import Register from "@/components/auth/sign-up/Register.tsx";
+import RegisterWithMobile from "@/components/widgets/auth/sign-up/RegisterWithMobile.tsx";
 
 // layouts
 import AuthLayout from "@/layouts/AuthLayout.tsx";
@@ -7,7 +7,7 @@ import AuthLayout from "@/layouts/AuthLayout.tsx";
 const SignUpPage = () => {
     return (
         <AuthLayout>
-            <Register/>
+            <RegisterWithMobile/>
         </AuthLayout>
     )
 }

@@ -2,8 +2,8 @@
 import {useBoolean} from "usehooks-ts";
 
 // components
-import LoginWithAccount from "@/components/auth/sign-in/LoginWithAccount.tsx";
-import LoginWithMobile from "@/components/auth/sign-in/LoginWithMobile.tsx";
+import LoginWithAccount from "@/components/widgets/auth/sign-in/LoginWithAccount.tsx";
+import LoginWithMobile from "@/components/widgets/auth/sign-in/LoginWithMobile.tsx";
 
 // layouts
 import AuthLayout from "@/layouts/AuthLayout.tsx";

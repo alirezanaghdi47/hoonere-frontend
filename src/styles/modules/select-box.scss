@@ -1,0 +1,134 @@
+.react-select {
+  &__container {
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  &__control {
+    width: 100% !important;
+    background-color: var(--bs-gray-100) !important;
+    border: 1px solid var(--bs-gray-100) !important;
+    box-shadow: none !important;
+    font-size: 1.1rem !important;
+    font-weight: 500 !important;
+    line-height: 1.5 !important;
+    height: 43.56px !important;
+    min-height: 43.56px !important;
+    border-radius: 0.95rem !important;
+    padding: 0.775rem 1rem !important;
+
+    &--menu-is-open {
+      box-shadow: none !important;
+      background-color: var(--bs-gray-200) !important;
+      border: 1px solid var(--bs-gray-200) !important;
+    }
+  }
+
+  &__input-container {
+    color: var(--bs-gray-700) !important;
+    font-size: 1.1rem !important;
+    font-weight: 500 !important;
+    line-height: 1.5 !important;
+  }
+
+  &__placeholder {
+    color: var(--bs-gray-500) !important;
+    font-size: 1.1rem !important;
+    font-weight: 500 !important;
+    line-height: 1.5 !important;
+  }
+
+  &__value-container {
+    padding: 0 !important;
+  }
+
+  &__single-value {
+    color: var(--bs-body-color) !important;
+  }
+
+  &__multi-value {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 4px !important;
+    background: var(--bs-secondary-bg) !important;
+    border-radius: 8px !important;
+    padding: 4px !important;
+    margin: 4px !important;
+
+    &__label {
+      font-size: 1.1rem !important;
+      font-weight: 500 !important;
+      line-height: 1.5 !important;
+      color: var(--bs-body-color) !important;
+      padding: 0 !important;
+    }
+
+    &__remove {
+      color: var(--bs-danger) !important;
+      padding: 0 !important;
+
+      &:hover {
+        background: transparent !important;
+      }
+
+      svg {
+        display: none !important;
+      }
+
+      &::after {
+        font-family: "Font Awesome\ 6 Pro" !important;
+        content: "\f00d" !important;
+        font-size: 1rem !important;
+      }
+    }
+  }
+
+  &__menu {
+    background: var(--bs-body-bg) !important;
+    border: none !important;
+    border-radius: 0.95rem !important;
+    box-shadow: var(--bs-box-shadow-sm) !important;
+    padding: 8px !important;
+  }
+
+  &__list {
+    padding: 0 !important;
+  }
+
+  &__option {
+    color: var(--bs-body-color) !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    line-height: 1.5 !important;
+    border-radius: 8px !important;
+    padding: 8px !important;
+    cursor: pointer !important;
+
+    &--is-focused {
+      background: var(--bs-body-bg) !important;
+      color: var(--bs-body-color) !important;
+    }
+
+    &--is-selected {
+      background: var(--bs-success) !important;
+      color: var(--bs-light) !important;
+    }
+  }
+
+  &__clear-indicator {
+    color: var(--bs-danger) !important;
+    cursor: pointer !important;
+    padding: 4px !important;
+
+    &::after {
+      font-family: "Font Awesome\ 6 Pro" !important;
+      content: "\f00d" !important;
+      font-size: 1.4rem !important;
+    }
+
+    svg {
+      display: none !important;
+    }
+  }
+}

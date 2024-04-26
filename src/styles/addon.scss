@@ -1,0 +1,14 @@
+@media (min-width: 0px) {
+  main, span, ol, ul, pre, div {
+    scrollbar-width: thin;
+    scrollbar-color: var(--bs-scrollbar-color) transparent;
+  }
+}
+
+.pe-30 {
+  padding-left: 10rem !important;
+}
+
+.w-max {
+  width: max-content !important;
+}

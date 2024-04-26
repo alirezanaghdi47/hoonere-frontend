@@ -1,0 +1,15 @@
+.swal2 {
+  &-container {
+    border-radius: 8px !important;
+  }
+
+  &-toast {
+    background: var(--bs-body-bg) !important;
+    color: var(--bs-body-color) !important;
+    box-shadow: var(--bs-box-shadow-sm) !important;
+  }
+
+  &-timer-progress-bar {
+    background: var(--bs-gray-300) !important;
+  }
+}

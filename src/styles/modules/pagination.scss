@@ -1,0 +1,33 @@
+.rc-pagination {
+  display: flex !important;
+  gap: 8px !important;
+  list-style-type: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+
+  &-item, &-prev, &-next, &-jump-next, &-jump-prev {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 35px !important;
+    min-width: 35px !important;
+    height: 35px !important;
+    min-height: 35px !important;
+    background: var(--bs-gray-100) !important;
+    color: var(--bs-gray-700) !important;
+    font-size: 1.1rem !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+
+    &:hover:not(&-active) {
+      background: var(--bs-gray-200) !important;
+      color: var(--bs-success) !important;
+    }
+
+    &-active {
+      background: var(--bs-success) !important;
+      color: var(--bs-light) !important;
+    }
+  }
+}

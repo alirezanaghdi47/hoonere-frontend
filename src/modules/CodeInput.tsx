@@ -3,22 +3,10 @@ import {useEffect} from "react";
 import {useCountdown} from 'usehooks-ts';
 
 // modules
-import Button from "@/modules/Button.tsx";
 import Typography from "@/modules/Typography.tsx";
+import IconButton from "@/modules/IconButton.tsx";
 
-const CodeInput = ({
-                       name,
-                       label,
-                       value,
-                       placeholder,
-                       onChange,
-                       onResend,
-                       error,
-                       touched,
-                       theme,
-                       startAdornment,
-                       endAdornment
-                   }) => {
+const CodeInput = ({name, value, placeholder, onChange, startAdornment , onResend}) => {
     const [count, {startCountdown, resetCountdown}] = useCountdown({
         countStart: 120,
         intervalMs: 1000,
@@ -35,79 +23,49 @@ const CodeInput = ({
     }, []);
 
     return (
-        <div className="d-flex flex-column justify-content-start align-items-start w-100 gap-2">
-            <div className={`d-flex justify-content-${label ? "between" : "end"} align-items-center w-100`}>
-                {
-                    label && (
-                        <Typography
-                            variant="label"
-                            color="gray-700"
-                            size="xs"
-                            isBold
-                        >
-                            {label}
-                        </Typography>
-                    )
-                }
+        <div className='position-relative w-100'>
+            {
+                startAdornment && (
+                    <span
+                        className="position-absolute start-0 top-0 d-flex justify-content-center align-items-center w-40px h-40px m-1">
+                        {startAdornment}
+                    </span>
+                )
+            }
 
+            <input
+                name={name}
+                id={name}
+                type="text"
+                placeholder={placeholder}
+                className={`form-control form-control-lg form-control-solid ${startAdornment ? 'ps-15' : ''} pe-30`}
+                value={value}
+                onChange={onChange}
+            />
+
+            <span
+                className="position-absolute end-0 top-0 d-flex justify-content-center align-items-center w-40px h-40px m-1">
                 {
                     count > 0 ? (
                         <Typography
                             variant="span"
                             color="gray-700"
-                            isBold
-                            size="sm"
+                            size="xs"
+                            className="mx-auto"
                         >
                             {count}
-                            &nbsp;
-                            <Typography
-                                variant="span"
-                                color="gray-700"
-                                size="xs"
-                            >
-                                ثانیه
-                            </Typography>
                         </Typography>
                     ) : (
-                        <Button
-                            textColor="primary"
-                            isDense
-                            startIcon="far fa-refresh"
+                        <IconButton
+                            size="sm"
+                            color="light"
                             onClick={_handleResend}
                         >
-                            ارسال مجدد کد
-                        </Button>
+                            <i className="far fa-refresh fs-4"/>
+                        </IconButton>
                     )
                 }
-            </div>
-
-            <div className='position-relative w-100'>
-                {startAdornment && startAdornment}
-
-                <input
-                    name={name}
-                    id={name}
-                    type="text"
-                    placeholder={placeholder}
-                    className={`form-control form-control-lg ${theme === "solid" ? "form-control-solid" : ""}`}
-                    value={value}
-                    onChange={onChange}
-                />
-
-                {endAdornment && endAdornment}
-            </div>
-
-            {
-                error && touched && (
-                    <Typography
-                        variant="p"
-                        color="danger"
-                        size="xs"
-                    >
-                        {error}
-                    </Typography>
-                )
-            }
+            </span>
         </div>
     )
 }

@@ -1,19 +1,15 @@
 // providers
 import RouterProvider from "@/providers/RouterProvider.tsx";
-import ToastProvider from "@/providers/ToastProvider.tsx";
 
 // styles
-import "@/styles/bootstrap.css";
+import "@/styles/theme.css";
 import "@/styles/font-awesome.css";
 import "@/styles/iran-sans.css";
-import "@/styles/global.scss";
+import "@/styles/addon.scss";
 
 const App = () => {
     return (
-        <>
-            <RouterProvider/>
-            <ToastProvider/>
-        </>
+        <RouterProvider/>
     )
 }
 
