@@ -9,16 +9,17 @@
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    width: 35px !important;
-    min-width: 35px !important;
-    height: 35px !important;
-    min-height: 35px !important;
+    width: 1.5rem !important;
+    min-width: 1.5rem !important;
+    height: 1.5rem !important;
+    min-height: 1.5rem !important;
     background: var(--bs-gray-100) !important;
     color: var(--bs-gray-700) !important;
     font-size: 1.1rem !important;
     border-radius: 8px !important;
     box-shadow: none !important;
     cursor: pointer !important;
+    padding: 1.5rem !important;
 
     &:hover:not(&-active) {
       background: var(--bs-gray-200) !important;

@@ -3,7 +3,10 @@ const TextInput = ({name, value, placeholder, onChange, startAdornment, endAdorn
         <div className='position-relative w-100'>
             {
                 startAdornment && (
-                    <span className="position-absolute start-0 top-0 d-flex justify-content-center align-items-center w-40px h-40px m-1">
+                    <span
+                        className="position-absolute d-flex justify-content-center align-items-center w-43px h-43px m-1"
+                        style={{top: 2, right: 2}}
+                    >
                         {startAdornment}
                     </span>
                 )
@@ -20,7 +23,10 @@ const TextInput = ({name, value, placeholder, onChange, startAdornment, endAdorn
 
             {
                 endAdornment && (
-                    <span className="position-absolute end-0 top-0 d-flex justify-content-center align-items-center w-40px h-40px m-1">
+                    <span
+                        className="position-absolute d-flex justify-content-center align-items-center w-43px h-43px m-1"
+                        style={{top: 2, left: 2}}
+                    >
                         {endAdornment}
                     </span>
                 )

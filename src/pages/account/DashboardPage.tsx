@@ -1,11 +1,8 @@
-// layouts
-import MainLayout from "@/layouts/MainLayout";
-
 const DashboardPage = () => {
     return (
-        <MainLayout>
-
-        </MainLayout>
+        <>
+            dashboard
+        </>
     )
 }
 

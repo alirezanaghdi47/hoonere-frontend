@@ -9,7 +9,7 @@ const TypeInfo = () => {
             <div className="card-body d-flex flex-column gap-5">
                 <Typography
                     variant="h2"
-                    size="md"
+                    size="lg"
                     color="dark"
                     isBold
                 >
@@ -17,12 +17,12 @@ const TypeInfo = () => {
                 </Typography>
 
                 <div className="row g-5">
-                    <div className="col-6">
+                    <div className="col-12 col-md-6">
                         <Form.Group>
                             <Form.Label
-                                label="تعداد قسمت ها"
+                                label="کل قسمت ها ( عدد )"
                                 required
-                                size="xs"
+                                size="sm"
                                 color="dark"
                             />
 
@@ -44,12 +44,12 @@ const TypeInfo = () => {
                         </Form.Group>
                     </div>
 
-                    <div className="col-6">
+                    <div className="col-12 col-md-6">
                         <Form.Group>
                             <Form.Label
-                                label="مدت زمان هر قسمت ( دقیقه )"
+                                label="هر قسمت ( دقیقه )"
                                 required
-                                size="xs"
+                                size="sm"
                                 color="dark"
                             />
 

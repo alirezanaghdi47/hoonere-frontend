@@ -15,7 +15,7 @@ const Type = () => {
             <div className="card-body d-flex flex-column gap-5">
                 <Typography
                     variant="h2"
-                    size="md"
+                    size="lg"
                     color="dark"
                     isBold
                 >
@@ -26,7 +26,7 @@ const Type = () => {
                     <Form.Label
                         label="نوع"
                         color="dark"
-                        size="xs"
+                        size="sm"
                         required
                     />
 

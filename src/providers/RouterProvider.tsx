@@ -1,6 +1,11 @@
 // libraries
-import {Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import Loadable from '@loadable/component';
+
+// layouts
+const MainLayout = Loadable(() => import('@/layouts/MainLayout.tsx'));
+const AuthLayout = Loadable(() => import('@/layouts/AuthLayout.tsx'));
+const BlankLayout = Loadable(() => import('@/layouts/BlankLayout.tsx'));
 
 // pages
 const Dashboard = Loadable(() => import('@/pages/account/DashboardPage.tsx'));
@@ -15,39 +20,59 @@ const RouterProvider = () => {
     return (
         <Routes>
             <Route
-                path="/account/dashboard"
-                element={<Dashboard/>}
+                path="/"
+                element={<Navigate to="/account/dashboard"/>}
             />
 
             <Route
-                path="/account/projects"
-                element={<Projects/>}
-            />
+                path="account"
+                element={<MainLayout/>}
+            >
+                <Route
+                    path="dashboard"
+                    element={<Dashboard/>}
+                />
+
+                <Route
+                    path="projects"
+                    element={<Projects/>}
+                />
+
+                <Route
+                    path="projects/add"
+                    element={<AddProject/>}
+                />
+
+                <Route
+                    path="profile"
+                    element={<Profile/>}
+                />
+            </Route>
 
             <Route
-                path="/account/projects/add"
-                element={<AddProject/>}
-            />
+                path="auth"
+                element={<AuthLayout/>}
+            >
+                <Route
+                    path="sign-in"
+                    element={<SignIn/>}
+                />
 
-            <Route
-                path="/account/profile"
-                element={<Profile/>}
-            />
-
-            <Route
-                path="/auth/sign-in"
-                element={<SignIn/>}
-            />
-
-            <Route
-                path="/auth/sign-up"
-                element={<SignUp/>}
-            />
+                <Route
+                    path="sign-up"
+                    element={<SignUp/>}
+                />
+            </Route>
 
             <Route
                 path="/*"
-                element={<NotFoundPage/>}
-            />
+                element={<BlankLayout/>}
+            >
+                <Route
+                    path="*"
+                    element={<NotFoundPage/>}
+                />
+            </Route>
         </Routes>
     )
 }

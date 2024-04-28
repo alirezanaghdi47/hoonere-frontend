@@ -12,13 +12,13 @@ const Breadcrumbs = ({links, activeLink}) => {
                     >
                         {
                             activeLink === link.href ? (
-                                <span className="fs-6 text-dark">
+                                <span className="fs-5 text-dark">
                                     {link.label}
                                 </span>
                             ) : (
                                 <Link
                                     to={link.href}
-                                    className={`fs-6 text-light ${activeLink === link.href ? "text-muted" : ""}`}
+                                    className="fs-5 text-light"
                                 >
                                     {link.label}
                                 </Link>

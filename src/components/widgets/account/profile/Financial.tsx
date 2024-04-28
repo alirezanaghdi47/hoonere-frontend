@@ -12,7 +12,7 @@ const Financial = () => {
                         <Form.Label
                             label="شماره کارت"
                             required
-                            size="xs"
+                            size="sm"
                             color="dark"
                         />
                     </div>
@@ -43,7 +43,7 @@ const Financial = () => {
                         <Form.Label
                             label="شماره شبا"
                             required
-                            size="xs"
+                            size="sm"
                             color="dark"
                         />
                     </div>
@@ -75,7 +75,7 @@ const Financial = () => {
                         <Form.Label
                             label="شماره حساب"
                             required
-                            size="xs"
+                            size="sm"
                             color="dark"
                         />
                     </div>
@@ -102,7 +102,7 @@ const Financial = () => {
                 </div>
 
                 <div className="row gy-2">
-                    <div className="d-flex justify-content-end align-items-center w-100">
+                    <div className="col-12 d-flex justify-content-end align-items-center">
                         <Button
                             color="success"
                             onClick={() => console.log("submit")}

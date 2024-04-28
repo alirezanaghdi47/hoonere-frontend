@@ -20,7 +20,7 @@ const Identify = () => {
                         <Form.Label
                             label="عکس پروفایل"
                             required
-                            size="xs"
+                            size="sm"
                             color="dark"
                         />
                     </div>
@@ -47,7 +47,7 @@ const Identify = () => {
                         <Form.Label
                             label="تصویر جلو کارت ملی"
                             required
-                            size="xs"
+                            size="sm"
                             color="dark"
                         />
                     </div>
@@ -73,7 +73,7 @@ const Identify = () => {
                         <Form.Label
                             label="نام و نام خانوادگی"
                             required
-                            size="xs"
+                            size="sm"
                             color="dark"
                         />
                     </div>
@@ -99,7 +99,7 @@ const Identify = () => {
                         <Form.Label
                             label="کد ملی"
                             required
-                            size="xs"
+                            size="sm"
                             color="dark"
                         />
                     </div>
@@ -129,7 +129,7 @@ const Identify = () => {
                         <Form.Label
                             label="شماره شناسنامه"
                             required
-                            size="xs"
+                            size="sm"
                             color="dark"
                         />
                     </div>
@@ -159,7 +159,7 @@ const Identify = () => {
                         <Form.Label
                             label="تاریخ تولد"
                             required
-                            size="xs"
+                            size="sm"
                             color="dark"
                         />
                     </div>
@@ -185,7 +185,7 @@ const Identify = () => {
                         <Form.Label
                             label="شماره موبایل"
                             required
-                            size="xs"
+                            size="sm"
                             color="dark"
                         />
                     </div>
@@ -216,7 +216,7 @@ const Identify = () => {
                         <Form.Label
                             label="ایمیل"
                             required
-                            size="xs"
+                            size="sm"
                             color="dark"
                         />
                     </div>
@@ -242,7 +242,7 @@ const Identify = () => {
                         <Form.Label
                             label="آدرس"
                             required
-                            size="xs"
+                            size="sm"
                             color="dark"
                         />
                     </div>
@@ -264,7 +264,7 @@ const Identify = () => {
                 </div>
 
                 <div className="row gy-2">
-                    <div className="d-flex justify-content-end align-items-center w-100">
+                    <div className="col-12 d-flex justify-content-end align-items-center">
                         <Button
                             color="success"
                             onClick={() => console.log("submit")}

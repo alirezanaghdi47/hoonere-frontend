@@ -6,9 +6,6 @@ import {useLocation, useNavigate} from "react-router-dom";
 import Header from "@/components/widgets/account/profile/Header.tsx";
 import Content from "@/components/widgets/account/profile/Content.tsx";
 
-// layouts
-import MainLayout from "@/layouts/MainLayout";
-
 const ProfilePage = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -20,10 +17,10 @@ const ProfilePage = () => {
     } , [location.key]);
 
     return (
-        <MainLayout>
+        <>
             <Header/>
             <Content/>
-        </MainLayout>
+        </>
     )
 }
 

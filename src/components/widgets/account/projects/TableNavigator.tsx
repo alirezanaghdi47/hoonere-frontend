@@ -11,7 +11,7 @@ const TableNavigator = () => {
     ];
 
     return (
-        <div className="d-flex flex-wrap justify-content-center justify-content-sm-between align-items-center w-100 gap-5">
+        <div className="d-flex flex-wrap justify-content-center justify-content-sm-between align-items-center w-100 gap-5 mt-auto">
             <div className="w-100px">
                 <SelectBox
                     name='pageSize'

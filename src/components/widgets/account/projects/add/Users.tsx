@@ -15,7 +15,7 @@ const Users = () => {
             <div className="card-body d-flex flex-column gap-5">
                 <Typography
                     variant="h2"
-                    size="md"
+                    size="lg"
                     color="dark"
                     isBold
                 >
@@ -28,7 +28,7 @@ const Users = () => {
                             <Form.Label
                                 label="کارفرما"
                                 color="dark"
-                                size="xs"
+                                size="sm"
                                 required
                             />
 
@@ -53,7 +53,7 @@ const Users = () => {
                             <Form.Label
                                 label="سرمایه گذار"
                                 color="dark"
-                                size="xs"
+                                size="sm"
                                 required
                             />
 
@@ -78,7 +78,7 @@ const Users = () => {
                             <Form.Label
                                 label="تهیه کننده"
                                 color="dark"
-                                size="xs"
+                                size="sm"
                                 required
                             />
 
@@ -103,7 +103,7 @@ const Users = () => {
                             <Form.Label
                                 label="مجری طرح"
                                 color="dark"
-                                size="xs"
+                                size="sm"
                                 required
                             />
 
@@ -128,7 +128,7 @@ const Users = () => {
                             <Form.Label
                                 label="ناظر"
                                 color="dark"
-                                size="xs"
+                                size="sm"
                                 required
                             />
 

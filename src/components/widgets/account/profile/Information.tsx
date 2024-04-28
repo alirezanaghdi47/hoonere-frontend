@@ -30,7 +30,7 @@ const Information = () => {
                     علیرضا نقدی
                 </Typography>
 
-                <ul className="d-flex flex-wrap justify-content-start align-items-start gap-5 w-100 list-style-none p-0 m-0">
+                <ul className="d-flex flex-column justify-content-start align-items-start gap-5 w-100 list-style-none p-0 m-0">
                     <li className="">
                         <Typography
                             variant="p"

@@ -25,17 +25,25 @@ const List = () => {
                 header: () => '#',
             },
             {
-                accessorKey: 'name',
-                header: () => 'پروژه',
+                accessorKey: 'logo',
+                header: () => 'لوگو',
                 cell: ({row}) => (
-                    <div className="d-flex align-items-center gap-2 text-truncate w-150px">
+                    <div className="w-50px">
                         <LazyLoadImage
                             src={logo}
                             alt="logo"
-                            width={25}
-                            height={25}
+                            width={40}
+                            height={40}
                             className='rounded-2'
                         />
+                    </div>
+                )
+            },
+            {
+                accessorKey: 'name',
+                header: () => 'عنوان',
+                cell: ({row}) => (
+                    <div className="w-100px fs-6 text-dark text-truncate">
                         پروژه 1
                     </div>
                 )
@@ -44,7 +52,7 @@ const List = () => {
                 accessorKey: 'type',
                 header: () => 'نوع',
                 cell: ({row}) => (
-                    <div className="text-truncate w-150px">
+                    <div className="w-150px fs-6 text-dark text-truncate">
                         <Chip
                             color={row.original.type === "فیلم" ? "light-primary" : "light-info"}
                             label={row.original.type}
@@ -52,20 +60,20 @@ const List = () => {
                     </div>
                 )
             },
-        {
-            accessorKey: 'detail',
-            header: () => 'زمان بندی',
-            cell: ({row}) => (
-                <div className="text-truncate w-200px">
-                    {row.original.detail}
-                </div>
-            )
-        },
+            {
+                accessorKey: 'detail',
+                header: () => 'زمان بندی',
+                cell: ({row}) => (
+                    <div className="w-200px fs-6 text-dark text-truncate">
+                        {row.original.detail}
+                    </div>
+                )
+            },
             {
                 accessorKey: 'producer',
                 header: () => 'تهیه کننده',
                 cell: ({row}) => (
-                    <div className="text-truncate w-150px">
+                    <div className="w-150px fs-6 text-dark text-truncate">
                         علیرضا نقدی
                     </div>
                 )
@@ -74,7 +82,7 @@ const List = () => {
                 accessorKey: 'supervisor',
                 header: () => 'ناظر',
                 cell: ({row}) => (
-                    <div className="text-truncate w-150px">
+                    <div className="w-150px fs-6 text-dark text-truncate">
                         علیرضا نقدی
                     </div>
                 )
@@ -83,7 +91,7 @@ const List = () => {
                 accessorKey: 'presenter',
                 header: () => 'مجری',
                 cell: ({row}) => (
-                    <div className="text-truncate w-150px">
+                    <div className="w-150px fs-6 text-dark text-truncate">
                         علیرضا نقدی
                     </div>
                 )
@@ -92,7 +100,7 @@ const List = () => {
                 accessorKey: 'employer',
                 header: () => 'کارفرما',
                 cell: ({row}) => (
-                    <div className="text-truncate w-150px">
+                    <div className="w-150px fs-6 text-dark text-truncate">
                         علیرضا نقدی
                     </div>
                 )
@@ -101,7 +109,7 @@ const List = () => {
                 accessorKey: 'investor',
                 header: () => 'سرمایه گذار',
                 cell: ({row}) => (
-                    <div className="text-truncate w-150px">
+                    <div className="w-150px fs-6 text-dark text-truncate">
                         علیرضا نقدی
                     </div>
                 )
@@ -110,57 +118,67 @@ const List = () => {
                 accessorKey: 'producer',
                 header: () => 'مکان فیلم برداری',
                 cell: ({row}) => (
-                    <div className="text-truncate w-450px">
+                    <div className="w-450px fs-6 text-dark text-truncate">
                         ایران ، تهران ، میدان ولی عصر
                     </div>
                 )
             },
-        {
-            accessorKey: 'actions',
-            header: () => 'ابزار',
-            cell: ({row}) => (
-                <div className="d-flex justify-content-start align-items-center w-max gap-5">
-                    <IconButton
-                        color="light-danger"
-                        size="sm"
-                        onClick={() => {
-                            dialog(
-                                "حذف پروژه",
-                                "آیا میخواهید این پروژه را حذف کنید ؟",
-                                "info",
-                                {
-                                    show: true,
-                                    text: "حذف",
-                                    color: "danger",
-                                },
-                                {
-                                    show: true,
-                                    text: "انصراف",
-                                    color: "light-dark",
-                                },
-                                async () => console.log("deleted")
-                            )
-                        }}
-                        data-tooltip-id="my-tooltip"
-                        data-tooltip-content="حذف پروژه"
-                    >
-                        <i className="fad fa-trash fs-4"/>
-                    </IconButton>
+            {
+                accessorKey: 'actions',
+                header: () => 'ابزار',
+                cell: ({row}) => (
+                    <div className="d-flex justify-content-start align-items-center w-max gap-2">
+                        <IconButton
+                            href="/account/projects/1/edit"
+                            color="light-warning"
+                            size="sm"
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content="ویرایش"
+                        >
+                            <i className="fad fa-pen fs-4"/>
+                        </IconButton>
 
-                    <Tooltip/>
-                </div>
-            )
-        },
+                        <IconButton
+                            color="light-danger"
+                            size="sm"
+                            onClick={() => {
+                                dialog(
+                                    "حذف پروژه",
+                                    "آیا میخواهید این پروژه را حذف کنید ؟",
+                                    "info",
+                                    {
+                                        show: true,
+                                        text: "حذف",
+                                        color: "danger",
+                                    },
+                                    {
+                                        show: true,
+                                        text: "انصراف",
+                                        color: "light-dark",
+                                    },
+                                    async () => console.log("deleted")
+                                )
+                            }}
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content="حذف"
+                        >
+                            <i className="fad fa-trash fs-4"/>
+                        </IconButton>
+
+                        <Tooltip/>
+                    </div>
+                )
+            },
         ], []
     );
 
     const tableData = [
-        {number: 1, name: "کاظمیه", producer: "کاظم کاظمی", type: "سریال" , detail: "20 قسمت ( 50 دقیقه ای )"},
-        {number: 2, name: "سهیلیه", producer: "سهیل سهیلی", type: "فیلم" , detail: "120 دقیقه"},
+        {number: 1, name: "کاظمیه", producer: "کاظم کاظمی", type: "سریال", detail: "20 قسمت ( 50 دقیقه ای )"},
+        {number: 2, name: "سهیلیه", producer: "سهیل سهیلی", type: "فیلم", detail: "120 دقیقه"},
     ];
 
     return (
-        <div className="card w-100">
+        <div className="card w-100 min-h-500px">
             <div className="card-body d-flex flex-column gap-5">
                 <TableFinder/>
 

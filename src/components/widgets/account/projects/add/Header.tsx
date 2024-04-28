@@ -8,18 +8,18 @@ import Badge from "@/modules/Badge.tsx";
 import Breadcrumbs from "@/modules/Breadcrumbs.tsx";
 
 const breadcrumbLinks = [
-    {id: 1 ,label: "داشبورد" , href: "/account/dashboard"},
-    {id: 2 ,label: "پروژه ها" , href: "/account/projects"},
-    {id: 3 ,label: "افزودن پروژه" , href: "/account/projects/add"},
+    {id: 1, label: "داشبورد", href: "/account/dashboard"},
+    {id: 2, label: "پروژه ها", href: "/account/projects"},
+    {id: 3, label: "افزودن پروژه", href: "/account/projects/add"},
 ];
 
 const Header = () => {
     const location = useLocation();
 
     return (
-        <div className="d-flex flex-column justify-content-center align-items-center w-100 bg-success">
-            <div className="d-flex justify-content-between align-items-center w-100 mw-950px p-5 mb-lg-15">
-                <div className="d-flex flex-column justify-content-center align-items-start gap-5">
+        <div className="d-flex justify-content-center align-items-center w-100 bg-success">
+            <div className="row gy-5 w-100 mw-950px p-5 mb-lg-15">
+                <div className="order-2 order-md-1 col-12 col-md-4 d-flex flex-column justify-content-center align-items-start gap-5">
                     <Typography
                         variant="h1"
                         color="white"
@@ -28,18 +28,10 @@ const Header = () => {
                     >
                         افزودن پروژه
                     </Typography>
-
-                    <Breadcrumbs
-                        links={breadcrumbLinks}
-                        activeLink={location.pathname}
-                    />
                 </div>
 
-                <div className="d-flex align-items-center flex-wrap gap-5 py-3 py-lg-0">
-                    <IconButton
-                        color="success"
-                        size="sm"
-                    >
+                <div className="order-1 order-md-2 col-12 col-md-8 d-flex justify-content-end align-items-center gap-5">
+                    <IconButton color="success">
                         <Badge
                             color="light-success"
                             size="sm"
@@ -47,22 +39,26 @@ const Header = () => {
                             label="2"
                         />
 
-                        <i className="fad fa-bell fs-4"/>
+                        <i className="fad fa-bell fs-3"/>
                     </IconButton>
 
-                    <IconButton
-                        color="success"
-                        size="sm"
-                    >
-                        <i className="fad fa-moon fs-4"/>
+                    <IconButton color="success">
+                        <i className="fad fa-moon fs-3"/>
                     </IconButton>
 
                     <IconButton
                         href="/account/profile"
                         color="success"
                     >
-                        <i className="fad fa-user fs-4"/>
+                        <i className="fad fa-user fs-3"/>
                     </IconButton>
+                </div>
+
+                <div className="order-3 col-12 d-flex flex-column justify-content-center align-items-start gap-5">
+                    <Breadcrumbs
+                        links={breadcrumbLinks}
+                        activeLink={location.pathname}
+                    />
                 </div>
             </div>
         </div>

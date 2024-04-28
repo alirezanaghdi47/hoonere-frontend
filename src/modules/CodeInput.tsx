@@ -27,7 +27,9 @@ const CodeInput = ({name, value, placeholder, onChange, startAdornment , onResen
             {
                 startAdornment && (
                     <span
-                        className="position-absolute start-0 top-0 d-flex justify-content-center align-items-center w-40px h-40px m-1">
+                        className="position-absolute d-flex justify-content-center align-items-center w-43px h-43px m-1"
+                        style={{top: 2, right: 2}}
+                    >
                         {startAdornment}
                     </span>
                 )
@@ -38,7 +40,7 @@ const CodeInput = ({name, value, placeholder, onChange, startAdornment , onResen
                 id={name}
                 type="text"
                 placeholder={placeholder}
-                className={`form-control form-control-lg form-control-solid ${startAdornment ? 'ps-15' : ''} pe-30`}
+                className={`form-control form-control-solid ${startAdornment ? 'ps-15' : ''} pe-30`}
                 value={value}
                 onChange={onChange}
             />

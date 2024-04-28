@@ -21,13 +21,13 @@ const Table = ({data, columns}) => {
 
     return (
         <div className="table-responsive w-100">
-            <table className="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer">
+            <table className="table table-flush align-middle table-row-dashed gy-5 dataTable no-footer">
                 <thead>
                 {
                     table.getHeaderGroups().map(headerGroup => (
                             <tr
                                 key={headerGroup.id}
-                                className="fw-bold text-muted"
+                                className="fs-5 fw-bold text-muted"
                             >
                                 {
                                     headerGroup.headers.map(header => {
@@ -35,6 +35,7 @@ const Table = ({data, columns}) => {
                                                 <th
                                                     key={header.id}
                                                     colSpan={header.colSpan}
+                                                    className='p-2'
                                                 >
                                                     {
                                                         header.isPlaceholder ? null : (
@@ -72,13 +73,13 @@ const Table = ({data, columns}) => {
                 <tbody>
                 {
                     table.getRowModel().rows.map(row =>
-                        <tr
-                            key={row.id}
-                            className="text-dark"
-                        >
+                        <tr key={row.id}>
                             {
                                 row.getVisibleCells().map(cell =>
-                                    <td key={cell.id}>
+                                    <td
+                                        key={cell.id}
+                                        className='fs-6 text-dark p-2'
+                                    >
                                         {
                                             flexRender(
                                                 cell.column.columnDef.cell,

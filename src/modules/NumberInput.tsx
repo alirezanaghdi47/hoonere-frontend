@@ -6,7 +6,7 @@ const NumberInput = ({name, value, placeholder , options, onChange, startAdornme
         <div className='position-relative w-100'>
             {
                 startAdornment && (
-                    <span className="position-absolute start-0 top-0 d-flex justify-content-center align-items-center w-40px h-40px m-1">
+                    <span className="position-absolute start-0 top-0 d-flex justify-content-center align-items-center w-43px h-43px m-1">
                         {startAdornment}
                     </span>
                 )
@@ -23,7 +23,10 @@ const NumberInput = ({name, value, placeholder , options, onChange, startAdornme
 
             {
                 endAdornment && (
-                    <span className="position-absolute end-0 top-0 d-flex justify-content-center align-items-center w-40px h-40px m-1">
+                    <span
+                        className="position-absolute d-flex justify-content-center align-items-center w-43px h-43px m-1"
+                        style={{top: 2, left: 2}}
+                    >
                         {endAdornment}
                     </span>
                 )

@@ -23,7 +23,6 @@ const TableFinder = () => {
             </div>
 
             <Button
-                size='sm'
                 color='light-dark'
                 startIcon="fad fa-filter"
             >

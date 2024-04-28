@@ -20,7 +20,7 @@ const Occupation = () => {
                         <Form.Label
                             label="گروه شغلی"
                             required
-                            size="xs"
+                            size="sm"
                             color="dark"
                         />
                     </div>
@@ -47,9 +47,9 @@ const Occupation = () => {
                 <div className="row gy-2">
                     <div className="col-lg-4">
                         <Form.Label
-                            label="شغلی شغلی"
+                            label="عنوان شغلی"
                             required
-                            size="xs"
+                            size="sm"
                             color="dark"
                         />
                     </div>
@@ -58,7 +58,7 @@ const Occupation = () => {
                         <Form.Group>
                             <SelectBox
                                 name="jobTitle"
-                                value={null}
+                                value={[options[1] , options[2]]}
                                 options={options}
                                 placeholder=""
                                 isSearchable
@@ -79,7 +79,7 @@ const Occupation = () => {
                         <Form.Label
                             label="رزومه ( عکس یا pdf )"
                             required
-                            size="xs"
+                            size="sm"
                             color="dark"
                         />
                     </div>
@@ -105,7 +105,7 @@ const Occupation = () => {
                         <Form.Label
                             label="رزومه متنی"
                             required
-                            size="xs"
+                            size="sm"
                             color="dark"
                         />
                     </div>
@@ -128,7 +128,7 @@ const Occupation = () => {
                 </div>
 
                 <div className="row gy-2">
-                    <div className="d-flex justify-content-end align-items-center w-100">
+                    <div className="col-12 d-flex justify-content-end align-items-center">
                         <Button
                             color="success"
                             onClick={() => console.log("submit")}

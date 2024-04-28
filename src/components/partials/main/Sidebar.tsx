@@ -48,7 +48,7 @@ const Sidebar = () => {
                                 color={sidebarLink.href === location.pathname ? "success" : "light"}
                                 onClick={hideDrawer}
                             >
-                                <i className={`${sidebarLink.icon} fs-4`}/>
+                                <i className={`${sidebarLink.icon} fs-3`}/>
                             </IconButton>
                         </li>
                     ))}
@@ -63,7 +63,7 @@ const Sidebar = () => {
                             activeColor="light-danger"
                             onClick={hideDrawer}
                         >
-                            <i className="fad fa-sign-out fs-4"/>
+                            <i className="fad fa-sign-out fs-3"/>
                         </IconButton>
                     </li>
                 </ul>

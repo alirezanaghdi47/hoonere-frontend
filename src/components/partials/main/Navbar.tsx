@@ -15,7 +15,7 @@ const Navbar = () => {
     const {showDrawer} = useAppStore();
 
     return (
-        <div className="header-mobile w-100 p-5">
+        <div className="header-mobile w-100 shadow-sm p-5">
             <div
                 className="container-fluid d-flex justify-content-center align-items-center w-100 p-0">
                 <div className="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
@@ -36,7 +36,7 @@ const Navbar = () => {
                     activeColor="light-success"
                     onClick={showDrawer}
                 >
-                    <i className="fad fa-bars fs-2"/>
+                    <i className="fad fa-bars fs-3"/>
                 </IconButton>
             </div>
         </div>

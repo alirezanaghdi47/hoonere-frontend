@@ -9,14 +9,21 @@ const Image = () => {
             <div className="card-body d-flex flex-column gap-5">
                 <Typography
                     variant="h2"
-                    size="md"
+                    size="lg"
                     color="dark"
                     isBold
                 >
-                    لوگو
+                    عکس
                 </Typography>
 
                 <Form.Group>
+                    <Form.Label
+                        label="لوگو"
+                        color="dark"
+                        size="sm"
+                        required
+                    />
+
                     <FileInput
                         name="logo"
                         value={null}

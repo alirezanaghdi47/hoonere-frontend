@@ -11,8 +11,11 @@ const SelectBox = ({name, value, options, isSearchable = false, isMulti = false,
             options={options}
             isSearchable={isSearchable}
             components={{
+                // Control: (props) => (
+                //     <input className="form-control form-control-solid" {...props}/>
+                // ),
                 IndicatorSeparator: () => null,
-                DropdownIndicator: () => <i className="far fa-chevron-down fs-6 mb-2"/>,
+                DropdownIndicator: () => null,
                 NoOptionsMessage: () => (
                     <div className="d-flex justify-content-center align-items-center w-100 py-8">
                         <span className="fs-7 fw-bold text-gray-500">داده ای یافت نشد</span>

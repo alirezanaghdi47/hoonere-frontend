@@ -8,61 +8,45 @@ const alertSizes = {
         md: "2",
         lg: "1",
     },
-    title: {
-        sm: "sm",
-        md: "md",
-        lg: "lg",
-    },
     message:{
-        sm: "xxs",
-        md: "xs",
-        lg: "sm",
+        sm: "xs",
+        md: "sm",
+        lg: "md",
     }
 }
 
-const Alert = ({color , size , icon , title , message , action}) => {
+const Alert = ({color , size , icon , message , action}) => {
     return (
-        <div className={`d-flex bg-light-warning rounded-2 border border-dashed border-${color} p-6`}>
+        <div className={`d-flex justify-content-start align-items-center gap-5 bg-light-warning rounded-2 border border-dashed border-${color} p-5`}>
             {
                 icon && (
-                    <i className={`${icon} fs-${alertSizes.icon[size]} text-${color} me-5`}/>
+                    <i className={`${icon} fs-${alertSizes.icon[size]} text-${color}`}/>
                 )
             }
 
-            <div className="d-flex flex-column justify-content-center align-items-start w-100 gap-2">
-                <Typography
-                    variant="span"
-                    color={color}
-                    size={alertSizes.title[size]}
-                    isBold
-                >
-                    {title}
-                </Typography>
+            <Typography
+                variant="span"
+                color={color}
+                size={alertSizes.message[size]}
+                isBold
+            >
+                {message}
+            </Typography>
 
-                <div className="d-flex justify-content-start align-items-center gap-5">
-                    <Typography
-                        variant="span"
-                        color="muted"
-                        size={alertSizes.message[size]}
+            {
+                (action.href || action.onClick) && (
+                    <Button
+                        href={action.href}
+                        textColor="primary"
+                        isDense
+                        isBold
+                        onClick={action.onClick}
+                        className="ms-auto"
                     >
-                        {message}
-                    </Typography>
-
-                    {
-                        (action.href || action.onClick) && (
-                            <Button
-                                href={action.href}
-                                textColor="primary"
-                                isDense
-                                isBold
-                                onClick={action.onClick}
-                            >
-                                {action.label}
-                            </Button>
-                        )
-                    }
-                </div>
-            </div>
+                        {action.label}
+                    </Button>
+                )
+            }
         </div>
     )
 }
