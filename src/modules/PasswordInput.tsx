@@ -1,5 +1,6 @@
 // libraries
 import {useToggle} from 'usehooks-ts'
+import {LuEye, LuEyeOff} from "react-icons/lu";
 
 // modules
 import IconButton from "@/modules/IconButton.tsx";
@@ -38,7 +39,19 @@ const PasswordInput = ({name, value, placeholder, onChange, startAdornment}) => 
                       color="light"
                       onClick={onToggle}
                   >
-                      <i className={`far ${isVisible ? "fa-eye-slash" : "fa-eye"} fs-4`}/>
+                      {
+                          isVisible ? (
+                              <LuEyeOff
+                                  size={20}
+                                  color="currentColor"
+                              />
+                          ) : (
+                              <LuEye
+                                  size={20}
+                                  color="currentColor"
+                              />
+                          )
+                      }
                   </IconButton>
             </span>
         </div>

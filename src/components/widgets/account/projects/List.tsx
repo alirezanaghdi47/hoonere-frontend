@@ -178,7 +178,7 @@ const List = () => {
     ];
 
     return (
-        <div className="card w-100 min-h-500px">
+        <div className="card w-100">
             <div className="card-body d-flex flex-column gap-5">
                 <TableFinder/>
 

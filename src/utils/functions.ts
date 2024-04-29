@@ -8,18 +8,34 @@ export const formattedSize = (bytes) => {
     return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
 }
 
-export const toEnglishDigits = (string) => {
+export const toEnglishDigits = (data) => {
     let e = '۰'.charCodeAt(0);
 
-    string = string.replace(/[۰-۹]/g, function(t) {
+    data = data.replace(/[۰-۹]/g, function (t) {
         return t.charCodeAt(0) - e;
     });
 
     e = '٠'.charCodeAt(0);
 
-    string = string.replace(/[٠-٩]/g, function(t) {
+    data = data.replace(/[٠-٩]/g, function (t) {
         return t.charCodeAt(0) - e;
     });
 
-    return string;
+    return data;
 }
+
+export const generateRandomString = (length) => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    let result = ' ';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
+}
+
+export const encodeData = (data) => btoa(data).concat(process.env.HASH_KEY).replace("==", " ");
+
+export const decodeData = (data) => atob(data.replace(process.env.HASH_KEY, ""));

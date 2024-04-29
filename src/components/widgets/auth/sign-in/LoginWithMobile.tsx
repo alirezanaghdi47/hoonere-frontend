@@ -1,6 +1,7 @@
 // libraries
 import {useNavigate} from "react-router-dom";
 import {useStep} from "usehooks-ts";
+import {LuArrowLeft, LuArrowRight, LuShield, LuUser} from "react-icons/lu";
 
 // components
 import Captcha from "@/modules/Captcha.tsx";
@@ -51,16 +52,26 @@ const Authentication = ({unSetMobileWay , goToNextStep}) => {
                     direction="start"
                     isDense
                     fullWidth
-                    startIcon="far fa-user"
+                    startIcon={
+                        <LuUser
+                            size={20}
+                            color="currentColor"
+                        />
+                    }
                     onClick={unSetMobileWay}
                 >
                     ورود با حساب کاربری
                 </Button>
 
                 <Button
-                    color="success"
+                    color="primary"
                     fullWidth
-                    startIcon="far fa-shield"
+                    startIcon={
+                        <LuShield
+                            size={20}
+                            color="currentColor"
+                        />
+                    }
                     onClick={goToNextStep}
                 >
                     اعتبارسنجی
@@ -106,16 +117,26 @@ const VerifyCode = ({goToPrevStep}) => {
                     direction="start"
                     isDense
                     fullWidth
-                    startIcon="far fa-arrow-right"
+                    startIcon={
+                        <LuArrowRight
+                            size={20}
+                            color="currentColor"
+                        />
+                    }
                     onClick={goToPrevStep}
                 >
                     بازگشت
                 </Button>
 
                 <Button
-                    color="success"
+                    color="primary"
                     fullWidth
-                    endIcon="far fa-arrow-left"
+                    endIcon={
+                        <LuArrowLeft
+                            size={20}
+                            color="currentColor"
+                        />
+                    }
                     onClick={() => navigate(0)}
                 >
                     ادامه

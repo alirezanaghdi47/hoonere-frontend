@@ -17,18 +17,13 @@ const alertSizes = {
 
 const Alert = ({color , size , icon , message , action}) => {
     return (
-        <div className={`d-flex justify-content-start align-items-center gap-5 bg-light-warning rounded-2 border border-dashed border-${color} p-5`}>
-            {
-                icon && (
-                    <i className={`${icon} fs-${alertSizes.icon[size]} text-${color}`}/>
-                )
-            }
+        <div className={`d-flex justify-content-start align-items-center gap-5 bg-light-${color} text-${color} rounded-2 border border-dashed border-${color} p-5`}>
+            {icon && icon}
 
             <Typography
                 variant="span"
                 color={color}
                 size={alertSizes.message[size]}
-                isBold
             >
                 {message}
             </Typography>

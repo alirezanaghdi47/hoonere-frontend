@@ -1,6 +1,7 @@
 // libraries
 import {useEffect} from "react";
 import {useCountdown} from 'usehooks-ts';
+import {LuRefreshCw} from "react-icons/lu";
 
 // modules
 import Typography from "@/modules/Typography.tsx";
@@ -63,7 +64,10 @@ const CodeInput = ({name, value, placeholder, onChange, startAdornment , onResen
                             color="light"
                             onClick={_handleResend}
                         >
-                            <i className="far fa-refresh fs-4"/>
+                            <LuRefreshCw
+                                size={20}
+                                color="currentColor"
+                            />
                         </IconButton>
                     )
                 }

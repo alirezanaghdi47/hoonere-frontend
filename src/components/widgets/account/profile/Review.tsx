@@ -3,6 +3,7 @@ import Typography from "@/modules/Typography.tsx";
 import Form from "@/modules/Form.tsx";
 import Alert from "@/modules/Alert.tsx";
 import Chip from "@/modules/Chip.tsx";
+import {LuAlertTriangle} from "react-icons/lu";
 
 const Review = () => {
     return (
@@ -19,7 +20,7 @@ const Review = () => {
 
                     <div className="col-lg-8">
                         <Chip
-                            color="success"
+                            color="primary"
                             label="ثبت شده"
                         />
                     </div>
@@ -305,7 +306,12 @@ const Review = () => {
                 <Alert
                     color="warning"
                     size="sm"
-                    icon="fad fa-triangle-exclamation"
+                    icon={
+                        <LuAlertTriangle
+                            size={25}
+                            color="currentColor"
+                        />
+                    }
                     title="تکمیل بخش مالی"
                     message="از طریق لینک رو به رو بخش مالی خود را تکمیل کنید"
                     action={{

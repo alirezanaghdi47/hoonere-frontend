@@ -1,5 +1,6 @@
 // libraries
 import {LazyLoadImage} from 'react-lazy-load-image-component';
+import {LuAtSign, LuMapPin, LuUserCircle} from "react-icons/lu";
 
 // assets
 import avatar from "@/assets/images/avatar.jpg";
@@ -37,7 +38,12 @@ const Information = () => {
                             size="xs"
                             color="gray-700"
                         >
-                            <i className="fad fa-user-circle fs-5 me-2"/>
+                            <LuUserCircle
+                                size={15}
+                                color='currentColor'
+                                className="me-2"
+                            />
+
                             برنامه نویس و طراح رابط کاربری
                         </Typography>
                     </li>
@@ -48,7 +54,12 @@ const Information = () => {
                             size="xs"
                             color="gray-700"
                         >
-                            <i className="fad fa-location-dot fs-5 me-2"/>
+                            <LuMapPin
+                                size={15}
+                                color='currentColor'
+                                className="me-2"
+                            />
+
                             تهران
                         </Typography>
                     </li>
@@ -59,7 +70,12 @@ const Information = () => {
                             size="xs"
                             color="gray-700"
                         >
-                            <i className="fad fa-at fs-5 me-2"/>
+                            <LuAtSign
+                                size={15}
+                                color='currentColor'
+                                className="me-2"
+                            />
+
                             alirezanaghdi47@gmail.com
                         </Typography>
                     </li>

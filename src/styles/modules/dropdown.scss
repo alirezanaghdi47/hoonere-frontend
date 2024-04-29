@@ -18,22 +18,21 @@
       }
 
       &.szh-menu__item--checked {
-        background: var(--bs-success) !important;
+        background: var(--bs-primary) !important;
         color: var(--bs-light) !important;
       }
     }
 
     &--hover {
       background: var(--bs-gray-200) !important;
-      color: var(--bs-success) !important;
+      color: var(--bs-primary) !important;
     }
 
     &--submenu {
       position: relative !important;
 
       &::after {
-        font-family: "Font Awesome\ 6 Pro" !important;
-        content: "\f053" !important;
+        content: url("../../assets/icons/chevron-left.svg") !important;
         position: absolute !important;
         font-size: 0.95rem !important;
         right: calc(100% - 16px) !important;

@@ -3,6 +3,10 @@ import ReactDatePicker, {DateObject} from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import georgian_en from "react-date-object/locales/gregorian_en";
+import {LuChevronLeft, LuChevronRight} from "react-icons/lu";
+
+// modules
+import IconButton from "@/modules/IconButton.tsx";
 
 // styles
 import "@/styles/modules/date-picker.scss";
@@ -33,18 +37,25 @@ const DatePicker = ({name, value, onChange, range, minDate, maxDate, disabled, r
             }).format("YYYY/MM/DD") : null}
             onChange={(value) => onChange(value)}
             renderButton={(direction, handleClick) => (
-                <button
-                    className='btn btn-icon btn-sm btn-light'
+                <IconButton
+                    size="sm"
+                    color="light"
                     onClick={handleClick}
                 >
                     {
                         direction === "right" ? (
-                            <i className="far fa-chevron-left fs-6"/>
+                            <LuChevronLeft
+                                size={20}
+                                color="currentColor"
+                            />
                         ) : (
-                            <i className="far fa-chevron-right fs-6"/>
+                            <LuChevronRight
+                                size={20}
+                                color="currentColor"
+                            />
                         )
                     }
-                </button>
+                </IconButton>
             )}
             mapDays={({date}) => {
                 let color;

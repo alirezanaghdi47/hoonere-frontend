@@ -1,6 +1,7 @@
 // libraries
 import {Link} from "react-router-dom";
 import {LazyLoadImage} from "react-lazy-load-image-component";
+import {LuMenu} from "react-icons/lu";
 
 // assets
 import logo from "@/assets/images/logo.svg";
@@ -33,10 +34,13 @@ const Navbar = () => {
 
                 <IconButton
                     color="light"
-                    activeColor="light-success"
+                    activeColor="light-primary"
                     onClick={showDrawer}
                 >
-                    <i className="fad fa-bars fs-3"/>
+                    <LuMenu
+                        size={20}
+                        color="currentColor"
+                    />
                 </IconButton>
             </div>
         </div>

@@ -18,7 +18,7 @@ const SelectBox = ({name, value, options, isSearchable = false, isMulti = false,
                 DropdownIndicator: () => null,
                 NoOptionsMessage: () => (
                     <div className="d-flex justify-content-center align-items-center w-100 py-8">
-                        <span className="fs-7 fw-bold text-gray-500">داده ای یافت نشد</span>
+                        <span className="fs-6 fw-bold text-muted">داده ای یافت نشد</span>
                     </div>
                 )
             }}

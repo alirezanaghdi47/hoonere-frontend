@@ -1,5 +1,6 @@
 // libraries
 import {useLocation} from "react-router-dom";
+import {LuBell, LuMoon, LuUser} from "react-icons/lu";
 
 // modules
 import Typography from "@/modules/Typography.tsx";
@@ -17,7 +18,7 @@ const Header = () => {
     const location = useLocation();
 
     return (
-        <div className="d-flex justify-content-center align-items-center w-100 bg-success">
+        <div className="d-flex justify-content-center align-items-center w-100 bg-primary">
             <div className="row gy-5 w-100 mw-950px p-5 mb-lg-15">
                 <div className="order-2 order-md-1 col-12 col-md-4 d-flex flex-column justify-content-center align-items-start gap-5">
                     <Typography
@@ -30,27 +31,36 @@ const Header = () => {
                     </Typography>
                 </div>
 
-                <div className="order-1 order-md-2 col-12 col-md-8 d-flex justify-content-end align-items-center gap-5">
-                    <IconButton color="success">
+                <div className="order-1 order-md-2 col-12 col-md-8 d-flex justify-content-end align-items-center gap-2">
+                    <IconButton color="primary">
                         <Badge
-                            color="light-success"
+                            color="light-primary"
                             size="sm"
                             placement="top-start"
                             label="2"
                         />
 
-                        <i className="fad fa-bell fs-3"/>
+                        <LuBell
+                            size={20}
+                            color="currentColor"
+                        />
                     </IconButton>
 
-                    <IconButton color="success">
-                        <i className="fad fa-moon fs-3"/>
+                    <IconButton color="primary">
+                        <LuMoon
+                            size={20}
+                            color="currentColor"
+                        />
                     </IconButton>
 
                     <IconButton
                         href="/account/profile"
-                        color="success"
+                        color="primary"
                     >
-                        <i className="fad fa-user fs-3"/>
+                        <LuUser
+                            size={20}
+                            color="currentColor"
+                        />
                     </IconButton>
                 </div>
 

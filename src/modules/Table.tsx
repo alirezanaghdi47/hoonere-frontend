@@ -6,6 +6,7 @@ import {
     getSortedRowModel,
     useReactTable,
 } from '@tanstack/react-table';
+import {LuArrowDown, LuArrowUp} from "react-icons/lu";
 
 const Table = ({data, columns}) => {
     const [sorting, setSorting] = useState([]);
@@ -20,7 +21,7 @@ const Table = ({data, columns}) => {
     })
 
     return (
-        <div className="table-responsive w-100">
+        <div className="table-responsive w-100 min-h-300px">
             <table className="table table-flush align-middle table-row-dashed gy-5 dataTable no-footer">
                 <thead>
                 {
@@ -53,8 +54,16 @@ const Table = ({data, columns}) => {
                                                                 }
                                                                 {
                                                                     {
-                                                                        asc: <i className="far fa-arrow-up fs-6 text-gray-500 ms-2"/>,
-                                                                        desc: <i className="far fa-arrow-down fs-6 text-gray-500 ms-2"/>,
+                                                                        asc: <LuArrowUp
+                                                                            size={20}
+                                                                            color="currentColor"
+                                                                            className="text-gray-500 ms-2"
+                                                                        />,
+                                                                        desc: <LuArrowDown
+                                                                            size={20}
+                                                                            color="currentColor"
+                                                                            className="text-gray-500 ms-2"
+                                                                        />,
                                                                     }
                                                                         [header.column.getIsSorted()] ?? null}
                                                             </div>

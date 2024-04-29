@@ -1,6 +1,7 @@
 // libraries
 import {useDropzone} from 'react-dropzone';
 import {LazyLoadImage} from "react-lazy-load-image-component";
+import {LuUser} from "react-icons/lu";
 
 const AvatarInput = ({name, value, preview, onChange}) => {
     const {getRootProps, getInputProps} = useDropzone({
@@ -30,7 +31,11 @@ const AvatarInput = ({name, value, preview, onChange}) => {
                 ) : (
                     <div
                         className="d-flex flex-column justify-content-center align-items-center gap-5 w-100 h-100">
-                        <i className="fad fa-user fs-1"/>
+                        <LuUser
+                            size={20}
+                            color="currentColor"
+                            className="text-muted"
+                        />
                     </div>
                 )
             }

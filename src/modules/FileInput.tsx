@@ -1,5 +1,6 @@
 // libraries
 import {useDropzone} from 'react-dropzone';
+import {LuFileUp} from "react-icons/lu";
 
 // utils
 import {formattedSize} from "@/utils/functions";
@@ -20,21 +21,25 @@ const FileInput = ({name, value, onChange}) => {
 
             {
                 value ? (
-                    <div className="d-flex flex-column justify-content-center align-items-center gap-5 w-100 my-auto py-10">
-                        <span className="fs-7 text-dark fw-bold mb-0">
+                    <div className="d-flex flex-column justify-content-center align-items-center gap-2 w-100 my-auto py-10">
+                        <span className="fs-5 text-dark fw-bold mb-0">
                             {value.name}
                         </span>
 
-                        <p className="fs-8 text-muted fw-bold mb-0">
+                        <p className="fs-6 text-muted mb-0">
                             {formattedSize(value.size)}
                         </p>
                     </div>
                 ) : (
                     <div
-                        className="d-flex flex-column justify-content-center align-items-center gap-5 w-100 my-auto py-10">
-                        <i className="fad fa-file-upload fs-1"/>
+                        className="d-flex flex-column justify-content-center align-items-center gap-2 w-100 my-auto py-10">
+                        <LuFileUp
+                            size={20}
+                            color="currentColor"
+                            className="text-muted"
+                        />
 
-                        <p className="fs-7 text-muted fw-bold mb-0">
+                        <p className="fs-6 text-muted mb-0">
                             فایل خود را انتخاب کنید
                         </p>
                     </div>

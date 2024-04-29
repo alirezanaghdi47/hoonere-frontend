@@ -1,6 +1,7 @@
 // libraries
 import {useNavigate} from "react-router-dom";
 import {useStep} from "usehooks-ts";
+import {LuArrowLeft, LuArrowRight, LuShield, LuUserPlus} from "react-icons/lu";
 
 // components
 import Captcha from "@/modules/Captcha.tsx";
@@ -54,15 +55,25 @@ const Authentication = ({goToNextStep}) => {
                     direction="start"
                     isDense
                     fullWidth
-                    startIcon="far fa-arrow-right"
+                    startIcon={
+                        <LuArrowRight
+                            size={20}
+                            color="currentColor"
+                        />
+                    }
                 >
                     بازگشت
                 </Button>
 
                 <Button
-                    color="success"
+                    color="primary"
                     fullWidth
-                    startIcon="far fa-shield"
+                    startIcon={
+                        <LuShield
+                            size={20}
+                            color="currentColor"
+                        />
+                    }
                     onClick={goToNextStep}
                 >
                     اعتبارسنجی
@@ -106,16 +117,26 @@ const VerifyCode = ({goToNextStep , goToPrevStep}) => {
                     direction="start"
                     isDense
                     fullWidth
-                    startIcon="far fa-arrow-right"
+                    startIcon={
+                        <LuArrowRight
+                            size={20}
+                            color="currentColor"
+                        />
+                    }
                     onClick={goToPrevStep}
                 >
                     بازگشت
                 </Button>
 
                 <Button
-                    color="success"
+                    color="primary"
                     fullWidth
-                    endIcon="far fa-arrow-left"
+                    endIcon={
+                        <LuArrowLeft
+                            size={20}
+                            color="currentColor"
+                        />
+                    }
                     onClick={goToNextStep}
                 >
                     بعدی
@@ -188,16 +209,26 @@ const Register = ({goToPrevStep}) => {
                     direction="start"
                     isDense
                     fullWidth
-                    startIcon="far fa-arrow-right"
+                    startIcon={
+                        <LuArrowRight
+                            size={20}
+                            color="currentColor"
+                        />
+                    }
                     onClick={goToPrevStep}
                 >
                     بازگشت
                 </Button>
 
                 <Button
-                    color="success"
+                    color="primary"
                     fullWidth
-                    startIcon="far fa-user-plus"
+                    startIcon={
+                        <LuUserPlus
+                            size={20}
+                            color="currentColor"
+                        />
+                    }
                     onClick={() => navigate("/auth/sign-in")}
                 >
                     عضویت

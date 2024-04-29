@@ -22,13 +22,13 @@ const Button = ({
     return href ? (
         <Link
             to={href}
-            className={classNames("position-relative d-flex align-items-center btn", props.className, {
+            className={classNames("position-relative d-flex align-items-center gap-2 btn", props.className, {
                 [`btn-${color}`]: true,
                 [`btn-active-${activeColor}`]: true,
                 [`btn-bg-${bgColor}`]: true,
                 [`btn-color-${textColor}`]: true,
                 [`btn-${size}`]: true,
-                "btn-link text-nowrap p-0": isDense,
+                "btn-link text-nowrap": isDense,
                 "justify-content-center": direction === "center",
                 "justify-content-start": direction === "start",
                 "justify-content-end": direction === "end",
@@ -37,20 +37,19 @@ const Button = ({
             })}
             onClick={onClick}
         >
-            {startIcon &&
-                <i className={`${size === "lg" ? "fs-3" : size === "sm" ? "fs-5" : "fs-4"} ${startIcon} me-2`}/>}
+            {startIcon && startIcon}
             {children}
-            {endIcon && <i className={`${size === "lg" ? "fs-3" : size === "sm" ? "fs-5" : "fs-4"} ${endIcon} ms-2`}/>}
+            {endIcon && endIcon}
         </Link>
     ) : (
         <button
-            className={classNames("position-relative d-flex align-items-center btn", props.className, {
+            className={classNames("position-relative d-flex align-items-center gap-2 btn", props.className, {
                 [`btn-${color}`]: true,
                 [`btn-active-${activeColor}`]: true,
                 [`btn-bg-${bgColor}`]: true,
                 [`btn-color-${textColor}`]: true,
                 [`btn-${size}`]: true,
-                "btn-link text-nowrap p-0": isDense,
+                "btn-link text-nowrap": isDense,
                 "justify-content-center": direction === "center",
                 "justify-content-start": direction === "start",
                 "justify-content-end": direction === "end",
@@ -59,10 +58,9 @@ const Button = ({
             })}
             onClick={onClick}
         >
-            {startIcon &&
-                <i className={`${size === "lg" ? "fs-3" : size === "sm" ? "fs-5" : "fs-4"} ${startIcon} me-2`}/>}
+            {startIcon && startIcon}
             {children}
-            {endIcon && <i className={`${size === "lg" ? "fs-3" : size === "sm" ? "fs-5" : "fs-4"} ${endIcon} ms-2`}/>}
+            {endIcon && endIcon}
         </button>
     )
 }

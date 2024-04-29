@@ -104,7 +104,7 @@ const Financial = () => {
                 <div className="row gy-2">
                     <div className="col-12 d-flex justify-content-end align-items-center">
                         <Button
-                            color="success"
+                            color="primary"
                             onClick={() => console.log("submit")}
                         >
                             ذخیره تغییرات

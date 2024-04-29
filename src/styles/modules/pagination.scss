@@ -23,11 +23,11 @@
 
     &:hover:not(&-active) {
       background: var(--bs-gray-200) !important;
-      color: var(--bs-success) !important;
+      color: var(--bs-primary) !important;
     }
 
     &-active {
-      background: var(--bs-success) !important;
+      background: var(--bs-primary) !important;
       color: var(--bs-light) !important;
     }
   }

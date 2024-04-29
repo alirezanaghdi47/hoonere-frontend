@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 import {useMediaQuery} from 'usehooks-ts';
+import {LuArrowLeft, LuPhone} from "react-icons/lu";
 
 // components
 import Captcha from "@/modules/Captcha.tsx";
@@ -105,9 +106,14 @@ const LoginWithAccount = ({setMobileWay}) => {
             />
 
             <Button
-                color="success"
+                color="primary"
                 fullWidth
-                endIcon="far fa-arrow-left"
+                endIcon={
+                    <LuArrowLeft
+                        size={20}
+                        color="currentColor"
+                    />
+                }
                 onClick={_handleLogin}
             >
                 ادامه
@@ -117,7 +123,12 @@ const LoginWithAccount = ({setMobileWay}) => {
                 textColor="gray-700"
                 isDense
                 fullWidth
-                startIcon="far fa-mobile"
+                startIcon={
+                    <LuPhone
+                        size={20}
+                        color="currentColor"
+                    />
+                }
                 onClick={setMobileWay}
             >
                 ورود با شماره همراه

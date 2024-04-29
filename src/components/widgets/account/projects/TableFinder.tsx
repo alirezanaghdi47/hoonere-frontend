@@ -1,3 +1,6 @@
+// libraries
+import {LuListFilter, LuSearch} from "react-icons/lu";
+
 // modules
 import TextInput from "@/modules/TextInput.tsx";
 import Button from "@/modules/Button.tsx";
@@ -15,7 +18,10 @@ const TableFinder = () => {
                             color="light"
                             size="sm"
                         >
-                            <i className="fad fa-search fs-4"/>
+                            <LuSearch
+                                size={20}
+                                color="currentColor"
+                            />
                         </IconButton>
                     }
                     onChange={(e) => console.log(e.target.value)}
@@ -23,8 +29,13 @@ const TableFinder = () => {
             </div>
 
             <Button
-                color='light-dark'
-                startIcon="fad fa-filter"
+                color='light'
+                startIcon={
+                    <LuListFilter
+                        size={20}
+                        color="currentColor"
+                    />
+                }
             >
                 فیلتر
             </Button>

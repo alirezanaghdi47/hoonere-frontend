@@ -1,5 +1,6 @@
 // libraries
 import {LazyLoadImage} from 'react-lazy-load-image-component';
+import {LuRefreshCw} from "react-icons/lu";
 
 // assets
 import placeholder from "@/assets/images/placeholder.png";
@@ -29,7 +30,10 @@ const Captcha = ({value, onChange, onResend}) => {
                         color="light"
                         onClick={onResend}
                     >
-                        <i className="far fa-refresh fs-4"/>
+                        <LuRefreshCw
+                            size={20}
+                            color="currentColor"
+                        />
                     </IconButton>
                 }
             />

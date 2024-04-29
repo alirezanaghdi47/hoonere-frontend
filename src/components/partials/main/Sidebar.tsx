@@ -2,6 +2,7 @@
 import {Link} from "react-router-dom";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {useMediaQuery} from "usehooks-ts";
+import {LuLayers, LuLogOut, LuPieChart} from "react-icons/lu";
 
 // assets
 import logo from "@/assets/images/logo.svg";
@@ -13,16 +14,17 @@ import IconButton from "@/modules/IconButton.tsx";
 import useAppStore from "@/stores/appStore.ts";
 
 const sidebarLinks = [
-    {id: 1, label: "داشبورد", href: "/account/dashboard", icon: "fad fa-tachometer-alt"},
-    {id: 2, label: "پروژه ها", href: "/account/projects", icon: "fad fa-project-diagram"},
+    {id: 1, label: "داشبورد", href: "/account/dashboard", icon: LuPieChart({size: 20, color: 'currentColor'})},
+    {id: 2, label: "پروژه ها", href: "/account/projects", icon: LuLayers({size: 20, color: 'currentColor'})},
 ];
 
 const Sidebar = () => {
-    const {app: {isOpenDrawer} , hideDrawer} = useAppStore();
+    const {app: {isOpenDrawer}, hideDrawer} = useAppStore();
     const isDesktop = useMediaQuery("(min-width: 992px)");
 
     return (
-        <div className={`aside ${!isDesktop ? "drawer drawer-start" : ""} ${isOpenDrawer ? "drawer-on" : ""} shadow-sm`}>
+        <div
+            className={`aside ${!isDesktop ? "drawer drawer-start" : ""} ${isOpenDrawer ? "drawer-on" : ""} shadow-sm`}>
             <div className="d-none d-lg-flex justify-content-center align-items-center my-10">
                 <Link
                     to="/account/dashboard"
@@ -45,10 +47,10 @@ const Sidebar = () => {
                         >
                             <IconButton
                                 href={sidebarLink.href}
-                                color={sidebarLink.href === location.pathname ? "success" : "light"}
+                                color={sidebarLink.href === location.pathname ? "primary" : "light"}
                                 onClick={hideDrawer}
                             >
-                                <i className={`${sidebarLink.icon} fs-3`}/>
+                                {sidebarLink.icon}
                             </IconButton>
                         </li>
                     ))}
@@ -63,7 +65,10 @@ const Sidebar = () => {
                             activeColor="light-danger"
                             onClick={hideDrawer}
                         >
-                            <i className="fad fa-sign-out fs-3"/>
+                            <LuLogOut
+                                size={20}
+                                color="currentColor"
+                            />
                         </IconButton>
                     </li>
                 </ul>
