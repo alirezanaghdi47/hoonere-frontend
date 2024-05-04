@@ -21,7 +21,7 @@ const Navbar = () => {
                 className="container-fluid d-flex justify-content-center align-items-center w-100 p-0">
                 <div className="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                     <Link
-                        to="/account/dashboard"
+                        to="/panel/dashboard"
                         className="w-max"
                     >
                         <LazyLoadImage

@@ -1,8 +1,42 @@
 // libraries
 import ReactPaginate from "rc-pagination";
+import {LuChevronLeft, LuChevronRight, LuMoreHorizontal} from "react-icons/lu";
 
 // styles
 import "@/styles/modules/pagination.scss";
+
+const PrevIcon = () => {
+    return (
+        <div className="text-muted">
+            <LuChevronRight
+                size={20}
+                color="currentColor"
+            />
+        </div>
+    )
+}
+
+const NextIcon = () => {
+    return (
+        <div className="text-muted">
+            <LuChevronLeft
+                size={20}
+                color="currentColor"
+            />
+        </div>
+    )
+}
+
+const JumpIcon = () => {
+    return (
+        <div className="text-muted">
+            <LuMoreHorizontal
+                size={20}
+                color="currentColor"
+            />
+        </div>
+    )
+}
 
 const Pagination = ({current, pageSize, total, onChange}) => {
     return (
@@ -12,10 +46,10 @@ const Pagination = ({current, pageSize, total, onChange}) => {
             pageSize={pageSize}
             showLessItems
             onChange={(value) => onChange(parseInt(value))}
-            // prevIcon={<LuChevronRight/>}
-            // nextIcon={() => <i className="fad fa-chevron-left"/>}
-            // jumpPrevIcon={() => <i className="fad fa-ellipsis"/>}
-            // jumpNextIcon={() => <i className="fad fa-ellipsis"/>}
+            prevIcon={PrevIcon}
+            nextIcon={NextIcon}
+            jumpNextIcon={JumpIcon}
+            jumpPrevIcon={JumpIcon}
         />
     )
 }

@@ -1,27 +1,41 @@
 // libraries
+import {useEffect, useState} from "react";
 import {useDropzone} from 'react-dropzone';
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {LuUser} from "react-icons/lu";
 
 const AvatarInput = ({name, value, preview, onChange}) => {
+    const [files, setFiles] = useState([value]);
+
     const {getRootProps, getInputProps} = useDropzone({
-        maxFiles: 1,
-        maxSize: 10 * 1024 * 1024,
-        onDrop: (acceptedFiles) => onChange(acceptedFiles[0]),
+        onDrop: acceptedFiles => {
+            setFiles(acceptedFiles.map(file => Object.assign(file, {
+                preview: URL.createObjectURL(file)
+            })));
+
+            onChange(acceptedFiles[0]);
+        }
     });
+
+    useEffect(() => {
+        return () => files.forEach(file => URL.revokeObjectURL(file.preview));
+    }, []);
 
     return (
         <div
             {...getRootProps()}
             className="d-flex justify-content-center align-items-center form-control form-control-lg form-control-solid w-100px h-100px p-2 cursor-pointer"
         >
-            <input {...getInputProps({name: name})} className='d-none'/>
+            <input
+                {...getInputProps({name: name})}
+                className='d-none'
+            />
 
             {
-                (value || preview) ? (
+                (files[0]?.preview || preview) ? (
                     <div className="d-flex flex-column justify-content-center align-items-center gap-2 w-100 h-100">
                         <LazyLoadImage
-                            src={value ? value : preview}
+                            src={files[0]?.preview ? files[0]?.preview : preview}
                             alt="logo"
                             width={100}
                             height={100}
@@ -29,8 +43,7 @@ const AvatarInput = ({name, value, preview, onChange}) => {
                         />
                     </div>
                 ) : (
-                    <div
-                        className="d-flex flex-column justify-content-center align-items-center gap-5 w-100 h-100">
+                    <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100">
                         <LuUser
                             size={20}
                             color="currentColor"

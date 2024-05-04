@@ -1,47 +1,65 @@
 // libraries
+import {useEffect, useState} from "react";
 import {useDropzone} from 'react-dropzone';
+import {LazyLoadImage} from "react-lazy-load-image-component";
 import {LuFileUp} from "react-icons/lu";
 
-// utils
-import {formattedSize} from "@/utils/functions";
+// modules
+import Typography from "@/modules/Typography.tsx";
 
-const FileInput = ({name, value, onChange}) => {
+const FileInput = ({name, value , preview, onChange}) => {
+    const [files, setFiles] = useState([value]);
+
     const {getRootProps, getInputProps} = useDropzone({
-        maxFiles: 1,
-        maxSize: 10 * 1024 * 1024,
-        onDrop: (acceptedFiles) => onChange(acceptedFiles[0]),
+        onDrop: acceptedFiles => {
+            setFiles(acceptedFiles.map(file => Object.assign(file, {
+                preview: URL.createObjectURL(file)
+            })));
+
+            onChange(acceptedFiles[0]);
+        }
     });
+
+    useEffect(() => {
+        return () => files.forEach(file => URL.revokeObjectURL(file.preview));
+    }, []);
 
     return (
         <div
             {...getRootProps()}
             className="d-flex justify-content-center align-items-center form-control form-control-solid w-100 cursor-pointer"
         >
-            <input {...getInputProps({name: name})} className='d-none'/>
+            <input
+                {...getInputProps({name: name})}
+                className='d-none'
+            />
 
             {
-                value ? (
-                    <div className="d-flex flex-column justify-content-center align-items-center gap-2 w-100 my-auto py-10">
-                        <span className="fs-5 text-dark fw-bold mb-0">
-                            {value.name}
-                        </span>
-
-                        <p className="fs-6 text-muted mb-0">
-                            {formattedSize(value.size)}
-                        </p>
+                (files[0]?.preview || preview) ? (
+                    <div className="d-flex flex-column justify-content-center align-items-center gap-2 w-100 h-100">
+                        <LazyLoadImage
+                            src={files[0]?.preview ? files[0]?.preview : preview}
+                            alt="logo"
+                            width={100}
+                            height={100}
+                            className="w-100 h-200px object-fit-cover rounded-2"
+                        />
                     </div>
                 ) : (
-                    <div
-                        className="d-flex flex-column justify-content-center align-items-center gap-2 w-100 my-auto py-10">
+                    <div className="d-flex flex-column justify-content-center align-items-center gap-2 w-100 my-auto py-10">
                         <LuFileUp
                             size={20}
                             color="currentColor"
                             className="text-muted"
                         />
 
-                        <p className="fs-6 text-muted mb-0">
-                            فایل خود را انتخاب کنید
-                        </p>
+                        <Typography
+                            variant="p"
+                            size="xs"
+                            color="muted"
+                        >
+                            انتخاب کنید
+                        </Typography>
                     </div>
                 )
             }

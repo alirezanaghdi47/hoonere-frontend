@@ -18,7 +18,7 @@ const TextInput = ({name, value, placeholder, onChange, startAdornment, endAdorn
                 placeholder={placeholder}
                 className={`form-control form-control-solid ${startAdornment ? 'ps-15' : ''} ${endAdornment ? 'pe-15' : ''}`}
                 value={value}
-                onChange={onChange}
+                onChange={(e) => onChange(e.target.value)}
             />
 
             {

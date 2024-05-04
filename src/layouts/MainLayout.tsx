@@ -12,7 +12,7 @@ const MainLayout = () => {
     const navigate = useNavigate();
 
     useLayoutEffect(() => {
-        if (location.pathname === "/account") navigate("/account/dashboard")
+        if (location.pathname === "/account") navigate("/panel/dashboard")
     }, [location.key]);
 
     return (

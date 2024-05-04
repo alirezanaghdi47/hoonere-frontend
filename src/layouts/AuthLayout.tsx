@@ -18,9 +18,9 @@ const AuthLayout = () => {
         <div className="d-flex flex-column flex-lg-row flex-column-fluid h-100 min-vh-100">
             <div
                 className="d-flex justify-content-center align-items-center flex-column gap-5 h-100 bg-white bg-body shadow-sm">
-                <div className="d-flex flex-column justify-content-center align-items-center w-100 w-sm-500px p-10">
+                <div className="d-flex flex-column justify-content-center align-items-center gap-5 w-100 w-sm-500px p-10">
                     <Link
-                        to="/account/dashboard"
+                        to="/panel/dashboard"
                         className="w-max mb-5"
                     >
                         <LazyLoadImage

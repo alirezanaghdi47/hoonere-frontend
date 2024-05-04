@@ -15,6 +15,7 @@ const Button = ({
                     textColor,
                     href,
                     startIcon,
+                    disabled,
                     endIcon,
                     onClick,
                     ...props
@@ -56,6 +57,7 @@ const Button = ({
                 "w-100": fullWidth,
                 "fw-bold": isBold
             })}
+            disabled={disabled}
             onClick={onClick}
         >
             {startIcon && startIcon}

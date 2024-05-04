@@ -43,7 +43,7 @@ const CodeInput = ({name, value, placeholder, onChange, startAdornment , onResen
                 placeholder={placeholder}
                 className={`form-control form-control-solid ${startAdornment ? 'ps-15' : ''} pe-30`}
                 value={value}
-                onChange={onChange}
+                onChange={(e) => onChange(e.target.value)}
             />
 
             <span

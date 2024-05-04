@@ -1,5 +1,6 @@
 // libraries
 import {Link} from "react-router-dom";
+import {useMutation} from "@tanstack/react-query";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {useMediaQuery} from "usehooks-ts";
 import {LuLayers, LuLogOut, LuPieChart} from "react-icons/lu";
@@ -9,31 +10,53 @@ import logo from "@/assets/images/logo.svg";
 
 // modules
 import IconButton from "@/modules/IconButton.tsx";
+import toast from "@/modules/Toast.tsx";
+
+// services
+import {doLogoutService} from "@/services/authService.ts";
 
 // stores
 import useAppStore from "@/stores/appStore.ts";
+import useAuthStore from "@/stores/authStore.ts";
 
 const sidebarLinks = [
-    {id: 1, label: "داشبورد", href: "/account/dashboard", icon: LuPieChart({size: 20, color: 'currentColor'})},
-    {id: 2, label: "پروژه ها", href: "/account/projects", icon: LuLayers({size: 20, color: 'currentColor'})},
+    {id: 1, label: "داشبورد", href: "/panel/dashboard", icon: LuPieChart({size: 20, color: 'currentColor'})},
+    {id: 2, label: "پروژه ها", href: "/panel/projects", icon: LuLayers({size: 20, color: 'currentColor'})},
 ];
 
 const Sidebar = () => {
     const {app: {isOpenDrawer}, hideDrawer} = useAppStore();
+    const {logout} = useAuthStore();
+
     const isDesktop = useMediaQuery("(min-width: 992px)");
+
+    const {mutate, isPending} = useMutation({
+        mutationFn: () => doLogoutService(),
+        onSuccess: async (data) => {
+            console.log(data);
+            if (!data.error) {
+                toast("success", data.message);
+                hideDrawer();
+                logout();
+            } else {
+                toast("error", data.message);
+            }
+        }
+    });
 
     return (
         <div
             className={`aside ${!isDesktop ? "drawer drawer-start" : ""} ${isOpenDrawer ? "drawer-on" : ""} shadow-sm`}>
             <div className="d-none d-lg-flex justify-content-center align-items-center my-10">
                 <Link
-                    to="/account/dashboard"
+                    to="/panel/dashboard"
                     className="w-max mb-5"
                 >
                     <LazyLoadImage
                         src={logo}
                         alt="logo"
                         width={40}
+                        height={40}
                     />
                 </Link>
             </div>
@@ -63,7 +86,7 @@ const Sidebar = () => {
                         <IconButton
                             color="light"
                             activeColor="light-danger"
-                            onClick={hideDrawer}
+                            onClick={mutate}
                         >
                             <LuLogOut
                                 size={20}

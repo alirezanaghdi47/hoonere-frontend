@@ -6,7 +6,7 @@ const Textarea = ({name, value, placeholder, rows = 5, onChange}) => {
             placeholder={placeholder}
             className="form-control form-control-solid"
             value={value}
-            onChange={onChange}
+            onChange={(e) => onChange(e.target.value)}
         />
     )
 }

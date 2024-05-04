@@ -35,7 +35,11 @@ const DatePicker = ({name, value, onChange, range, minDate, maxDate, disabled, r
                 locale: georgian_en,
                 calendar: persian
             }).format("YYYY/MM/DD") : null}
-            onChange={(value) => onChange(value)}
+            onChange={(value) => onChange(new DateObject({
+                date: value,
+                locale: georgian_en,
+                calendar: persian
+            }).format("YYYY/MM/DD"))}
             renderButton={(direction, handleClick) => (
                 <IconButton
                     size="sm"
