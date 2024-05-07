@@ -12,9 +12,11 @@ export const updateIdentityService = async (data) => {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(data)));
-        formData.append("profile_img", data.profile_img);
-        formData.append("national_card", data.national_card);
+        const {profile_img, national_card, ...rawData} = data;
+
+        if (Object.keys(profile_img).length > 0) formData.append("profile_img", profile_img);
+        if (Object.keys(national_card).length > 0) formData.append("national_card", national_card);
+        formData.append("data", encodeData(JSON.stringify(rawData)));
 
         const response = await axios.post(process.env.API_URL + "/panel/profile/updateIdentity", formData, {
             headers: {
@@ -30,7 +32,7 @@ export const updateIdentityService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -57,6 +59,7 @@ export const meService = async () => {
 }
 
 export const bankCardsCreateService = async (data) => {
+    console.log(data)
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -77,7 +80,104 @@ export const bankCardsCreateService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const bankCardsGetService = async () => {
+    try {
+        const {token} = useAuthStore.getState().auth;
+
+        const response = await axios.post(process.env.API_URL + "/panel/profile/bankCards/get", null, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
         if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const bankCardsUpdateService = async (data) => {
+    try {
+        const {token} = useAuthStore.getState().auth;
+        const formData = new FormData();
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/profile/bankCards/update", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const bankCardsDeleteService = async (data) => {
+    try {
+        const {token} = useAuthStore.getState().auth;
+        const formData = new FormData();
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/profile/bankCards/delete", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const bankCardsChangeToMainService = async (data) => {
+    try {
+        const {token} = useAuthStore.getState().auth;
+        const formData = new FormData();
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/profile/bankCards/changeToMain", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -108,8 +208,12 @@ export const jobUpdateService = async (data) => {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(data)));
-        formData.append("resume_file", data.resume_file);
+        const {resume_file, ...rawData} = data;
+
+        console.log(rawData)
+
+        if (Object.keys(resume_file).length > 0) formData.append("resume_file", resume_file);
+        formData.append("data", encodeData(JSON.stringify(rawData)));
 
         const response = await axios.post(process.env.API_URL + "/panel/profile/job/update", formData, {
             headers: {
@@ -125,6 +229,6 @@ export const jobUpdateService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }

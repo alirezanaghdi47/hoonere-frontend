@@ -2,7 +2,6 @@
 import ReactDatePicker, {DateObject} from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import georgian_en from "react-date-object/locales/gregorian_en";
 import {LuChevronLeft, LuChevronRight} from "react-icons/lu";
 
 // modules
@@ -22,24 +21,24 @@ const DatePicker = ({name, value, onChange, range, minDate, maxDate, disabled, r
             containerClassName="w-100"
             calendar={persian}
             locale={persian_fa}
-            value={value}
+            value={value ? new DateObject({
+                date: value,
+                locale: persian_fa,
+                calendar: persian
+            }).format("YYYY/MM/DD") : null}
             range={range}
             multiple={false}
             minDate={minDate ? new DateObject({
                 date: minDate,
-                locale: georgian_en,
+                locale: persian_fa,
                 calendar: persian
             }).format("YYYY/MM/DD") : null}
             maxDate={maxDate ? new DateObject({
                 date: maxDate,
-                locale: georgian_en,
+                locale: persian_fa,
                 calendar: persian
             }).format("YYYY/MM/DD") : null}
-            onChange={(value) => onChange(new DateObject({
-                date: value,
-                locale: georgian_en,
-                calendar: persian
-            }).format("YYYY/MM/DD"))}
+            onChange={(value) => onChange(value)}
             renderButton={(direction, handleClick) => (
                 <IconButton
                     size="sm"
@@ -66,7 +65,7 @@ const DatePicker = ({name, value, onChange, range, minDate, maxDate, disabled, r
 
                 const formattedDate = new DateObject({
                     date: date,
-                    locale: georgian_en,
+                    locale: persian_fa,
                     calendar: persian
                 }).format("YYYY/MM/DD");
 

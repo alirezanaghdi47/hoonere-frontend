@@ -1,3 +1,10 @@
+// libraries
+import {DateObject} from "react-multi-date-picker";
+import gregorian from "react-date-object/calendars/gregorian";
+import gregorian_en from "react-date-object/locales/gregorian_en";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+
 export const formattedSize = (bytes) => {
     if (!bytes) return '0 Bytes';
 
@@ -52,9 +59,23 @@ export const hexToRgba = (hex, alpha = 1) => {
     }
 }
 
-export const generateRandomNumber = (min ,max) => Math.floor(Math.random() * (max - min + 1) + min);
+export const generateRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
-export const encodeData = (data) => btoa(btoa(data).concat(generateRandomString(372))).replace("==", " ");
+export const convertJalaliToGregorian = (date) => new DateObject(date).convert(gregorian, gregorian_en).format("YYYY/MM/DD");
+
+export const convertGregorianToJalali = (date) => new DateObject(date).convert(persian, persian_fa).format("YYYY/MM/DD");
+
+export const encodeData = (data) => {
+    let encoded = btoa(encodeURIComponent(data).replace(/%([0-9A-F]{2})/g, function toSolidBytes(match, p1) {
+        return String.fromCharCode(('0x' + p1))
+    })) + generateRandomString(372);
+
+    encoded = btoa(encodeURIComponent(encoded).replace(/%([0-9A-F]{2})/g, function toSolidBytes(match, p1) {
+        return String.fromCharCode(('0x' + p1))
+    }));
+
+    return encoded;
+}
 
 export const decodeData = (data) => {
     let bytes = Uint8Array.from(atob(data).split("").map(char => char.charCodeAt(0)));
@@ -67,3 +88,4 @@ export const decodeData = (data) => {
 
     return secondDecodedString;
 }
+

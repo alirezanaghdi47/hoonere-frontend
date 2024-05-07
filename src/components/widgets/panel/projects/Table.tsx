@@ -8,16 +8,15 @@ import logo from "@/assets/images/logo.svg";
 
 // components
 import TableNavigator from "@/components/widgets/panel/projects/TableNavigator.tsx";
-import TableFinder from "@/components/widgets/panel/projects/TableFinder.tsx";
 
 // modules
-import Table from "@/modules/Table.tsx";
+import DataTable from "@/modules/DataTable.tsx";
 import Chip from "@/modules/Chip.tsx";
 import Tooltip from "@/modules/Tooltip.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import dialog from "@/modules/dialog.tsx";
 
-const List = () => {
+const Table = ({filter , changeFilter}) => {
     const tableColumns = useMemo(() => [
             {
                 accessorKey: 'number',
@@ -198,17 +197,18 @@ const List = () => {
     return (
         <div className="card w-100">
             <div className="card-body d-flex flex-column gap-5">
-                <TableFinder/>
-
-                <Table
+                <DataTable
                     data={tableData}
                     columns={tableColumns}
                 />
 
-                <TableNavigator/>
+                <TableNavigator
+                    filter={filter}
+                    changeFilter={changeFilter}
+                />
             </div>
         </div>
     )
 }
 
-export default List;
+export default Table;

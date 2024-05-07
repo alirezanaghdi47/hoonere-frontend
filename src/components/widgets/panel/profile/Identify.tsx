@@ -18,7 +18,7 @@ import {updateIdentityService} from "@/services/profileService.ts";
 
 // utils
 import {profileIdentitySchema} from "@/utils/validations.ts";
-import {toEnglishDigits} from "@/utils/functions.ts";
+import {convertGregorianToJalali, convertJalaliToGregorian, toEnglishDigits} from "@/utils/functions.ts";
 
 const Identify = ({me}) => {
     const {mutate, isPending} = useMutation({
@@ -40,9 +40,9 @@ const Identify = ({me}) => {
             national_card: {},
             first_name: me?.data?.data?.userInfo?.first_name ? me?.data?.data?.userInfo?.first_name : "",
             last_name: me?.data?.data?.userInfo?.last_name ? me?.data?.data?.userInfo?.last_name : "",
-            id_code: me?.data?.data?.userInfo?.id_code ? me?.data?.data?.userInfo?.id_code : "",
             national_code: me?.data?.data?.userInfo?.national_code ? me?.data?.data?.userInfo?.national_code : "",
-            birthdate: me?.data?.data?.userInfo?.birthdate ? me?.data?.data?.userInfo?.birthdate : "",
+            id_code: me?.data?.data?.userInfo?.id_code ? me?.data?.data?.userInfo?.id_code : "",
+            birthdate: me?.data?.data?.userInfo?.birthdate ? convertGregorianToJalali(me?.data?.data?.userInfo?.birthdate) : "",
             email: me?.data?.data?.userInfo?.email ? me?.data?.data?.userInfo?.email : "",
             address: me?.data?.data?.userInfo?.address ? me?.data?.data?.userInfo?.address : "",
         },
@@ -50,8 +50,9 @@ const Identify = ({me}) => {
         onSubmit: async (result) => {
             mutate({
                 ...result,
+                national_code: toEnglishDigits(result.national_code),
                 id_code: toEnglishDigits(result.id_code),
-                national_code: toEnglishDigits(result.national_code)
+                birthdate: convertJalaliToGregorian(result.birthdate)
             });
         }
     });
@@ -73,7 +74,7 @@ const Identify = ({me}) => {
                             <Form.Group>
                                 <AvatarInput
                                     name="profile_img"
-                                    // preview={avatar}
+                                    preview={me?.data?.data?.userInfo.profile_img}
                                     value={formik.values.profile_img}
                                     onChange={(value) => formik.setFieldValue("profile_img", value)}
                                 />
@@ -99,7 +100,7 @@ const Identify = ({me}) => {
                             <Form.Group>
                                 <FileInput
                                     name="national_card"
-                                    // preview={avatar}
+                                    preview={me?.data?.data?.userInfo.national_card}
                                     value={formik.values.national_card}
                                     onChange={(value) => formik.setFieldValue("national_card", value)}
                                 />
@@ -118,6 +119,7 @@ const Identify = ({me}) => {
                                 label="نام"
                                 size="sm"
                                 color="dark"
+                                required
                             />
                         </div>
 
@@ -143,6 +145,7 @@ const Identify = ({me}) => {
                                 label="نام خانوادگی"
                                 size="sm"
                                 color="dark"
+                                required
                             />
                         </div>
 
@@ -165,9 +168,10 @@ const Identify = ({me}) => {
                     <div className="row gy-2">
                         <div className="col-lg-4">
                             <Form.Label
-                                label="کد ملی"
+                                label="شماره شناسنامه"
                                 size="sm"
                                 color="dark"
+                                required
                             />
                         </div>
 
@@ -194,9 +198,10 @@ const Identify = ({me}) => {
                     <div className="row gy-2">
                         <div className="col-lg-4">
                             <Form.Label
-                                label="شماره شناسنامه"
+                                label="کد ملی"
                                 size="sm"
                                 color="dark"
+                                required
                             />
                         </div>
 
@@ -226,6 +231,7 @@ const Identify = ({me}) => {
                                 label="تاریخ تولد"
                                 size="sm"
                                 color="dark"
+                                required
                             />
                         </div>
 
@@ -251,6 +257,7 @@ const Identify = ({me}) => {
                                 label="ایمیل"
                                 size="sm"
                                 color="dark"
+                                required
                             />
                         </div>
 
@@ -276,6 +283,7 @@ const Identify = ({me}) => {
                                 label="آدرس"
                                 size="sm"
                                 color="dark"
+                                required
                             />
                         </div>
 

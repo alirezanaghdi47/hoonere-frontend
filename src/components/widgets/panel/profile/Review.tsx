@@ -7,6 +7,9 @@ import Form from "@/modules/Form.tsx";
 import Alert from "@/modules/Alert.tsx";
 import Chip from "@/modules/Chip.tsx";
 
+// utils
+import {convertGregorianToJalali} from "@/utils/functions.ts";
+
 const Review = ({me}) => {
     return (
         <div className="card w-100">
@@ -136,9 +139,7 @@ const Review = ({me}) => {
                                         color="danger"
                                         label="ثبت نشده"
                                     />
-                                ) : (
-                                    me?.data?.data?.userInfo?.birthdate
-                                )
+                                ) : convertGregorianToJalali(me?.data?.data?.userInfo?.birthdate)
                             }
                         </Typography>
                     </div>
@@ -228,43 +229,6 @@ const Review = ({me}) => {
                                 )
                             }
                         </Typography>
-                    </div>
-                </div>
-
-                <div className="row gy-2">
-                    <div className="col-lg-4">
-                        <Form.Label
-                            label="نقش کاربری"
-                            size="sm"
-                            color="muted"
-                        />
-                    </div>
-
-                    <div className="col-lg-8">
-                        {
-                            me?.data?.data?.userInfo?.roles.length === 0 ? (
-                                <Chip
-                                    color="danger"
-                                    label="ثبت نشده"
-                                />
-                            ) : (
-                                <ul className="list-group list-group-flush hstack gap-2">
-                                    {
-                                        me?.data?.data?.userInfo?.roles.map(role =>
-                                            <li
-                                                key={role.id}
-                                                className="list-style-none"
-                                            >
-                                                <Chip
-                                                    color={role.class_name}
-                                                    label={role.name}
-                                                />
-                                            </li>
-                                        )
-                                    }
-                                </ul>
-                            )
-                        }
                     </div>
                 </div>
 

@@ -1,5 +1,5 @@
 // libraries
-import {useLayoutEffect} from "react";
+import {useEffect, useLayoutEffect} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 import {useBoolean} from 'usehooks-ts';
@@ -48,7 +48,7 @@ const TempJobCard = ({onClick}) => {
     )
 }
 
-const JobCard = ({group, title , onDelete}) => {
+const JobCard = ({group, title, onDelete}) => {
     return (
         <div className="col-12 col-sm-6 col-md-4">
             <div
@@ -61,7 +61,7 @@ const JobCard = ({group, title , onDelete}) => {
                             color="dark"
                             isBold
                         >
-                            {group}
+                            {group?.title}
                         </Typography>
 
                         <Typography
@@ -69,11 +69,11 @@ const JobCard = ({group, title , onDelete}) => {
                             size="sm"
                             color="dark"
                         >
-                            {title}
+                            {title?.title}
                         </Typography>
                     </div>
 
-                    <div className="d-flex justify-content-end align-items-center gap-5">
+                    <div className="d-flex justify-content-end align-items-start gap-5 h-100">
                         <IconButton
                             color="light-danger"
                             size="sm"
@@ -132,7 +132,8 @@ const Occupation = ({me}) => {
             hideAddCardForm();
             resetForm();
         },
-        onReset: async () => {
+        onReset: async (result , {resetForm}) => {
+            resetForm();
             hideAddCardForm();
         }
     });
@@ -140,14 +141,14 @@ const Occupation = ({me}) => {
     const formik2 = useFormik({
         enableReinitialize: true,
         initialValues: {
-            fields_of_activity: [],
+            fields_of_activity: jobGetMyFieldsOfActivity?.data?.data?.fieldsOfActivity ? jobGetMyFieldsOfActivity?.data?.data?.fieldsOfActivity : [],
             resume_file: {},
             resume_text: me?.data?.data?.userInfo?.resume_text ? me?.data?.data?.userInfo?.resume_text : "",
         },
         validationSchema: profileOccupation2Schema,
         onSubmit: async (result) => {
             mutate(result);
-        }
+        },
     });
 
     useLayoutEffect(() => {
@@ -155,7 +156,9 @@ const Occupation = ({me}) => {
         jobGetMyFieldsOfActivity.mutate();
     }, []);
 
-    console.log(jobGetMyFieldsOfActivity.data)
+    useEffect(() => {
+        if (formik2.errors.fields_of_activity) toast("error", formik2.errors.fields_of_activity);
+    }, [formik2.errors.fields_of_activity, formik2.touched.fields_of_activity]);
 
     return (
         <>
@@ -173,10 +176,16 @@ const Occupation = ({me}) => {
                     </div>
 
                     <div className="row gy-5">
-                        <JobCard
-                            group="گروه 1"
-                            title="عنوان 1"
-                        />
+                        {
+                            formik2.values.fields_of_activity.map((foa, i) =>
+                                <JobCard
+                                    key={i}
+                                    group={allFieldsOfActivity?.data?.data?.fieldsOfActivity.find(item => parseInt(item.id) === parseInt(foa.foa_parent_id))}
+                                    title={allFieldsOfActivity?.data?.data?.fieldsOfActivity.find(item => parseInt(item.id) === parseInt(foa.foa_child_id))}
+                                    onDelete={() => formik2.setFieldValue("fields_of_activity", formik2.values.fields_of_activity.filter((item, j) => i !== j))}
+                                />
+                            )
+                        }
 
                         {
                             !addCardForm && (
@@ -190,7 +199,7 @@ const Occupation = ({me}) => {
                     {
                         addCardForm && (
                             <>
-                                <div className="row gy-2 mt-10">
+                                <div className={`row gy-2 ${!addCardForm ? "mt-10" : ""}`}>
                                     <div className="col-lg-4">
                                         <Form.Label
                                             label="گروه شغلی"
@@ -237,7 +246,7 @@ const Occupation = ({me}) => {
                                             <SelectBox
                                                 name="foa_child_id"
                                                 value={formik.values.foa_child_id}
-                                                options={allFieldsOfActivity?.data?.data?.fieldsOfActivity?.filter(foa => parseInt(foa.parent_id) === parseInt(formik.values.foa_parent_id)).map(item => ({
+                                                options={allFieldsOfActivity?.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id !== null && parseInt(foa.parent_id) === parseInt(formik.values.foa_parent_id)).map(item => ({
                                                     label: item.title,
                                                     value: item.id
                                                 }))}
@@ -312,6 +321,7 @@ const Occupation = ({me}) => {
                                 label="رزومه متنی"
                                 size="sm"
                                 color="dark"
+                                required
                             />
                         </div>
 

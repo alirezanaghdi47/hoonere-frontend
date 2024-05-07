@@ -48,13 +48,13 @@ export const profileIdentitySchema = Yup.object().shape({
             return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
         }
     }),
-    first_name: Yup.string().trim(),
-    last_name: Yup.string().trim(),
-    id_code: Yup.string().trim(),
-    national_code: Yup.string().trim(),
-    birthdate: Yup.string().trim(),
-    email: Yup.string().trim().matches(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, "فرمت ایمیل نادرست است"),
-    address: Yup.string().trim()
+    first_name: Yup.string().trim().required("نام الزامی است"),
+    last_name: Yup.string().trim().required("نام خانوادگی الزامی است"),
+    national_code: Yup.string().trim().required("کد ملی الزامی است"),
+    id_code: Yup.string().trim().required("شماره شناسنامه الزامی است"),
+    birthdate: Yup.string().trim().required("تاریخ تولد الزامی است"),
+    email: Yup.string().trim().matches(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, "فرمت ایمیل نادرست است").required("ایمیل الزامی است"),
+    address: Yup.string().trim().required("آدرس الزامی است")
 });
 
 export const profileOccupationSchema = Yup.object().shape({
@@ -64,8 +64,8 @@ export const profileOccupationSchema = Yup.object().shape({
 
 export const profileOccupation2Schema = Yup.object().shape({
     fields_of_activity: Yup.array().of(Yup.object().shape({
-        foa_parent_id: Yup.number().required(),
-        foa_child_id: Yup.number().required(),
+        foa_parent_id: Yup.number(),
+        foa_child_id: Yup.number(),
     })).min(1, "حداقل یک زمینه شغلی باید انتخاب شود"),
     resume_file: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 1 مگابایت باشد", (value: any) => {
         if (Object.keys(value).length === 0) {
@@ -80,7 +80,7 @@ export const profileOccupation2Schema = Yup.object().shape({
             return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
         }
     }),
-    resume_text: Yup.string().trim()
+    resume_text: Yup.string().trim().required("رزومه متنی الزامی است")
 });
 
 export const profileFinancialSchema = Yup.object().shape({

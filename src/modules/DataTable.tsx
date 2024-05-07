@@ -8,7 +8,7 @@ import {
 } from '@tanstack/react-table';
 import {LuArrowDown, LuArrowUp} from "react-icons/lu";
 
-const Table = ({data, columns}) => {
+const DataTable = ({data, columns}) => {
     const [sorting, setSorting] = useState([]);
 
     const table = useReactTable({
@@ -107,4 +107,4 @@ const Table = ({data, columns}) => {
     )
 }
 
-export default Table;
+export default DataTable;

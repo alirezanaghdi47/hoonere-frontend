@@ -13,7 +13,9 @@ const useFilter = (initialData = null) => {
 
     const hideFilter = () => setIsOpenFilter(true);
 
-    return {filter, changeFilter , resetFilter, isOpenFilter, showFilter, hideFilter}
+    const toggleFilter = () => setIsOpenFilter(prev => !prev);
+
+    return {filter, changeFilter , resetFilter, isOpenFilter, showFilter, hideFilter , toggleFilter}
 }
 
 export default useFilter;
