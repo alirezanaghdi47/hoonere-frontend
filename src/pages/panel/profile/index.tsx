@@ -9,7 +9,7 @@ import Content from "@/components/widgets/panel/profile/Content.tsx";
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-const ProfilePage = () => {
+const Profile = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const {auth} = useAuthStore();
@@ -28,4 +28,4 @@ const ProfilePage = () => {
     )
 }
 
-export default ProfilePage;
+export default Profile;

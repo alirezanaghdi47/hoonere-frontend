@@ -3,7 +3,7 @@ import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
 // components
-import Loading from "@/components/partials/main/Loading.tsx";
+import Loading from "@/components/partials/panel/Loading.tsx";
 
 // modules
 import FileInput from "@/modules/FileInput.tsx";

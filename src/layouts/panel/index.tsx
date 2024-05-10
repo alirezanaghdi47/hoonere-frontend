@@ -2,11 +2,11 @@
 import {Outlet} from "react-router-dom";
 
 // components
-import Navbar from "@/components/partials/main/Navbar.tsx";
-import Sidebar from "@/components/partials/main/Sidebar.tsx";
-import Overlay from "@/components/partials/main/Overlay.tsx";
+import Navbar from "@/components/partials/panel/Navbar.tsx";
+import Sidebar from "@/components/partials/panel/Sidebar.tsx";
+import Overlay from "@/components/partials/panel/Overlay.tsx";
 
-const MainLayout = () => {
+const Panel = () => {
     return (
         <>
             <div className="header-fixed header-tablet-and-mobile-fixed aside-fixed aside-secondary-disabled">
@@ -24,4 +24,4 @@ const MainLayout = () => {
     );
 };
 
-export default MainLayout;
+export default Panel;

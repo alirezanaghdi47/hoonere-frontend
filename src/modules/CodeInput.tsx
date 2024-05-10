@@ -44,7 +44,7 @@ const CodeInput = ({name, value, placeholder, onChange, startAdornment , onResen
                     count > 0 ? (
                         <Typography
                             variant="span"
-                            color="gray-700"
+                            color="gray-600"
                             size="xs"
                             className="mx-auto"
                         >

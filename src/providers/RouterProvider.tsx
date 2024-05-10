@@ -8,19 +8,19 @@ import useAuthStore from "@/stores/authStore.ts";
 import Temp from "@/pages/TempPage.tsx";
 
 // layouts
-const MainLayout = Loadable(() => import('@/layouts/MainLayout.tsx'));
-const AuthLayout = Loadable(() => import('@/layouts/AuthLayout.tsx'));
-const BlankLayout = Loadable(() => import('@/layouts/BlankLayout.tsx'));
+const Panel = Loadable(() => import('@/layouts/panel'));
+const Auth = Loadable(() => import('@/layouts/auth'));
+const Blank = Loadable(() => import('@/layouts/error'));
 
 // pages
-const DashboardPanel = Loadable(() => import('@/pages/panel/dashboard'));
-const ProjectsPanel = Loadable(() => import('@/pages/panel/projects'));
-const AddProjectPanel = Loadable(() => import('@/pages/panel/projects/add'));
-const ProfilePanel = Loadable(() => import('@/pages/panel/profile'));
+const Dashboard = Loadable(() => import('@/pages/panel/dashboard'));
+const Projects = Loadable(() => import('@/pages/panel/projects'));
+const CreateProject = Loadable(() => import('@/pages/panel/projects/create'));
+const Profile = Loadable(() => import('@/pages/panel/profile'));
 const SignIn = Loadable(() => import('@/pages/auth/sign-in'));
 const SignUp = Loadable(() => import('@/pages/auth/sign-up'));
-const ServerError = Loadable(() => import('@/pages/error/server'));
-const ClientError = Loadable(() => import('@/pages/error/client'));
+const Server = Loadable(() => import('@/pages/error/server'));
+const Client = Loadable(() => import('@/pages/error/client'));
 
 const RouterProvider = () => {
     const {auth} = useAuthStore();
@@ -36,7 +36,7 @@ const RouterProvider = () => {
 
             <Route
                 path="auth"
-                element={!isAuth ? <AuthLayout/> : <Navigate to="/panel/dashboard"/>}
+                element={!isAuth ? <Auth/> : <Navigate to="/panel/dashboard"/>}
             >
                 <Route
                     path=""
@@ -56,7 +56,7 @@ const RouterProvider = () => {
 
             <Route
                 path="panel"
-                element={isAuth ? <MainLayout/> : <Navigate to="/auth/sign-in"/>}
+                element={isAuth ? <Panel/> : <Navigate to="/auth/sign-in"/>}
             >
                 <Route
                     path=""
@@ -65,37 +65,37 @@ const RouterProvider = () => {
 
                 <Route
                     path="dashboard"
-                    element={<DashboardPanel/>}
+                    element={<Dashboard/>}
                 />
 
                 <Route
                     path="projects"
-                    element={<ProjectsPanel/>}
+                    element={<Projects/>}
                 />
 
                 <Route
                     path="projects/add"
-                    element={<AddProjectPanel/>}
+                    element={<CreateProject/>}
                 />
 
                 <Route
                     path="profile"
-                    element={<ProfilePanel/>}
+                    element={<Profile/>}
                 />
             </Route>
 
             <Route
                 path="/*"
-                element={<BlankLayout/>}
+                element={<Blank/>}
             >
                 <Route
                     path="server-down"
-                    element={<ServerError/>}
+                    element={<Server/>}
                 />
 
                 <Route
                     path="*"
-                    element={<ClientError/>}
+                    element={<Client/>}
                 />
             </Route>
 

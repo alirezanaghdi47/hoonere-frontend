@@ -2,7 +2,7 @@
 import {LuAlertTriangle} from "react-icons/lu";
 
 // components
-import Loading from "@/components/partials/main/Loading.tsx";
+import Loading from "@/components/partials/panel/Loading.tsx";
 
 // modules
 import Typography from "@/modules/Typography.tsx";

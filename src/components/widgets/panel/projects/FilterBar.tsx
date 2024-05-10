@@ -49,7 +49,7 @@ const FilterBar = ({isOpenFilter, filter, changeFilter, resetFilter, toggleFilte
                     </div>
 
                     <Button
-                        color={isOpenFilter ? 'info' : 'light-info'}
+                        color={isOpenFilter ? 'info' : 'light-read'}
                         startIcon={
                             <LuListFilter
                                 size={20}

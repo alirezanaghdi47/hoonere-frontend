@@ -1,10 +1,10 @@
 // components
-import ClientError from "@/components/widgets/error/ClientError.tsx";
+import Content from "@/components/widgets/error/client/Content.tsx";
 
-const ClientErrorPage = () => {
+const Client = () => {
     return (
-        <ClientError/>
+        <Content/>
     )
 }
 
-export default ClientErrorPage;
+export default Client;

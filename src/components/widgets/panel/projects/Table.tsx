@@ -54,7 +54,7 @@ const Table = ({filter , changeFilter}) => {
                 cell: ({row}) => (
                     <div className="w-150px fs-6 text-dark text-truncate">
                         <Chip
-                            color={row.original.type === "فیلم" ? "light-primary" : "light-info"}
+                            color={row.original.type === "فیلم" ? "light-primary" : "light-read"}
                             label={row.original.type}
                         />
                     </div>
@@ -142,7 +142,7 @@ const Table = ({filter , changeFilter}) => {
                         </IconButton>
 
                         <IconButton
-                            href={auth.panel_url + "projects/1/edit"}
+                            href={auth.panel_url + "projects/1/update"}
                             color="light-warning"
                             size="sm"
                             data-tooltip-id="my-tooltip"

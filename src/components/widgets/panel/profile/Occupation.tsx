@@ -7,7 +7,7 @@ import {useFormik} from "formik";
 import Resume from "@/components/widgets/panel/profile/occupation/Resume.tsx";
 import CreateJob from "@/components/widgets/panel/profile/occupation/CreateJob.tsx";
 import Jobs from "@/components/widgets/panel/profile/occupation/Jobs.tsx";
-import Loading from "@/components/partials/main/Loading.tsx";
+import Loading from "@/components/partials/panel/Loading.tsx";
 
 // hooks
 import usePart from "@/hooks/usePart.tsx";

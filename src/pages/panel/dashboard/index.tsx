@@ -2,7 +2,7 @@
 import Header from "@/components/widgets/panel/dashboard/Header.tsx";
 import Content from "@/components/widgets/panel/dashboard/Content.tsx";
 
-const DashboardPage = () => {
+const Dashboard = () => {
     return (
         <>
             <Header/>
@@ -11,4 +11,4 @@ const DashboardPage = () => {
     )
 }
 
-export default DashboardPage;
+export default Dashboard;

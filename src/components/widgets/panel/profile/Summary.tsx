@@ -1,7 +1,7 @@
 // components
 import Information from "@/components/widgets/panel/profile/Information.tsx";
 import Links from "@/components/widgets/panel/profile/Links.tsx";
-import Loading from "@/components/partials/main/Loading.tsx";
+import Loading from "@/components/partials/panel/Loading.tsx";
 
 const Summary = ({myProfileAction}) => {
     return !myProfileAction.isPending ? (

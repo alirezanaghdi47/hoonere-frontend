@@ -14,7 +14,7 @@ import useAuthStore from "@/stores/authStore.ts";
 const breadcrumbLinks = [
     {id: 1, label: "داشبورد", href: useAuthStore.getState().auth.panel_url + "dashboard"},
     {id: 2, label: "پروژه ها", href: useAuthStore.getState().auth.panel_url + "projects"},
-    {id: 3, label: "افزودن پروژه", href: useAuthStore.getState().auth.panel_url + "projects/add"},
+    {id: 3, label: "افزودن پروژه", href: useAuthStore.getState().auth.panel_url + "projects/create"},
 ];
 
 const Header = () => {

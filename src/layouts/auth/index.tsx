@@ -2,7 +2,7 @@
 import {Outlet} from "react-router-dom";
 import {LazyLoadImage} from 'react-lazy-load-image-component';
 
-const AuthLayout = () => {
+const Auth = () => {
     return (
         <div className="d-flex flex-column flex-lg-row flex-column-fluid h-100 min-vh-100">
             <div
@@ -24,4 +24,4 @@ const AuthLayout = () => {
     )
 }
 
-export default AuthLayout;
+export default Auth;

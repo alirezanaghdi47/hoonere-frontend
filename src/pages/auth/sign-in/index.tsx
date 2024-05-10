@@ -5,7 +5,7 @@ import {useBoolean} from "usehooks-ts";
 import LoginWithAccount from "@/components/widgets/auth/sign-in/LoginWithAccount.tsx";
 import LoginWithMobile from "@/components/widgets/auth/sign-in/LoginWithMobile.tsx";
 
-const SignInPage = () => {
+const SignIn = () => {
     const {value: isOtpWay, setTrue: setOtpWay, setFalse: unSetOtpWay} = useBoolean(false);
 
     return (
@@ -21,4 +21,4 @@ const SignInPage = () => {
     )
 }
 
-export default SignInPage;
+export default SignIn;

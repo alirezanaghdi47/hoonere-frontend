@@ -5,7 +5,7 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import Typography from "@/modules/Typography.tsx";
 import Button from "@/modules/Button.tsx";
 
-const ServerError = () => {
+const Content = () => {
     return (
         <div className="d-flex flex-column justify-content-center align-items-center gap-10 w-100 h-100">
             <LazyLoadImage
@@ -16,7 +16,7 @@ const ServerError = () => {
 
             <Typography
                 variant="h1"
-                color="gray-700"
+                color="gray-600"
                 size="lg"
                 isBold
             >
@@ -25,7 +25,7 @@ const ServerError = () => {
 
             <Typography
                 variant="h3"
-                color="gray-700"
+                color="gray-600"
                 size="sm"
             >
                 ارتباط خود را با سرور چک کنید
@@ -42,4 +42,4 @@ const ServerError = () => {
     )
 }
 
-export default ServerError;
+export default Content;

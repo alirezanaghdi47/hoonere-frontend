@@ -69,7 +69,7 @@ const Banks = ({myBankCardsAction, changePart, changeCurrentPart, user}) => {
                                         label: "ویرایش",
                                         onClick: () => {
                                             changePart(bankCard);
-                                            changeCurrentPart("edit");
+                                            changeCurrentPart("update");
                                         }
                                     },
                                     {

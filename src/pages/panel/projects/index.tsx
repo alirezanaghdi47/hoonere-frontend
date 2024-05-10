@@ -2,7 +2,7 @@
 import Header from "@/components/widgets/panel/projects/Header.tsx";
 import Content from "@/components/widgets/panel/projects/Content.tsx";
 
-const ProjectsPage = () => {
+const Projects = () => {
     return (
         <>
             <Header/>
@@ -11,4 +11,4 @@ const ProjectsPage = () => {
     )
 }
 
-export default ProjectsPage;
+export default Projects;

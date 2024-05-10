@@ -1,11 +1,11 @@
 // components
-import Image from "@/components/widgets/panel/projects/add/Image.tsx";
-import Intro from "@/components/widgets/panel/projects/add/Intro.tsx";
-import Type from "@/components/widgets/panel/projects/add/Type.tsx";
-import Users from "@/components/widgets/panel/projects/add/Users.tsx";
-import TypeInfo from "@/components/widgets/panel/projects/add/TypeInfo.tsx";
-import Location from "@/components/widgets/panel/projects/add/Location.tsx";
-import ActionBar from "@/components/widgets/panel/projects/add/ActionBar.tsx";
+import Image from "@/components/widgets/panel/projects/create/Image.tsx";
+import Intro from "@/components/widgets/panel/projects/create/Intro.tsx";
+import Type from "@/components/widgets/panel/projects/create/Type.tsx";
+import Users from "@/components/widgets/panel/projects/create/Users.tsx";
+import TypeInfo from "@/components/widgets/panel/projects/create/TypeInfo.tsx";
+import Location from "@/components/widgets/panel/projects/create/Location.tsx";
+import ActionBar from "@/components/widgets/panel/projects/create/ActionBar.tsx";
 
 const Content = () => {
     return (

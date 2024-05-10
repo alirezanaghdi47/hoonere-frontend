@@ -17,13 +17,23 @@ import useAppStore from "@/stores/appStore.ts";
 import useAuthStore from "@/stores/authStore.ts";
 
 const sidebarLinks = [
-    {id: 1, label: "داشبورد", href: useAuthStore.getState().auth.panel_url + "dashboard", icon: LuPieChart({size: 20, color: 'currentColor'})},
-    {id: 2, label: "پروژه ها", href: useAuthStore.getState().auth.panel_url + "projects", icon: LuLayers({size: 20, color: 'currentColor'})},
+    {
+        id: 1,
+        label: "داشبورد",
+        href: useAuthStore.getState().auth.panel_url + "dashboard",
+        icon: LuPieChart({size: 20, color: 'currentColor'})
+    },
+    {
+        id: 2,
+        label: "پروژه ها",
+        href: useAuthStore.getState().auth.panel_url + "projects",
+        icon: LuLayers({size: 20, color: 'currentColor'})
+    },
 ];
 
 const Sidebar = () => {
     const {app: {isOpenDrawer}, hideDrawer} = useAppStore();
-    const {logout , auth} = useAuthStore();
+    const {logout, auth} = useAuthStore();
     const isDesktop = useMediaQuery("(min-width: 992px)");
 
     const logoutAction = useMutation({
@@ -58,20 +68,23 @@ const Sidebar = () => {
 
             <div className="d-flex flex-column justify-content-center align-items-center h-100">
                 <ul className="vstack justify-content-start justify-content-lg-center gap-5 h-100 p-0 m-0 pt-20 pt-lg-0">
-                    {sidebarLinks.map((sidebarLink) => (
-                        <li
-                            key={sidebarLink.id}
-                            className="d-flex justify-content-center align-items-center w-100"
-                        >
-                            <IconButton
-                                href={sidebarLink.href}
-                                color={sidebarLink.href === location.pathname ? "primary" : "light"}
-                                onClick={hideDrawer}
+                    {
+                        sidebarLinks.map((sidebarLink) => (
+                            <li
+                                key={sidebarLink.id}
+                                className="d-flex justify-content-center align-items-center w-100"
                             >
-                                {sidebarLink.icon}
-                            </IconButton>
-                        </li>
-                    ))}
+                                <IconButton
+                                    href={sidebarLink.href}
+                                    color={sidebarLink.href === location.pathname ? "primary" : "light"}
+                                    activeColor="light-primary"
+                                    onClick={hideDrawer}
+                                >
+                                    {sidebarLink.icon}
+                                </IconButton>
+                            </li>
+                        ))
+                    }
                 </ul>
             </div>
 

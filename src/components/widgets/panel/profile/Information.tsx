@@ -22,7 +22,7 @@ const Information = ({myProfileAction}) => {
                         <LuUser
                             size={30}
                             color='currentColor'
-                            className="text-gray-700"
+                            className="text-gray-600"
                         />
                     )
                 }
@@ -49,7 +49,7 @@ const Information = ({myProfileAction}) => {
                 {/*        <Typography*/}
                 {/*            variant="p"*/}
                 {/*            size="xs"*/}
-                {/*            color="gray-700"*/}
+                {/*            color="gray-600"*/}
                 {/*        >*/}
                 {/*            <LuUserCircle*/}
                 {/*                size={15}*/}
@@ -65,7 +65,7 @@ const Information = ({myProfileAction}) => {
                 {/*        <Typography*/}
                 {/*            variant="p"*/}
                 {/*            size="xs"*/}
-                {/*            color="gray-700"*/}
+                {/*            color="gray-600"*/}
                 {/*        >*/}
                 {/*            <LuMapPin*/}
                 {/*                size={15}*/}
@@ -81,7 +81,7 @@ const Information = ({myProfileAction}) => {
                 {/*        <Typography*/}
                 {/*            variant="p"*/}
                 {/*            size="xs"*/}
-                {/*            color="gray-700"*/}
+                {/*            color="gray-600"*/}
                 {/*        >*/}
                 {/*            <LuAtSign*/}
                 {/*                size={15}*/}

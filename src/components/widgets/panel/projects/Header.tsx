@@ -68,7 +68,7 @@ const Header = () => {
                     </IconButton>
 
                     <Button
-                        href={auth.panel_url + "projects/add"}
+                        href={auth.panel_url + "projects/create"}
                         color="info"
                     >
                         افزودن پروژه

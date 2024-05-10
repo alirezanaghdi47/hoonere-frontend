@@ -6,7 +6,7 @@ import {useMutation} from "@tanstack/react-query";
 import Banks from "@/components/widgets/panel/profile/financial/Banks.tsx";
 import CreateBank from "@/components/widgets/panel/profile/financial/CreateBank.tsx";
 import UpdateBank from "@/components/widgets/panel/profile/financial/UpdateBank.tsx";
-import Loading from "@/components/partials/main/Loading.tsx";
+import Loading from "@/components/partials/panel/Loading.tsx";
 
 // hooks
 import usePart from "@/hooks/usePart.tsx";
@@ -49,7 +49,7 @@ const Financial = ({myProfileAction}) => {
             }
 
             {
-                (currentPart === "edit" && Object.keys(part).length > 0) && (
+                (currentPart === "update" && Object.keys(part).length > 0) && (
                     <UpdateBank
                         part={part}
                         resetPart={resetPart}
