@@ -1,6 +1,9 @@
 // libraries
 import {LuAlertTriangle} from "react-icons/lu";
 
+// components
+import Loading from "@/components/partials/main/Loading.tsx";
+
 // modules
 import Typography from "@/modules/Typography.tsx";
 import Form from "@/modules/Form.tsx";
@@ -10,8 +13,8 @@ import Chip from "@/modules/Chip.tsx";
 // utils
 import {convertGregorianToJalali} from "@/utils/functions.ts";
 
-const Review = ({me}) => {
-    return (
+const Review = ({myProfileAction}) => {
+    return !myProfileAction.isPending ? (
         <div className="card w-100">
             <div className="card-body d-flex flex-column gap-5">
                 <div className="row gy-2">
@@ -25,8 +28,8 @@ const Review = ({me}) => {
 
                     <div className="col-lg-8">
                         <Chip
-                            color={me?.data?.data?.userInfo?.national_card ? "success" : "danger"}
-                            label={me?.data?.data?.userInfo?.national_card ? "ثبت شده" : "ثبت نشده"}
+                            color={myProfileAction?.data?.data?.userInfo?.national_card ? "success" : "danger"}
+                            label={myProfileAction?.data?.data?.userInfo?.national_card ? "ثبت شده" : "ثبت نشده"}
                         />
                     </div>
                 </div>
@@ -47,13 +50,13 @@ const Review = ({me}) => {
                             color="dark"
                         >
                             {
-                                (!me?.data?.data?.userInfo?.first_name || !me?.data?.data?.userInfo?.last_name) ? (
+                                (!myProfileAction?.data?.data?.userInfo?.first_name || !myProfileAction?.data?.data?.userInfo?.last_name) ? (
                                     <Chip
                                         color="danger"
                                         label="ثبت نشده"
                                     />
                                 ) : (
-                                    me?.data?.data?.userInfo?.first_name + " " + me?.data?.data?.userInfo?.last_name
+                                    myProfileAction?.data?.data?.userInfo?.first_name + " " + myProfileAction?.data?.data?.userInfo?.last_name
                                 )
                             }
                         </Typography>
@@ -76,13 +79,13 @@ const Review = ({me}) => {
                             color="dark"
                         >
                             {
-                                !me?.data?.data?.userInfo?.national_code ? (
+                                !myProfileAction?.data?.data?.userInfo?.national_code ? (
                                     <Chip
                                         color="danger"
                                         label="ثبت نشده"
                                     />
                                 ) : (
-                                    me?.data?.data?.userInfo?.national_code
+                                    myProfileAction?.data?.data?.userInfo?.national_code
                                 )
                             }
                         </Typography>
@@ -105,13 +108,13 @@ const Review = ({me}) => {
                             color="dark"
                         >
                             {
-                                !me?.data?.data?.userInfo?.id_code ? (
+                                !myProfileAction?.data?.data?.userInfo?.id_code ? (
                                     <Chip
                                         color="danger"
                                         label="ثبت نشده"
                                     />
                                 ) : (
-                                    me?.data?.data?.userInfo?.id_code
+                                    myProfileAction?.data?.data?.userInfo?.id_code
                                 )
                             }
                         </Typography>
@@ -134,12 +137,12 @@ const Review = ({me}) => {
                             color="dark"
                         >
                             {
-                                !me?.data?.data?.userInfo?.birthdate ? (
+                                !myProfileAction?.data?.data?.userInfo?.birthdate ? (
                                     <Chip
                                         color="danger"
                                         label="ثبت نشده"
                                     />
-                                ) : convertGregorianToJalali(me?.data?.data?.userInfo?.birthdate)
+                                ) : convertGregorianToJalali(myProfileAction?.data?.data?.userInfo?.birthdate)
                             }
                         </Typography>
                     </div>
@@ -161,13 +164,13 @@ const Review = ({me}) => {
                             color="dark"
                         >
                             {
-                                !me?.data?.data?.userInfo?.mobile ? (
+                                !myProfileAction?.data?.data?.userInfo?.mobile ? (
                                     <Chip
                                         color="danger"
                                         label="ثبت نشده"
                                     />
                                 ) : (
-                                    me?.data?.data?.userInfo?.mobile
+                                    myProfileAction?.data?.data?.userInfo?.mobile
                                 )
                             }
                         </Typography>
@@ -190,13 +193,13 @@ const Review = ({me}) => {
                             color="dark"
                         >
                             {
-                                !me?.data?.data?.userInfo?.address ? (
+                                !myProfileAction?.data?.data?.userInfo?.address ? (
                                     <Chip
                                         color="danger"
                                         label="ثبت نشده"
                                     />
                                 ) : (
-                                    me?.data?.data?.userInfo?.address
+                                    myProfileAction?.data?.data?.userInfo?.address
                                 )
                             }
                         </Typography>
@@ -219,59 +222,13 @@ const Review = ({me}) => {
                             color="dark"
                         >
                             {
-                                !me?.data?.data?.userInfo?.email ? (
+                                !myProfileAction?.data?.data?.userInfo?.email ? (
                                     <Chip
                                         color="danger"
                                         label="ثبت نشده"
                                     />
                                 ) : (
-                                    me?.data?.data?.userInfo?.email
-                                )
-                            }
-                        </Typography>
-                    </div>
-                </div>
-
-                <div className="row gy-2">
-                    <div className="col-lg-4">
-                        <Form.Label
-                            label="رزومه (عکس یا pdf)"
-                            size="sm"
-                            color="muted"
-                        />
-                    </div>
-
-                    <div className="col-lg-8">
-                        <Chip
-                            color={me?.data?.data?.userInfo?.resume_file ? "success" : "danger"}
-                            label={me?.data?.data?.userInfo?.resume_file ? "ثبت شده" : "ثبت نشده"}
-                        />
-                    </div>
-                </div>
-
-                <div className="row gy-2">
-                    <div className="col-lg-4">
-                        <Form.Label
-                            label="رزومه متنی"
-                            size="sm"
-                            color="muted"
-                        />
-                    </div>
-
-                    <div className="col-lg-8">
-                        <Typography
-                            variant="p"
-                            size="sm"
-                            color="dark"
-                        >
-                            {
-                                !me?.data?.data?.userInfo?.resume_text ? (
-                                    <Chip
-                                        color="danger"
-                                        label="ثبت نشده"
-                                    />
-                                ) : (
-                                    me?.data?.data?.userInfo?.resume_text
+                                    myProfileAction?.data?.data?.userInfo?.email
                                 )
                             }
                         </Typography>
@@ -279,7 +236,7 @@ const Review = ({me}) => {
                 </div>
 
                 {
-                    parseInt(me?.data?.data?.userInfo?.status_id) !== 5 && (
+                    parseInt(myProfileAction?.data?.data?.userInfo?.status_id) !== 5 && (
                         <Alert
                             color="warning"
                             size="xs"
@@ -289,12 +246,17 @@ const Review = ({me}) => {
                                     color="currentColor"
                                 />
                             }
-                            message={me?.data?.data?.userInfo?.status.title}
+                            message={myProfileAction?.data?.data?.userInfo?.status.title}
                         />
                     )
                 }
             </div>
         </div>
+    ) : (
+        <Loading
+            width="100%"
+            height={400}
+        />
     )
 }
 

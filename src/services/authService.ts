@@ -7,7 +7,7 @@ import useAuthStore from "@/stores/authStore.ts";
 // utils
 import {decodeData, encodeData} from "@/utils/functions.ts";
 
-export const sendAuthConfirmCodeService = async (data) => {
+export const authService = async (data) => {
     try {
         const formData = new FormData();
 
@@ -20,14 +20,11 @@ export const sendAuthConfirmCodeService = async (data) => {
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        return {
-            message: err?.response?.data?.message,
-            error: true,
-        };
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
-export const doAuthService = async (data) => {
+export const verifyService = async (data) => {
     try {
         const formData = new FormData();
 
@@ -40,16 +37,11 @@ export const doAuthService = async (data) => {
             data: JSON.parse(decodeData(response.data.data)),
         }
     } catch (err) {
-        return {
-            message: err?.response?.data?.message,
-            error: true,
-        };
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
-export const doLoginWithStaticPasswordService = async (data) => {
-    console.log(data)
-
+export const loginService = async (data) => {
     try {
         const formData = new FormData();
         formData.append("data", encodeData(JSON.stringify(data)));
@@ -60,14 +52,11 @@ export const doLoginWithStaticPasswordService = async (data) => {
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        return {
-            message: err?.response?.data?.message,
-            error: true,
-        };
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
-export const completeRegisterService = async (data) => {
+export const registerService = async (data) => {
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -85,26 +74,20 @@ export const completeRegisterService = async (data) => {
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        return {
-            message: err?.response?.data?.message,
-            error: true,
-        };
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
-export const getCaptchaService = async (data) => {
+export const captchaService = async (data) => {
     try {
         const response = await axios.get(process.env.API_URL + `/auth/getCaptcha/${data.code}?id=${data.id}`);
         return process.env.API_URL + `/auth/getCaptcha/${data.code}?id=${data.id}`;
     } catch (err) {
-        return {
-            message: err?.response?.data?.message,
-            error: true,
-        };
+
     }
 }
 
-export const doLogoutService = async () => {
+export const logoutService = async () => {
     try {
         const {token} = useAuthStore.getState().auth;
 
@@ -119,9 +102,6 @@ export const doLogoutService = async () => {
             data: JSON.parse(decodeData(response.data.data)),
         }
     } catch (err) {
-        return {
-            message: err?.response?.data?.message,
-            error: true,
-        };
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }

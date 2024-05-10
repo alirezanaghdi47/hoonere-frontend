@@ -2,7 +2,7 @@
 import SelectBox from "@/modules/SelectBox.tsx";
 import Pagination from "@/modules/Pagination.tsx";
 
-const TableNavigator = () => {
+const Finder = () => {
     const options = [
         {value: '12', label: '12'},
         {value: '24', label: '24'},
@@ -12,10 +12,10 @@ const TableNavigator = () => {
 
     return (
         <div className="d-flex flex-wrap justify-content-center justify-content-sm-between align-items-center w-100 gap-5 mt-auto">
-            <div className="w-100px">
+            <div className="w-125px">
                 <SelectBox
                     name='pageSize'
-                    value={options[1]}
+                    value={options[0].value}
                     options={options}
                     onChange={(value) => console.log(value)}
                 />
@@ -31,4 +31,4 @@ const TableNavigator = () => {
     )
 }
 
-export default TableNavigator;
+export default Finder;

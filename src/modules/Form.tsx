@@ -3,17 +3,34 @@
 // modules
 import Typography from "@/modules/Typography.tsx";
 
-const FormGroup = ({children}) => {
+const FormGroup = ({children , ...props}) => {
     return (
-        <div className="d-flex flex-column justify-content-center align-items-start gap-2 w-100">
+        <div
+            {...props}
+            className="d-flex flex-column justify-content-center align-items-start gap-2 w-100"
+        >
             {children}
         </div>
     )
 }
 
-const FormLabel = ({label , required , isBold , size , color}) => {
+const FormControl = ({children , ...props}) => {
     return (
-        <div className="d-flex justify-content-start align-items-center gap-2">
+        <label
+            {...props}
+            className="d-flex align-items-center gap-2 w-100"
+        >
+            {children}
+        </label>
+    )
+}
+
+const FormLabel = ({label , required , isBold , size , color , ...props}) => {
+    return (
+        <div
+            {...props}
+            className="d-flex justify-content-start align-items-center gap-2"
+        >
             <Typography
                 variant="p"
                 size={size}
@@ -50,6 +67,7 @@ const FormError = ({error, touched}) => {
 const Form = () => null;
 
 Form.Group = FormGroup;
+Form.Control = FormControl;
 Form.Label = FormLabel;
 Form.Error = FormError;
 

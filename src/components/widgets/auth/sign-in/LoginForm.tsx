@@ -5,6 +5,9 @@ import {useMutation, useQuery} from "@tanstack/react-query";
 import {useFormik} from "formik";
 import {LuArrowLeft} from "react-icons/lu";
 
+// components
+import Captcha from "@/components/widgets/auth/sign-in/Captcha.tsx";
+
 // hooks
 import useId from "@/hooks/useId.tsx";
 
@@ -14,17 +17,16 @@ import PasswordInput from "@/modules/PasswordInput.tsx";
 import Button from "@/modules/Button.tsx";
 import Typography from "@/modules/Typography.tsx";
 import Form from "@/modules/Form.tsx";
-import Captcha from "@/modules/Captcha.tsx";
 import toast from "@/modules/Toast.tsx";
 
 // services
-import {doLoginWithStaticPasswordService, getCaptchaService} from "@/services/authService.ts";
+import {loginService, captchaService} from "@/services/authService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
 // utils
-import {loginWithAccountSchema} from "@/utils/validations.ts";
+import {loginSchema} from "@/utils/validations.ts";
 import {generateRandomNumber, toEnglishDigits} from "@/utils/functions.ts";
 
 const uniqueCode = Date.now() + "_" + generateRandomNumber(1, 1000);
@@ -34,8 +36,8 @@ const LoginForm = () => {
     const {login} = useAuthStore();
     const {uuid, regenerateUUID} = useId();
 
-    const {mutate, isPending} = useMutation({
-        mutationFn: (data) => doLoginWithStaticPasswordService(data),
+    const loginAction = useMutation({
+        mutationFn: (data) => loginService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -54,13 +56,13 @@ const LoginForm = () => {
         }
     });
 
-    const captcha = useQuery({
+    const captchaAction = useQuery({
         queryKey: ['captcha'],
-        queryFn: () => getCaptchaService({id: uuid, code: uniqueCode}),
+        queryFn: () => captchaService({id: uuid, code: uniqueCode}),
         enabled: Boolean(uuid)
     });
 
-    const formik = useFormik({
+    const loginForm = useFormik({
         enableReinitialize: true,
         initialValues: {
             username: "",
@@ -68,16 +70,16 @@ const LoginForm = () => {
             captcha: "",
             captcha_id: uniqueCode
         },
-        validationSchema: loginWithAccountSchema,
+        validationSchema: loginSchema,
         onSubmit: async (result) => {
-            mutate({...result , captcha: toEnglishDigits(result.captcha)});
+            loginAction.mutate({...result , captcha: toEnglishDigits(result.captcha)});
         }
     });
 
     useEffect(() => {
         const interval = setInterval(() => {
             regenerateUUID();
-            captcha.refetch();
+            captchaAction.refetch();
         }, 6 * 10 * 1000);
 
         return () => clearInterval(interval);
@@ -99,13 +101,13 @@ const LoginForm = () => {
                 <TextInput
                     name="username"
                     placeholder="نام کاربری"
-                    value={formik.values.username}
-                    onChange={(value) => formik.setFieldValue("username", value)}
+                    value={loginForm.values.username}
+                    onChange={(value) => loginForm.setFieldValue("username", value)}
                 />
 
                 <Form.Error
-                    error={formik.errors.username}
-                    touched={formik.touched.username}
+                    error={loginForm.errors.username}
+                    touched={loginForm.touched.username}
                 />
             </Form.Group>
 
@@ -113,33 +115,33 @@ const LoginForm = () => {
                 <PasswordInput
                     name="password"
                     placeholder="رمز عبور"
-                    value={formik.values.password}
-                    onChange={(value) => formik.setFieldValue("password", value)}
+                    value={loginForm.values.password}
+                    onChange={(value) => loginForm.setFieldValue("password", value)}
                 />
 
                 <Form.Error
-                    error={formik.errors.password}
-                    touched={formik.touched.password}
+                    error={loginForm.errors.password}
+                    touched={loginForm.touched.password}
                 />
             </Form.Group>
 
             <Form.Group>
                 <Captcha
                     name="captcha"
-                    value={formik.values.captcha}
+                    value={loginForm.values.captcha}
                     placeholder="کد امنیتی"
-                    preview={captcha.data}
-                    isLoading={captcha.isFetching || captcha.isError}
-                    onChange={(value) => formik.setFieldValue("captcha", value)}
+                    preview={captchaAction.data}
+                    isLoading={captchaAction.isFetching || captchaAction.isError}
+                    onChange={(value) => loginForm.setFieldValue("captcha", value)}
                     onResend={() => {
                         regenerateUUID();
-                        captcha.refetch();
+                        captchaAction.refetch();
                     }}
                 />
 
                 <Form.Error
-                    error={formik.errors.captcha}
-                    touched={formik.touched.captcha}
+                    error={loginForm.errors.captcha}
+                    touched={loginForm.touched.captcha}
                 />
             </Form.Group>
 
@@ -152,8 +154,8 @@ const LoginForm = () => {
                         color="currentColor"
                     />
                 }
-                onClick={formik.handleSubmit}
-                disabled={isPending}
+                onClick={loginForm.handleSubmit}
+                isLoading={loginAction.isPending}
             >
                 ادامه
             </Button>

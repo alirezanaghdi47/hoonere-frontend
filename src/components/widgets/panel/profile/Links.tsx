@@ -4,11 +4,14 @@ import {useLocation, useNavigate} from "react-router-dom";
 // modules
 import Tabs from "@/modules/Tabs.tsx";
 
+// stores
+import useAuthStore from "@/stores/authStore.ts";
+
 const navbarLinks = [
-    {id: 1, label: "بررسی اجمالی", href: "/panel/profile", value: ""},
-    {id: 2, label: "هویتی", href: "/panel/profile#identify", value: "#identify"},
-    {id: 3, label: "شغلی", href: "/panel/profile#occupation", value: "#occupation"},
-    {id: 4, label: "مالی", href: "/panel/profile#financial", value: "#financial"},
+    {id: 1, label: "بررسی اجمالی", href: useAuthStore.getState().auth.panel_url + "profile", value: ""},
+    {id: 2, label: "هویتی", href: useAuthStore.getState().auth.panel_url + "profile#identify", value: "#identify"},
+    {id: 3, label: "شغلی", href: useAuthStore.getState().auth.panel_url + "profile#occupation", value: "#occupation"},
+    {id: 4, label: "مالی", href: useAuthStore.getState().auth.panel_url + "profile#financial", value: "#financial"},
 ];
 
 const Links = () => {

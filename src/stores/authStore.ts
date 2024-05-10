@@ -5,7 +5,6 @@ import {persist, createJSONStorage} from 'zustand/middleware';
 const initialState = {
     token: null,
     username: null,
-    email: null,
     panel_url: null,
     status_id: null
 }
@@ -14,6 +13,7 @@ const useAuthStore = create(persist((set) => ({
         auth: initialState,
         login: (data) => set((state) => ({
             auth: {
+                ...state.auth,
                 token: data.token,
                 username: data.username,
                 panel_url: data.panel_url,
@@ -32,7 +32,7 @@ const useAuthStore = create(persist((set) => ({
     }),
     {
         name: "auth",
-        storage: createJSONStorage(() => sessionStorage)
+        // storage: createJSONStorage(() => sessionStorage)
     }
 ));
 

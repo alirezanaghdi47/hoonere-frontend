@@ -5,6 +5,8 @@ import Loadable from '@loadable/component';
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
+import Temp from "@/pages/TempPage.tsx";
+
 // layouts
 const MainLayout = Loadable(() => import('@/layouts/MainLayout.tsx'));
 const AuthLayout = Loadable(() => import('@/layouts/AuthLayout.tsx'));
@@ -17,8 +19,8 @@ const AddProjectPanel = Loadable(() => import('@/pages/panel/projects/add'));
 const ProfilePanel = Loadable(() => import('@/pages/panel/profile'));
 const SignIn = Loadable(() => import('@/pages/auth/sign-in'));
 const SignUp = Loadable(() => import('@/pages/auth/sign-up'));
-const ServerError = Loadable(() => import('@/pages/ServerErrorPage.tsx'));
-const ClientError = Loadable(() => import('@/pages/ClientErrorPage.tsx'));
+const ServerError = Loadable(() => import('@/pages/error/server'));
+const ClientError = Loadable(() => import('@/pages/error/client'));
 
 const RouterProvider = () => {
     const {auth} = useAuthStore();
@@ -37,6 +39,11 @@ const RouterProvider = () => {
                 element={!isAuth ? <AuthLayout/> : <Navigate to="/panel/dashboard"/>}
             >
                 <Route
+                    path=""
+                    element={<Navigate to="/auth/sign-in"/>}
+                />
+
+                <Route
                     path="sign-in"
                     element={<SignIn/>}
                 />
@@ -51,6 +58,11 @@ const RouterProvider = () => {
                 path="panel"
                 element={isAuth ? <MainLayout/> : <Navigate to="/auth/sign-in"/>}
             >
+                <Route
+                    path=""
+                    element={<Navigate to="/panel/dashboard"/>}
+                />
+
                 <Route
                     path="dashboard"
                     element={<DashboardPanel/>}
@@ -86,6 +98,11 @@ const RouterProvider = () => {
                     element={<ClientError/>}
                 />
             </Route>
+
+            <Route
+                path="/temp"
+                element={<Temp/>}
+            />
         </Routes>
     )
 }

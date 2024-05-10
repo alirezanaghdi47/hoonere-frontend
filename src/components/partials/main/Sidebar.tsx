@@ -5,35 +5,30 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {useMediaQuery} from "usehooks-ts";
 import {LuLayers, LuLogOut, LuPieChart} from "react-icons/lu";
 
-// assets
-import logo from "@/assets/images/logo.svg";
-
 // modules
 import IconButton from "@/modules/IconButton.tsx";
 import toast from "@/modules/Toast.tsx";
 
 // services
-import {doLogoutService} from "@/services/authService.ts";
+import {logoutService} from "@/services/authService.ts";
 
 // stores
 import useAppStore from "@/stores/appStore.ts";
 import useAuthStore from "@/stores/authStore.ts";
 
 const sidebarLinks = [
-    {id: 1, label: "داشبورد", href: "/panel/dashboard", icon: LuPieChart({size: 20, color: 'currentColor'})},
-    {id: 2, label: "پروژه ها", href: "/panel/projects", icon: LuLayers({size: 20, color: 'currentColor'})},
+    {id: 1, label: "داشبورد", href: useAuthStore.getState().auth.panel_url + "dashboard", icon: LuPieChart({size: 20, color: 'currentColor'})},
+    {id: 2, label: "پروژه ها", href: useAuthStore.getState().auth.panel_url + "projects", icon: LuLayers({size: 20, color: 'currentColor'})},
 ];
 
 const Sidebar = () => {
     const {app: {isOpenDrawer}, hideDrawer} = useAppStore();
-    const {logout} = useAuthStore();
-
+    const {logout , auth} = useAuthStore();
     const isDesktop = useMediaQuery("(min-width: 992px)");
 
-    const {mutate, isPending} = useMutation({
-        mutationFn: () => doLogoutService(),
+    const logoutAction = useMutation({
+        mutationFn: () => logoutService(),
         onSuccess: async (data) => {
-            console.log(data);
             if (!data.error) {
                 toast("success", data.message);
                 hideDrawer();
@@ -49,11 +44,11 @@ const Sidebar = () => {
             className={`aside ${!isDesktop ? "drawer drawer-start" : ""} ${isOpenDrawer ? "drawer-on" : ""} shadow-sm`}>
             <div className="d-none d-lg-flex justify-content-center align-items-center my-10">
                 <Link
-                    to="/panel/dashboard"
+                    to={auth.panel_url + "dashboard"}
                     className="w-max mb-5"
                 >
                     <LazyLoadImage
-                        src={logo}
+                        src="/assets/images/logo.svg"
                         alt="logo"
                         width={40}
                         height={40}
@@ -86,7 +81,8 @@ const Sidebar = () => {
                         <IconButton
                             color="light"
                             activeColor="light-danger"
-                            onClick={mutate}
+                            onClick={logoutAction.mutate}
+                            isLoading={logoutAction.isPending}
                         >
                             <LuLogOut
                                 size={20}

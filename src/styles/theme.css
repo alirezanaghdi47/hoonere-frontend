@@ -201,14 +201,14 @@
 }
 @font-face {
     font-family: 'IRANSansWeb';
-    src:  url('../assets/fonts/iran-sans/IRANSansWeb.woff2') format('woff2');
+    src:  url('/assets/fonts/iran-sans/IRANSansWeb.woff2') format('woff2');
     font-weight: normal;
     font-display: fallback;
 }
 
 @font-face {
     font-family: 'IRANSansWeb';
-    src:  url('../assets/fonts/iran-sans/IRANSansWeb_Bold.woff2') format('woff2');
+    src:  url('/assets/fonts/iran-sans/IRANSansWeb_Bold.woff2') format('woff2');
     font-weight: bold;
     font-display: fallback;
 }
@@ -2641,8 +2641,8 @@ textarea.form-control-lg {
   box-shadow: none;
 }
 .form-check-input:checked {
-  background-color: #009ef7;
-  border-color: #009ef7;
+  background-color: #50cd89;
+  border-color: #50cd89;
 }
 .form-check-input:checked[type=checkbox] {
   --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 11' width='13' height='11' fill='none'%3e%3cpath d='M11.0426 1.02893C11.3258 0.695792 11.8254 0.655283 12.1585 0.938451C12.4917 1.22162 12.5322 1.72124 12.249 2.05437L5.51985 9.97104C5.23224 10.3094 4.72261 10.3451 4.3907 10.05L0.828197 6.88335C0.50141 6.59288 0.471975 6.09249 0.762452 5.7657C1.05293 5.43891 1.55332 5.40948 1.88011 5.69995L4.83765 8.32889L11.0426 1.02893Z' fill='%23ffffff'/%3e%3c/svg%3e");
@@ -2651,8 +2651,8 @@ textarea.form-control-lg {
   --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23ffffff'/%3e%3c/svg%3e");
 }
 .form-check-input[type=checkbox]:indeterminate {
-  background-color: #009ef7;
-  border-color: #009ef7;
+  background-color: #50cd89;
+  border-color: #50cd89;
   --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e");
 }
 .form-check-input:disabled {
@@ -2745,7 +2745,7 @@ textarea.form-control-lg {
   width: 1rem;
   height: 1rem;
   margin-top: -0.25rem;
-  background-color: #009ef7;
+  background-color: #50cd89;
   border: 0;
   border-radius: 1rem;
   box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.1);
@@ -2773,7 +2773,7 @@ textarea.form-control-lg {
 .form-range::-moz-range-thumb {
   width: 1rem;
   height: 1rem;
-  background-color: #009ef7;
+  background-color: #50cd89;
   border: 0;
   border-radius: 1rem;
   box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.1);
@@ -28544,11 +28544,11 @@ textarea.form-control-lg {
   --bs-border-color: #F1F1F2;
   --bs-border-dashed-color: #DBDFE9;
   --bs-component-active-color: #ffffff;
-  --bs-component-active-bg: #009ef7;
-  --bs-component-hover-color: #009ef7;
+  --bs-component-active-bg: #50cd89;
+  --bs-component-hover-color: #50cd89;
   --bs-component-hover-bg: #F9F9F9;
   --bs-component-checked-color: #ffffff;
-  --bs-component-checked-bg: #009ef7;
+  --bs-component-checked-bg: #50cd89;
   --bs-box-shadow-xs: 0 0.1rem 0.75rem 0.25rem rgba(0, 0, 0, 0.05);
   --bs-box-shadow-sm: 0 0.1rem 1rem 0.25rem rgba(0, 0, 0, 0.05);
   --bs-box-shadow: 0 0.5rem 1.5rem 0.5rem rgba(0, 0, 0, 0.075);

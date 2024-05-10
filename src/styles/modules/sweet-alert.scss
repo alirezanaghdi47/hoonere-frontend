@@ -1,6 +1,6 @@
 .swal2 {
-  &-container {
-    border-radius: 8px !important;
+  &-popup {
+    border-radius: 10px !important;
   }
 
   &-toast {
@@ -11,5 +11,9 @@
 
   &-timer-progress-bar {
     background: var(--bs-gray-300) !important;
+  }
+
+  &-confirm , &-cancel{
+    border-radius: 10px !important;
   }
 }

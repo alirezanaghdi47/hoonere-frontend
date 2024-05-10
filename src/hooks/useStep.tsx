@@ -1,9 +1,9 @@
 // libraries
 import {useState} from "react";
 
-const useStep = (initialData = null, stepper = 1) => {
+const useStep = (initialData = null, activeStep = 1) => {
     const [step, setStep] = useState(initialData);
-    const [currentStep, setCurrentStep] = useState(stepper);
+    const [currentStep, setCurrentStep] = useState(activeStep);
 
     const changeStep = (value) => setStep(value);
 
@@ -13,7 +13,7 @@ const useStep = (initialData = null, stepper = 1) => {
 
     const resetStep = () => {
         setStep(initialData);
-        setCurrentStep(stepper);
+        setCurrentStep(activeStep);
     }
 
     return {step, changeStep, resetStep, currentStep, nextStep, prevStep}

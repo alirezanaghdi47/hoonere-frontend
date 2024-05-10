@@ -2,6 +2,9 @@
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
+// components
+import Loading from "@/components/partials/main/Loading.tsx";
+
 // modules
 import FileInput from "@/modules/FileInput.tsx";
 import DatePicker from "@/modules/DatePicker.tsx";
@@ -14,41 +17,41 @@ import AvatarInput from "@/modules/AvatarInput.tsx";
 import toast from "@/modules/Toast.tsx";
 
 // services
-import {updateIdentityService} from "@/services/profileService.ts";
+import {updateProfileService} from "@/services/profileService.ts";
 
 // utils
-import {profileIdentitySchema} from "@/utils/validations.ts";
+import {updateProfileSchema} from "@/utils/validations.ts";
 import {convertGregorianToJalali, convertJalaliToGregorian, toEnglishDigits} from "@/utils/functions.ts";
 
-const Identify = ({me}) => {
-    const {mutate, isPending} = useMutation({
-        mutationFn: (data) => updateIdentityService(data),
+const Identify = ({myProfileAction}) => {
+    const updateProfileAction = useMutation({
+        mutationFn: (data) => updateProfileService(data),
         onSuccess: async (data) => {
-            console.log(data)
             if (!data.error) {
                 toast("success", data.message);
+                myProfileAction.mutate();
             } else {
                 toast("error", data.message);
             }
         }
     });
 
-    const formik = useFormik({
+    const updateProfileForm = useFormik({
         enableReinitialize: true,
         initialValues: {
             profile_img: {},
             national_card: {},
-            first_name: me?.data?.data?.userInfo?.first_name ? me?.data?.data?.userInfo?.first_name : "",
-            last_name: me?.data?.data?.userInfo?.last_name ? me?.data?.data?.userInfo?.last_name : "",
-            national_code: me?.data?.data?.userInfo?.national_code ? me?.data?.data?.userInfo?.national_code : "",
-            id_code: me?.data?.data?.userInfo?.id_code ? me?.data?.data?.userInfo?.id_code : "",
-            birthdate: me?.data?.data?.userInfo?.birthdate ? convertGregorianToJalali(me?.data?.data?.userInfo?.birthdate) : "",
-            email: me?.data?.data?.userInfo?.email ? me?.data?.data?.userInfo?.email : "",
-            address: me?.data?.data?.userInfo?.address ? me?.data?.data?.userInfo?.address : "",
+            first_name: myProfileAction?.data?.data?.userInfo?.first_name ? myProfileAction?.data?.data?.userInfo?.first_name : "",
+            last_name: myProfileAction?.data?.data?.userInfo?.last_name ? myProfileAction?.data?.data?.userInfo?.last_name : "",
+            national_code: myProfileAction?.data?.data?.userInfo?.national_code ? myProfileAction?.data?.data?.userInfo?.national_code : "",
+            id_code: myProfileAction?.data?.data?.userInfo?.id_code ? myProfileAction?.data?.data?.userInfo?.id_code : "",
+            birthdate: myProfileAction?.data?.data?.userInfo?.birthdate ? convertGregorianToJalali(myProfileAction?.data?.data?.userInfo?.birthdate) : "",
+            email: myProfileAction?.data?.data?.userInfo?.email ? myProfileAction?.data?.data?.userInfo?.email : "",
+            address: myProfileAction?.data?.data?.userInfo?.address ? myProfileAction?.data?.data?.userInfo?.address : "",
         },
-        validationSchema: profileIdentitySchema,
+        validationSchema: updateProfileSchema,
         onSubmit: async (result) => {
-            mutate({
+            updateProfileAction.mutate({
                 ...result,
                 national_code: toEnglishDigits(result.national_code),
                 id_code: toEnglishDigits(result.id_code),
@@ -57,7 +60,7 @@ const Identify = ({me}) => {
         }
     });
 
-    return (
+    return !myProfileAction.isPending ? (
         <>
             <div className="card w-100">
                 <div className="card-body d-flex flex-column gap-5">
@@ -74,14 +77,14 @@ const Identify = ({me}) => {
                             <Form.Group>
                                 <AvatarInput
                                     name="profile_img"
-                                    preview={me?.data?.data?.userInfo.profile_img}
-                                    value={formik.values.profile_img}
-                                    onChange={(value) => formik.setFieldValue("profile_img", value)}
+                                    preview={myProfileAction?.data?.data?.userInfo.profile_img}
+                                    value={updateProfileForm.values.profile_img}
+                                    onChange={(value) => updateProfileForm.setFieldValue("profile_img", value)}
                                 />
 
                                 <Form.Error
-                                    error={formik.errors.profile_img}
-                                    touched={formik.touched.profile_img}
+                                    error={updateProfileForm.errors.profile_img}
+                                    touched={updateProfileForm.touched.profile_img}
                                 />
                             </Form.Group>
                         </div>
@@ -100,14 +103,14 @@ const Identify = ({me}) => {
                             <Form.Group>
                                 <FileInput
                                     name="national_card"
-                                    preview={me?.data?.data?.userInfo.national_card}
-                                    value={formik.values.national_card}
-                                    onChange={(value) => formik.setFieldValue("national_card", value)}
+                                    preview={myProfileAction?.data?.data?.userInfo.national_card}
+                                    value={updateProfileForm.values.national_card}
+                                    onChange={(value) => updateProfileForm.setFieldValue("national_card", value)}
                                 />
 
                                 <Form.Error
-                                    error={formik.errors.national_card}
-                                    touched={formik.touched.national_card}
+                                    error={updateProfileForm.errors.national_card}
+                                    touched={updateProfileForm.touched.national_card}
                                 />
                             </Form.Group>
                         </div>
@@ -127,13 +130,13 @@ const Identify = ({me}) => {
                             <Form.Group>
                                 <TextInput
                                     name="first_name"
-                                    value={formik.values.first_name}
-                                    onChange={(value) => formik.setFieldValue("first_name", value)}
+                                    value={updateProfileForm.values.first_name}
+                                    onChange={(value) => updateProfileForm.setFieldValue("first_name", value)}
                                 />
 
                                 <Form.Error
-                                    error={formik.errors.first_name}
-                                    touched={formik.touched.first_name}
+                                    error={updateProfileForm.errors.first_name}
+                                    touched={updateProfileForm.touched.first_name}
                                 />
                             </Form.Group>
                         </div>
@@ -153,13 +156,13 @@ const Identify = ({me}) => {
                             <Form.Group>
                                 <TextInput
                                     name="last_name"
-                                    value={formik.values.last_name}
-                                    onChange={(value) => formik.setFieldValue("last_name", value)}
+                                    value={updateProfileForm.values.last_name}
+                                    onChange={(value) => updateProfileForm.setFieldValue("last_name", value)}
                                 />
 
                                 <Form.Error
-                                    error={formik.errors.last_name}
-                                    touched={formik.touched.last_name}
+                                    error={updateProfileForm.errors.last_name}
+                                    touched={updateProfileForm.touched.last_name}
                                 />
                             </Form.Group>
                         </div>
@@ -183,13 +186,13 @@ const Identify = ({me}) => {
                                         numericOnly: true,
                                         delimiter: '',
                                     }}
-                                    value={formik.values.id_code}
-                                    onChange={(value) => formik.setFieldValue("id_code", value)}
+                                    value={updateProfileForm.values.id_code}
+                                    onChange={(value) => updateProfileForm.setFieldValue("id_code", value)}
                                 />
 
                                 <Form.Error
-                                    error={formik.errors.id_code}
-                                    touched={formik.touched.id_code}
+                                    error={updateProfileForm.errors.id_code}
+                                    touched={updateProfileForm.touched.id_code}
                                 />
                             </Form.Group>
                         </div>
@@ -213,13 +216,13 @@ const Identify = ({me}) => {
                                         numericOnly: true,
                                         delimiter: '',
                                     }}
-                                    value={formik.values.national_code}
-                                    onChange={(value) => formik.setFieldValue("national_code", value)}
+                                    value={updateProfileForm.values.national_code}
+                                    onChange={(value) => updateProfileForm.setFieldValue("national_code", value)}
                                 />
 
                                 <Form.Error
-                                    error={formik.errors.national_code}
-                                    touched={formik.touched.national_code}
+                                    error={updateProfileForm.errors.national_code}
+                                    touched={updateProfileForm.touched.national_code}
                                 />
                             </Form.Group>
                         </div>
@@ -239,13 +242,13 @@ const Identify = ({me}) => {
                             <Form.Group>
                                 <DatePicker
                                     name="birthdate"
-                                    value={formik.values.birthdate}
-                                    onChange={(value) => formik.setFieldValue("birthdate", value)}
+                                    value={updateProfileForm.values.birthdate}
+                                    onChange={(value) => updateProfileForm.setFieldValue("birthdate", value)}
                                 />
 
                                 <Form.Error
-                                    error={formik.errors.birthdate}
-                                    touched={formik.touched.birthdate}
+                                    error={updateProfileForm.errors.birthdate}
+                                    touched={updateProfileForm.touched.birthdate}
                                 />
                             </Form.Group>
                         </div>
@@ -265,13 +268,13 @@ const Identify = ({me}) => {
                             <Form.Group>
                                 <TextInput
                                     name="email"
-                                    value={formik.values.email}
-                                    onChange={(value) => formik.setFieldValue("email", value)}
+                                    value={updateProfileForm.values.email}
+                                    onChange={(value) => updateProfileForm.setFieldValue("email", value)}
                                 />
 
                                 <Form.Error
-                                    error={formik.errors.email}
-                                    touched={formik.touched.email}
+                                    error={updateProfileForm.errors.email}
+                                    touched={updateProfileForm.touched.email}
                                 />
                             </Form.Group>
                         </div>
@@ -291,13 +294,13 @@ const Identify = ({me}) => {
                             <Form.Group>
                                 <Textarea
                                     name="address"
-                                    value={formik.values.address}
-                                    onChange={(value) => formik.setFieldValue("address", value)}
+                                    value={updateProfileForm.values.address}
+                                    onChange={(value) => updateProfileForm.setFieldValue("address", value)}
                                 />
 
                                 <Form.Error
-                                    error={formik.errors.address}
-                                    touched={formik.touched.address}
+                                    error={updateProfileForm.errors.address}
+                                    touched={updateProfileForm.touched.address}
                                 />
                             </Form.Group>
                         </div>
@@ -308,13 +311,18 @@ const Identify = ({me}) => {
             <div className="d-flex justify-content-end align-items-center gap-5 w-100">
                 <Button
                     color="primary"
-                    onClick={formik.handleSubmit}
-                    disabled={isPending}
+                    onClick={updateProfileForm.handleSubmit}
+                    isLoading={updateProfileAction.isPending}
                 >
                     ذخیره تغییرات
                 </Button>
             </div>
         </>
+    ) : (
+        <Loading
+            width="100%"
+            height={900}
+        />
     )
 }
 

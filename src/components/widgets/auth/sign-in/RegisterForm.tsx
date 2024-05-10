@@ -13,22 +13,21 @@ import Form from "@/modules/Form.tsx";
 import toast from "@/modules/Toast.tsx";
 
 // services
-import {completeRegisterService} from "@/services/authService.ts";
+import {registerService} from "@/services/authService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
 // utils
-import {registerCreateAccountSchema} from "@/utils/validations.ts";
+import {registerSchema} from "@/utils/validations.ts";
 
 const RegisterForm = ({resetStep}) => {
     const navigate = useNavigate();
     const {auth , changeStatusId} = useAuthStore();
 
-    const {mutate, isPending} = useMutation({
-        mutationFn: (data) => completeRegisterService(data),
+    const registerAction = useMutation({
+        mutationFn: (data) => registerService(data),
         onSuccess: async (data) => {
-            console.log(data);
             if (!data.error) {
                 toast("success", data.message);
 
@@ -41,16 +40,16 @@ const RegisterForm = ({resetStep}) => {
         }
     });
 
-    const formik = useFormik({
+    const registerForm = useFormik({
         enableReinitialize: true,
         initialValues: {
             username: auth.username ? auth.username : "",
             password: "",
             password_confirmation: "",
         },
-        validationSchema: registerCreateAccountSchema,
+        validationSchema: registerSchema,
         onSubmit: async (result) => {
-            mutate(result);
+            registerAction.mutate(result);
         }
     });
 
@@ -70,13 +69,13 @@ const RegisterForm = ({resetStep}) => {
                 <TextInput
                     name="username"
                     placeholder="نام کاربری"
-                    value={formik.values.username}
-                    onChange={(value) => formik.setFieldValue("username" , value)}
+                    value={registerForm.values.username}
+                    onChange={(value) => registerForm.setFieldValue("username" , value)}
                 />
 
                 <Form.Error
-                    error={formik.errors.username}
-                    touched={formik.touched.username}
+                    error={registerForm.errors.username}
+                    touched={registerForm.touched.username}
                 />
             </Form.Group>
 
@@ -84,13 +83,13 @@ const RegisterForm = ({resetStep}) => {
                 <PasswordInput
                     name="password"
                     placeholder="رمز عبور"
-                    value={formik.values.password}
-                    onChange={(value) => formik.setFieldValue("password" , value)}
+                    value={registerForm.values.password}
+                    onChange={(value) => registerForm.setFieldValue("password" , value)}
                 />
 
                 <Form.Error
-                    error={formik.errors.password}
-                    touched={formik.touched.password}
+                    error={registerForm.errors.password}
+                    touched={registerForm.touched.password}
                 />
             </Form.Group>
 
@@ -98,13 +97,13 @@ const RegisterForm = ({resetStep}) => {
                 <PasswordInput
                     name="password_confirmation"
                     placeholder="تکرار رمز عبور"
-                    value={formik.values.password_confirmation}
-                    onChange={(value) => formik.setFieldValue("password_confirmation" , value)}
+                    value={registerForm.values.password_confirmation}
+                    onChange={(value) => registerForm.setFieldValue("password_confirmation" , value)}
                 />
 
                 <Form.Error
-                    error={formik.errors.password_confirmation}
-                    touched={formik.touched.password_confirmation}
+                    error={registerForm.errors.password_confirmation}
+                    touched={registerForm.touched.password_confirmation}
                 />
             </Form.Group>
 
@@ -134,8 +133,8 @@ const RegisterForm = ({resetStep}) => {
                             color="currentColor"
                         />
                     }
-                    onClick={formik.handleSubmit}
-                    disabled={isPending}
+                    onClick={registerForm.handleSubmit}
+                    isLoading={registerAction.isPending}
                 >
                     عضویت
                 </Button>

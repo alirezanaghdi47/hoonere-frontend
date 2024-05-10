@@ -1,6 +1,5 @@
 // libraries
-import {useLayoutEffect} from "react";
-import {Outlet, useLocation, useNavigate} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 
 // components
 import Navbar from "@/components/partials/main/Navbar.tsx";
@@ -8,13 +7,6 @@ import Sidebar from "@/components/partials/main/Sidebar.tsx";
 import Overlay from "@/components/partials/main/Overlay.tsx";
 
 const MainLayout = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
-
-    useLayoutEffect(() => {
-        if (location.pathname === "/account") navigate("/panel/dashboard")
-    }, [location.key]);
-
     return (
         <>
             <div className="header-fixed header-tablet-and-mobile-fixed aside-fixed aside-secondary-disabled">

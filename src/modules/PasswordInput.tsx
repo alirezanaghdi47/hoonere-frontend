@@ -5,11 +5,14 @@ import {LuEye, LuEyeOff} from "react-icons/lu";
 // modules
 import IconButton from "@/modules/IconButton.tsx";
 
-const PasswordInput = ({name, value, placeholder, onChange, startAdornment}) => {
+const PasswordInput = ({name, value, placeholder, onChange, startAdornment , ...props}) => {
     const [isVisible, onToggle] = useToggle();
 
     return (
-        <div className='position-relative w-100'>
+        <div
+            {...props}
+            className='position-relative w-100'
+        >
             {
                 startAdornment && (
                     <span

@@ -1,21 +1,18 @@
 // libraries
 import {LazyLoadImage} from 'react-lazy-load-image-component';
-
-// assets
-import avatar from "@/assets/images/avatar.jpg";
+import {LuUser} from "react-icons/lu";
 
 // modules
 import Typography from "@/modules/Typography.tsx";
-import {LuUser} from "react-icons/lu";
 
-const Information = ({me}) => {
+const Information = ({myProfileAction}) => {
     return (
         <div className="d-flex flex-column flex-sm-row justify-content-start align-items-start gap-5 w-100 h-100 mb-5">
             <div className="d-flex justify-content-center align-items-center w-150px h-150px bg-secondary rounded-2">
                 {
-                    me?.data?.data?.userInfo?.profile_img ? (
+                    myProfileAction?.data?.data?.userInfo?.profile_img ? (
                         <LazyLoadImage
-                            src={me?.data?.data?.userInfo?.profile_img}
+                            src={myProfileAction?.data?.data?.userInfo?.profile_img}
                             alt="avatar"
                             width={150}
                             height={150}
@@ -39,10 +36,10 @@ const Information = ({me}) => {
                     isBold
                 >
                     {
-                        (!me?.data?.data?.userInfo?.first_name || !me?.data?.data?.userInfo?.last_name) ? (
-                            me?.data?.data?.userInfo?.username
+                        (!myProfileAction?.data?.data?.userInfo?.first_name || !myProfileAction?.data?.data?.userInfo?.last_name) ? (
+                            myProfileAction?.data?.data?.userInfo?.username
                         ) : (
-                            me?.data?.data?.userInfo?.first_name + " " + me?.data?.data?.userInfo?.last_name
+                            myProfileAction?.data?.data?.userInfo?.first_name + " " + myProfileAction?.data?.data?.userInfo?.last_name
                         )
                     }
                 </Typography>

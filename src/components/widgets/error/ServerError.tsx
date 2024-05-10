@@ -1,9 +1,6 @@
 // libraries
 import {LazyLoadImage} from "react-lazy-load-image-component";
 
-// assets
-import banner from "@/assets/images/server-down.svg";
-
 // modules
 import Typography from "@/modules/Typography.tsx";
 import Button from "@/modules/Button.tsx";
@@ -12,7 +9,7 @@ const ServerError = () => {
     return (
         <div className="d-flex flex-column justify-content-center align-items-center gap-10 w-100 h-100">
             <LazyLoadImage
-                src={banner}
+                src="/assets/images/server-down.svg"
                 alt="500"
                 width={250}
             />

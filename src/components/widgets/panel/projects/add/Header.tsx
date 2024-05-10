@@ -8,14 +8,18 @@ import IconButton from "@/modules/IconButton.tsx";
 import Badge from "@/modules/Badge.tsx";
 import Breadcrumbs from "@/modules/Breadcrumbs.tsx";
 
+// stores
+import useAuthStore from "@/stores/authStore.ts";
+
 const breadcrumbLinks = [
-    {id: 1, label: "داشبورد", href: "/panel/dashboard"},
-    {id: 2, label: "پروژه ها", href: "/panel/projects"},
-    {id: 3, label: "افزودن پروژه", href: "/panel/projects/add"},
+    {id: 1, label: "داشبورد", href: useAuthStore.getState().auth.panel_url + "dashboard"},
+    {id: 2, label: "پروژه ها", href: useAuthStore.getState().auth.panel_url + "projects"},
+    {id: 3, label: "افزودن پروژه", href: useAuthStore.getState().auth.panel_url + "projects/add"},
 ];
 
 const Header = () => {
     const location = useLocation();
+    const {auth} = useAuthStore();
 
     return (
         <div className="d-flex justify-content-center align-items-center w-100 bg-primary">
@@ -54,7 +58,7 @@ const Header = () => {
                     </IconButton>
 
                     <IconButton
-                        href="/panel/profile"
+                        href={auth.panel_url + "profile"}
                         color="primary"
                     >
                         <LuUser

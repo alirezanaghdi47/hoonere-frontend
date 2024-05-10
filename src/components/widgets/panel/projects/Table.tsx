@@ -3,11 +3,8 @@ import {useMemo} from "react";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {LuInfo, LuPen, LuTrash2} from "react-icons/lu";
 
-// assets
-import logo from "@/assets/images/logo.svg";
-
 // components
-import TableNavigator from "@/components/widgets/panel/projects/TableNavigator.tsx";
+import Finder from "@/components/widgets/panel/projects/Finder.tsx";
 
 // modules
 import DataTable from "@/modules/DataTable.tsx";
@@ -16,7 +13,12 @@ import Tooltip from "@/modules/Tooltip.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import dialog from "@/modules/dialog.tsx";
 
+// stores
+import useAuthStore from "@/stores/authStore.ts";
+
 const Table = ({filter , changeFilter}) => {
+    const {auth} = useAuthStore();
+
     const tableColumns = useMemo(() => [
             {
                 accessorKey: 'number',
@@ -28,7 +30,7 @@ const Table = ({filter , changeFilter}) => {
                 cell: ({row}) => (
                     <div className="w-50px">
                         <LazyLoadImage
-                            src={logo}
+                            src="/assets/images/logo.svg"
                             alt="logo"
                             width={40}
                             height={40}
@@ -127,7 +129,7 @@ const Table = ({filter , changeFilter}) => {
                 cell: ({row}) => (
                     <div className="d-flex justify-content-start align-items-center w-max gap-2">
                         <IconButton
-                            href="/panel/projects/1"
+                            href={auth.panel_url + "projects/1"}
                             color="light-info"
                             size="sm"
                             data-tooltip-id="my-tooltip"
@@ -140,7 +142,7 @@ const Table = ({filter , changeFilter}) => {
                         </IconButton>
 
                         <IconButton
-                            href="/panel/projects/1/edit"
+                            href={auth.panel_url + "projects/1/edit"}
                             color="light-warning"
                             size="sm"
                             data-tooltip-id="my-tooltip"
@@ -202,7 +204,7 @@ const Table = ({filter , changeFilter}) => {
                     columns={tableColumns}
                 />
 
-                <TableNavigator
+                <Finder
                     filter={filter}
                     changeFilter={changeFilter}
                 />

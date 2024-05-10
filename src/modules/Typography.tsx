@@ -1,3 +1,6 @@
+// libraries
+import classNames from "classnames";
+
 const typographySizes = {
     xxs: "7",
     xs: "6",
@@ -8,11 +11,19 @@ const typographySizes = {
     xxl: "1",
 }
 
-const Typography = ({children , variant , size , color , isBold , ...props}) => {
+const Typography = ({children, variant = "p", size, color, isBold, ...props}) => {
     const Tag = `${variant}`;
 
     return (
-        <Tag className={`d-flex align-items-center fs-${typographySizes[size]} text-${color} ${isBold ? "fw-bold" : "fw-normal"} mb-0 ${props.className}`}>
+        <Tag
+            {...props}
+            className={classNames("d-flex align-items-center mb-0", props.className, {
+                [`fs-${typographySizes[size]}`]: true,
+                [`text-${color}`]: true,
+                "fw-bold": isBold,
+                "fw-normal": !isBold,
+            })}
+        >
             {children}
         </Tag>
     )

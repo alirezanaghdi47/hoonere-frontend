@@ -5,9 +5,9 @@ import axios from "axios";
 import useAuthStore from "@/stores/authStore.ts";
 
 // utils
-import {decodeData, encodeData} from "@/utils/functions.ts";
+import {decodeData} from "@/utils/functions.ts";
 
-export const getAllFieldsOfActivityService = async () => {
+export const allJobService = async () => {
     try {
         const {token} = useAuthStore.getState().auth;
 

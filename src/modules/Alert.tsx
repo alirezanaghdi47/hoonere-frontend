@@ -1,9 +1,19 @@
+// libraries
+import classNames from "classnames";
+
 // modules
 import Typography from "@/modules/Typography.tsx";
 
-const Alert = ({color , size , icon , message}) => {
+const Alert = ({color , size , icon , message , ...props}) => {
     return (
-        <div className={`d-flex justify-content-start align-items-center gap-5 bg-light-${color} text-${color} rounded-2 border border-dashed border-${color} p-5`}>
+        <div
+            {...props}
+            className={classNames("d-flex justify-content-start align-items-center gap-5 rounded-2 border border-dashed p-5" , props.className , {
+                [`bg-light-${color}`]: true,
+                [`text-${color}`]: true,
+                [`border-${color}`]: true,
+            })}
+        >
             {icon && icon}
 
             <Typography

@@ -13,9 +13,48 @@ import "@/styles/modules/date-picker.scss";
 // utils
 import {toEnglishDigits} from "@/utils/functions.js";
 
-const DatePicker = ({name, value, onChange, range, minDate, maxDate, disabled, readOnly, holidayDates = []}) => {
+const RenderButton = ({direction, handleClick}) => {
+    return (
+        <IconButton
+            size="sm"
+            color="light"
+            onClick={handleClick}
+        >
+            {
+                direction === "right" ? (
+                    <LuChevronLeft
+                        size={20}
+                        color="currentColor"
+                    />
+                ) : (
+                    <LuChevronRight
+                        size={20}
+                        color="currentColor"
+                    />
+                )
+            }
+        </IconButton>
+    )
+}
+
+const DatePicker = ({name, value, onChange, range, minDate, maxDate, disabled, readOnly, holidayDates = [] , ...props}) => {
+    const customizeDays = (date) => {
+        let color;
+
+        const formattedDate = new DateObject({
+            date: date,
+            locale: persian_fa,
+            calendar: persian
+        }).format("YYYY-MM-DD");
+
+        if (holidayDates.includes(toEnglishDigits(formattedDate))) color = "red";
+
+        if (color) return {className: "highlight highlight-" + color};
+    }
+
     return (
         <ReactDatePicker
+            {...props}
             name={name}
             inputClass="form-control form-control-solid w-100"
             containerClassName="w-100"
@@ -25,54 +64,27 @@ const DatePicker = ({name, value, onChange, range, minDate, maxDate, disabled, r
                 date: value,
                 locale: persian_fa,
                 calendar: persian
-            }).format("YYYY/MM/DD") : null}
+            }).format("YYYY-MM-DD") : null}
             range={range}
             multiple={false}
             minDate={minDate ? new DateObject({
                 date: minDate,
                 locale: persian_fa,
                 calendar: persian
-            }).format("YYYY/MM/DD") : null}
+            }).format("YYYY-MM-DD") : null}
             maxDate={maxDate ? new DateObject({
                 date: maxDate,
                 locale: persian_fa,
                 calendar: persian
-            }).format("YYYY/MM/DD") : null}
+            }).format("YYYY-MM-DD") : null}
             onChange={(value) => onChange(value)}
             renderButton={(direction, handleClick) => (
-                <IconButton
-                    size="sm"
-                    color="light"
-                    onClick={handleClick}
-                >
-                    {
-                        direction === "right" ? (
-                            <LuChevronLeft
-                                size={20}
-                                color="currentColor"
-                            />
-                        ) : (
-                            <LuChevronRight
-                                size={20}
-                                color="currentColor"
-                            />
-                        )
-                    }
-                </IconButton>
+                <RenderButton
+                    direction={direction}
+                    handleClick={handleClick}
+                />
             )}
-            mapDays={({date}) => {
-                let color;
-
-                const formattedDate = new DateObject({
-                    date: date,
-                    locale: persian_fa,
-                    calendar: persian
-                }).format("YYYY/MM/DD");
-
-                if (holidayDates.includes(toEnglishDigits(formattedDate))) color = "red";
-
-                if (color) return {className: "highlight highlight-" + color};
-            }}
+            mapDays={({date}) => customizeDays(date)}
             format="YYYY/MM/DD"
             arrow={false}
             dateSeparator=" تا "

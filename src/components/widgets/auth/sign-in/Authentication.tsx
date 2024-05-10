@@ -1,7 +1,7 @@
 // libraries
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
-import {LuArrowRight, LuShield, LuUser} from "react-icons/lu";
+import {LuShield, LuUser} from "react-icons/lu";
 
 // modules
 import Button from "@/modules/Button.tsx";
@@ -11,20 +11,20 @@ import Form from "@/modules/Form.tsx";
 import toast from "@/modules/Toast.tsx";
 
 // services
-import {sendAuthConfirmCodeService} from "@/services/authService.ts";
+import {authService} from "@/services/authService.ts";
 
 // utils
-import {registerAuthenticationSchema,} from "@/utils/validations.ts";
+import {authSchema} from "@/utils/validations.ts";
 import {toEnglishDigits} from "@/utils/functions.ts";
 
 const Authentication = ({unSetOtpWay, nextStep, changeStep}) => {
-    const {mutate, isPending} = useMutation({
-        mutationFn: (data) => sendAuthConfirmCodeService(data),
+    const authAction = useMutation({
+        mutationFn: (data) => authService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
                 changeStep({
-                    mobile: formik.values.mobile,
+                    mobile: authForm.values.mobile,
                     code: data.data.code
                 });
                 nextStep();
@@ -34,13 +34,13 @@ const Authentication = ({unSetOtpWay, nextStep, changeStep}) => {
         }
     });
 
-    const formik = useFormik({
+    const authForm = useFormik({
         initialValues: {
             mobile: "",
         },
-        validationSchema: registerAuthenticationSchema,
+        validationSchema: authSchema,
         onSubmit: async (result) => {
-            mutate({...result, mobile: toEnglishDigits(result.mobile)});
+            authAction.mutate({...result, mobile: toEnglishDigits(result.mobile)});
         }
     });
 
@@ -60,13 +60,13 @@ const Authentication = ({unSetOtpWay, nextStep, changeStep}) => {
                 <NumberInput
                     name="mobile"
                     placeholder="شماره موبایل"
-                    value={formik.values.mobile}
-                    onChange={(value) => formik.setFieldValue("mobile", value)}
+                    value={authForm.values.mobile}
+                    onChange={(value) => authForm.setFieldValue("mobile", value)}
                 />
 
                 <Form.Error
-                    error={formik.errors.mobile}
-                    touched={formik.touched.mobile}
+                    error={authForm.errors.mobile}
+                    touched={authForm.touched.mobile}
                 />
             </Form.Group>
 
@@ -96,8 +96,8 @@ const Authentication = ({unSetOtpWay, nextStep, changeStep}) => {
                             color="currentColor"
                         />
                     }
-                    disabled={isPending}
-                    onClick={formik.handleSubmit}
+                    isLoading={authAction.isPending}
+                    onClick={authForm.handleSubmit}
                 >
                     اعتبارسنجی
                 </Button>

@@ -12,23 +12,22 @@ import Form from "@/modules/Form.tsx";
 import toast from "@/modules/Toast.tsx";
 
 // services
-import {doAuthService, sendAuthConfirmCodeService} from "@/services/authService.ts";
+import {verifyService, authService} from "@/services/authService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
 // utils
-import {registerVerifyCodeSchema} from "@/utils/validations.ts";
+import {verifySchema} from "@/utils/validations.ts";
 import {toEnglishDigits} from "@/utils/functions.ts";
 
 const VerifyCode = ({nextStep, resetStep, step}) => {
     const navigate = useNavigate();
     const {login} = useAuthStore();
 
-    const {mutate, isPending} = useMutation({
-        mutationFn: (data) => doAuthService(data),
+    const verifyAction = useMutation({
+        mutationFn: (data) => verifyService(data),
         onSuccess: async (data) => {
-            console.log(data.data)
             if (!data.error) {
                 toast("success", data.message);
 
@@ -50,8 +49,8 @@ const VerifyCode = ({nextStep, resetStep, step}) => {
         }
     });
 
-    const sendAuthConfirmCode = useMutation({
-        mutationFn: (data) => sendAuthConfirmCodeService(data),
+    const authAction = useMutation({
+        mutationFn: (data) => authService(data),
         onSuccess: async (data) => {
             console.log(data.data)
             if (!data.error) {
@@ -62,13 +61,13 @@ const VerifyCode = ({nextStep, resetStep, step}) => {
         }
     });
 
-    const formik = useFormik({
+    const verifyForm = useFormik({
         initialValues: {
             code: "",
         },
-        validationSchema: registerVerifyCodeSchema,
+        validationSchema: verifySchema,
         onSubmit: async (result) => {
-            mutate({...result, code: toEnglishDigits(result.code), mobile: step.mobile});
+            verifyAction.mutate({...result, code: toEnglishDigits(result.code), mobile: step.mobile});
         }
     });
 
@@ -88,14 +87,14 @@ const VerifyCode = ({nextStep, resetStep, step}) => {
                 <CodeInput
                     name="code"
                     placeholder="کد اعتبارسنجی"
-                    value={formik.values.code}
-                    onChange={(value) => formik.setFieldValue("code", value)}
-                    onResend={() => sendAuthConfirmCode.mutate({mobile: step.mobile})}
+                    value={verifyForm.values.code}
+                    onChange={(value) => verifyForm.setFieldValue("code", value)}
+                    onResend={() => authAction.mutate({mobile: step.mobile})}
                 />
 
                 <Form.Error
-                    error={formik.errors.code}
-                    touched={formik.touched.code}
+                    error={verifyForm.errors.code}
+                    touched={verifyForm.touched.code}
                 />
             </Form.Group>
 
@@ -125,8 +124,8 @@ const VerifyCode = ({nextStep, resetStep, step}) => {
                             color="currentColor"
                         />
                     }
-                    onClick={formik.handleSubmit}
-                    disabled={isPending}
+                    onClick={verifyForm.handleSubmit}
+                    isLoading={verifyAction.isPending}
                 >
                     بعدی
                 </Button>

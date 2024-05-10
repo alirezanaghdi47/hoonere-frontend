@@ -6,14 +6,15 @@ import {LuRefreshCw} from "react-icons/lu";
 // modules
 import Typography from "@/modules/Typography.tsx";
 import IconButton from "@/modules/IconButton.tsx";
+import NumberInput from "@/modules/NumberInput.tsx";
 
-const CodeInput = ({name, value, placeholder, onChange, startAdornment , onResend}) => {
+const CodeInput = ({name, value, placeholder, onChange, startAdornment , onResend , props}) => {
     const [count, {startCountdown, resetCountdown}] = useCountdown({
         countStart: 120,
         intervalMs: 1000,
     });
 
-    const _handleResend = () => {
+    const resend = () => {
         resetCountdown();
         startCountdown();
         onResend();
@@ -24,26 +25,17 @@ const CodeInput = ({name, value, placeholder, onChange, startAdornment , onResen
     }, []);
 
     return (
-        <div className='position-relative w-100'>
-            {
-                startAdornment && (
-                    <span
-                        className="position-absolute d-flex justify-content-center align-items-center w-43px h-43px m-1"
-                        style={{top: 2, right: 2}}
-                    >
-                        {startAdornment}
-                    </span>
-                )
-            }
+        <div
+            {...props}
+            className='position-relative w-100'
+        >
 
-            <input
+            <NumberInput
                 name={name}
-                id={name}
-                type="text"
                 placeholder={placeholder}
-                className={`form-control form-control-solid ${startAdornment ? 'ps-15' : ''} pe-30`}
                 value={value}
-                onChange={(e) => onChange(e.target.value)}
+                onChange={onChange}
+                startAdornment={startAdornment}
             />
 
             <span
@@ -62,7 +54,7 @@ const CodeInput = ({name, value, placeholder, onChange, startAdornment , onResen
                         <IconButton
                             size="sm"
                             color="light"
-                            onClick={_handleResend}
+                            onClick={resend}
                         >
                             <LuRefreshCw
                                 size={20}

@@ -3,7 +3,10 @@ import {DateObject} from "react-multi-date-picker";
 import gregorian from "react-date-object/calendars/gregorian";
 import gregorian_en from "react-date-object/locales/gregorian_en";
 import persian from "react-date-object/calendars/persian";
-import persian_fa from "react-date-object/locales/persian_fa";
+import persian_en from "react-date-object/locales/persian_en";
+
+// assets
+import iranianBanks from "@/assets/data/iranian-bank.json";
 
 export const formattedSize = (bytes) => {
     if (!bytes) return '0 Bytes';
@@ -61,9 +64,11 @@ export const hexToRgba = (hex, alpha = 1) => {
 
 export const generateRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
-export const convertJalaliToGregorian = (date) => new DateObject(date).convert(gregorian, gregorian_en).format("YYYY/MM/DD");
+export const convertJalaliToGregorian = (date) => new DateObject(date).convert(gregorian, gregorian_en).format("YYYY-MM-DD");
 
-export const convertGregorianToJalali = (date) => new DateObject(date).convert(persian, persian_fa).format("YYYY/MM/DD");
+export const convertGregorianToJalali = (date) => new DateObject(date).convert(persian, persian_en).format("YYYY-MM-DD");
+
+export const getBankInfoFromCardNumber = (card_number) => card_number.length > 6 ? iranianBanks.find(bank => card_number.startsWith(bank.bin)) : null;
 
 export const encodeData = (data) => {
     let encoded = btoa(encodeURIComponent(data).replace(/%([0-9A-F]{2})/g, function toSolidBytes(match, p1) {
@@ -88,4 +93,3 @@ export const decodeData = (data) => {
 
     return secondDecodedString;
 }
-

@@ -11,27 +11,27 @@ import Financial from "@/components/widgets/panel/profile/Financial.tsx";
 import Summary from "@/components/widgets/panel/profile/Summary.tsx";
 
 // services
-import {meService} from "@/services/profileService.ts";
+import {myProfileService} from "@/services/profileService.ts";
 
 const Content = () => {
     const location = useLocation();
 
-    const me = useMutation({
-        mutationFn: (data) => meService(data),
+    const myProfileAction = useMutation({
+        mutationFn: (data) => myProfileService(data),
     });
 
     useLayoutEffect(() => {
-        me.mutate();
-    }, [location.hash]);
+        myProfileAction.mutate();
+    }, []);
 
     return (
         <div className="d-flex flex-column justify-content-start align-items-start gap-5 w-100 mw-950px mt-lg-n20 p-5">
-            <Summary me={me}/>
+            <Summary myProfileAction={myProfileAction}/>
 
-            {location.hash === "" && <Review me={me}/>}
-            {location.hash === "#identify" && <Identify me={me}/>}
-            {location.hash === "#occupation" && <Occupation me={me}/>}
-            {location.hash === "#financial" && <Financial me={me}/>}
+            {location.hash === "" && <Review myProfileAction={myProfileAction}/>}
+            {location.hash === "#identify" && <Identify myProfileAction={myProfileAction}/>}
+            {location.hash === "#occupation" && <Occupation myProfileAction={myProfileAction}/>}
+            {location.hash === "#financial" && <Financial myProfileAction={myProfileAction}/>}
         </div>
     )
 }

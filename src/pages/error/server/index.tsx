@@ -1,5 +1,5 @@
 // components
-import ServerError from "@/components/widgets/errors/ServerError.tsx";
+import ServerError from "@/components/widgets/error/ServerError.tsx";
 
 const ServerErrorPage = () => {
     return (

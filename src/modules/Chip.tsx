@@ -1,12 +1,15 @@
-const badgeSizes = {
-    sm: "badge-sm",
-    md: "",
-    lg: "badge-lg",
-}
+// libraries
+import classNames from "classnames";
 
-const Chip = ({label, size = "md", color, circle = false}) => {
+const Chip = ({label, size = "md", color, circle , ...props}) => {
     return (
-        <span className={`badge ${badgeSizes[size]} badge-${color} ${circle ? "badge-circle" : ""}`}>
+        <span
+            className={classNames("badge" , props.className , {
+                [`badge-${size}`]: true,
+                [`badge-${color}`]: true,
+                "badge-circle": circle,
+            })}
+        >
             {label}
         </span>
     )

@@ -1,8 +1,6 @@
-@media (min-width: 0px) {
-  main, span, ol, ul, pre, div {
-    scrollbar-width: thin;
-    scrollbar-color: var(--bs-scrollbar-color) transparent;
-  }
+* {
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--bs-scrollbar-color) transparent !important;
 }
 
 .pe-30 {
@@ -13,6 +11,6 @@
   width: max-content !important;
 }
 
-.border-solid{
-  border-style: solid!important;
+.border-solid {
+  border-style: solid !important;
 }

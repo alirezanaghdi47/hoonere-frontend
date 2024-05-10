@@ -1,6 +1,9 @@
-const TextInput = ({name, value, placeholder, onChange, startAdornment, endAdornment}) => {
+const TextInput = ({name, value, placeholder, onChange, startAdornment, endAdornment, ...props}) => {
     return (
-        <div className='position-relative w-100'>
+        <div
+            {...props}
+            className='position-relative w-100'
+        >
             {
                 startAdornment && (
                     <span

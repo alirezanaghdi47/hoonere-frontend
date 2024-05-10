@@ -7,7 +7,7 @@ import useAuthStore from "@/stores/authStore.ts";
 // utils
 import {decodeData, encodeData} from "@/utils/functions.ts";
 
-export const updateIdentityService = async (data) => {
+export const updateProfileService = async (data) => {
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -32,11 +32,11 @@ export const updateIdentityService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
-export const meService = async () => {
+export const myProfileService = async () => {
     try {
         const {token} = useAuthStore.getState().auth;
 
@@ -58,8 +58,7 @@ export const meService = async () => {
     }
 }
 
-export const bankCardsCreateService = async (data) => {
-    console.log(data)
+export const createBankCardService = async (data) => {
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -80,11 +79,11 @@ export const bankCardsCreateService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
-export const bankCardsGetService = async () => {
+export const myBankCardsService = async () => {
     try {
         const {token} = useAuthStore.getState().auth;
 
@@ -106,7 +105,7 @@ export const bankCardsGetService = async () => {
     }
 }
 
-export const bankCardsUpdateService = async (data) => {
+export const updateBankCardService = async (data) => {
     try {
         const {token} = useAuthStore.getState().auth;
         const formData = new FormData();
@@ -131,7 +130,7 @@ export const bankCardsUpdateService = async (data) => {
     }
 }
 
-export const bankCardsDeleteService = async (data) => {
+export const deleteBankCardService = async (data) => {
     try {
         const {token} = useAuthStore.getState().auth;
         const formData = new FormData();
@@ -156,7 +155,7 @@ export const bankCardsDeleteService = async (data) => {
     }
 }
 
-export const bankCardsChangeToMainService = async (data) => {
+export const changeStatusOfBankCardService = async (data) => {
     try {
         const {token} = useAuthStore.getState().auth;
         const formData = new FormData();
@@ -177,11 +176,11 @@ export const bankCardsChangeToMainService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
-export const jobGetMyFieldsOfActivityService = async () => {
+export const myJobsService = async () => {
     try {
         const {token} = useAuthStore.getState().auth;
 
@@ -203,14 +202,12 @@ export const jobGetMyFieldsOfActivityService = async () => {
     }
 }
 
-export const jobUpdateService = async (data) => {
+export const updateOccupationService = async (data) => {
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
         const {resume_file, ...rawData} = data;
-
-        console.log(rawData)
 
         if (Object.keys(resume_file).length > 0) formData.append("resume_file", resume_file);
         formData.append("data", encodeData(JSON.stringify(rawData)));
@@ -229,6 +226,6 @@ export const jobUpdateService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }

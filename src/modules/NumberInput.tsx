@@ -1,9 +1,12 @@
 // libraries
 import Cleave from 'cleave.js/react';
 
-const NumberInput = ({name, value, placeholder , options, onChange, startAdornment, endAdornment}) => {
+const NumberInput = ({name, value, placeholder , options, onChange, startAdornment, endAdornment , ...props}) => {
     return (
-        <div className='position-relative w-100'>
+        <div
+            {...props}
+            className='position-relative w-100'
+        >
             {
                 startAdornment && (
                     <span className="position-absolute start-0 top-0 d-flex justify-content-center align-items-center w-43px h-43px m-1">

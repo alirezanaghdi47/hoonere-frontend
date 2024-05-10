@@ -1,5 +1,5 @@
 // components
-import ClientError from "@/components/widgets/errors/ClientError.tsx";
+import ClientError from "@/components/widgets/error/ClientError.tsx";
 
 const ClientErrorPage = () => {
     return (

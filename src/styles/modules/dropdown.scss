@@ -32,7 +32,7 @@
       position: relative !important;
 
       &::after {
-        content: url("../../assets/icons/chevron-left.svg") !important;
+        content: url("../../../public/assets/icons/chevron-left.svg") !important;
         position: absolute !important;
         font-size: 0.95rem !important;
         right: calc(100% - 16px) !important;
