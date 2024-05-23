@@ -1,6 +1,6 @@
 // components
-import Header from "@/components/widgets/panel/projects/Header.tsx";
 import Content from "@/components/widgets/panel/projects/Content.tsx";
+import Header from "@/components/widgets/panel/projects/Header.tsx";
 
 const Projects = () => {
     return (

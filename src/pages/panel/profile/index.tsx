@@ -15,8 +15,8 @@ const Profile = () => {
     const {auth} = useAuthStore();
 
     useEffect(() => {
-        if (!["", "#identify", "#occupation", "#financial"].includes(location.hash)) {
-            navigate(auth.panel_url + "profile");
+        if (!["#review", "#identify", "#occupation", "#financial"].includes(location.hash)) {
+            navigate(auth.panel_url + "profile#review");
         }
     }, [location.key]);
 

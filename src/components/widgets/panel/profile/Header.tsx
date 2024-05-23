@@ -13,7 +13,7 @@ import useAuthStore from "@/stores/authStore.ts";
 
 const breadcrumbLinks = [
     {id: 1, label: "داشبورد", href: useAuthStore.getState().auth.panel_url + "dashboard"},
-    {id: 2, label: "حساب کاربری", href: useAuthStore.getState().auth.panel_url + "profile"},
+    {id: 2, label: "حساب کاربری", href: useAuthStore.getState().auth.panel_url + "profile#review"},
 ];
 
 const Header = () => {
@@ -57,7 +57,7 @@ const Header = () => {
                     </IconButton>
 
                     <IconButton
-                        href={auth.panel_url + "profile"}
+                        href={auth.panel_url + "profile#review"}
                         color="primary"
                     >
                         <LuUser

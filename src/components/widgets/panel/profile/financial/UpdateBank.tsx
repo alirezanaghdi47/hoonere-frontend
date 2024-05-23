@@ -17,16 +17,18 @@ import {updateBankCardService} from "@/services/profileService.ts";
 // utils
 import {financialSchema} from "@/utils/validations.ts";
 
-const UpdateBankForm = ({myBankCardsAction, part, resetPart, user}) => {
+const UpdateBankForm = ({readMyAllBankCardAction, part, resetPart, user}) => {
     const updateBankCardAction = useMutation({
         mutationFn: (data) => updateBankCardService(data),
         onSuccess: async (data) => {
-            console.log(data)
             if (!data.error) {
                 toast("success", data.message);
+
                 resetPart();
+
                 updateBankCardForm.handleReset();
-                myBankCardsAction.mutate();
+
+                readMyAllBankCardAction.mutate();
             } else {
                 toast("error", data.message);
             }
@@ -36,13 +38,16 @@ const UpdateBankForm = ({myBankCardsAction, part, resetPart, user}) => {
     const updateBankCardForm = useFormik({
         enableReinitialize: true,
         initialValues: {
-            card_number: part?.card_number ? part?.card_number : "",
-            card_shaba: part?.card_shaba ? part?.card_shaba : "",
-            account_id: part?.account_id ? part?.account_id : ""
+            card_number: part?.card_number ? part.card_number : "",
+            card_shaba: part?.card_shaba ? part.card_shaba : "",
+            account_id: part?.account_id ? part.account_id : ""
         },
         validationSchema: financialSchema,
         onSubmit: async (result) => {
-            updateBankCardAction.mutate({...result, card_id: part?.id.toString()});
+            updateBankCardAction.mutate({
+                ...result,
+                card_id: part?.id.toString()
+            });
         },
         onReset: async () => {
             resetPart();
@@ -158,10 +163,10 @@ const UpdateBankForm = ({myBankCardsAction, part, resetPart, user}) => {
     )
 }
 
-const UpdateBank = ({myBankCardsAction, part, resetPart, user}) => {
+const UpdateBank = ({readMyAllBankCardAction, part, resetPart, user}) => {
     return (
         <UpdateBankForm
-            myBankCardsAction={myBankCardsAction}
+            readMyAllBankCardAction={readMyAllBankCardAction}
             part={part}
             resetPart={resetPart}
             user={user}

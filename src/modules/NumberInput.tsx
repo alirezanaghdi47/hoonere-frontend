@@ -1,7 +1,8 @@
 // libraries
 import Cleave from 'cleave.js/react';
+import classNames from "classnames";
 
-const NumberInput = ({name, value, placeholder , options, onChange, startAdornment, endAdornment , ...props}) => {
+const NumberInput = ({name, value, placeholder , options, onChange, startAdornment, endAdornment , disabled , ...props}) => {
     return (
         <div
             {...props}
@@ -18,10 +19,14 @@ const NumberInput = ({name, value, placeholder , options, onChange, startAdornme
             <Cleave
                 name={name}
                 placeholder={placeholder}
-                className={`form-control form-control-solid ${startAdornment ? 'ps-15' : ''} ${endAdornment ? 'pe-15' : ''}`}
+                className={classNames("form-control form-control-solid", {
+                    "ps-15": startAdornment,
+                    "pe-15": endAdornment,
+                })}
                 value={value}
                 onChange={(e) => onChange(e.target.rawValue)}
                 options={options}
+                disabled={disabled}
             />
 
             {

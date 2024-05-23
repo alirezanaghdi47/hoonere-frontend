@@ -1,5 +1,7 @@
 .react-tooltip {
+  max-width: 250px !important;
   background: var(--bs-dark) !important;
   color: var(--bs-light) !important;
-  border-radius: 10px!important;
+  line-height: 25px;
+  border-radius: 10px !important;
 }

@@ -6,7 +6,7 @@ import persian from "react-date-object/calendars/persian";
 import persian_en from "react-date-object/locales/persian_en";
 
 // assets
-import iranianBanks from "@/assets/data/iranian-bank.json";
+import iranianBanks from "@/assets/data/iranian-banks.json";
 
 export const formattedSize = (bytes) => {
     if (!bytes) return '0 Bytes';
@@ -68,7 +68,7 @@ export const convertJalaliToGregorian = (date) => new DateObject(date).convert(g
 
 export const convertGregorianToJalali = (date) => new DateObject(date).convert(persian, persian_en).format("YYYY-MM-DD");
 
-export const getBankInfoFromCardNumber = (card_number) => card_number.length > 6 ? iranianBanks.find(bank => card_number.startsWith(bank.bin)) : null;
+export const getBankInfoFromCardNumber = (card_number) => card_number.length > 6 ? iranianBanks?.find(bank => card_number.startsWith(bank.bin)) : null;
 
 export const encodeData = (data) => {
     let encoded = btoa(encodeURIComponent(data).replace(/%([0-9A-F]{2})/g, function toSolidBytes(match, p1) {
@@ -92,4 +92,14 @@ export const decodeData = (data) => {
     let secondDecodedString = decoder.decode(bytes);
 
     return secondDecodedString;
+}
+
+export const removeItemFromObject = (obj , keys) => {
+    let clonedObject = JSON.parse(JSON.stringify(obj));
+
+    keys.forEach(key => {
+        delete clonedObject[key];
+    })
+
+    return clonedObject;
 }

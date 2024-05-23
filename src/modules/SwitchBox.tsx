@@ -1,4 +1,4 @@
-const SwitchBox = ({name , id, checked, value, onChange , ...props}) => {
+const SwitchBox = ({name , id, checked, value, onChange , disabled , ...props}) => {
     return (
         <div
             {...props}
@@ -11,7 +11,8 @@ const SwitchBox = ({name , id, checked, value, onChange , ...props}) => {
                 className="form-check-input"
                 value={value}
                 checked={checked}
-                onChange={onChange}
+                onChange={(e) => onChange(e.target.checked)}
+                disabled={disabled}
             />
         </div>
     )

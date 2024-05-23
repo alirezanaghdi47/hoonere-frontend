@@ -1,4 +1,4 @@
-const Radiobox = ({name , id, checked, value, onChange , ...props}) => {
+const Radiobox = ({name , id, checked, value, onChange , disabled , ...props}) => {
     return (
         <div
             {...props}
@@ -12,6 +12,7 @@ const Radiobox = ({name , id, checked, value, onChange , ...props}) => {
                 value={value}
                 checked={checked}
                 onChange={onChange}
+                disabled={disabled}
             />
         </div>
     )

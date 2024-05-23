@@ -2,7 +2,6 @@
 import {useNavigate} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
-import {LuUserPlus, LuX} from "react-icons/lu";
 
 // modules
 import TextInput from "@/modules/TextInput.tsx";
@@ -113,12 +112,6 @@ const RegisterForm = ({resetStep}) => {
                     direction="start"
                     isDense
                     fullWidth
-                    startIcon={
-                        <LuX
-                            size={20}
-                            color="currentColor"
-                        />
-                    }
                     onClick={resetStep}
                 >
                     انصراف
@@ -127,12 +120,6 @@ const RegisterForm = ({resetStep}) => {
                 <Button
                     color="primary"
                     fullWidth
-                    startIcon={
-                        <LuUserPlus
-                            size={20}
-                            color="currentColor"
-                        />
-                    }
                     onClick={registerForm.handleSubmit}
                     isLoading={registerAction.isPending}
                 >

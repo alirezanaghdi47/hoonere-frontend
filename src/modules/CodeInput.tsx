@@ -8,7 +8,7 @@ import Typography from "@/modules/Typography.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import NumberInput from "@/modules/NumberInput.tsx";
 
-const CodeInput = ({name, value, placeholder, onChange, startAdornment , onResend , props}) => {
+const CodeInput = ({name, value, placeholder, onChange, startAdornment , onResend , disabled , ...props}) => {
     const [count, {startCountdown, resetCountdown}] = useCountdown({
         countStart: 120,
         intervalMs: 1000,
@@ -36,6 +36,7 @@ const CodeInput = ({name, value, placeholder, onChange, startAdornment , onResen
                 value={value}
                 onChange={onChange}
                 startAdornment={startAdornment}
+                disabled={disabled}
             />
 
             <span

@@ -43,14 +43,14 @@ export const PreviewBankCard = ({card, user}) => {
             <div className="col-12 col-md-6">
                 <div
                     className="position-relative d-flex flex-column justify-content-between align-items-center gap-5 w-100 h-200px rounded-2 p-5"
-                    style={{background: getBankInfoFromCardNumber(card.card_number) ? hexToRgba(getBankInfoFromCardNumber(card.card_number)?.color, 0.25) : hexToRgba("#DBDFE9", 0.25)}}
+                    style={{background: getBankInfoFromCardNumber(card?.card_number) ? hexToRgba(getBankInfoFromCardNumber(card?.card_number)?.color, 0.25) : hexToRgba("#DBDFE9", 0.25)}}
                 >
 
                     <div className='d-flex justify-content-between align-items-center gap-2 w-100'>
                         <div className="d-flex justify-content-start align-items-center gap-2">
                             <LazyLoadImage
-                                src={getBankInfoFromCardNumber(card.card_number)?.bank ? `/assets/images/${getBankInfoFromCardNumber(card.card_number)?.bank}.png` : "/assets/images/placeholder.png"}
-                                alt={getBankInfoFromCardNumber(card.card_number)?.bank}
+                                src={getBankInfoFromCardNumber(card?.card_number)?.bank ? `/assets/images/iranian-banks/${getBankInfoFromCardNumber(card?.card_number)?.bank}.png` : "/assets/images/placeholder.png"}
+                                alt={getBankInfoFromCardNumber(card?.card_number)?.bank}
                                 width={50}
                                 height={50}
                                 className="object-fit-cover rounded-circle"
@@ -62,7 +62,7 @@ export const PreviewBankCard = ({card, user}) => {
                                 color="dark"
                                 isBold
                             >
-                                {getBankInfoFromCardNumber(card.card_number)?.title ? getBankInfoFromCardNumber(card.card_number)?.title : 'نام بانک یا موسسه اعتباری'}
+                                {getBankInfoFromCardNumber(card?.card_number)?.title ? getBankInfoFromCardNumber(card?.card_number)?.title : 'نام بانک یا موسسه اعتباری'}
                             </Typography>
                         </div>
                     </div>
@@ -107,14 +107,14 @@ export const BankCard = ({card, user, dropdownOptions}) => {
         <div className="col-12 col-md-6">
             <div
                 className="position-relative d-flex flex-column justify-content-between align-items-center gap-5 w-100 h-200px rounded-2 p-5"
-                style={{background: getBankInfoFromCardNumber(card.card_number) ? hexToRgba(getBankInfoFromCardNumber(card.card_number)?.color, 0.25) : hexToRgba("#DBDFE9", 0.25)}}
+                style={{background: getBankInfoFromCardNumber(card?.card_number) ? hexToRgba(getBankInfoFromCardNumber(card?.card_number)?.color, 0.25) : hexToRgba("#DBDFE9", 0.25)}}
             >
 
                 <div className='d-flex justify-content-between align-items-center gap-2 w-100'>
                     <div className="d-flex justify-content-start align-items-center gap-2">
                         <LazyLoadImage
-                            src={getBankInfoFromCardNumber(card.card_number)?.bank ? `/assets/images/${getBankInfoFromCardNumber(card.card_number)?.bank}.png` : "/assets/images/placeholder.png"}
-                            alt={getBankInfoFromCardNumber(card.card_number)?.bank}
+                            src={getBankInfoFromCardNumber(card?.card_number)?.bank ? `/assets/images/iranian-banks/${getBankInfoFromCardNumber(card?.card_number)?.bank}.png` : "/assets/images/placeholder.png"}
+                            alt={getBankInfoFromCardNumber(card?.card_number)?.bank}
                             width={50}
                             height={50}
                             className="object-fit-cover rounded-circle"
@@ -126,7 +126,7 @@ export const BankCard = ({card, user, dropdownOptions}) => {
                             color="dark"
                             isBold
                         >
-                            {getBankInfoFromCardNumber(card.card_number)?.title ? getBankInfoFromCardNumber(card.card_number)?.title : 'نام بانک یا موسسه اعتباری'}
+                            {getBankInfoFromCardNumber(card?.card_number)?.title ? getBankInfoFromCardNumber(card?.card_number)?.title : 'نام بانک یا موسسه اعتباری'}
                         </Typography>
                     </div>
 
@@ -179,7 +179,7 @@ export const BankCard = ({card, user, dropdownOptions}) => {
                     </Typography>
 
                     {
-                        Boolean(parseInt(card.is_main) > 0) && (
+                        Boolean(parseInt(card?.is_main) > 0) && (
                             <Chip
                                 color="primary"
                                 label="حساب پیش فرض"

@@ -1,7 +1,6 @@
 // libraries
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
-import {LuShield, LuUser} from "react-icons/lu";
 
 // modules
 import Button from "@/modules/Button.tsx";
@@ -40,7 +39,10 @@ const Authentication = ({unSetOtpWay, nextStep, changeStep}) => {
         },
         validationSchema: authSchema,
         onSubmit: async (result) => {
-            authAction.mutate({...result, mobile: toEnglishDigits(result.mobile)});
+            authAction.mutate({
+                ...result,
+                mobile: toEnglishDigits(result.mobile)
+            });
         }
     });
 
@@ -76,12 +78,6 @@ const Authentication = ({unSetOtpWay, nextStep, changeStep}) => {
                     direction="start"
                     isDense
                     fullWidth
-                    startIcon={
-                        <LuUser
-                            size={20}
-                            color="currentColor"
-                        />
-                    }
                     onClick={unSetOtpWay}
                 >
                     ورود با حساب کاربری
@@ -90,12 +86,6 @@ const Authentication = ({unSetOtpWay, nextStep, changeStep}) => {
                 <Button
                     color="primary"
                     fullWidth
-                    startIcon={
-                        <LuShield
-                            size={20}
-                            color="currentColor"
-                        />
-                    }
                     isLoading={authAction.isPending}
                     onClick={authForm.handleSubmit}
                 >

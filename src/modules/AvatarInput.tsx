@@ -4,10 +4,11 @@ import {useDropzone} from 'react-dropzone';
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {LuUser} from "react-icons/lu";
 
-const AvatarInput = ({name, value, preview, onChange}) => {
+const AvatarInput = ({name, value, preview, onChange , disabled}) => {
     const [files, setFiles] = useState([value]);
 
     const {getRootProps, getInputProps} = useDropzone({
+        disabled: disabled,
         onDrop: acceptedFiles => {
             setFiles(acceptedFiles.map(file => Object.assign(file, {
                 preview: URL.createObjectURL(file)

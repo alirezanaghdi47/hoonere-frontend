@@ -1,11 +1,12 @@
 // libraries
 import {useToggle} from 'usehooks-ts'
+import classNames from "classnames";
 import {LuEye, LuEyeOff} from "react-icons/lu";
 
 // modules
 import IconButton from "@/modules/IconButton.tsx";
 
-const PasswordInput = ({name, value, placeholder, onChange, startAdornment , ...props}) => {
+const PasswordInput = ({name, value, placeholder, onChange, startAdornment, disabled, ...props}) => {
     const [isVisible, onToggle] = useToggle();
 
     return (
@@ -28,9 +29,12 @@ const PasswordInput = ({name, value, placeholder, onChange, startAdornment , ...
                 name={name}
                 type={isVisible ? "text" : 'password'}
                 placeholder={placeholder}
-                className={`form-control form-control-solid ${startAdornment ? 'ps-15' : ''}`}
+                className={classNames("form-control form-control-solid", {
+                    "ps-15": startAdornment
+                })}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
+                disabled={disabled}
             />
 
             <span

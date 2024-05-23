@@ -1,4 +1,17 @@
-const TextInput = ({name, value, placeholder, onChange, startAdornment, endAdornment, ...props}) => {
+// libraries
+import classNames from "classnames";
+
+const TextInput = ({
+                       name,
+                       value,
+                       placeholder,
+                       onChange,
+                       onBlur = () => null,
+                       startAdornment,
+                       endAdornment,
+                       disabled,
+                       ...props
+                   }) => {
     return (
         <div
             {...props}
@@ -19,9 +32,14 @@ const TextInput = ({name, value, placeholder, onChange, startAdornment, endAdorn
                 name={name}
                 type="text"
                 placeholder={placeholder}
-                className={`form-control form-control-solid ${startAdornment ? 'ps-15' : ''} ${endAdornment ? 'pe-15' : ''}`}
+                className={classNames("form-control form-control-solid", {
+                    "ps-15": startAdornment,
+                    "pe-15": endAdornment,
+                })}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
+                onBlur={(e) => onBlur(e.target.value)}
+                disabled={disabled}
             />
 
             {

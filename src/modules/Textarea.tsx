@@ -1,4 +1,4 @@
-const Textarea = ({name, value, placeholder, rows = 5, onChange, ...props}) => {
+const Textarea = ({name, value, placeholder, rows = 5, onChange , disabled, ...props}) => {
     return (
         <div
             {...props}
@@ -11,6 +11,7 @@ const Textarea = ({name, value, placeholder, rows = 5, onChange, ...props}) => {
                 className="form-control form-control-solid"
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
+                disabled={disabled}
             />
         </div>
     )

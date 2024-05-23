@@ -17,15 +17,18 @@ import {createBankCardService} from "@/services/profileService.ts";
 // utils
 import {financialSchema} from "@/utils/validations.ts";
 
-const CreateBankForm = ({myBankCardsAction, resetPart, user}) => {
+const CreateBankForm = ({readMyAllBankCardAction, resetPart, user}) => {
     const createBankCardAction = useMutation({
         mutationFn: (data) => createBankCardService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
+
                 resetPart();
+
                 createBankCardForm.handleReset();
-                myBankCardsAction.mutate();
+
+                readMyAllBankCardAction.mutate();
             } else {
                 toast("error", data.message);
             }
@@ -156,10 +159,10 @@ const CreateBankForm = ({myBankCardsAction, resetPart, user}) => {
     )
 }
 
-const CreateBank = ({myBankCardsAction, resetPart, user}) => {
+const CreateBank = ({readMyAllBankCardAction, resetPart, user}) => {
     return (
         <CreateBankForm
-            myBankCardsAction={myBankCardsAction}
+            readMyAllBankCardAction={readMyAllBankCardAction}
             resetPart={resetPart}
             user={user}
         />

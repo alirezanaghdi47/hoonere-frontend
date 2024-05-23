@@ -1,6 +1,3 @@
-// libraries
-import {LuPhone} from "react-icons/lu";
-
 // components
 import LoginForm from "@/components/widgets/auth/sign-in/LoginForm.tsx";
 
@@ -18,12 +15,6 @@ const LoginWithAccount = ({setOtpWay}) => {
                     textColor="gray-600"
                     isDense
                     fullWidth
-                    startIcon={
-                        <LuPhone
-                            size={20}
-                            color="currentColor"
-                        />
-                    }
                     onClick={setOtpWay}
                 >
                     ورود با شماره همراه

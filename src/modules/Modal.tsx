@@ -1,5 +1,6 @@
 // libraries
 import ReactModal from 'react-modal';
+import classNames from "classnames";
 import {LuX} from "react-icons/lu";
 
 // modules
@@ -27,15 +28,24 @@ const styles = {
     }
 }
 
-const Modal = ({children, isOpen, onClose, width = "md", height = "content", position = "any"}) => {
+const Modal = ({children, isOpen, onClose, width = "md", height = "content", position = "any" , ...props}) => {
     return (
         <ReactModal
             isOpen={isOpen}
             onRequestClose={onClose}
             ariaHideApp={false}
             closeTimeoutMS={300}
-            className={`d-flex flex-column justify-content-start align-items-center gap-5 ${styles.width[width]} ${styles.height[height]} ${position === "any" && "rounded-0"}  ${position === "center" && "rounded-2"} ${position === "bottom" && "rounded-tl-lg rounded-tr-lg"} bg-light p-5`}
-            overlayClassName={`position-fixed top-0 left-0 z-index-1 d-flex ${styles.position[position]} ${position === "center" && "p-5"} w-100 h-100 bg-dark bg-opacity-75`}
+            className={classNames("d-flex flex-column justify-content-start align-items-center gap-5 bg-light p-5" , props.className.content , {
+                [`${styles.width[width]}`]: true,
+                [`${styles.height[height]}`]: true,
+                "rounded-0": position === "any",
+                "rounded-2": position === "center",
+                "rounded-tl-lg rounded-tr-lg": position === "bottom",
+            })}
+            overlayClassName={classNames("position-fixed top-0 left-0 z-index-2 d-flex w-100 h-100 bg-dark bg-opacity-75" , props.className.overlay , {
+                [`${styles.position[position]}`]: true,
+                "p-5": position === "center",
+            })}
         >
             {children}
         </ReactModal>
@@ -43,7 +53,6 @@ const Modal = ({children, isOpen, onClose, width = "md", height = "content", pos
 }
 
 const ModalHeader = ({title, onClose}) => {
-
     return (
         <div className="d-flex justify-content-between align-items-center w-100 gap-5">
             <Typography
@@ -67,19 +76,25 @@ const ModalHeader = ({title, onClose}) => {
     )
 }
 
-const ModalBody = ({children, center , className}) => {
-
+const ModalBody = ({children, center, ...props}) => {
     return (
-        <div className={`d-flex flex-column justify-content-start align-items-center gap-5 w-100 h-max overflow-y-auto remove-scrollbar ${center && "my-auto"} ${className ?? ""}`}>
+        <div
+            {...props}
+            className={classNames("d-flex flex-column justify-content-start align-items-center gap-5 w-100 h-max overflow-y-auto remove-scrollbar", props.className, {
+                "my-auto": center
+            })}
+        >
             {children}
         </div>
     )
 }
 
-const ModalFooter = ({cancelButton, submitButton}) => {
-
+const ModalFooter = ({cancelButton, submitButton, ...props}) => {
     return (
-        <div className="d-flex justify-content-end align-items-center gap-2 w-100 mt-auto">
+        <div
+            {...props}
+            className="d-flex justify-content-end align-items-center gap-2 w-100 mt-auto"
+        >
             {cancelButton}
             {submitButton}
         </div>

@@ -88,3 +88,81 @@ export const financialSchema = Yup.object().shape({
     card_shaba: Yup.string().trim().required("شماره شبا الزامی است"),
     account_id: Yup.string().trim().required("شماره حساب الزامی است")
 });
+
+export const readUserInquirySchema = Yup.object().shape({
+    username: Yup.string().trim().required("نام کاربری الزامی است"),
+    foa_parent_id: Yup.number().nullable(),
+    foa_id: Yup.number().required("عنوان شغلی الزامی است"),
+});
+
+export const createProjectSchema = Yup.object().shape({
+    logo: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 1 مگابایت باشد", (value: any) => {
+        if (Object.keys(value).length === 0) {
+            return true;
+        } else {
+            return value.size <= 1_024_000;
+        }
+    }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: any) => {
+        if (Object.keys(value).length === 0) {
+            return true;
+        } else {
+            return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
+        }
+    }),
+    type_id: Yup.string().trim().required("نوع پروژه الزامی است"),
+    title: Yup.string().trim().required("عنوان پروژه الزامی است"),
+    description: Yup.string().trim().required("توضیحات پروژه الزامی است"),
+    producer: Yup.string().trim().required("تهیه کننده پروژه الزامی است"),
+    count_of_parts: Yup.number().min(1, "حداقل تعداد قسمت پروژه 1 می باشد").required("تعداد قسمت های پروژه الزامی است"),
+    time_of_parts: Yup.number().min(1, "حداقل مدت زمان هر قسمت پروژه 1 می باشد").required("مدت زمان هر قسمت پروژه الزامی است"),
+    location: Yup.string().trim().required("موقعیت فیلم برداری پروژه الزامی است")
+});
+
+export const updateProjectSchema = Yup.object().shape({
+    logo: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 1 مگابایت باشد", (value: any) => {
+        if (Object.keys(value).length === 0) {
+            return true;
+        } else {
+            return value.size <= 1_024_000;
+        }
+    }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: any) => {
+        if (Object.keys(value).length === 0) {
+            return true;
+        } else {
+            return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
+        }
+    }),
+    type_id: Yup.string().trim().required("نوع پروژه الزامی است"),
+    title: Yup.string().trim().required("عنوان پروژه الزامی است"),
+    description: Yup.string().trim().required("توضیحات پروژه الزامی است"),
+    producer: Yup.string().trim().required("تهیه کننده پروژه الزامی است"),
+    count_of_parts: Yup.number().min(1, "حداقل تعداد قسمت پروژه 1 می باشد").required("تعداد قسمت های پروژه الزامی است"),
+    time_of_parts: Yup.number().min(1, "حداقل مدت زمان هر قسمت پروژه 1 می باشد").required("مدت زمان هر قسمت پروژه الزامی است"),
+    location: Yup.string().trim().required("موقعیت فیلم برداری پروژه الزامی است")
+});
+
+export const createProjectMemberSchema = Yup.object().shape({
+    foa_parent_id: Yup.string().required("گروه شغلی الزامی است"),
+    foa_child_id: Yup.string().required("عنوان شغلی الزامی است"),
+    user_id: Yup.string().trim().when(["name"], {
+        is: (value) => value === undefined,
+        then: () => Yup.string().trim().required("نام کاربری الزامی است"),
+    }),
+    name: Yup.string().trim().when(["user_id"], {
+        is: (value) => value === undefined,
+        then: () => Yup.string().trim().required("نام و نام خانوادگی الزامی است"),
+    })
+}, [['user_id', 'name']]);
+
+export const updateProjectMemberSchema = Yup.object().shape({
+    foa_parent_id: Yup.string().required("گروه شغلی الزامی است"),
+    foa_child_id: Yup.string().required("عنوان شغلی الزامی است"),
+    user_id: Yup.string().trim().when(["name"], {
+        is: (value) => value === undefined,
+        then: () => Yup.string().trim().required("نام کاربری الزامی است"),
+    }),
+    name: Yup.string().trim().when(["user_id"], {
+        is: (value) => value === undefined,
+        then: () => Yup.string().trim().required("نام و نام خانوادگی الزامی است"),
+    })
+}, [['user_id', 'name']]);

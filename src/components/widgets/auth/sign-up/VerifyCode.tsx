@@ -2,7 +2,6 @@
 import {useNavigate} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
-import {LuArrowLeft, LuArrowRight} from "react-icons/lu";
 
 // modules
 import Button from "@/modules/Button.tsx";
@@ -67,7 +66,11 @@ const VerifyCode = ({nextStep, resetStep, step}) => {
         },
         validationSchema: verifySchema,
         onSubmit: async (result) => {
-            verifyAction.mutate({...result, code: toEnglishDigits(result.code), mobile: step.mobile});
+            verifyAction.mutate({
+                ...result,
+                code: toEnglishDigits(result.code),
+                mobile: step.mobile
+            });
         }
     });
 
@@ -104,12 +107,6 @@ const VerifyCode = ({nextStep, resetStep, step}) => {
                     direction="start"
                     isDense
                     fullWidth
-                    startIcon={
-                        <LuArrowRight
-                            size={20}
-                            color="currentColor"
-                        />
-                    }
                     onClick={resetStep}
                 >
                     بازگشت
@@ -118,12 +115,6 @@ const VerifyCode = ({nextStep, resetStep, step}) => {
                 <Button
                     color="primary"
                     fullWidth
-                    endIcon={
-                        <LuArrowLeft
-                            size={20}
-                            color="currentColor"
-                        />
-                    }
                     onClick={verifyForm.handleSubmit}
                     isLoading={verifyAction.isPending}
                 >

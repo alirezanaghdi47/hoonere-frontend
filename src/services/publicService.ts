@@ -5,9 +5,9 @@ import axios from "axios";
 import useAuthStore from "@/stores/authStore.ts";
 
 // utils
-import {decodeData} from "@/utils/functions.ts";
+import {decodeData, encodeData} from "@/utils/functions.ts";
 
-export const allJobService = async () => {
+export const readAllJobService = async () => {
     try {
         const {token} = useAuthStore.getState().auth;
 
@@ -28,3 +28,73 @@ export const allJobService = async () => {
         if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
+
+export const readAllProjectTypeService = async () => {
+    try {
+        const {token} = useAuthStore.getState().auth;
+
+        const response = await axios.post(process.env.API_URL + "/panel/public/getAllProjectTypes", null, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readAllInvestorService = async () => {
+    try {
+        const {token} = useAuthStore.getState().auth;
+
+        const response = await axios.post(process.env.API_URL + "/panel/public/getAllInvestors", null, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readUserInquiryService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/public/userInquiry", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+

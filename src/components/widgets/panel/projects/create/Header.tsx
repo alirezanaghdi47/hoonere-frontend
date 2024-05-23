@@ -5,6 +5,7 @@ import {LuBell, LuMoon, LuUser} from "react-icons/lu";
 // modules
 import Typography from "@/modules/Typography.tsx";
 import IconButton from "@/modules/IconButton.tsx";
+import Button from "@/modules/Button.tsx";
 import Badge from "@/modules/Badge.tsx";
 import Breadcrumbs from "@/modules/Breadcrumbs.tsx";
 
@@ -14,12 +15,11 @@ import useAuthStore from "@/stores/authStore.ts";
 const breadcrumbLinks = [
     {id: 1, label: "داشبورد", href: useAuthStore.getState().auth.panel_url + "dashboard"},
     {id: 2, label: "پروژه ها", href: useAuthStore.getState().auth.panel_url + "projects"},
-    {id: 3, label: "افزودن پروژه", href: useAuthStore.getState().auth.panel_url + "projects/create"},
 ];
 
 const Header = () => {
     const location = useLocation();
-    const {auth} = useAuthStore();
+    const{auth} = useAuthStore();
 
     return (
         <div className="d-flex justify-content-center align-items-center w-100 bg-primary">
@@ -66,6 +66,13 @@ const Header = () => {
                             color="currentColor"
                         />
                     </IconButton>
+
+                    <Button
+                        href={auth.panel_url + "projects/create"}
+                        color="info"
+                    >
+                        افزودن پروژه
+                    </Button>
                 </div>
 
                 <div className="order-3 col-12 d-flex flex-column justify-content-center align-items-start gap-5">

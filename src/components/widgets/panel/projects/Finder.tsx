@@ -2,31 +2,42 @@
 import SelectBox from "@/modules/SelectBox.tsx";
 import Pagination from "@/modules/Pagination.tsx";
 
-const Finder = () => {
-    const options = [
-        {value: '12', label: '12'},
-        {value: '24', label: '24'},
-        {value: '48', label: '48'},
-        {value: '96', label: '96'}
-    ];
+const options = [
+    {value: 12, label: '12'},
+    {value: 24, label: '24'},
+    {value: 48, label: '48'},
+    {value: 96, label: '96'}
+];
 
+const Finder = ({readAllProjectAction, filter, changeFilter}) => {
     return (
-        <div className="d-flex flex-wrap justify-content-center justify-content-sm-between align-items-center w-100 gap-5 mt-auto">
+        <div
+            className={`d-flex flex-wrap ${readAllProjectAction.data?.data?.pagination?.total > filter.per_page ? "justify-content-center justify-content-sm-between" : "justify-content-start"} align-items-center w-100 gap-5 mt-auto`}>
             <div className="w-125px">
                 <SelectBox
                     name='pageSize'
-                    value={options[0].value}
+                    value={filter.per_page}
                     options={options}
-                    onChange={(value) => console.log(value)}
+                    onChange={(value) => {
+                        changeFilter({per_page: value});
+                        readAllProjectAction.mutate({...filter, per_page: value});
+                    }}
                 />
             </div>
 
-            <Pagination
-                current={1}
-                pageSize={2}
-                total={20}
-                onChange={(value) => console.log(value)}
-            />
+            {
+                readAllProjectAction.data?.data?.pagination?.total > filter.per_page && (
+                    <Pagination
+                        current={filter.page}
+                        pageSize={filter.per_page}
+                        total={readAllProjectAction.data?.data?.pagination?.total}
+                        onChange={(value) => {
+                            changeFilter({page: value});
+                            readAllProjectAction.mutate({...filter, page: value});
+                        }}
+                    />
+                )
+            }
         </div>
     )
 }

@@ -1,18 +1,18 @@
 .szh-menu {
   background-color: var(--bs-body-bg) !important;
-  border-radius: 8px !important;
+  border-radius: 10px !important;
   box-shadow: var(--bs-box-shadow-sm) !important;
-  padding: 8px !important;
+  padding: 10px !important;
   color: var(--bs-body-color) !important;
 
   &__item {
     background: var(--bs-body-bg) !important;
     color: var(--bs-dark) !important;
     font-size: 0.95rem !important;
-    border-radius: 8px !important;
-    padding: 8px !important;
+    border-radius: 10px !important;
+    padding: 10px !important;
 
-    &--type-radio , &--type-checkbox {
+    &--type-radio, &--type-checkbox {
       &::before {
         content: none !important;
       }

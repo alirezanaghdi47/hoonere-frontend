@@ -12,13 +12,14 @@ import dialog from "@/modules/dialog.tsx";
 // services
 import {deleteBankCardService, changeStatusOfBankCardService} from "@/services/profileService.ts";
 
-const Banks = ({myBankCardsAction, changePart, changeCurrentPart, user}) => {
+const Banks = ({readMyAllBankCardAction, changePart, changeCurrentPart, user}) => {
     const changeStatusOfBankCardAction = useMutation({
         mutationFn: (data) => changeStatusOfBankCardService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
-                myBankCardsAction.mutate();
+
+                readMyAllBankCardAction.mutate();
             } else {
                 toast("error", data.message);
             }
@@ -30,7 +31,8 @@ const Banks = ({myBankCardsAction, changePart, changeCurrentPart, user}) => {
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
-                myBankCardsAction.mutate();
+
+                readMyAllBankCardAction.mutate();
             } else {
                 toast("error", data.message);
             }
@@ -51,7 +53,7 @@ const Banks = ({myBankCardsAction, changePart, changeCurrentPart, user}) => {
 
                 <div className="row gy-5">
                     {
-                        myBankCardsAction?.data?.data?.cards.map(bankCard =>
+                        readMyAllBankCardAction?.data?.data?.cards?.map(bankCard =>
                             <BankCard
                                 key={bankCard.id}
                                 card={bankCard}

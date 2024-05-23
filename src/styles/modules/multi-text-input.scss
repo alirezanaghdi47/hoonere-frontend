@@ -1,0 +1,46 @@
+.rti {
+  &--container {
+    width: 100% !important;
+    background-color: var(--bs-gray-100) !important;
+    border: 1px solid var(--bs-gray-100) !important;
+    box-shadow: none !important;
+    font-size: 1.1rem !important;
+    font-weight: 500 !important;
+    line-height: 1.5 !important;
+    min-height: 43.56px !important;
+    border-radius: 0.95rem !important;
+    padding: 0.387rem 0.5rem !important;
+
+    &:focus-within {
+      background-color: var(--bs-gray-200) !important;
+      border: 1px solid var(--bs-gray-200) !important;
+    }
+  }
+
+  &--input {
+    background: transparent !important;
+    color: var(--bs-gray-700) !important;
+    font-size: 1.1rem !important;
+    font-weight: 500 !important;
+    line-height: 1.5 !important;
+  }
+
+  &--tag {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 10px!important;
+    background: var(--bs-secondary) !important;
+    color: var(--bs-body-color) !important;
+    padding: 4px !important;
+
+    button{
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      color: var(--bs-danger) !important;
+      padding: 0!important;
+      margin-top: 5px!important;
+    }
+  }
+}

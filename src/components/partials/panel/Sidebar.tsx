@@ -41,7 +41,9 @@ const Sidebar = () => {
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
+
                 hideDrawer();
+
                 logout();
             } else {
                 toast("error", data.message);

@@ -36,7 +36,7 @@ export const updateProfileService = async (data) => {
     }
 }
 
-export const myProfileService = async () => {
+export const readMyProfileService = async () => {
     try {
         const {token} = useAuthStore.getState().auth;
 
@@ -83,7 +83,7 @@ export const createBankCardService = async (data) => {
     }
 }
 
-export const myBankCardsService = async () => {
+export const readMyAllBankCardService = async () => {
     try {
         const {token} = useAuthStore.getState().auth;
 
@@ -180,7 +180,7 @@ export const changeStatusOfBankCardService = async (data) => {
     }
 }
 
-export const myJobsService = async () => {
+export const readAllMyJobService = async () => {
     try {
         const {token} = useAuthStore.getState().auth;
 

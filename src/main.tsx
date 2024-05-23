@@ -11,7 +11,7 @@ import ServerErrorPage from "@/pages/error/server";
 import QueryProvider from "@/providers/QueryProvider.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
+    <React.Fragment>
         <ErrorBoundary FallbackComponent={<ServerErrorPage/>}>
             <BrowserRouter>
                 <QueryProvider>
@@ -19,5 +19,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 </QueryProvider>
             </BrowserRouter>
         </ErrorBoundary>
-    </React.StrictMode>,
+    </React.Fragment>,
 );

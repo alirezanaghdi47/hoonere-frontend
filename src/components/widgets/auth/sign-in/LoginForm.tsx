@@ -3,10 +3,9 @@ import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {useFormik} from "formik";
-import {LuArrowLeft} from "react-icons/lu";
 
 // components
-import Captcha from "@/components/widgets/auth/sign-in/Captcha.tsx";
+import Captcha from "@/components/widgets/auth/Captcha.tsx";
 
 // hooks
 import useId from "@/hooks/useId.tsx";
@@ -72,7 +71,10 @@ const LoginForm = () => {
         },
         validationSchema: loginSchema,
         onSubmit: async (result) => {
-            loginAction.mutate({...result , captcha: toEnglishDigits(result.captcha)});
+            loginAction.mutate({
+                ...result ,
+                captcha: toEnglishDigits(result.captcha)
+            });
         }
     });
 
@@ -148,12 +150,6 @@ const LoginForm = () => {
             <Button
                 color="primary"
                 fullWidth
-                endIcon={
-                    <LuArrowLeft
-                        size={20}
-                        color="currentColor"
-                    />
-                }
                 onClick={loginForm.handleSubmit}
                 isLoading={loginAction.isPending}
             >

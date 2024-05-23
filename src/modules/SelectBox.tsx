@@ -1,5 +1,5 @@
 // libraries
-import Select , {components} from 'react-select';
+import Select, {components} from 'react-select';
 
 // modules
 import Typography from "@/modules/Typography.tsx";
@@ -58,7 +58,7 @@ const SelectBox = ({
             classNamePrefix="react-select"
             placeholder={placeholder}
             value={options?.find(item => item.value === value)}
-            onChange={(value) => onChange(value.value)}
+            onChange={(value) => isMulti ? onChange(value?.map(subValue => subValue.value)) : onChange(value.value)}
             isMulti={isMulti}
             isDisabled={disabled}
         />

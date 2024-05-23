@@ -16,6 +16,10 @@ const Blank = Loadable(() => import('@/layouts/error'));
 const Dashboard = Loadable(() => import('@/pages/panel/dashboard'));
 const Projects = Loadable(() => import('@/pages/panel/projects'));
 const CreateProject = Loadable(() => import('@/pages/panel/projects/create'));
+const UpdateProject = Loadable(() => import('@/pages/panel/projects/update'));
+const ProjectMembers = Loadable(() => import('@/pages/panel/projects/members'));
+const CreateProjectMember = Loadable(() => import('@/pages/panel/projects/members/create'));
+const UpdateProjectMember = Loadable(() => import('@/pages/panel/projects/members/update'));
 const Profile = Loadable(() => import('@/pages/panel/profile'));
 const SignIn = Loadable(() => import('@/pages/auth/sign-in'));
 const SignUp = Loadable(() => import('@/pages/auth/sign-up'));
@@ -74,8 +78,28 @@ const RouterProvider = () => {
                 />
 
                 <Route
-                    path="projects/add"
+                    path="projects/create"
                     element={<CreateProject/>}
+                />
+
+                <Route
+                    path="projects/:id/update"
+                    element={<UpdateProject/>}
+                />
+
+                <Route
+                    path="projects/:id/members"
+                    element={<ProjectMembers/>}
+                />
+
+                <Route
+                    path="projects/:id/members/create"
+                    element={<CreateProjectMember/>}
+                />
+
+                <Route
+                    path="projects/:id/members/:subId/update"
+                    element={<UpdateProjectMember/>}
                 />
 
                 <Route
