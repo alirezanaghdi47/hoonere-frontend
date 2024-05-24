@@ -12,7 +12,7 @@ const options = [
 const Finder = ({readAllProjectAction, filter, changeFilter}) => {
     return (
         <div
-            className={`d-flex flex-wrap ${readAllProjectAction.data?.data?.pagination?.total > filter.per_page ? "justify-content-center justify-content-sm-between" : "justify-content-start"} align-items-center w-100 gap-5 mt-auto`}>
+            className={`d-flex flex-wrap ${readAllProjectAction.data?.data?.pagination?.total > filter.per_page ? "justify-content-center justify-content-sm-between" : "justify-content-start"} align-items-center w-100 gap-5`}>
             <div className="w-125px">
                 <SelectBox
                     name='pageSize'

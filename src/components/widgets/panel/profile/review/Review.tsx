@@ -25,8 +25,8 @@ const Review = ({readMyProfileAction}) => {
 
                     <div className="col-lg-8">
                         <Chip
-                            color={readMyProfileAction.data?.data?.userInfo?.national_card ? "success" : "danger"}
-                            label={readMyProfileAction.data?.data?.userInfo?.national_card ? "ثبت شده" : "ثبت نشده"}
+                            color={readMyProfileAction.data?.data?.user_info?.national_card ? "success" : "danger"}
+                            label={readMyProfileAction.data?.data?.user_info?.national_card ? "ثبت شده" : "ثبت نشده"}
                         />
                     </div>
                 </div>
@@ -47,13 +47,13 @@ const Review = ({readMyProfileAction}) => {
                             color="dark"
                         >
                             {
-                                (!readMyProfileAction.data?.data?.userInfo?.first_name || !readMyProfileAction.data?.data?.userInfo?.last_name) ? (
+                                (!readMyProfileAction.data?.data?.user_info?.first_name || !readMyProfileAction.data?.data?.user_info?.last_name) ? (
                                     <Chip
                                         color="danger"
                                         label="ثبت نشده"
                                     />
                                 ) : (
-                                    readMyProfileAction.data?.data?.userInfo?.first_name + " " + readMyProfileAction.data?.data?.userInfo?.last_name
+                                    readMyProfileAction.data?.data?.user_info?.first_name + " " + readMyProfileAction.data?.data?.user_info?.last_name
                                 )
                             }
                         </Typography>
@@ -76,13 +76,13 @@ const Review = ({readMyProfileAction}) => {
                             color="dark"
                         >
                             {
-                                !readMyProfileAction.data?.data?.userInfo?.national_code ? (
+                                !readMyProfileAction.data?.data?.user_info?.national_code ? (
                                     <Chip
                                         color="danger"
                                         label="ثبت نشده"
                                     />
                                 ) : (
-                                    readMyProfileAction.data?.data?.userInfo?.national_code
+                                    readMyProfileAction.data?.data?.user_info?.national_code
                                 )
                             }
                         </Typography>
@@ -105,13 +105,13 @@ const Review = ({readMyProfileAction}) => {
                             color="dark"
                         >
                             {
-                                !readMyProfileAction.data?.data?.userInfo?.id_code ? (
+                                !readMyProfileAction.data?.data?.user_info?.id_code ? (
                                     <Chip
                                         color="danger"
                                         label="ثبت نشده"
                                     />
                                 ) : (
-                                    readMyProfileAction.data?.data?.userInfo?.id_code
+                                    readMyProfileAction.data?.data?.user_info?.id_code
                                 )
                             }
                         </Typography>
@@ -134,12 +134,12 @@ const Review = ({readMyProfileAction}) => {
                             color="dark"
                         >
                             {
-                                !readMyProfileAction.data?.data?.userInfo?.birthdate ? (
+                                !readMyProfileAction.data?.data?.user_info?.birthdate ? (
                                     <Chip
                                         color="danger"
                                         label="ثبت نشده"
                                     />
-                                ) : convertGregorianToJalali(readMyProfileAction.data?.data?.userInfo?.birthdate)
+                                ) : convertGregorianToJalali(readMyProfileAction.data?.data?.user_info?.birthdate)
                             }
                         </Typography>
                     </div>
@@ -161,13 +161,13 @@ const Review = ({readMyProfileAction}) => {
                             color="dark"
                         >
                             {
-                                !readMyProfileAction.data?.data?.userInfo?.mobile ? (
+                                !readMyProfileAction.data?.data?.user_info?.mobile ? (
                                     <Chip
                                         color="danger"
                                         label="ثبت نشده"
                                     />
                                 ) : (
-                                    readMyProfileAction.data?.data?.userInfo?.mobile
+                                    readMyProfileAction.data?.data?.user_info?.mobile
                                 )
                             }
                         </Typography>
@@ -190,13 +190,13 @@ const Review = ({readMyProfileAction}) => {
                             color="dark"
                         >
                             {
-                                !readMyProfileAction.data?.data?.userInfo?.address ? (
+                                !readMyProfileAction.data?.data?.user_info?.address ? (
                                     <Chip
                                         color="danger"
                                         label="ثبت نشده"
                                     />
                                 ) : (
-                                    readMyProfileAction.data?.data?.userInfo?.address
+                                    readMyProfileAction.data?.data?.user_info?.address
                                 )
                             }
                         </Typography>
@@ -219,13 +219,13 @@ const Review = ({readMyProfileAction}) => {
                             color="dark"
                         >
                             {
-                                !readMyProfileAction.data?.data?.userInfo?.email ? (
+                                !readMyProfileAction.data?.data?.user_info?.email ? (
                                     <Chip
                                         color="danger"
                                         label="ثبت نشده"
                                     />
                                 ) : (
-                                    readMyProfileAction.data?.data?.userInfo?.email
+                                    readMyProfileAction.data?.data?.user_info?.email
                                 )
                             }
                         </Typography>
@@ -233,7 +233,7 @@ const Review = ({readMyProfileAction}) => {
                 </div>
 
                 {
-                    parseInt(readMyProfileAction.data?.data?.userInfo?.status_id) !== 5 && (
+                    parseInt(readMyProfileAction.data?.data?.user_info?.status_id) !== 5 && (
                         <div className="row gy-5 w-100">
                             <div className="col-12">
                                 <Alert
@@ -245,7 +245,7 @@ const Review = ({readMyProfileAction}) => {
                                             color="currentColor"
                                         />
                                     }
-                                    message={readMyProfileAction.data?.data?.userInfo?.status?.title}
+                                    message={readMyProfileAction.data?.data?.user_info?.status?.title}
                                 />
                             </div>
                         </div>

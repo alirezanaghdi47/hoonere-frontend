@@ -18,8 +18,7 @@ import {updateProjectMemberService, readProjectMemberService} from "@/services/p
 import useAuthStore from "@/stores/authStore.ts";
 
 // utils
-import {updateProjectMemberSchema} from "@/utils/validations.ts";
-import {removeItemFromObject} from "@/utils/functions.ts";
+import {updateProjectMemberWithUserNameSchema, updateProjectMemberWithFullNameSchema} from "@/utils/validations.ts";
 
 const Content = () => {
     const params = useParams();
@@ -43,29 +42,37 @@ const Content = () => {
         }
     });
 
-    const updateProjectMemberForm = useFormik({
+    const updateProjectMemberFormWithFullName = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            foa_parent_id: readProjectMemberAction.data?.data?.member_info?.foa_parent_id ? readProjectMemberAction.data?.data?.member_info.foa_parent_id : "",
+            foa_child_id: readProjectMemberAction.data?.data?.member_info?.foa_child_id ? readProjectMemberAction.data?.data?.member_info.foa_child_id : "",
+            name: readProjectMemberAction.data?.data?.member_info?.name ? readProjectMemberAction.data?.data?.member_info.name : "",
+        },
+        validationSchema: updateProjectMemberWithFullNameSchema,
+        onSubmit: async (result) => {
+            updateProjectMemberAction.mutate({
+                ...result,
+                project_id: params.id,
+                member_id: params.subId,
+            });
+        }
+    });
+
+    const updateProjectMemberFormWithUserName = useFormik({
         enableReinitialize: true,
         initialValues: {
             foa_parent_id: readProjectMemberAction.data?.data?.member_info?.foa_parent_id ? readProjectMemberAction.data?.data?.member_info.foa_parent_id : "",
             foa_child_id: readProjectMemberAction.data?.data?.member_info?.foa_child_id ? readProjectMemberAction.data?.data?.member_info.foa_child_id : "",
             user_id: readProjectMemberAction.data?.data?.member_info?.user_id ? readProjectMemberAction.data?.data?.member_info.user_id : "",
-            name: readProjectMemberAction.data?.data?.member_info?.name ? readProjectMemberAction.data?.data?.member_info.name : "",
         },
-        validationSchema: updateProjectMemberSchema,
+        validationSchema: updateProjectMemberWithUserNameSchema,
         onSubmit: async (result) => {
-            if (result.name) {
-                updateProjectMemberAction.mutate({
-                    ...removeItemFromObject(result, ["user_id"]),
-                    project_id: params.id,
-                    member_id: params.subId,
-                });
-            } else if (result.user_id) {
-                updateProjectMemberAction.mutate({
-                    ...removeItemFromObject(result, ["name"]),
-                    project_id: params.id,
-                    member_id: params.subId,
-                });
-            }
+            updateProjectMemberAction.mutate({
+                ...result,
+                project_id: params.id,
+                member_id: params.subId,
+            });
         }
     });
 
@@ -79,13 +86,12 @@ const Content = () => {
     return (
         <div
             className="d-flex flex-column flex-lg-row justify-content-start align-items-start gap-5 w-100 mw-950px p-5">
-            <div className="d-flex flex-wrap gap-5 w-100 mt-lg-n20">
+            <div className="d-flex flex-wrap justify-content-center gap-5 w-100 mt-lg-n20">
                 {
                     readProjectMemberAction?.isPending && (
                         <Loading
                             width="100%"
-                            height={300}
-                            withCard
+                            height={400}
                         />
                     )
                 }
@@ -94,7 +100,8 @@ const Content = () => {
                     !readProjectMemberAction?.isPending && (
                         <FormData
                             readProjectMemberAction={readProjectMemberAction}
-                            updateProjectMemberForm={updateProjectMemberForm}
+                            updateProjectMemberFormWithUserName={updateProjectMemberFormWithUserName}
+                            updateProjectMemberFormWithFullName={updateProjectMemberFormWithFullName}
                             updateProjectMemberAction={updateProjectMemberAction}
                         />
                     )

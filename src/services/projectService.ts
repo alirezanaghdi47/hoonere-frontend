@@ -5,14 +5,14 @@ import axios from "axios";
 import useAuthStore from "@/stores/authStore.ts";
 
 // utils
-import {decodeData, encodeData} from "@/utils/functions.ts";
+import {cleaningObject, decodeData, encodeData} from "@/utils/functions.ts";
 
 export const readAllProjectService = async (data) => {
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(data)));
+        formData.append("data", encodeData(JSON.stringify(cleaningObject(data))));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/index", formData, {
             headers: {
@@ -28,7 +28,7 @@ export const readAllProjectService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -56,7 +56,7 @@ export const createProjectService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -84,7 +84,7 @@ export const updateProjectService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -109,7 +109,7 @@ export const readProjectService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -134,6 +134,6 @@ export const deleteProjectService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }

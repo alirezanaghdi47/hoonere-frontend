@@ -39,13 +39,13 @@ const Identify = ({readMyProfileAction}) => {
         initialValues: {
             profile_img: {},
             national_card: {},
-            first_name: readMyProfileAction.data?.data?.userInfo?.first_name ? readMyProfileAction.data?.data?.userInfo.first_name : "",
-            last_name: readMyProfileAction.data?.data?.userInfo?.last_name ? readMyProfileAction.data?.data?.userInfo.last_name : "",
-            national_code: readMyProfileAction.data?.data?.userInfo?.national_code ? readMyProfileAction.data?.data?.userInfo.national_code : "",
-            id_code: readMyProfileAction.data?.data?.userInfo?.id_code ? readMyProfileAction.data?.data?.userInfo.id_code : "",
-            birthdate: readMyProfileAction.data?.data?.userInfo?.birthdate ? convertGregorianToJalali(readMyProfileAction.data?.data?.userInfo.birthdate) : "",
-            email: readMyProfileAction.data?.data?.userInfo?.email ? readMyProfileAction.data?.data?.userInfo.email : "",
-            address: readMyProfileAction.data?.data?.userInfo?.address ? readMyProfileAction.data?.data?.userInfo.address : "",
+            first_name: readMyProfileAction.data?.data?.user_info?.first_name ? readMyProfileAction.data?.data?.user_info.first_name : "",
+            last_name: readMyProfileAction.data?.data?.user_info?.last_name ? readMyProfileAction.data?.data?.user_info.last_name : "",
+            national_code: readMyProfileAction.data?.data?.user_info?.national_code ? readMyProfileAction.data?.data?.user_info.national_code : "",
+            id_code: readMyProfileAction.data?.data?.user_info?.id_code ? readMyProfileAction.data?.data?.user_info.id_code : "",
+            birthdate: readMyProfileAction.data?.data?.user_info?.birthdate ? convertGregorianToJalali(readMyProfileAction.data?.data?.user_info.birthdate) : "",
+            email: readMyProfileAction.data?.data?.user_info?.email ? readMyProfileAction.data?.data?.user_info.email : "",
+            address: readMyProfileAction.data?.data?.user_info?.address ? readMyProfileAction.data?.data?.user_info.address : "",
         },
         validationSchema: updateProfileSchema,
         onSubmit: async (result) => {
@@ -75,7 +75,7 @@ const Identify = ({readMyProfileAction}) => {
                             <Form.Group>
                                 <AvatarInput
                                     name="profile_img"
-                                    preview={readMyProfileAction.data?.data?.userInfo.profile_img}
+                                    preview={readMyProfileAction.data?.data?.user_info.profile_img}
                                     value={updateProfileForm.values.profile_img}
                                     onChange={(value) => updateProfileForm.setFieldValue("profile_img", value)}
                                 />
@@ -101,7 +101,7 @@ const Identify = ({readMyProfileAction}) => {
                             <Form.Group>
                                 <FileInput
                                     name="national_card"
-                                    preview={readMyProfileAction.data?.data?.userInfo.national_card}
+                                    preview={readMyProfileAction.data?.data?.user_info.national_card}
                                     value={updateProfileForm.values.national_card}
                                     onChange={(value) => updateProfileForm.setFieldValue("national_card", value)}
                                 />

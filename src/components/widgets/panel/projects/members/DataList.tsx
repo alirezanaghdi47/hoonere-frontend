@@ -23,7 +23,7 @@ const BlankCard = ({onClick}) => {
             onClick={onClick}
         >
             <div
-                className="d-flex flex-column justify-content-center align-items-center w-100 min-h-250px rounded-2 border border-dashed border-secondary p-5 cursor-pointer">
+                className="d-flex flex-column justify-content-center align-items-center w-100 min-h-300px rounded-2 border-2 border-dashed border-secondary p-5 cursor-pointer">
                 <LuPlus
                     size={20}
                     color="currentColor"
@@ -51,7 +51,7 @@ const DataCard = ({readAllProjectMemberAction, member}) => {
             if (!data.error) {
                 toast("success", data.message);
 
-                readAllProjectMemberAction.mutate();
+                readAllProjectMemberAction.mutate({project_id: params?.id});
             } else {
                 toast("error", data.message);
             }
@@ -61,7 +61,7 @@ const DataCard = ({readAllProjectMemberAction, member}) => {
     return (
         <div className="col-12 col-sm-6 col-lg-4">
             <div
-                className="d-flex flex-column justify-content-center align-items-center w-100 min-h-250px rounded-2 border border-dashed border-secondary p-5">
+                className="d-flex flex-column justify-content-center align-items-center w-100 min-h-300px bg-light rounded-2 p-5">
                 <LazyLoadImage
                     src={member?.user_info?.profile_img}
                     width={75}
@@ -98,16 +98,14 @@ const DataCard = ({readAllProjectMemberAction, member}) => {
                     <Button
                         href={auth.panel_url + "projects/" + params.id + "/members/" + member?.id + "/update"}
                         size="sm"
-                        color="light-warning"
-                        activeColor="warning"
+                        color="warning"
                     >
                         ویرایش
                     </Button>
 
                     <Button
                         size="sm"
-                        color="light-danger"
-                        activeColor="danger"
+                        color="danger"
                         onClick={() =>
                             dialog(
                                 "حذف عضو",
@@ -146,18 +144,22 @@ const DataList = ({readAllProjectMemberAction}) => {
     const {auth} = useAuthStore();
 
     return (
-        <div className="row gy-5">
-            {
-                readAllProjectMemberAction.data?.data?.members?.map((member) =>
-                    <DataCard
-                        key={member?.id}
-                        readAllProjectMemberAction={readAllProjectMemberAction}
-                        member={member}
-                    />
-                )
-            }
+        <div className="card w-100">
+            <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
+                <div className="row gy-5 w-100">
+                    {
+                        readAllProjectMemberAction.data?.data?.members?.map((member) =>
+                            <DataCard
+                                key={member?.id}
+                                readAllProjectMemberAction={readAllProjectMemberAction}
+                                member={member}
+                            />
+                        )
+                    }
 
-            <BlankCard onClick={() => navigate(auth.panel_url + "projects/" + params.id + "/members/create")}/>
+                    <BlankCard onClick={() => navigate(auth.panel_url + "projects/" + params.id + "/members/create")}/>
+                </div>
+            </div>
         </div>
     )
 }

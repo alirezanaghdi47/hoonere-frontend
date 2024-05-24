@@ -25,19 +25,12 @@ import useAuthStore from "@/stores/authStore.ts";
 // utils
 import {readUserInquirySchema} from "@/utils/validations.ts";
 
-const FormData = ({createProjectMemberForm, createProjectMemberAction, isFullName, setIsFullName}) => {
-    const params = useParams();
-    const {auth} = useAuthStore();
-
-    const readAllJobAction = useMutation({
-        mutationFn: () => readAllJobService(),
-    });
-
+const FormDataWithUserName = ({readAllJobAction, createProjectMemberFormWithUserName}) => {
     const readUserInquiryAction = useMutation({
         mutationFn: (data) => readUserInquiryService(data),
         onSuccess: async (data) => {
             if (!data?.error) {
-                createProjectMemberForm.setFieldValue("user_id", data?.data?.user_info?.id.toString());
+                createProjectMemberFormWithUserName.setFieldValue("user_id", data?.data?.user_info?.id.toString());
             }
         }
     });
@@ -46,13 +39,229 @@ const FormData = ({createProjectMemberForm, createProjectMemberAction, isFullNam
         enableReinitialize: true,
         initialValues: {
             username: "",
-            foa_id: createProjectMemberForm.values.foa_child_id,
-            foa_parent_id: createProjectMemberForm.values.foa_parent_id,
+            foa_id: createProjectMemberFormWithUserName.values.foa_child_id,
+            foa_parent_id: createProjectMemberFormWithUserName.values.foa_parent_id,
         },
         validationSchema: readUserInquirySchema,
         onSubmit: async (result) => {
             readUserInquiryAction.mutate(result);
         }
+    });
+
+    return (
+        <div className="card w-100">
+            <div className="card-body d-flex justify-content-center align-items-center flex-column gap-5">
+                <div className="row gy-5 w-100">
+                    <div className="col-12">
+                        <Form.Group>
+                            <Form.Label
+                                label="گروه شغلی"
+                                color="dark"
+                                size="sm"
+                                required
+                            />
+
+                            <SelectBox
+                                name="foa_parent_id"
+                                value={createProjectMemberFormWithUserName.values.foa_parent_id}
+                                options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id === null)?.map(item => ({
+                                    label: item.title,
+                                    value: item.id.toString()
+                                }))}
+                                placeholder=""
+                                isSearchable
+                                onChange={(value) => createProjectMemberFormWithUserName.setFieldValue("foa_parent_id", value)}
+                            />
+
+                            <Form.Error
+                                error={createProjectMemberFormWithUserName.errors.foa_parent_id}
+                                touched={createProjectMemberFormWithUserName.touched.foa_parent_id}
+                            />
+                        </Form.Group>
+                    </div>
+
+                    <div className="col-12">
+                        <Form.Group>
+                            <Form.Label
+                                label="عنوان شغلی"
+                                color="dark"
+                                size="sm"
+                                required
+                            />
+
+                            <SelectBox
+                                name="foa_child_id"
+                                value={createProjectMemberFormWithUserName.values.foa_child_id}
+                                options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id !== null && parseInt(foa.parent_id) === parseInt(createProjectMemberFormWithUserName.values.foa_parent_id))?.map(item => ({
+                                    label: item.title,
+                                    value: item.id.toString()
+                                }))}
+                                placeholder=""
+                                isSearchable
+                                disabled={!createProjectMemberFormWithUserName.values.foa_parent_id}
+                                onChange={(value) => createProjectMemberFormWithUserName.setFieldValue("foa_child_id", value)}
+                            />
+
+                            <Form.Error
+                                error={createProjectMemberFormWithUserName.errors.foa_child_id}
+                                touched={createProjectMemberFormWithUserName.touched.foa_child_id}
+                            />
+                        </Form.Group>
+                    </div>
+
+                    <div
+                        className="col-12 d-flex flex-column justify-content-center align-items-start gap-5">
+                        <Form.Group>
+                            <Form.Label
+                                label="نام کاربری"
+                                color="dark"
+                                size="sm"
+                                required
+                            />
+
+                            <TextInput
+                                name="username"
+                                placeholder=""
+                                value={readUserInquiryForm.values.username}
+                                disabled={!readUserInquiryForm.values.foa_id}
+                                onChange={(value) => readUserInquiryForm.setFieldValue("username", value)}
+                                onBlur={() => readUserInquiryForm.handleSubmit()}
+                                endAdornment={
+                                    readUserInquiryAction.isPending && (
+                                        <MoonLoader
+                                            size={20}
+                                            color="currentColor"
+                                            className="m-1"
+                                        />
+                                    )
+                                }
+                            />
+
+                            <Form.Error
+                                error={readUserInquiryForm.errors.username || createProjectMemberFormWithUserName.errors.user_id}
+                                touched={readUserInquiryForm.touched.username || createProjectMemberFormWithUserName.touched.user_id}
+                            />
+                        </Form.Group>
+
+                        {
+                            (!readUserInquiryAction.isPending && readUserInquiryAction.data) && (
+                                <Alert
+                                    color={readUserInquiryAction.data?.error ? "danger" : "success"}
+                                    size="sm"
+                                    message={readUserInquiryAction?.data?.data?.user_info ? `${readUserInquiryAction.data?.data?.user_info?.first_name} ${readUserInquiryAction.data?.data?.user_info?.last_name}` : "کاربری با این مشخصات یافت نشد"}
+                                />
+                            )
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const FormDataWithFullName = ({readAllJobAction, createProjectMemberFormWithFullName}) => {
+    return (
+        <div className="card w-100">
+            <div className="card-body d-flex justify-content-center align-items-center flex-column gap-5">
+                <div className="row gy-5 w-100">
+                    <div className="col-12">
+                        <Form.Group>
+                            <Form.Label
+                                label="گروه شغلی"
+                                color="dark"
+                                size="sm"
+                                required
+                            />
+
+                            <SelectBox
+                                name="foa_parent_id"
+                                value={createProjectMemberFormWithFullName.values.foa_parent_id}
+                                options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id === null)?.map(item => ({
+                                    label: item.title,
+                                    value: item.id.toString()
+                                }))}
+                                placeholder=""
+                                isSearchable
+                                onChange={(value) => createProjectMemberFormWithFullName.setFieldValue("foa_parent_id", value)}
+                            />
+
+                            <Form.Error
+                                error={createProjectMemberFormWithFullName.errors.foa_parent_id}
+                                touched={createProjectMemberFormWithFullName.touched.foa_parent_id}
+                            />
+                        </Form.Group>
+                    </div>
+
+                    <div className="col-12">
+                        <Form.Group>
+                            <Form.Label
+                                label="عنوان شغلی"
+                                color="dark"
+                                size="sm"
+                                required
+                            />
+
+                            <SelectBox
+                                name="foa_child_id"
+                                value={createProjectMemberFormWithFullName.values.foa_child_id}
+                                options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id !== null && parseInt(foa.parent_id) === parseInt(createProjectMemberFormWithFullName.values.foa_parent_id))?.map(item => ({
+                                    label: item.title,
+                                    value: item.id.toString()
+                                }))}
+                                placeholder=""
+                                isSearchable
+                                disabled={!createProjectMemberFormWithFullName.values.foa_parent_id}
+                                onChange={(value) => createProjectMemberFormWithFullName.setFieldValue("foa_child_id", value)}
+                            />
+
+                            <Form.Error
+                                error={createProjectMemberFormWithFullName.errors.foa_child_id}
+                                touched={createProjectMemberFormWithFullName.touched.foa_child_id}
+                            />
+                        </Form.Group>
+                    </div>
+
+                    <div
+                        className="col-12 d-flex flex-column justify-content-center align-items-start gap-5">
+                        <Form.Group>
+                            <Form.Label
+                                label="نام و نام خانوادگی"
+                                color="dark"
+                                size="sm"
+                                required
+                            />
+
+                            <TextInput
+                                name="name"
+                                placeholder=""
+                                value={createProjectMemberFormWithFullName.values.name}
+                                onChange={(value) => createProjectMemberFormWithFullName.setFieldValue("name", value)}
+                            />
+
+                            <Form.Error
+                                error={createProjectMemberFormWithFullName.errors.name}
+                                touched={createProjectMemberFormWithFullName.touched.name}
+                            />
+                        </Form.Group>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const FormData = ({
+                      createProjectMemberFormWithUserName,
+                      createProjectMemberFormWithFullName,
+                      createProjectMemberAction,
+                      isFullName,
+                      setIsFullName
+                  }) => {
+    const params = useParams();
+    const {auth} = useAuthStore();
+
+    const readAllJobAction = useMutation({
+        mutationFn: () => readAllJobService(),
     });
 
     useLayoutEffect(() => {
@@ -61,143 +270,21 @@ const FormData = ({createProjectMemberForm, createProjectMemberAction, isFullNam
 
     return (
         <>
-            <div className="card w-100">
-                <div className="card-body d-flex justify-content-center align-items-center flex-column gap-5">
-                    <div className="row gy-5 w-100">
-                        <div className="col-12">
-                            <Form.Group>
-                                <Form.Label
-                                    label="گروه شغلی"
-                                    color="dark"
-                                    size="sm"
-                                    required
-                                />
+            {
+                isFullName ? (
+                    <FormDataWithFullName
+                        readAllJobAction={readAllJobAction}
+                        createProjectMemberFormWithFullName={createProjectMemberFormWithFullName}
+                    />
+                ) : (
+                    <FormDataWithUserName
+                        readAllJobAction={readAllJobAction}
+                        createProjectMemberFormWithUserName={createProjectMemberFormWithUserName}
+                    />
+                )
+            }
 
-                                <SelectBox
-                                    name="foa_parent_id"
-                                    value={createProjectMemberForm.values.foa_parent_id}
-                                    options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id === null)?.map(item => ({
-                                        label: item.title,
-                                        value: item.id.toString()
-                                    }))}
-                                    placeholder=""
-                                    isSearchable
-                                    onChange={(value) => createProjectMemberForm.setFieldValue("foa_parent_id", value)}
-                                />
-
-                                <Form.Error
-                                    error={createProjectMemberForm.errors.foa_parent_id}
-                                    touched={createProjectMemberForm.touched.foa_parent_id}
-                                />
-                            </Form.Group>
-                        </div>
-
-                        <div className="col-12">
-                            <Form.Group>
-                                <Form.Label
-                                    label="عنوان شغلی"
-                                    color="dark"
-                                    size="sm"
-                                    required
-                                />
-
-                                <SelectBox
-                                    name="foa_child_id"
-                                    value={createProjectMemberForm.values.foa_child_id}
-                                    options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id !== null && parseInt(foa.parent_id) === parseInt(createProjectMemberForm.values.foa_parent_id))?.map(item => ({
-                                        label: item.title,
-                                        value: item.id.toString()
-                                    }))}
-                                    placeholder=""
-                                    isSearchable
-                                    disabled={!createProjectMemberForm.values.foa_parent_id}
-                                    onChange={(value) => createProjectMemberForm.setFieldValue("foa_child_id", value)}
-                                />
-
-                                <Form.Error
-                                    error={createProjectMemberForm.errors.foa_child_id}
-                                    touched={createProjectMemberForm.touched.foa_child_id}
-                                />
-                            </Form.Group>
-                        </div>
-
-                        {
-                            isFullName ? (
-                                <div
-                                    className="col-12 d-flex flex-column justify-content-center align-items-start gap-5">
-                                    <Form.Group>
-                                        <Form.Label
-                                            label="نام و نام خانوادگی"
-                                            color="dark"
-                                            size="sm"
-                                            required
-                                        />
-
-                                        <TextInput
-                                            name="name"
-                                            placeholder=""
-                                            value={createProjectMemberForm.values.name}
-                                            onChange={(value) => createProjectMemberForm.setFieldValue("name", value)}
-                                        />
-
-                                        <Form.Error
-                                            error={createProjectMemberForm.errors.name}
-                                            touched={createProjectMemberForm.touched.name}
-                                        />
-                                    </Form.Group>
-                                </div>
-                            ) : (
-                                <div
-                                    className="col-12 d-flex flex-column justify-content-center align-items-start gap-5">
-                                    <Form.Group>
-                                        <Form.Label
-                                            label="نام کاربری"
-                                            color="dark"
-                                            size="sm"
-                                            required
-                                        />
-
-                                        <TextInput
-                                            name="username"
-                                            placeholder=""
-                                            value={readUserInquiryForm.values.username}
-                                            disabled={!readUserInquiryForm.values.foa_id}
-                                            onChange={(value) => readUserInquiryForm.setFieldValue("username", value)}
-                                            onBlur={() => readUserInquiryForm.handleSubmit()}
-                                            endAdornment={
-                                                readUserInquiryAction.isPending && (
-                                                    <MoonLoader
-                                                        size={20}
-                                                        color="currentColor"
-                                                        className="m-1"
-                                                    />
-                                                )
-                                            }
-                                        />
-
-                                        <Form.Error
-                                            error={readUserInquiryForm.errors.username || createProjectMemberForm.errors.user_id}
-                                            touched={readUserInquiryForm.touched.username || createProjectMemberForm.touched.user_id}
-                                        />
-                                    </Form.Group>
-
-                                    {
-                                        (!readUserInquiryAction.isPending && readUserInquiryAction.data) && (
-                                            <Alert
-                                                color={readUserInquiryAction.data?.error ? "danger" : "success"}
-                                                size="sm"
-                                                message={readUserInquiryAction?.data?.data?.user_info ? `${readUserInquiryAction.data?.data?.user_info?.first_name} ${readUserInquiryAction.data?.data?.user_info?.last_name}` : "کاربری با این مشخصات یافت نشد"}
-                                            />
-                                        )
-                                    }
-                                </div>
-                            )
-                        }
-                    </div>
-                </div>
-            </div>
-
-            <div className="d-flex flex-column justify-content-between align-items-center w-100">
+            <div className="d-flex flex-column justify-content-between align-items-center gap-5 w-100">
                 <div className="d-flex justify-content-start align-items-center gap-5 w-100">
                     <SwitchBox
                         name="isFullName"
@@ -236,7 +323,7 @@ const FormData = ({createProjectMemberForm, createProjectMemberAction, isFullNam
 
                     <Button
                         color="success"
-                        onClick={createProjectMemberForm.handleSubmit}
+                        onClick={() => isFullName ? createProjectMemberFormWithFullName.handleSubmit() : createProjectMemberFormWithUserName.handleSubmit()}
                         isLoading={createProjectMemberAction.isPending}
                     >
                         افزودن عضو

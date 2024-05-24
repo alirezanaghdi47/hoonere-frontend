@@ -42,7 +42,6 @@ const Content = () => {
                     <Loading
                         width="100%"
                         height={250}
-                        withCard
                     />
                 )
             }
@@ -58,7 +57,6 @@ const Content = () => {
                     <Loading
                         width="100%"
                         height={450}
-                        withCard
                     />
                 )
             }
@@ -74,7 +72,6 @@ const Content = () => {
                     <Loading
                         width="100%"
                         height={900}
-                        withCard
                     />
                 )
             }
@@ -90,7 +87,6 @@ const Content = () => {
                     <Loading
                         width="100%"
                         height={600}
-                        withCard
                     />
                 )
             }
@@ -109,7 +105,6 @@ const Content = () => {
                     <Loading
                         width="100%"
                         height={300}
-                        withCard
                     />
                 )
             }

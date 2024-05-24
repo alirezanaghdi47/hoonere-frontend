@@ -3,10 +3,7 @@ import {useLayoutEffect} from "react";
 import {useMutation} from "@tanstack/react-query";
 
 // components
-import Filter from "@/components/widgets/panel/projects/Filter.tsx";
 import DataTable from "@/components/widgets/panel/projects/DataTable.tsx";
-import Finder from "@/components/widgets/panel/projects/Finder.tsx";
-import Empty from "@/components/partials/panel/Empty.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // hooks
@@ -33,57 +30,34 @@ const Content = () => {
 
     return (
         <div
-            className="d-flex flex-column justify-content-start align-items-start gap-5 w-100 mw-950px mt-lg-n20 p-5">
-            <div className="card w-100">
-                <div className="card-body d-flex flex-column gap-5">
-                    <Filter
-                        readAllProjectAction={readAllProjectAction}
-                        filter={filter}
-                        initialFilter={initialFilter}
-                        changeFilter={changeFilter}
-                        isOpenFilter={isOpenFilter}
-                        showFilter={showFilter}
-                        hideFilter={hideFilter}
-                        resetFilter={resetFilter}
-                    />
+            className="d-flex flex-column flex-lg-row justify-content-start align-items-start gap-5 w-100 mw-950px p-5">
+            <div className="d-flex flex-wrap justify-content-center gap-5 w-100 mt-lg-n20">
+                {
+                    readAllProjectAction?.isPending && (
+                        <Loading
+                            width="100%"
+                            height={500}
+                        />
+                    )
+                }
 
-                    {
-                        readAllProjectAction?.isPending && (
-                            <Loading
-                                width="100%"
-                                height={300}
-                            />
-                        )
-                    }
-
-                    {
-                        (!readAllProjectAction?.isPending && readAllProjectAction.data?.data?.projects.length > 0) && (
-                            <DataTable
-                                readAllProjectAction={readAllProjectAction}
-                                filter={filter}
-                            />
-                        )
-                    }
-
-                    {
-                        (!readAllProjectAction?.isPending && readAllProjectAction.data?.data?.projects.length === 0) && (
-                            <Empty
-                                width="100%"
-                                height={300}
-                            />
-                        )
-                    }
-
-                    <Finder
-                        readAllProjectAction={readAllProjectAction}
-                        filter={filter}
-                        changeFilter={changeFilter}
-                    />
-                </div>
+                {
+                    !readAllProjectAction?.isPending && (
+                        <DataTable
+                            readAllProjectAction={readAllProjectAction}
+                            filter={filter}
+                            initialFilter={initialFilter}
+                            isOpenFilter={isOpenFilter}
+                            changeFilter={changeFilter}
+                            resetFilter={resetFilter}
+                            hideFilter={hideFilter}
+                            showFilter={showFilter}
+                        />
+                    )
+                }
             </div>
         </div>
     )
-
 }
 
 export default Content;

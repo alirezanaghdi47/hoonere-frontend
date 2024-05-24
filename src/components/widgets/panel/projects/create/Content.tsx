@@ -60,7 +60,7 @@ const Content = () => {
     return (
         <div
             className="d-flex flex-column flex-lg-row justify-content-start align-items-start gap-5 w-100 mw-950px p-5">
-            <div className="d-flex flex-wrap gap-5 w-100 mt-lg-n20">
+            <div className="d-flex flex-wrap justify-content-center gap-5 w-100 mt-lg-n20">
                 <FormData
                     createProjectForm={createProjectForm}
                     createProjectAction={createProjectAction}

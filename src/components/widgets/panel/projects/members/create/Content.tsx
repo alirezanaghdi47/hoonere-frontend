@@ -17,8 +17,7 @@ import {createProjectMemberService} from "@/services/projectMemberService.ts";
 import useAuthStore from "@/stores/authStore.ts";
 
 // utils
-import {createProjectMemberSchema} from "@/utils/validations.ts";
-import {removeItemFromObject} from "@/utils/functions.ts";
+import {createProjectMemberWithFullNameSchema, createProjectMemberWithUserNameSchema} from "@/utils/validations.ts";
 
 const Content = () => {
     const params = useParams();
@@ -40,35 +39,43 @@ const Content = () => {
         }
     });
 
-    const createProjectMemberForm = useFormik({
+    const createProjectMemberFormWithFullName = useFormik({
+        initialValues: {
+            foa_parent_id: "",
+            foa_child_id: "",
+            name: "",
+        },
+        validationSchema: createProjectMemberWithFullNameSchema,
+        onSubmit: async (result) => {
+            createProjectMemberAction.mutate({
+                ...result,
+                project_id: params.id,
+            });
+        }
+    });
+
+    const createProjectMemberFormWithUserName = useFormik({
         initialValues: {
             foa_parent_id: "",
             foa_child_id: "",
             user_id: "",
-            name: "",
         },
-        validationSchema: createProjectMemberSchema,
+        validationSchema: createProjectMemberWithUserNameSchema,
         onSubmit: async (result) => {
-            if (isFullName && result.name) {
-                createProjectMemberAction.mutate({
-                    ...removeItemFromObject(result, ["user_id"]),
-                    project_id: params.id,
-                });
-            } else if (!isFullName && result.user_id) {
-                createProjectMemberAction.mutate({
-                    ...removeItemFromObject(result, ["name"]),
-                    project_id: params.id,
-                });
-            }
+            createProjectMemberAction.mutate({
+                ...result,
+                project_id: params.id,
+            });
         }
     });
 
     return (
         <div
             className="d-flex flex-column flex-lg-row justify-content-start align-items-start gap-5 w-100 mw-950px p-5">
-            <div className="d-flex flex-wrap gap-5 w-100 mt-lg-n20">
+            <div className="d-flex flex-wrap justify-content-center gap-5 w-100 mt-lg-n20">
                 <FormData
-                    createProjectMemberForm={createProjectMemberForm}
+                    createProjectMemberFormWithUserName={createProjectMemberFormWithUserName}
+                    createProjectMemberFormWithFullName={createProjectMemberFormWithFullName}
                     createProjectMemberAction={createProjectMemberAction}
                     isFullName={isFullName}
                     setIsFullName={setIsFullName}

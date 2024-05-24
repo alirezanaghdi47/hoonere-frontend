@@ -1,4 +1,5 @@
 // libraries
+import {useState} from "react";
 import {useLocation} from "react-router-dom";
 import {LuBell, LuMoon, LuUser} from "react-icons/lu";
 
@@ -12,14 +13,14 @@ import Breadcrumbs from "@/modules/Breadcrumbs.tsx";
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-const breadcrumbLinks = [
-    {id: 1, label: "داشبورد", href: useAuthStore.getState().auth.panel_url + "dashboard"},
-    {id: 2, label: "پروژه ها", href: useAuthStore.getState().auth.panel_url + "projects"},
-];
-
 const Header = () => {
     const location = useLocation();
     const{auth} = useAuthStore();
+
+    const [breadcrumbLinks , setBreadcrumbLinks] = useState([
+        {id: 1, label: "داشبورد", href: auth.panel_url + "dashboard"},
+        {id: 2, label: "پروژه ها", href: auth.panel_url + "projects"},
+    ]);
 
     return (
         <div className="d-flex justify-content-center align-items-center w-100 bg-primary">

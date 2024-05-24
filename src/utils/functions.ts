@@ -94,12 +94,14 @@ export const decodeData = (data) => {
     return secondDecodedString;
 }
 
-export const removeItemFromObject = (obj , keys) => {
-    let clonedObject = JSON.parse(JSON.stringify(obj));
+export const cleaningObject = (sourceObject) => {
+    const clonedObject = JSON.parse(JSON.stringify(sourceObject));
 
-    keys.forEach(key => {
-        delete clonedObject[key];
-    })
+    for (var propName in clonedObject) {
+        if (clonedObject[propName] === null || clonedObject[propName] === undefined || clonedObject[propName] === "") {
+            delete clonedObject[propName];
+        }
+    }
 
     return clonedObject;
 }

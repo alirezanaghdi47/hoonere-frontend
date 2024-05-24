@@ -45,7 +45,7 @@ const Occupation = ({readMyProfileAction, readAllMyJobAction}) => {
         initialValues: {
             fields_of_activity: readAllMyJobAction.data?.data?.fieldsOfActivity ? readAllMyJobAction.data?.data.fieldsOfActivity : [],
             resume_file: {},
-            resume_text: readMyProfileAction.data?.data?.userInfo?.resume_text ? readMyProfileAction.data?.data?.userInfo.resume_text : "",
+            resume_text: readMyProfileAction.data?.data?.user_info?.resume_text ? readMyProfileAction.data?.data?.user_info.resume_text : "",
         },
         validationSchema: occupationSchema,
         onSubmit: async (result) => {
@@ -67,8 +67,7 @@ const Occupation = ({readMyProfileAction, readAllMyJobAction}) => {
                 readAllJobAction.isPending && (
                     <Loading
                         width="100%"
-                        height={300}
-                        withCard
+                        height={200}
                     />
                 )
             }

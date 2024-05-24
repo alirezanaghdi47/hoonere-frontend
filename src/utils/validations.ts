@@ -141,28 +141,26 @@ export const updateProjectSchema = Yup.object().shape({
     location: Yup.string().trim().required("موقعیت فیلم برداری پروژه الزامی است")
 });
 
-export const createProjectMemberSchema = Yup.object().shape({
+export const createProjectMemberWithFullNameSchema = Yup.object().shape({
     foa_parent_id: Yup.string().required("گروه شغلی الزامی است"),
     foa_child_id: Yup.string().required("عنوان شغلی الزامی است"),
-    user_id: Yup.string().trim().when(["name"], {
-        is: (value) => value === undefined,
-        then: () => Yup.string().trim().required("نام کاربری الزامی است"),
-    }),
-    name: Yup.string().trim().when(["user_id"], {
-        is: (value) => value === undefined,
-        then: () => Yup.string().trim().required("نام و نام خانوادگی الزامی است"),
-    })
-}, [['user_id', 'name']]);
+    name: Yup.string().trim().required("نام و نام خانوادگی الزامی است")
+});
 
-export const updateProjectMemberSchema = Yup.object().shape({
+export const createProjectMemberWithUserNameSchema = Yup.object().shape({
     foa_parent_id: Yup.string().required("گروه شغلی الزامی است"),
     foa_child_id: Yup.string().required("عنوان شغلی الزامی است"),
-    user_id: Yup.string().trim().when(["name"], {
-        is: (value) => value === undefined,
-        then: () => Yup.string().trim().required("نام کاربری الزامی است"),
-    }),
-    name: Yup.string().trim().when(["user_id"], {
-        is: (value) => value === undefined,
-        then: () => Yup.string().trim().required("نام و نام خانوادگی الزامی است"),
-    })
-}, [['user_id', 'name']]);
+    user_id: Yup.string().trim().required("نام کاربری الزامی است")
+});
+
+export const updateProjectMemberWithFullNameSchema = Yup.object().shape({
+    foa_parent_id: Yup.string().required("گروه شغلی الزامی است"),
+    foa_child_id: Yup.string().required("عنوان شغلی الزامی است"),
+    name: Yup.string().trim().required("نام و نام خانوادگی الزامی است")
+});
+
+export const updateProjectMemberWithUserNameSchema = Yup.object().shape({
+    foa_parent_id: Yup.string().required("گروه شغلی الزامی است"),
+    foa_child_id: Yup.string().required("عنوان شغلی الزامی است"),
+    user_id: Yup.string().trim().required("نام کاربری الزامی است")
+});

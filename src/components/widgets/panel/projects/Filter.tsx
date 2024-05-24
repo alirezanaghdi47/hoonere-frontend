@@ -53,7 +53,7 @@ const AdvanceFilter = ({filter, initialFilter, changeFilter, hideFilter, resetFi
                         disabled={readAllProjectTypeAction.isPending}
                         options={(!readAllProjectTypeAction.isPending && readAllProjectTypeAction.data) ? readAllProjectTypeAction.data?.data?.projectTypes?.map(projectType => ({
                             label: projectType.title,
-                            value: projectType.id
+                            value: projectType.id.toString()
                         })) : []}
                         placeholder=""
                         isSearchable
@@ -146,7 +146,7 @@ const Filter = ({
                     resetFilter
                 }) => {
     return (
-        <div className='d-flex flex-column justify-content-start align-items-start w-100 gap-5'>
+        <div className='d-flex flex-column justify-content-start align-items-start w-100 gap-5 mb-5'>
             {
                 isOpenFilter ? (
                     <AdvanceFilter

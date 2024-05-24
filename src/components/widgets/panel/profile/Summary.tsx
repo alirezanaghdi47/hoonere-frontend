@@ -29,9 +29,9 @@ const Summary = ({readMyProfileAction}) => {
                     <div
                         className="d-flex justify-content-center align-items-center w-150px h-150px bg-secondary rounded-2">
                         {
-                            readMyProfileAction.data?.data?.userInfo?.profile_img ? (
+                            readMyProfileAction.data?.data?.user_info?.profile_img ? (
                                 <LazyLoadImage
-                                    src={readMyProfileAction?.data?.data?.userInfo?.profile_img}
+                                    src={readMyProfileAction?.data?.data?.user_info?.profile_img}
                                     alt="avatar"
                                     width={150}
                                     height={150}
@@ -55,10 +55,10 @@ const Summary = ({readMyProfileAction}) => {
                             isBold
                         >
                             {
-                                (!readMyProfileAction.data?.data?.userInfo?.first_name || !readMyProfileAction.data?.data?.userInfo?.last_name) ? (
-                                    readMyProfileAction.data?.data?.userInfo?.username
+                                (!readMyProfileAction.data?.data?.user_info?.first_name || !readMyProfileAction.data?.data?.user_info?.last_name) ? (
+                                    readMyProfileAction.data?.data?.user_info?.username
                                 ) : (
-                                    readMyProfileAction.data?.data?.userInfo?.first_name + " " + readMyProfileAction.data?.data?.userInfo?.last_name
+                                    readMyProfileAction.data?.data?.user_info?.first_name + " " + readMyProfileAction.data?.data?.user_info?.last_name
                                 )
                             }
                         </Typography>

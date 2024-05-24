@@ -21,7 +21,7 @@ const ResumeForm = ({readMyProfileAction , updateOccupationForm}) => {
                         <Form.Group>
                             <FileInput
                                 name="resume_file"
-                                preview={readMyProfileAction.data?.data?.userInfo?.resume_file}
+                                preview={readMyProfileAction.data?.data?.user_info?.resume_file}
                                 value={updateOccupationForm.values.resume_file}
                                 onChange={(value) => updateOccupationForm.setFieldValue("resume_file", value)}
                             />

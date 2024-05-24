@@ -17,7 +17,7 @@ const Financial = ({readMyProfileAction , readMyAllBankCardAction}) => {
                         readMyAllBankCardAction={readMyAllBankCardAction}
                         changePart={changePart}
                         changeCurrentPart={changeCurrentPart}
-                        user={readMyProfileAction.data?.data?.userInfo?.first_name + " " + readMyProfileAction.data?.data?.userInfo?.last_name}
+                        user={readMyProfileAction.data?.data?.user_info?.first_name + " " + readMyProfileAction.data?.data?.user_info?.last_name}
                     />
                 )
             }
@@ -27,7 +27,7 @@ const Financial = ({readMyProfileAction , readMyAllBankCardAction}) => {
                     <CreateBank
                         readMyAllBankCardAction={readMyAllBankCardAction}
                         resetPart={resetPart}
-                        user={readMyProfileAction.data?.data?.userInfo?.first_name + " " + readMyProfileAction.data?.data?.userInfo?.last_name}
+                        user={readMyProfileAction.data?.data?.user_info?.first_name + " " + readMyProfileAction.data?.data?.user_info?.last_name}
                     />
                 )
             }
@@ -37,7 +37,7 @@ const Financial = ({readMyProfileAction , readMyAllBankCardAction}) => {
                     <UpdateBank
                         part={part}
                         resetPart={resetPart}
-                        user={readMyProfileAction.data?.data?.userInfo?.first_name + " " + readMyProfileAction.data?.data?.userInfo?.last_name}
+                        user={readMyProfileAction.data?.data?.user_info?.first_name + " " + readMyProfileAction.data?.data?.user_info?.last_name}
                         readMyAllBankCardAction={readMyAllBankCardAction}
                     />
                 )

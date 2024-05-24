@@ -5,6 +5,11 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {format} from "date-fns-jalali";
 import {LuInfo, LuPen, LuTrash2} from "react-icons/lu";
 
+// components
+import Finder from "@/components/widgets/panel/projects/Finder.tsx";
+import Filter from "@/components/widgets/panel/projects/Filter.tsx";
+import Empty from "@/components/partials/panel/Empty.tsx";
+
 // modules
 import Table from "@/modules/Table.tsx";
 import Tooltip from "@/modules/Tooltip.tsx";
@@ -18,7 +23,16 @@ import {deleteProjectService} from "@/services/projectService.ts";
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-const DataTable = ({readAllProjectAction, filter}) => {
+const DataTable = ({
+                       readAllProjectAction,
+                       filter,
+                       initialFilter,
+                       isOpenFilter,
+                       changeFilter,
+                       resetFilter,
+                       showFilter,
+                       hideFilter
+                   }) => {
     const {auth} = useAuthStore();
 
     const deleteProjectAction = useMutation({
@@ -38,7 +52,7 @@ const DataTable = ({readAllProjectAction, filter}) => {
             {
                 accessorKey: 'number',
                 header: () => '#',
-                cell: ({row}) => row.index + 1,
+                cell: ({row}) => filter.page * filter.per_page - filter.per_page + row.index + 1,
                 sortingFn: (rowA, rowB, columnId) => rowA.index - rowB.index
             },
             {
@@ -188,10 +202,45 @@ const DataTable = ({readAllProjectAction, filter}) => {
     );
 
     return (
-        <Table
-            data={readAllProjectAction?.data?.data?.projects}
-            columns={tableColumns}
-        />
+        <div className="card w-100">
+            <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
+                <Filter
+                    readAllProjectAction={readAllProjectAction}
+                    filter={filter}
+                    initialFilter={initialFilter}
+                    changeFilter={changeFilter}
+                    isOpenFilter={isOpenFilter}
+                    showFilter={showFilter}
+                    hideFilter={hideFilter}
+                    resetFilter={resetFilter}
+                />
+
+                {
+                    readAllProjectAction.data?.data?.projects.length > 0 && (
+                        <Table
+                            data={readAllProjectAction?.data?.data?.projects}
+                            columns={tableColumns}
+                        />
+                    )
+                }
+
+                {
+                    readAllProjectAction.data?.data?.projects.length === 0 && (
+                        <Empty
+                            title="پروژه ای یافت نشد"
+                            width="100%"
+                            height={300}
+                        />
+                    )
+                }
+
+                <Finder
+                    readAllProjectAction={readAllProjectAction}
+                    filter={filter}
+                    changeFilter={changeFilter}
+                />
+            </div>
+        </div>
     )
 }
 

@@ -23,24 +23,22 @@ const Content = () => {
 
     return (
         <div
-            className="d-flex flex-column justify-content-start align-items-start gap-5 w-100 mw-950px mt-lg-n20 p-5">
-            <div className="card w-100">
-                <div className="card-body d-flex flex-column gap-5">
-                    {
-                        readAllProjectMemberAction?.isPending && (
-                            <Loading
-                                width="100%"
-                                height={250}
-                            />
-                        )
-                    }
+            className="d-flex flex-column flex-lg-row justify-content-start align-items-start gap-5 w-100 mw-950px p-5">
+            <div className="d-flex flex-wrap justify-content-center gap-5 w-100 mt-lg-n20">
+                {
+                    readAllProjectMemberAction?.isPending && (
+                        <Loading
+                            width="100%"
+                            height={350}
+                        />
+                    )
+                }
 
-                    {
-                        !readAllProjectMemberAction?.isPending && (
-                            <DataList readAllProjectMemberAction={readAllProjectMemberAction}/>
-                        )
-                    }
-                </div>
+                {
+                    !readAllProjectMemberAction?.isPending && (
+                        <DataList readAllProjectMemberAction={readAllProjectMemberAction}/>
+                    )
+                }
             </div>
         </div>
     )

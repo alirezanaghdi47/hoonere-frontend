@@ -85,7 +85,7 @@ const DatePicker = ({name, value, onChange, range, minDate, maxDate, disabled, r
                 />
             )}
             mapDays={({date}) => customizeDays(date)}
-            format="YYYY/MM/DD"
+            format="YYYY-MM-DD"
             arrow={false}
             dateSeparator=" تا "
             monthYearSeparator=" | "
