@@ -4,6 +4,11 @@ import {useMutation} from "@tanstack/react-query";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {LuPlus} from "react-icons/lu";
 
+// components
+import Actions from "@/components/widgets/panel/projects/members/Actions.tsx";
+import Filter from "@/components/widgets/panel/projects/members/Filter.tsx";
+import Finder from "@/components/widgets/panel/projects/members/Finder.tsx";
+
 // modules
 import Typography from "@/modules/Typography.tsx";
 import Button from "@/modules/Button.tsx";
@@ -41,7 +46,7 @@ const BlankCard = ({onClick}) => {
     )
 }
 
-const DataCard = ({readAllProjectMemberAction, member}) => {
+const MemberCard = ({readAllProjectMemberAction, member}) => {
     const params = useParams();
     const {auth} = useAuthStore();
 
@@ -138,7 +143,18 @@ const DataCard = ({readAllProjectMemberAction, member}) => {
     )
 }
 
-const DataList = ({readAllProjectMemberAction}) => {
+const DataList = ({
+                      readAllProjectMemberAction,
+                      filter,
+                      initialFilter,
+                      isOpenFilter,
+                      changeFilter,
+                      resetFilter,
+                      hideFilter,
+                      showFilter,
+                      isListView,
+                      toggleView
+                  }) => {
     const params = useParams();
     const navigate = useNavigate();
     const {auth} = useAuthStore();
@@ -146,10 +162,26 @@ const DataList = ({readAllProjectMemberAction}) => {
     return (
         <div className="card w-100">
             <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
+                <Actions
+                    isListView={isListView}
+                    toggleView={toggleView}
+                />
+
+                <Filter
+                    readAllProjectMemberAction={readAllProjectMemberAction}
+                    filter={filter}
+                    initialFilter={initialFilter}
+                    changeFilter={changeFilter}
+                    isOpenFilter={isOpenFilter}
+                    showFilter={showFilter}
+                    hideFilter={hideFilter}
+                    resetFilter={resetFilter}
+                />
+
                 <div className="row gy-5 w-100">
                     {
                         readAllProjectMemberAction.data?.data?.members?.map((member) =>
-                            <DataCard
+                            <MemberCard
                                 key={member?.id}
                                 readAllProjectMemberAction={readAllProjectMemberAction}
                                 member={member}
@@ -159,6 +191,12 @@ const DataList = ({readAllProjectMemberAction}) => {
 
                     <BlankCard onClick={() => navigate(auth.panel_url + "projects/" + params.id + "/members/create")}/>
                 </div>
+
+                <Finder
+                    readAllProjectMemberAction={readAllProjectMemberAction}
+                    filter={filter}
+                    changeFilter={changeFilter}
+                />
             </div>
         </div>
     )

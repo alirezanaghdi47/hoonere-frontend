@@ -12,7 +12,7 @@ import Popover from "@/modules/Popover.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import Modal from "@/modules/Modal.tsx";
 
-const TempPage = () => {
+const Temp = () => {
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -147,4 +147,4 @@ const TempPage = () => {
     )
 }
 
-export default TempPage;
+export default Temp;

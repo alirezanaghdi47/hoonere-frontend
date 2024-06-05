@@ -50,7 +50,6 @@ const AdvanceFilter = ({filter, initialFilter, changeFilter, hideFilter, resetFi
                     <SelectBox
                         name="type_id"
                         value={filter.type_id}
-                        disabled={readAllProjectTypeAction.isPending}
                         options={(!readAllProjectTypeAction.isPending && readAllProjectTypeAction.data) ? readAllProjectTypeAction.data?.data?.projectTypes?.map(projectType => ({
                             label: projectType.title,
                             value: projectType.id.toString()
@@ -58,6 +57,7 @@ const AdvanceFilter = ({filter, initialFilter, changeFilter, hideFilter, resetFi
                         placeholder=""
                         isSearchable
                         onChange={(value) => changeFilter({type_id: value})}
+                        isLoading={readAllProjectTypeAction.isPending}
                     />
                 </Form.Group>
             </div>

@@ -2,7 +2,6 @@
 import {useLayoutEffect} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
-import MoonLoader from "react-spinners/MoonLoader";
 
 // modules
 import Form from "@/modules/Form.tsx";
@@ -101,7 +100,6 @@ const FormData = ({createProjectForm, createProjectAction}) => {
                                     <SelectBox
                                         name="type_id"
                                         value={createProjectForm.values.type_id}
-                                        disabled={readAllProjectTypeAction.isPending}
                                         options={(!readAllProjectTypeAction.isPending && readAllProjectTypeAction.data) ? readAllProjectTypeAction.data?.data?.projectTypes?.map(projectType => ({
                                             label: projectType.title,
                                             value: projectType.id.toString()
@@ -109,6 +107,7 @@ const FormData = ({createProjectForm, createProjectAction}) => {
                                         placeholder=""
                                         isSearchable
                                         onChange={(value) => createProjectForm.setFieldValue("type_id", value)}
+                                        isLoading={readAllProjectTypeAction.isPending}
                                     />
 
                                     <Form.Error
@@ -251,15 +250,7 @@ const FormData = ({createProjectForm, createProjectAction}) => {
                                         disabled={readUserInquiryAction.isPending}
                                         onChange={(value) => readUserInquiryForm.setFieldValue("username", value)}
                                         onBlur={() => readUserInquiryForm.handleSubmit()}
-                                        endAdornment={
-                                            readUserInquiryAction.isPending && (
-                                                <MoonLoader
-                                                    size={20}
-                                                    color="currentColor"
-                                                    className="m-1"
-                                                />
-                                            )
-                                        }
+                                        isLoading={readUserInquiryAction.isPending}
                                     />
 
                                     <Form.Error

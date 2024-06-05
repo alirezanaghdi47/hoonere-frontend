@@ -48,6 +48,7 @@ export const updateProfileSchema = Yup.object().shape({
             return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
         }
     }),
+    username: Yup.string().trim().required("نام کاربری الزامی است"),
     first_name: Yup.string().trim().required("نام الزامی است"),
     last_name: Yup.string().trim().required("نام خانوادگی الزامی است"),
     national_code: Yup.string().trim().required("کد ملی الزامی است"),
@@ -84,9 +85,10 @@ export const occupationSchema = Yup.object().shape({
 });
 
 export const financialSchema = Yup.object().shape({
+    name: Yup.string().trim().required("نام و نام خانوادگی الزامی است"),
     card_number: Yup.string().trim().required("شماره کارت الزامی است"),
     card_shaba: Yup.string().trim().required("شماره شبا الزامی است"),
-    account_id: Yup.string().trim().required("شماره حساب الزامی است")
+    account_id: Yup.string().trim()
 });
 
 export const readUserInquirySchema = Yup.object().shape({

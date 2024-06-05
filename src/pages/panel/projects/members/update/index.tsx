@@ -2,6 +2,9 @@
 import Header from "@/components/widgets/panel/projects/members/update/Header.tsx";
 import Content from "@/components/widgets/panel/projects/members/update/Content.tsx";
 
+// hocs
+import RouteGuardHoc from "@/hocs/RouteGuardHoc.tsx";
+
 const UpdateProjectMember = () => {
     return (
         <>
@@ -11,4 +14,4 @@ const UpdateProjectMember = () => {
     )
 }
 
-export default UpdateProjectMember;
+export default RouteGuardHoc(UpdateProjectMember);

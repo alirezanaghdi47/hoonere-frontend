@@ -1,7 +1,7 @@
 // libraries
 import {useState} from "react";
 import {useLocation} from "react-router-dom";
-import {LuBell, LuMoon, LuUser} from "react-icons/lu";
+import {LuBell, LuMoon, LuSun, LuUser} from "react-icons/lu";
 
 // modules
 import Typography from "@/modules/Typography.tsx";
@@ -11,10 +11,12 @@ import Breadcrumbs from "@/modules/Breadcrumbs.tsx";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
+import useAppStore from "@/stores/appStore.ts";
 
 const Header = () => {
     const location = useLocation();
     const{auth} = useAuthStore();
+    const {app: {isDark}, toggleTheme} = useAppStore();
 
     const [breadcrumbLinks , setBreadcrumbLinks] = useState([
         {id: 1, label: "داشبورد", href: auth.panel_url + "dashboard"},
@@ -50,11 +52,23 @@ const Header = () => {
                         />
                     </IconButton>
 
-                    <IconButton color="primary">
-                        <LuMoon
-                            size={20}
-                            color="currentColor"
-                        />
+                    <IconButton
+                        color="primary"
+                        onClick={toggleTheme}
+                    >
+                        {
+                            isDark ? (
+                                <LuSun
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            ) : (
+                                <LuMoon
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            )
+                        }
                     </IconButton>
 
                     <IconButton

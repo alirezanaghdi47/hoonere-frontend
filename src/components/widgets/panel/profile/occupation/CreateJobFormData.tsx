@@ -58,6 +58,7 @@ const CreateJobFormData = ({readAllJobAction, updateOccupationForm, resetPart}) 
                                 placeholder=""
                                 isSearchable
                                 onChange={(value) => createJobForm.setFieldValue("foa_parent_id", value)}
+                                isLoading={readAllJobAction.isPending}
                             />
 
                             <Form.Error

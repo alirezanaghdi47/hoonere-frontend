@@ -3,7 +3,6 @@ import {useLayoutEffect} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
-import MoonLoader from "react-spinners/MoonLoader";
 import {LuInfo} from "react-icons/lu";
 
 // modules
@@ -71,6 +70,7 @@ const FormDataWithUserName = ({readAllJobAction, createProjectMemberFormWithUser
                                 placeholder=""
                                 isSearchable
                                 onChange={(value) => createProjectMemberFormWithUserName.setFieldValue("foa_parent_id", value)}
+                                isLoading={readAllJobAction.isPending}
                             />
 
                             <Form.Error
@@ -123,18 +123,10 @@ const FormDataWithUserName = ({readAllJobAction, createProjectMemberFormWithUser
                                 name="username"
                                 placeholder=""
                                 value={readUserInquiryForm.values.username}
-                                disabled={!readUserInquiryForm.values.foa_id}
                                 onChange={(value) => readUserInquiryForm.setFieldValue("username", value)}
                                 onBlur={() => readUserInquiryForm.handleSubmit()}
-                                endAdornment={
-                                    readUserInquiryAction.isPending && (
-                                        <MoonLoader
-                                            size={20}
-                                            color="currentColor"
-                                            className="m-1"
-                                        />
-                                    )
-                                }
+                                isLoading={readUserInquiryAction.isPending}
+                                disabled={!createProjectMemberFormWithUserName.values.foa_child_id}
                             />
 
                             <Form.Error
@@ -236,6 +228,7 @@ const FormDataWithFullName = ({readAllJobAction, createProjectMemberFormWithFull
                                 placeholder=""
                                 value={createProjectMemberFormWithFullName.values.name}
                                 onChange={(value) => createProjectMemberFormWithFullName.setFieldValue("name", value)}
+                                disabled={!createProjectMemberFormWithFullName.values.foa_child_id}
                             />
 
                             <Form.Error

@@ -1,5 +1,6 @@
 // libraries
 import classNames from "classnames";
+import MoonLoader from "react-spinners/MoonLoader";
 
 const TextInput = ({
                        name,
@@ -9,6 +10,7 @@ const TextInput = ({
                        onBlur = () => null,
                        startAdornment,
                        endAdornment,
+                       isLoading,
                        disabled,
                        ...props
                    }) => {
@@ -39,7 +41,7 @@ const TextInput = ({
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 onBlur={(e) => onBlur(e.target.value)}
-                disabled={disabled}
+                disabled={disabled || isLoading}
             />
 
             {
@@ -49,6 +51,21 @@ const TextInput = ({
                         style={{top: 2, left: 2}}
                     >
                         {endAdornment}
+                    </span>
+                )
+            }
+
+            {
+                isLoading && (
+                    <span
+                        className="position-absolute d-flex justify-content-center align-items-center w-43px h-43px m-1"
+                        style={{top: 2, left: 2}}
+                    >
+                        <MoonLoader
+                            size={20}
+                            color="currentColor"
+                            className="m-1"
+                        />
                     </span>
                 )
             }

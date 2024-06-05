@@ -39,6 +39,7 @@ const Identify = ({readMyProfileAction}) => {
         initialValues: {
             profile_img: {},
             national_card: {},
+            username: readMyProfileAction.data?.data?.user_info?.username ? readMyProfileAction.data?.data?.user_info.username : "",
             first_name: readMyProfileAction.data?.data?.user_info?.first_name ? readMyProfileAction.data?.data?.user_info.first_name : "",
             last_name: readMyProfileAction.data?.data?.user_info?.last_name ? readMyProfileAction.data?.data?.user_info.last_name : "",
             national_code: readMyProfileAction.data?.data?.user_info?.national_code ? readMyProfileAction.data?.data?.user_info.national_code : "",
@@ -109,6 +110,32 @@ const Identify = ({readMyProfileAction}) => {
                                 <Form.Error
                                     error={updateProfileForm.errors.national_card}
                                     touched={updateProfileForm.touched.national_card}
+                                />
+                            </Form.Group>
+                        </div>
+                    </div>
+
+                    <div className="row gy-5 w-100">
+                        <div className="col-lg-4">
+                            <Form.Label
+                                label="نام کاربری"
+                                size="sm"
+                                color="dark"
+                                required
+                            />
+                        </div>
+
+                        <div className="col-lg-8">
+                            <Form.Group>
+                                <TextInput
+                                    name="username"
+                                    value={updateProfileForm.values.username}
+                                    onChange={(value) => updateProfileForm.setFieldValue("username", value)}
+                                />
+
+                                <Form.Error
+                                    error={updateProfileForm.errors.username}
+                                    touched={updateProfileForm.touched.username}
                                 />
                             </Form.Group>
                         </div>

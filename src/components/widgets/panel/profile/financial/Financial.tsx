@@ -1,44 +1,44 @@
 // components
 import Banks from "@/components/widgets/panel/profile/financial/Banks.tsx";
-import CreateBank from "@/components/widgets/panel/profile/financial/CreateBank.tsx";
-import UpdateBank from "@/components/widgets/panel/profile/financial/UpdateBank.tsx";
+import CreateBankFormData from "@/components/widgets/panel/profile/financial/CreateBankFormData.tsx";
+import UpdateBankFormData from "@/components/widgets/panel/profile/financial/UpdateBankFormData.tsx";
 
 // hooks
 import usePart from "@/hooks/usePart.tsx";
 
 const Financial = ({readMyProfileAction , readMyAllBankCardAction}) => {
-    const {part, currentPart, resetPart, changePart, changeCurrentPart} = usePart();
+    const {part, currentPart, resetPart, changePart, changeCurrentPart} = usePart(null , "read");
 
     return (
         <>
             {
-                !currentPart && (
+                currentPart === "read" && (
                     <Banks
                         readMyAllBankCardAction={readMyAllBankCardAction}
+                        readMyProfileAction={readMyProfileAction}
                         changePart={changePart}
                         changeCurrentPart={changeCurrentPart}
-                        user={readMyProfileAction.data?.data?.user_info?.first_name + " " + readMyProfileAction.data?.data?.user_info?.last_name}
                     />
                 )
             }
 
             {
-                currentPart === "add" && (
-                    <CreateBank
+                currentPart === "create" && (
+                    <CreateBankFormData
                         readMyAllBankCardAction={readMyAllBankCardAction}
+                        readMyProfileAction={readMyProfileAction}
                         resetPart={resetPart}
-                        user={readMyProfileAction.data?.data?.user_info?.first_name + " " + readMyProfileAction.data?.data?.user_info?.last_name}
                     />
                 )
             }
 
             {
-                (currentPart === "update" && Object.keys(part).length > 0) && (
-                    <UpdateBank
+                currentPart === "update" && (
+                    <UpdateBankFormData
+                        readMyAllBankCardAction={readMyAllBankCardAction}
+                        readMyProfileAction={readMyProfileAction}
                         part={part}
                         resetPart={resetPart}
-                        user={readMyProfileAction.data?.data?.user_info?.first_name + " " + readMyProfileAction.data?.data?.user_info?.last_name}
-                        readMyAllBankCardAction={readMyAllBankCardAction}
                     />
                 )
             }

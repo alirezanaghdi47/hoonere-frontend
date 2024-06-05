@@ -4,9 +4,10 @@ import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
 // components
-import FormData from "@/components/widgets/panel/profile/occupation/FormData.tsx";
+import FormData from "@/components/widgets/panel/profile/occupation/ResumeFormData.tsx";
 import CreateJobFormData from "@/components/widgets/panel/profile/occupation/CreateJobFormData.tsx";
-import ReadAllMyJob from "@/components/widgets/panel/profile/occupation/ReadAllMyJob.tsx";
+import Jobs from "@/components/widgets/panel/profile/occupation/Jobs.tsx";
+import Loading from "@/components/partials/panel/Loading.tsx";
 
 // hooks
 import usePart from "@/hooks/usePart.tsx";
@@ -20,10 +21,9 @@ import {readAllJobService} from "@/services/publicService.ts";
 
 // utils
 import {occupationSchema} from "@/utils/validations.ts";
-import Loading from "@/components/partials/panel/Loading.tsx";
 
 const Occupation = ({readMyProfileAction, readAllMyJobAction}) => {
-    const {currentPart, resetPart, changeCurrentPart} = usePart();
+    const {currentPart, resetPart, changeCurrentPart} = usePart(null , "read");
 
     const readAllJobAction = useMutation({
         mutationFn: () => readAllJobService(),
@@ -73,8 +73,8 @@ const Occupation = ({readMyProfileAction, readAllMyJobAction}) => {
             }
 
             {
-                !readAllJobAction.isPending && readAllMyJobAction.data && !currentPart && (
-                    <ReadAllMyJob
+                !readAllJobAction.isPending && readAllMyJobAction.data && currentPart === "read" && (
+                    <Jobs
                         readAllJobAction={readAllJobAction}
                         updateOccupationForm={updateOccupationForm}
                         changeCurrentPart={changeCurrentPart}
@@ -83,7 +83,7 @@ const Occupation = ({readMyProfileAction, readAllMyJobAction}) => {
             }
 
             {
-                !readAllJobAction.isPending && readAllMyJobAction.data && currentPart === "add" && (
+                !readAllJobAction.isPending && readAllMyJobAction.data && currentPart === "create" && (
                     <CreateJobFormData
                         readAllJobAction={readAllJobAction}
                         updateOccupationForm={updateOccupationForm}

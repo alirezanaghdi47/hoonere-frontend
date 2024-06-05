@@ -6,8 +6,9 @@ import {format} from "date-fns-jalali";
 import {LuInfo, LuPen, LuTrash2} from "react-icons/lu";
 
 // components
-import Finder from "@/components/widgets/panel/projects/Finder.tsx";
-import Filter from "@/components/widgets/panel/projects/Filter.tsx";
+import Actions from "@/components/widgets/panel/projects/members/Actions.tsx";
+import Finder from "@/components/widgets/panel/projects/members/Finder.tsx";
+import Filter from "@/components/widgets/panel/projects/members/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
 // modules
@@ -18,30 +19,32 @@ import dialog from "@/modules/dialog.tsx";
 import toast from "@/modules/Toast.tsx";
 
 // services
-import {deleteProjectService} from "@/services/projectService.ts";
+import {deleteProjectMemberService} from "@/services/projectMemberService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
 const DataTable = ({
-                       readAllProjectAction,
+                       readAllProjectMemberAction,
                        filter,
                        initialFilter,
                        isOpenFilter,
                        changeFilter,
                        resetFilter,
                        showFilter,
-                       hideFilter
+                       hideFilter,
+                       isListView,
+                       toggleView
                    }) => {
     const {auth} = useAuthStore();
 
-    const deleteProjectAction = useMutation({
-        mutationFn: (data) => deleteProjectService(data),
+    const deleteProjectMemberAction = useMutation({
+        mutationFn: (data) => deleteProjectMemberService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
 
-                readAllProjectAction.mutate(filter);
+                readAllProjectMemberAction.mutate(filter);
             } else {
                 toast("error", data.message);
             }
@@ -56,73 +59,107 @@ const DataTable = ({
                 sortingFn: (rowA, rowB, columnId) => rowA.index - rowB.index
             },
             {
-                accessorKey: 'logo',
-                header: () => 'لوگو',
-                cell: ({row}) => (
-                    <div
-                        className="w-100px fs-6 text-dark text-truncate"
-                    >
-                        <LazyLoadImage
-                            src={row.original.logo}
-                            alt={row.original.title}
-                            width={50}
-                            height={50}
-                        />
-                    </div>
-                ),
+                accessorKey: 'profile_img',
+                header: () => 'عکس پروفایل',
+                cell: ({row}) => {
+                    const username = row.original.name ? row.original.name : null;
+                    const fullName = row.original.user_info ? row.original.user_info?.first_name + " " + row.original.user_info?.last_name : null;
+
+                    return (
+                        <div className="w-100px fs-6 text-dark text-truncate">
+                            <LazyLoadImage
+                                src={row.original.user_info?.profile_img}
+                                alt={fullName ?? username}
+                                width={50}
+                                height={50}
+                                className="rounded-circle"
+                            />
+                        </div>
+                    )
+                },
                 enableSorting: false
             },
             {
-                accessorKey: 'title',
-                header: () => 'عنوان',
-                cell: ({row}) => (
-                    <div
-                        className="w-150px fs-6 text-dark text-truncate"
-                        data-tooltip-id="my-tooltip"
-                        data-tooltip-content={row.original.title}
-                    >
-                        {row.original.title}
-                    </div>
-                ),
+                accessorKey: 'full_name',
+                header: () => 'نام و نام خانوادگی',
+                cell: ({row}) => {
+                    const fullName = row.original.user_info ? row.original.user_info?.first_name + " " + row.original.user_info?.last_name : "-----";
+
+                    return (
+                        <div
+                            className="w-100px fs-6 text-dark text-truncate"
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content={fullName}
+                        >
+                            {fullName}
+                        </div>
+                    )
+                },
+                sortingFn: (rowA, rowB, columnId, desc) => {
+                    if (!rowA.original.first_name && !rowB.original.first_name) {
+                        return 0;
+                    }
+
+                    if (!rowA.original.first_name) {
+                        return desc ? -1 : 1;
+                    }
+
+                    if (!rowB.original.first_name) {
+                        return desc ? 1 : -1;
+                    }
+
+                    return rowA.original?.first_name.localeCompare(rowB.original?.first_name);
+                }
+            },
+            {
+                accessorKey: 'username',
+                header: () => 'نام کاربری',
+                cell: ({row}) => {
+                    const username = row.original.name ? row.original.name : "-----";
+
+                    return (
+                        <div
+                            className="w-100px fs-6 text-dark text-truncate"
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content={username}
+                        >
+                            {username}
+                        </div>
+                    )
+                },
                 sortingFn: "text"
             },
             {
-                accessorKey: 'description',
-                header: () => 'توضیحات',
+                accessorKey: 'foa_parent',
+                header: () => 'گروه شغلی',
                 cell: ({row}) => (
                     <div
                         className="w-250px fs-6 text-dark text-truncate"
                         data-tooltip-id="my-tooltip"
-                        data-tooltip-content={row.original.description}
+                        data-tooltip-content={row.original.parent_info.title}
                     >
-                        {row.original.description}
+                        {row.original.parent_info.title}
                     </div>
                 ),
                 sortingFn: "text"
             },
             {
-                accessorKey: 'count_of_parts',
-                header: () => 'تعداد قسمت ها',
+                accessorKey: 'foa_child',
+                header: () => 'عنوان شغلی',
                 cell: ({row}) => (
-                    <div className="w-100px fs-6 text-dark text-truncate">
-                        {row.original.count_of_parts}
-                    </div>
-                ),
-                sortingFn: "text"
-            },
-            {
-                accessorKey: 'time_of_parts',
-                header: () => 'مدت زمان ( دقیقه )',
-                cell: ({row}) => (
-                    <div className="w-100px fs-6 text-dark text-truncate">
-                        {row.original.time_of_parts}
+                    <div
+                        className="w-250px fs-6 text-dark text-truncate"
+                        data-tooltip-id="my-tooltip"
+                        data-tooltip-content={row.original.child_info.title}
+                    >
+                        {row.original.child_info.title}
                     </div>
                 ),
                 sortingFn: "text"
             },
             {
                 accessorKey: 'created_at',
-                header: () => 'زمان ایجاد',
+                header: () => 'زمان عضویت',
                 cell: ({row}) => (
                     <div className="w-150px fs-6 text-dark text-truncate">
                         {format(new Date(row.original.created_at), "hh:mm | yyy/MM/dd")}
@@ -138,20 +175,7 @@ const DataTable = ({
                 cell: ({row}) => (
                     <div className="d-flex justify-content-start align-items-center w-max gap-2">
                         <IconButton
-                            href={auth.panel_url + "projects/" + row.original.id + "/members"}
-                            color="light-info"
-                            size="sm"
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="نمایش اعضا"
-                        >
-                            <LuInfo
-                                size={20}
-                                color="currentColor"
-                            />
-                        </IconButton>
-
-                        <IconButton
-                            href={auth.panel_url + "projects/" + row.original.id + "/update"}
+                            href={auth.panel_url + "projects/" + row.original.project_id + "/members/" + row.original.id + "/update"}
                             color="light-warning"
                             size="sm"
                             data-tooltip-id="my-tooltip"
@@ -168,8 +192,8 @@ const DataTable = ({
                             size="sm"
                             onClick={() => {
                                 dialog(
-                                    "حذف پروژه",
-                                    "آیا میخواهید این پروژه را حذف کنید ؟",
+                                    "حذف عضو",
+                                    "آیا میخواهید این عضو را حذف کنید ؟",
                                     "info",
                                     {
                                         show: true,
@@ -181,7 +205,7 @@ const DataTable = ({
                                         text: "انصراف",
                                         color: "light-dark",
                                     },
-                                    async () => deleteProjectAction.mutate({project_id: row.original.id.toString()})
+                                    async () => deleteProjectMemberAction.mutate({member_id: row.original.id.toString()})
                                 )
                             }}
                             data-tooltip-id="my-tooltip"
@@ -203,8 +227,13 @@ const DataTable = ({
         <>
             <div className="card w-100">
                 <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
+                    <Actions
+                        isListView={isListView}
+                        toggleView={toggleView}
+                    />
+
                     <Filter
-                        readAllProjectAction={readAllProjectAction}
+                        readAllProjectMemberAction={readAllProjectMemberAction}
                         filter={filter}
                         initialFilter={initialFilter}
                         changeFilter={changeFilter}
@@ -215,18 +244,18 @@ const DataTable = ({
                     />
 
                     {
-                        readAllProjectAction.data?.data?.projects.length > 0 && (
+                        readAllProjectMemberAction.data?.data?.members.length > 0 && (
                             <Table
-                                data={readAllProjectAction?.data?.data?.projects}
+                                data={readAllProjectMemberAction?.data?.data?.members}
                                 columns={tableColumns}
                             />
                         )
                     }
 
                     {
-                        readAllProjectAction.data?.data?.projects.length === 0 && (
+                        readAllProjectMemberAction.data?.data?.members.length === 0 && (
                             <Empty
-                                title="پروژه ای یافت نشد"
+                                title="عضوی یافت نشد"
                                 width="100%"
                                 height={300}
                             />
@@ -234,7 +263,7 @@ const DataTable = ({
                     }
 
                     <Finder
-                        readAllProjectAction={readAllProjectAction}
+                        readAllProjectMemberAction={readAllProjectMemberAction}
                         filter={filter}
                         changeFilter={changeFilter}
                     />

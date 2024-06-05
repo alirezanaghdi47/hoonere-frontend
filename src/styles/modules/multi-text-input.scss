@@ -27,20 +27,30 @@
 
   &--tag {
     display: flex !important;
-    justify-content: center !important;
+    justify-content: space-between !important;
     align-items: center !important;
-    gap: 10px!important;
+    gap: 4px !important;
     background: var(--bs-secondary) !important;
-    color: var(--bs-body-color) !important;
     padding: 4px !important;
 
-    button{
+    span {
+      color: var(--bs-gray-700) !important;
+      font-size: 1.1rem !important;
+      font-weight: 500 !important;
+      line-height: 1.5 !important;
+    }
+
+    button {
       display: flex !important;
       justify-content: center !important;
       align-items: center !important;
+      width: 12px !important;
+      height: 12px !important;
       color: var(--bs-danger) !important;
-      padding: 0!important;
-      margin-top: 5px!important;
+      font-weight: bold!important;
+      font-size: 12px!important;
+      padding: 0 !important;
+      margin-top: 4px!important;
     }
   }
 }

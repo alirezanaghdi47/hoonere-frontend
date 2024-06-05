@@ -33,7 +33,7 @@ const Content = () => {
             className="d-flex flex-column flex-lg-row justify-content-start align-items-start gap-5 w-100 mw-950px p-5">
             <div className="d-flex flex-wrap justify-content-center gap-5 w-100 mt-lg-n20">
                 {
-                    readAllProjectAction?.isPending && (
+                    readAllProjectAction.isPending && (
                         <Loading
                             width="100%"
                             height={500}
@@ -42,7 +42,7 @@ const Content = () => {
                 }
 
                 {
-                    !readAllProjectAction?.isPending && (
+                    !readAllProjectAction.isPending && (
                         <DataTable
                             readAllProjectAction={readAllProjectAction}
                             filter={filter}

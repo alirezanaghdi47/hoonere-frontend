@@ -1,11 +1,6 @@
 // libraries
-import {Navigate, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Loadable from '@loadable/component';
-
-// stores
-import useAuthStore from "@/stores/authStore.ts";
-
-import Temp from "@/pages/TempPage.tsx";
 
 // layouts
 const Panel = Loadable(() => import('@/layouts/panel'));
@@ -13,6 +8,11 @@ const Auth = Loadable(() => import('@/layouts/auth'));
 const Blank = Loadable(() => import('@/layouts/error'));
 
 // pages
+const Home = Loadable(() => import('@/pages/home'));
+const Server = Loadable(() => import('@/pages/error/server'));
+const Client = Loadable(() => import('@/pages/error/client'));
+const SignIn = Loadable(() => import('@/pages/auth/sign-in'));
+const SignUp = Loadable(() => import('@/pages/auth/sign-up'));
 const Dashboard = Loadable(() => import('@/pages/panel/dashboard'));
 const Projects = Loadable(() => import('@/pages/panel/projects'));
 const CreateProject = Loadable(() => import('@/pages/panel/projects/create'));
@@ -21,112 +21,120 @@ const ProjectMembers = Loadable(() => import('@/pages/panel/projects/members'));
 const CreateProjectMember = Loadable(() => import('@/pages/panel/projects/members/create'));
 const UpdateProjectMember = Loadable(() => import('@/pages/panel/projects/members/update'));
 const Profile = Loadable(() => import('@/pages/panel/profile'));
-const SignIn = Loadable(() => import('@/pages/auth/sign-in'));
-const SignUp = Loadable(() => import('@/pages/auth/sign-up'));
-const Server = Loadable(() => import('@/pages/error/server'));
-const Client = Loadable(() => import('@/pages/error/client'));
+
+const routes = [
+    {
+        id: 1,
+        path: "*",
+        component: Blank,
+        children: [
+            {
+                id: 1,
+                path: "",
+                component: Home,
+                requiredAuth: false,
+            },
+            {
+                id: 2,
+                path: "server-down",
+                component: Server,
+            },
+            {
+                id: 3,
+                path: "*",
+                component: Client,
+            }
+        ]
+    },
+    {
+        id: 2,
+        path: "auth",
+        component: Auth,
+        children: [
+            {
+                id: 1,
+                path: "sign-in",
+                component: SignIn,
+            },
+            {
+                id: 2,
+                path: "sign-up",
+                component: SignUp,
+            }
+        ]
+    },
+    {
+        id: 3,
+        path: "panel",
+        component: Panel,
+        children: [
+            {
+                id: 1,
+                path: "dashboard",
+                component: Dashboard,
+            },
+            {
+                id: 2,
+                path: "projects",
+                component: Projects,
+            },
+            {
+                id: 3,
+                path: "projects/create",
+                component: CreateProject,
+            },
+            {
+                id: 4,
+                path: "projects/:id/update",
+                component: UpdateProject,
+            },
+            {
+                id: 5,
+                path: "projects/:id/members",
+                component: ProjectMembers,
+            },
+            {
+                id: 6,
+                path: "projects/:id/members/create",
+                component: CreateProjectMember,
+            },
+            {
+                id: 6,
+                path: "projects/:id/members/:subId/update",
+                component: UpdateProjectMember,
+            },
+            {
+                id: 16,
+                path: "profile",
+                component: Profile,
+            },
+        ]
+    },
+]
 
 const RouterProvider = () => {
-    const {auth} = useAuthStore();
-
-    const isAuth = Boolean(auth.token && parseInt(auth.status_id) > 1);
-
     return (
         <Routes>
-            <Route
-                path="/"
-                element={isAuth ? <Navigate to="/panel/dashboard"/> : <Navigate to="/auth/sign-in"/>}
-            />
-
-            <Route
-                path="auth"
-                element={!isAuth ? <Auth/> : <Navigate to="/panel/dashboard"/>}
-            >
-                <Route
-                    path=""
-                    element={<Navigate to="/auth/sign-in"/>}
-                />
-
-                <Route
-                    path="sign-in"
-                    element={<SignIn/>}
-                />
-
-                <Route
-                    path="sign-up"
-                    element={<SignUp/>}
-                />
-            </Route>
-
-            <Route
-                path="panel"
-                element={isAuth ? <Panel/> : <Navigate to="/auth/sign-in"/>}
-            >
-                <Route
-                    path=""
-                    element={<Navigate to="/panel/dashboard"/>}
-                />
-
-                <Route
-                    path="dashboard"
-                    element={<Dashboard/>}
-                />
-
-                <Route
-                    path="projects"
-                    element={<Projects/>}
-                />
-
-                <Route
-                    path="projects/create"
-                    element={<CreateProject/>}
-                />
-
-                <Route
-                    path="projects/:id/update"
-                    element={<UpdateProject/>}
-                />
-
-                <Route
-                    path="projects/:id/members"
-                    element={<ProjectMembers/>}
-                />
-
-                <Route
-                    path="projects/:id/members/create"
-                    element={<CreateProjectMember/>}
-                />
-
-                <Route
-                    path="projects/:id/members/:subId/update"
-                    element={<UpdateProjectMember/>}
-                />
-
-                <Route
-                    path="profile"
-                    element={<Profile/>}
-                />
-            </Route>
-
-            <Route
-                path="/*"
-                element={<Blank/>}
-            >
-                <Route
-                    path="server-down"
-                    element={<Server/>}
-                />
-
-                <Route
-                    path="*"
-                    element={<Client/>}
-                />
-            </Route>
-
-            <Route
-                path="/temp"
-                element={<Temp/>}
-            />
+            {
+                routes.map(route => (
+                        <Route
+                            key={route.id}
+                            path={route.path}
+                            element={<route.component/>}
+                        >
+                            {
+                                route.hasOwnProperty("children") && route.children?.map(subRoute =>
+                                    <Route
+                                        key={subRoute.id}
+                                        path={subRoute.path}
+                                        element={<subRoute.component/>}
+                                    />
+                                )
+                            }
+                        </Route>
+                    )
+                )
+            }
         </Routes>
     )
 }

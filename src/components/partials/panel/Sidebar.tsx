@@ -1,5 +1,6 @@
 // libraries
-import {Link} from "react-router-dom";
+import {useState} from "react";
+import {Link , useNavigate} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {useMediaQuery} from "usehooks-ts";
@@ -16,25 +17,26 @@ import {logoutService} from "@/services/authService.ts";
 import useAppStore from "@/stores/appStore.ts";
 import useAuthStore from "@/stores/authStore.ts";
 
-const sidebarLinks = [
-    {
-        id: 1,
-        label: "داشبورد",
-        href: useAuthStore.getState().auth.panel_url + "dashboard",
-        icon: LuPieChart({size: 20, color: 'currentColor'})
-    },
-    {
-        id: 2,
-        label: "پروژه ها",
-        href: useAuthStore.getState().auth.panel_url + "projects",
-        icon: LuLayers({size: 20, color: 'currentColor'})
-    },
-];
-
 const Sidebar = () => {
+    const navigate = useNavigate();
     const {app: {isOpenDrawer}, hideDrawer} = useAppStore();
     const {logout, auth} = useAuthStore();
     const isDesktop = useMediaQuery("(min-width: 992px)");
+
+    const [sidebarLinks , setSidebarLinks] = useState([
+        {
+            id: 1,
+            label: "داشبورد",
+            href: auth.panel_url + "dashboard",
+            icon: LuPieChart({size: 20, color: 'currentColor'})
+        },
+        {
+            id: 2,
+            label: "پروژه ها",
+            href: auth.panel_url + "projects",
+            icon: LuLayers({size: 20, color: 'currentColor'})
+        },
+    ]);
 
     const logoutAction = useMutation({
         mutationFn: () => logoutService(),
@@ -45,6 +47,8 @@ const Sidebar = () => {
                 hideDrawer();
 
                 logout();
+
+                navigate("/auth/sign-in", {replace: true});
             } else {
                 toast("error", data.message);
             }

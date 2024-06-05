@@ -9,13 +9,16 @@ import ServerErrorPage from "@/pages/error/server";
 
 // providers
 import QueryProvider from "@/providers/QueryProvider.tsx";
+import ThemeProvider from "@/providers/ThemeProvider.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.Fragment>
         <ErrorBoundary FallbackComponent={<ServerErrorPage/>}>
             <BrowserRouter>
                 <QueryProvider>
-                    <App/>
+                    <ThemeProvider>
+                        <App/>
+                    </ThemeProvider>
                 </QueryProvider>
             </BrowserRouter>
         </ErrorBoundary>

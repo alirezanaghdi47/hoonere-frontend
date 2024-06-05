@@ -1,5 +1,5 @@
 // libraries
-import {LuBell, LuMoon, LuUser} from "react-icons/lu";
+import {LuBell, LuMoon, LuSun, LuUser} from "react-icons/lu";
 
 // modules
 import Typography from "@/modules/Typography.tsx";
@@ -8,9 +8,11 @@ import Badge from "@/modules/Badge.tsx";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
+import useAppStore from "@/stores/appStore.ts";
 
 const Header = () => {
     const {auth} = useAuthStore();
+    const {app: {isDark}, toggleTheme} = useAppStore();
 
     return (
         <div className="d-flex justify-content-center align-items-center w-100 bg-primary">
@@ -41,11 +43,23 @@ const Header = () => {
                         />
                     </IconButton>
 
-                    <IconButton color="primary">
-                        <LuMoon
-                            size={20}
-                            color="currentColor"
-                        />
+                    <IconButton
+                        color="primary"
+                        onClick={toggleTheme}
+                    >
+                        {
+                            isDark ? (
+                                <LuSun
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            ) : (
+                                <LuMoon
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            )
+                        }
                     </IconButton>
 
                     <IconButton

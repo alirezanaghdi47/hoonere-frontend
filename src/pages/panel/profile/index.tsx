@@ -6,6 +6,9 @@ import {useLocation, useNavigate} from "react-router-dom";
 import Header from "@/components/widgets/panel/profile/Header.tsx";
 import Content from "@/components/widgets/panel/profile/Content.tsx";
 
+// hocs
+import RouteGuardHoc from "@/hocs/RouteGuardHoc.tsx";
+
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
@@ -28,4 +31,4 @@ const Profile = () => {
     )
 }
 
-export default Profile;
+export default RouteGuardHoc(Profile);

@@ -31,7 +31,7 @@ const useAuthStore = create(persist((set) => ({
         }),
     }),
     {
-        name: "auth",
+        name: "panel-auth",
         // storage: createJSONStorage(() => sessionStorage)
     }
 ));

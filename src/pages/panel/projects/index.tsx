@@ -2,6 +2,9 @@
 import Content from "@/components/widgets/panel/projects/Content.tsx";
 import Header from "@/components/widgets/panel/projects/Header.tsx";
 
+// hocs
+import RouteGuardHoc from "@/hocs/RouteGuardHoc.tsx";
+
 const Projects = () => {
     return (
         <>
@@ -11,4 +14,4 @@ const Projects = () => {
     )
 }
 
-export default Projects;
+export default RouteGuardHoc(Projects);
