@@ -11,10 +11,13 @@ import Button from "@/modules/Button.tsx";
 import Textarea from "@/modules/Textarea.tsx";
 import NumberInput from "@/modules/NumberInput.tsx";
 import AvatarInput from "@/modules/AvatarInput.tsx";
-import toast from "@/modules/Toast.tsx";
+import toast from "@/helpers/Toast.tsx";
 
 // services
 import {updateProfileService} from "@/services/profileService.ts";
+
+// types
+import {IUpdateProfile} from "@/types/services";
 
 // utils
 import {updateProfileSchema} from "@/utils/validations.ts";
@@ -22,7 +25,7 @@ import {convertGregorianToJalali, convertJalaliToGregorian, toEnglishDigits} fro
 
 const Identify = ({readMyProfileAction}) => {
     const updateProfileAction = useMutation({
-        mutationFn: (data) => updateProfileService(data),
+        mutationFn: (data: IUpdateProfile) => updateProfileService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -75,6 +78,7 @@ const Identify = ({readMyProfileAction}) => {
                         <div className="col-lg-8">
                             <Form.Group>
                                 <AvatarInput
+                                    id="profile_img"
                                     name="profile_img"
                                     preview={readMyProfileAction.data?.data?.user_info.profile_img}
                                     value={updateProfileForm.values.profile_img}
@@ -101,6 +105,7 @@ const Identify = ({readMyProfileAction}) => {
                         <div className="col-lg-8">
                             <Form.Group>
                                 <FileInput
+                                    id="national_card"
                                     name="national_card"
                                     preview={readMyProfileAction.data?.data?.user_info.national_card}
                                     value={updateProfileForm.values.national_card}
@@ -128,6 +133,7 @@ const Identify = ({readMyProfileAction}) => {
                         <div className="col-lg-8">
                             <Form.Group>
                                 <TextInput
+                                    id="username"
                                     name="username"
                                     value={updateProfileForm.values.username}
                                     onChange={(value) => updateProfileForm.setFieldValue("username", value)}
@@ -154,6 +160,7 @@ const Identify = ({readMyProfileAction}) => {
                         <div className="col-lg-8">
                             <Form.Group>
                                 <TextInput
+                                    id="first_name"
                                     name="first_name"
                                     value={updateProfileForm.values.first_name}
                                     onChange={(value) => updateProfileForm.setFieldValue("first_name", value)}
@@ -180,6 +187,7 @@ const Identify = ({readMyProfileAction}) => {
                         <div className="col-lg-8">
                             <Form.Group>
                                 <TextInput
+                                    id="last_name"
                                     name="last_name"
                                     value={updateProfileForm.values.last_name}
                                     onChange={(value) => updateProfileForm.setFieldValue("last_name", value)}
@@ -206,6 +214,7 @@ const Identify = ({readMyProfileAction}) => {
                         <div className="col-lg-8">
                             <Form.Group>
                                 <NumberInput
+                                    id="id_code"
                                     name="id_code"
                                     options={{
                                         numericOnly: true,
@@ -236,6 +245,7 @@ const Identify = ({readMyProfileAction}) => {
                         <div className="col-lg-8">
                             <Form.Group>
                                 <NumberInput
+                                    id="national_code"
                                     name="national_code"
                                     options={{
                                         numericOnly: true,
@@ -266,6 +276,7 @@ const Identify = ({readMyProfileAction}) => {
                         <div className="col-lg-8">
                             <Form.Group>
                                 <DatePicker
+                                    id="birthdate"
                                     name="birthdate"
                                     value={updateProfileForm.values.birthdate}
                                     onChange={(value) => updateProfileForm.setFieldValue("birthdate", value)}
@@ -292,6 +303,7 @@ const Identify = ({readMyProfileAction}) => {
                         <div className="col-lg-8">
                             <Form.Group>
                                 <TextInput
+                                    id="email"
                                     name="email"
                                     value={updateProfileForm.values.email}
                                     onChange={(value) => updateProfileForm.setFieldValue("email", value)}
@@ -318,6 +330,7 @@ const Identify = ({readMyProfileAction}) => {
                         <div className="col-lg-8">
                             <Form.Group>
                                 <Textarea
+                                    id="address"
                                     name="address"
                                     value={updateProfileForm.values.address}
                                     onChange={(value) => updateProfileForm.setFieldValue("address", value)}

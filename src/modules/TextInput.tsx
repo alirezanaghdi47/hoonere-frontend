@@ -2,22 +2,26 @@
 import classNames from "classnames";
 import MoonLoader from "react-spinners/MoonLoader";
 
+// types
+import {TTextInput} from "@/types/modules.ts";
+
 const TextInput = ({
+                       id,
                        name,
                        value,
                        placeholder,
                        onChange,
                        onBlur = () => null,
-                       startAdornment,
-                       endAdornment,
-                       isLoading,
-                       disabled,
+                       startAdornment = null,
+                       endAdornment = null,
+                       isLoading = false,
+                       disabled = false,
                        ...props
-                   }) => {
+                   }: TTextInput) => {
     return (
         <div
             {...props}
-            className='position-relative w-100'
+            className={classNames('position-relative w-100' , props.className)}
         >
             {
                 startAdornment && (
@@ -31,6 +35,7 @@ const TextInput = ({
             }
 
             <input
+                id={id}
                 name={name}
                 type="text"
                 placeholder={placeholder}

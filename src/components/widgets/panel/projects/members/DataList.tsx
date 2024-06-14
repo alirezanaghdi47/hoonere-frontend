@@ -12,14 +12,17 @@ import Finder from "@/components/widgets/panel/projects/members/Finder.tsx";
 // modules
 import Typography from "@/modules/Typography.tsx";
 import Button from "@/modules/Button.tsx";
-import dialog from "@/modules/dialog.tsx";
-import toast from "@/modules/Toast.tsx";
+import dialog from "@/helpers/dialog.tsx";
+import toast from "@/helpers/Toast.tsx";
 
 // services
 import {deleteProjectMemberService} from "@/services/projectMemberService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
+
+// types
+import {IDeleteProjectMember} from "@/types/services";
 
 const BlankCard = ({onClick}) => {
     return (
@@ -51,7 +54,7 @@ const MemberCard = ({readAllProjectMemberAction, member}) => {
     const {auth} = useAuthStore();
 
     const deleteProjectMemberAction = useMutation({
-        mutationFn: (data) => deleteProjectMemberService(data),
+        mutationFn: (data: IDeleteProjectMember) => deleteProjectMemberService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);

@@ -1,35 +1,39 @@
 // libraries
+import classNames from "classnames";
 
 // modules
 import Typography from "@/modules/Typography.tsx";
 
-const FormGroup = ({children , ...props}) => {
+// types
+import {TFormError, TFormLabel} from "@/types/modules.ts";
+
+const FormGroup = ({children, ...props}) => {
     return (
         <div
             {...props}
-            className="d-flex flex-column justify-content-center align-items-start gap-2 w-100"
+            className={classNames("d-flex flex-column justify-content-center align-items-start gap-2 w-100", props.className)}
         >
             {children}
         </div>
     )
 }
 
-const FormControl = ({children , ...props}) => {
+const FormControl = ({children, ...props}) => {
     return (
         <label
             {...props}
-            className="d-flex align-items-center gap-2 w-100"
+            className={classNames("d-flex align-items-center gap-2 w-100", props.className)}
         >
             {children}
         </label>
     )
 }
 
-const FormLabel = ({label , required , isBold , size , color , ...props}) => {
+const FormLabel = ({label, required = false, isBold = false, size, color, ...props}: TFormLabel) => {
     return (
         <div
             {...props}
-            className="d-flex justify-content-start align-items-center gap-2"
+            className={classNames("d-flex justify-content-start align-items-center gap-2", props.className)}
         >
             <Typography
                 variant="p"
@@ -51,7 +55,7 @@ const FormLabel = ({label , required , isBold , size , color , ...props}) => {
     )
 }
 
-const FormError = ({error, touched}) => {
+const FormError = ({error, touched}: TFormError) => {
     return error && touched && (
         <Typography
             variant="p"

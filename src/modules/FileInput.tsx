@@ -2,13 +2,17 @@
 import {useEffect, useState} from "react";
 import {useDropzone} from 'react-dropzone';
 import {LazyLoadImage} from "react-lazy-load-image-component";
+import classNames from "classnames";
 import {LuFileUp, LuTrash2} from "react-icons/lu";
 
 // modules
 import Typography from "@/modules/Typography.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 
-const FileInput = ({name, value, preview, onChange, disabled, ...props}) => {
+// types
+import {TFileInput} from "@/types/modules.ts";
+
+const FileInput = ({id , name, value, preview = null, onChange, disabled = false, ...props}: TFileInput) => {
     const [files, setFiles] = useState([value]);
 
     const {getRootProps, getInputProps} = useDropzone({
@@ -29,10 +33,10 @@ const FileInput = ({name, value, preview, onChange, disabled, ...props}) => {
     return (
         <div
             {...getRootProps()}
-            className={`d-flex justify-content-center align-items-center form-control form-control-solid w-100 h-100 min-h-200px cursor-pointer`}
+            className={classNames("d-flex justify-content-center align-items-center form-control form-control-solid w-100 h-100 min-h-200px cursor-pointer", props.className)}
         >
             <input
-                {...getInputProps({name: name})}
+                {...getInputProps({id: id , name: name})}
                 className='d-none'
             />
 

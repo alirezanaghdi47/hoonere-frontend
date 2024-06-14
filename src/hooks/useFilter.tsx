@@ -1,13 +1,13 @@
 // libraries
 import {useState} from "react";
 
-const useFilter = (initialData = null) => {
-    const [filter, setFilter] = useState(initialData);
-    const [isOpenFilter, setIsOpenFilter] = useState(false);
+const useFilter = <T,>(initialData = null) => {
+    const [filter, setFilter] = useState<T>(initialData);
+    const [isOpenFilter, setIsOpenFilter] = useState<boolean>(false);
 
     const initialFilter = initialData;
 
-    const changeFilter = (value) => setFilter(prevState => ({...prevState, ...value}));
+    const changeFilter = (value: { [key: string]: string | number | null }) => setFilter(prevState => ({...prevState, ...value}));
 
     const resetFilter = () => setFilter(initialData);
 

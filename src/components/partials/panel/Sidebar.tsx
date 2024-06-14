@@ -8,7 +8,7 @@ import {LuLayers, LuLogOut, LuPieChart} from "react-icons/lu";
 
 // modules
 import IconButton from "@/modules/IconButton.tsx";
-import toast from "@/modules/Toast.tsx";
+import toast from "@/helpers/Toast.tsx";
 
 // services
 import {logoutService} from "@/services/authService.ts";

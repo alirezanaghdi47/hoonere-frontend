@@ -7,12 +7,15 @@ import {useFormik} from "formik";
 import Form from "@/modules/Form.tsx";
 import NumberInput from "@/modules/NumberInput.tsx";
 import Button from "@/modules/Button.tsx";
-import toast from "@/modules/Toast.tsx";
+import toast from "@/helpers/Toast.tsx";
 import TextInput from "@/modules/TextInput.tsx";
 import Typography from "@/modules/Typography.tsx";
 
 // services
 import {createBankCardService} from "@/services/profileService.ts";
+
+// types
+import {ICreateBankCard} from "@/types/services";
 
 // utils
 import {financialSchema} from "@/utils/validations.ts";
@@ -83,16 +86,16 @@ export const PreviewBankCard = ({card}) => {
     )
 }
 
-const CreateBankFormData = ({readMyAllBankCardAction , readMyProfileAction, resetPart}) => {
+const CreateBankFormData = ({readMyAllBankCardAction, readMyProfileAction, resetPart}) => {
     const createBankCardAction = useMutation({
-        mutationFn: (data) => createBankCardService(data),
+        mutationFn: (data: ICreateBankCard) => createBankCardService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
 
                 resetPart();
 
-                createBankCardForm.handleReset();
+                createBankCardForm.handleReset(createBankCardForm);
 
                 readMyAllBankCardAction.mutate();
             } else {
@@ -104,7 +107,7 @@ const CreateBankFormData = ({readMyAllBankCardAction , readMyProfileAction, rese
     const createBankCardForm = useFormik({
         enableReinitialize: true,
         initialValues: {
-            name: readMyProfileAction.data?.data?.user_info?.first_name + " " + readMyProfileAction.data?.data?.user_info?.last_name ?? "",
+            name: readMyProfileAction.data?.data?.user_info?.first_name && readMyProfileAction.data?.data?.user_info?.last_name ? readMyProfileAction.data?.data?.user_info?.first_name + " " + readMyProfileAction.data?.data?.user_info?.last_name : "",
             card_number: "",
             card_shaba: "",
             account_id: ""
@@ -141,6 +144,7 @@ const CreateBankFormData = ({readMyAllBankCardAction , readMyProfileAction, rese
                     <div className="col-lg-8">
                         <Form.Group>
                             <TextInput
+                                id="name"
                                 name="name"
                                 value={createBankCardForm.values.name}
                                 onChange={(value) => createBankCardForm.setFieldValue("name", value)}
@@ -167,6 +171,7 @@ const CreateBankFormData = ({readMyAllBankCardAction , readMyProfileAction, rese
                     <div className="col-lg-8">
                         <Form.Group>
                             <NumberInput
+                                id="card_number"
                                 name="card_number"
                                 value={createBankCardForm.values.card_number}
                                 onChange={(value) => createBankCardForm.setFieldValue("card_number", value)}
@@ -193,6 +198,7 @@ const CreateBankFormData = ({readMyAllBankCardAction , readMyProfileAction, rese
                     <div className="col-lg-8">
                         <Form.Group>
                             <NumberInput
+                                id="card_shaba"
                                 name="card_shaba"
                                 value={createBankCardForm.values.card_shaba}
                                 onChange={(value) => createBankCardForm.setFieldValue("card_shaba", value)}
@@ -218,6 +224,7 @@ const CreateBankFormData = ({readMyAllBankCardAction , readMyProfileAction, rese
                     <div className="col-lg-8">
                         <Form.Group>
                             <NumberInput
+                                id="account_id"
                                 name="account_id"
                                 value={createBankCardForm.values.account_id}
                                 onChange={(value) => createBankCardForm.setFieldValue("account_id", value)}
@@ -235,7 +242,7 @@ const CreateBankFormData = ({readMyAllBankCardAction , readMyProfileAction, rese
                     <div className="col-12 d-flex justify-content-end align-items-center gap-5">
                         <Button
                             color="light-danger"
-                            onClick={createBankCardForm.handleReset}
+                            onClick={() => createBankCardForm.handleReset(createBankCardForm)}
                         >
                             انصراف
                         </Button>

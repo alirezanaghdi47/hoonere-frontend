@@ -1,11 +1,14 @@
 // libraries
-import {useLayoutEffect} from "react";
+import {ComponentType, useLayoutEffect} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-const RouteGuardHoc = (WrappedComponent) => {
+// types
+import {TWrappedComponent} from "@/types/hocs";
+
+const RouteGuardHoc = <P extends TWrappedComponent>(WrappedComponent: ComponentType<P>): ComponentType<P> => {
     const RouteGuardHoc = (props) => {
         const navigate = useNavigate();
         const location = useLocation();

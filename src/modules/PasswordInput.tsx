@@ -6,13 +6,25 @@ import {LuEye, LuEyeOff} from "react-icons/lu";
 // modules
 import IconButton from "@/modules/IconButton.tsx";
 
-const PasswordInput = ({name, value, placeholder, onChange, startAdornment, disabled, ...props}) => {
+// types
+import {TPasswordInput} from "@/types/modules.ts";
+
+const PasswordInput = ({
+                           id,
+                           name,
+                           value,
+                           placeholder = null,
+                           onChange,
+                           startAdornment = null,
+                           disabled = false,
+                           ...props
+                       }: TPasswordInput) => {
     const [isVisible, onToggle] = useToggle();
 
     return (
         <div
             {...props}
-            className='position-relative w-100'
+            className={classNames('position-relative w-100', props.className)}
         >
             {
                 startAdornment && (
@@ -26,6 +38,7 @@ const PasswordInput = ({name, value, placeholder, onChange, startAdornment, disa
             }
 
             <input
+                id={id}
                 name={name}
                 type={isVisible ? "text" : 'password'}
                 placeholder={placeholder}

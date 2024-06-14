@@ -32,6 +32,7 @@ const FormDataWithUserName = ({readAllJobAction, readProjectMemberAction, update
                             />
 
                             <SelectBox
+                                id="foa_parent_id"
                                 name="foa_parent_id"
                                 value={updateProjectMemberFormWithUserName.values.foa_parent_id}
                                 options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id === null)?.map(item => ({
@@ -60,6 +61,7 @@ const FormDataWithUserName = ({readAllJobAction, readProjectMemberAction, update
                             />
 
                             <SelectBox
+                                id="foa_child_id"
                                 name="foa_child_id"
                                 value={updateProjectMemberFormWithUserName.values.foa_child_id}
                                 options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id !== null && parseInt(foa.parent_id) === parseInt(updateProjectMemberFormWithUserName.values.foa_parent_id))?.map(item => ({
@@ -90,8 +92,8 @@ const FormDataWithUserName = ({readAllJobAction, readProjectMemberAction, update
                             />
 
                             <TextInput
+                                id="username"
                                 name="username"
-                                placeholder=""
                                 value={readProjectMemberAction?.data?.data?.member_info?.user_info?.username}
                                 disabled
                             />
@@ -124,6 +126,7 @@ const FormDataWithFullName = ({readAllJobAction, updateProjectMemberFormWithFull
                             />
 
                             <SelectBox
+                                id="foa_parent_id"
                                 name="foa_parent_id"
                                 value={updateProjectMemberFormWithFullName.values.foa_parent_id}
                                 options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id === null)?.map(item => ({
@@ -152,6 +155,7 @@ const FormDataWithFullName = ({readAllJobAction, updateProjectMemberFormWithFull
                             />
 
                             <SelectBox
+                                id="foa_child_id"
                                 name="foa_child_id"
                                 value={updateProjectMemberFormWithFullName.values.foa_child_id}
                                 options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id !== null && parseInt(foa.parent_id) === parseInt(updateProjectMemberFormWithFullName.values.foa_parent_id))?.map(item => ({
@@ -182,8 +186,8 @@ const FormDataWithFullName = ({readAllJobAction, updateProjectMemberFormWithFull
                             />
 
                             <TextInput
+                                id="name"
                                 name="name"
-                                placeholder=""
                                 value={updateProjectMemberFormWithFullName.values.name}
                                 onChange={(value) => updateProjectMemberFormWithFullName.setFieldValue("name", value)}
                             />

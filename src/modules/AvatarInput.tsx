@@ -2,10 +2,15 @@
 import {useEffect, useState} from "react";
 import {useDropzone} from 'react-dropzone';
 import {LazyLoadImage} from "react-lazy-load-image-component";
+import classNames from "classnames";
 import {LuUser} from "react-icons/lu";
 
-const AvatarInput = ({name, value, preview, onChange , disabled}) => {
-    const [files, setFiles] = useState([value]);
+// types
+import {TAvatarInput} from "@/types/modules.ts";
+import {ExtendedFile} from "@/types/interfaces.ts";
+
+const AvatarInput = ({id, name, value, preview = null, onChange, disabled = false, ...props}: TAvatarInput) => {
+    const [files, setFiles] = useState<ExtendedFile[]>([value]);
 
     const {getRootProps, getInputProps} = useDropzone({
         disabled: disabled,
@@ -25,10 +30,10 @@ const AvatarInput = ({name, value, preview, onChange , disabled}) => {
     return (
         <div
             {...getRootProps()}
-            className="d-flex justify-content-center align-items-center form-control form-control-lg form-control-solid w-100px h-100px p-2 cursor-pointer"
+            className={classNames("d-flex justify-content-center align-items-center form-control form-control-lg form-control-solid w-100px h-100px p-2 cursor-pointer", props.className)}
         >
             <input
-                {...getInputProps({name: name})}
+                {...getInputProps({id: id, name: name})}
                 className='d-none'
             />
 

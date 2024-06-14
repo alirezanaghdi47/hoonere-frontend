@@ -1,8 +1,14 @@
-const SwitchBox = ({name , id, checked, value, onChange , disabled , ...props}) => {
+// libraries
+import classNames from "classnames";
+
+// types
+import {TSwitchBox} from "@/types/modules.ts";
+
+const SwitchBox = ({name , id, checked, value, onChange , disabled = false , ...props}: TSwitchBox) => {
     return (
         <div
             {...props}
-            className="form-check form-switch form-check-custom form-check-solid"
+            className={classNames("form-check form-switch form-check-custom form-check-solid", props.className)}
         >
             <input
                 type="checkbox"

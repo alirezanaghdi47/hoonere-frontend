@@ -5,6 +5,9 @@ import {LuChevronLeft, LuChevronRight, LuMoreHorizontal} from "react-icons/lu";
 // styles
 import "@/styles/modules/pagination.scss";
 
+// types
+import {TPagination} from "@/types/modules.ts";
+
 const PrevIcon = () => {
     return (
         <div className="text-muted">
@@ -38,18 +41,19 @@ const JumpIcon = () => {
     )
 }
 
-const Pagination = ({current, pageSize, total, onChange}) => {
+const Pagination = ({current, pageSize, total, onChange , ...props}: TPagination) => {
     return (
         <ReactPaginate
             current={current}
             total={total}
             pageSize={pageSize}
             showLessItems
-            onChange={(value) => onChange(parseInt(value))}
+            onChange={(value) => onChange(value)}
             prevIcon={PrevIcon}
             nextIcon={NextIcon}
             jumpNextIcon={JumpIcon}
             jumpPrevIcon={JumpIcon}
+            className={props.className}
         />
     )
 }

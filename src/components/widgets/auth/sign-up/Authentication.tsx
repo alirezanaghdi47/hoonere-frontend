@@ -7,10 +7,13 @@ import Button from "@/modules/Button.tsx";
 import Typography from "@/modules/Typography.tsx";
 import NumberInput from "@/modules/NumberInput.tsx";
 import Form from "@/modules/Form.tsx";
-import toast from "@/modules/Toast.tsx";
+import toast from "@/helpers/Toast.tsx";
 
 // services
 import {authService} from "@/services/authService.ts";
+
+// types
+import {IAuth} from "@/types/services.ts";
 
 // utils
 import {authSchema} from "@/utils/validations.ts";
@@ -18,7 +21,7 @@ import {toEnglishDigits} from "@/utils/functions.ts";
 
 const Authentication = ({nextStep, changeStep}) => {
     const authAction = useMutation({
-        mutationFn: (data) => authService(data),
+        mutationFn: (data: IAuth) => authService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -42,7 +45,6 @@ const Authentication = ({nextStep, changeStep}) => {
         validationSchema: authSchema,
         onSubmit: async (result) => {
             authAction.mutate({
-                ...result ,
                 mobile: toEnglishDigits(result.mobile)
             });
         }
@@ -62,6 +64,7 @@ const Authentication = ({nextStep, changeStep}) => {
 
             <Form.Group>
                 <NumberInput
+                    id="mobile"
                     name="mobile"
                     placeholder="شماره موبایل"
                     value={authForm.values.mobile}

@@ -19,7 +19,7 @@ const CreateJobFormData = ({readAllJobAction, updateOccupationForm, resetPart}) 
         validationSchema: createJobSchema,
         onSubmit: async (result, {resetForm}) => {
             const oldFoaArray = updateOccupationForm.values.fields_of_activity;
-            let newFoaArray = oldFoaArray.filter(foa => JSON.stringify(foa) !== JSON.stringify(result));
+            const newFoaArray = oldFoaArray.filter(foa => JSON.stringify(foa) !== JSON.stringify(result));
 
             newFoaArray.push(result);
 
@@ -49,6 +49,7 @@ const CreateJobFormData = ({readAllJobAction, updateOccupationForm, resetPart}) 
                     <div className="col-lg-8">
                         <Form.Group>
                             <SelectBox
+                                id="foa_parent_id"
                                 name="foa_parent_id"
                                 value={createJobForm.values.foa_parent_id}
                                 options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id === null).map(item => ({
@@ -82,6 +83,7 @@ const CreateJobFormData = ({readAllJobAction, updateOccupationForm, resetPart}) 
                     <div className="col-lg-8">
                         <Form.Group>
                             <SelectBox
+                                id="foa_child_id"
                                 name="foa_child_id"
                                 value={createJobForm.values.foa_child_id}
                                 options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id !== null && parseInt(foa.parent_id) === parseInt(createJobForm.values.foa_parent_id)).map(item => ({
@@ -106,7 +108,7 @@ const CreateJobFormData = ({readAllJobAction, updateOccupationForm, resetPart}) 
                     <div className="col-12 d-flex justify-content-end align-items-center gap-5">
                         <Button
                             color="light-danger"
-                            onClick={createJobForm.handleReset}
+                            onClick={() => createJobForm.handleReset(createJobForm)}
                         >
                             انصراف
                         </Button>

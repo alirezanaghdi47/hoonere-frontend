@@ -9,13 +9,16 @@ import FormData from "@/components/widgets/panel/projects/members/update/FormDat
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // modules
-import toast from "@/modules/Toast.tsx";
+import toast from "@/helpers/Toast.tsx";
 
 // services
 import {updateProjectMemberService, readProjectMemberService} from "@/services/projectMemberService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
+
+// types
+import {IUpdateProjectMember, IReadProjectMember} from "@/types/services";
 
 // utils
 import {updateProjectMemberWithUserNameSchema, updateProjectMemberWithFullNameSchema} from "@/utils/validations.ts";
@@ -26,11 +29,11 @@ const Content = () => {
     const {auth} = useAuthStore();
 
     const readProjectMemberAction = useMutation({
-        mutationFn: (data) => readProjectMemberService(data),
+        mutationFn: (data: IReadProjectMember) => readProjectMemberService(data),
     });
 
     const updateProjectMemberAction = useMutation({
-        mutationFn: (data) => updateProjectMemberService(data),
+        mutationFn: (data: IUpdateProjectMember) => updateProjectMemberService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);

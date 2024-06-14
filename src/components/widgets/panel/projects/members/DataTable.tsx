@@ -15,14 +15,17 @@ import Empty from "@/components/partials/panel/Empty.tsx";
 import Table from "@/modules/Table.tsx";
 import Tooltip from "@/modules/Tooltip.tsx";
 import IconButton from "@/modules/IconButton.tsx";
-import dialog from "@/modules/dialog.tsx";
-import toast from "@/modules/Toast.tsx";
+import dialog from "@/helpers/dialog.tsx";
+import toast from "@/helpers/Toast.tsx";
 
 // services
 import {deleteProjectMemberService} from "@/services/projectMemberService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
+
+// types
+import {IDeleteProjectMember} from "@/types/services";
 
 const DataTable = ({
                        readAllProjectMemberAction,
@@ -39,7 +42,7 @@ const DataTable = ({
     const {auth} = useAuthStore();
 
     const deleteProjectMemberAction = useMutation({
-        mutationFn: (data) => deleteProjectMemberService(data),
+        mutationFn: (data: IDeleteProjectMember) => deleteProjectMemberService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -166,7 +169,7 @@ const DataTable = ({
                     </div>
                 ),
                 sortingFn: (rowA, rowB, columnId) => {
-                    return new Date(rowA.original.created_at) - new Date(rowB.original.created_at);
+                    return new Date(rowA.original.created_at).getTime() - new Date(rowB.original.created_at).getTime();
                 }
             },
             {

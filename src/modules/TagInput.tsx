@@ -1,14 +1,18 @@
 // libraries
 import {TagsInput} from "react-tag-input-component";
+import classNames from "classnames";
 
 // styles
-import "@/styles/modules/multi-text-input.scss";
+import "@/styles/modules/tag-input.scss";
 
-const MultiTextInput = ({name, value, placeholder, onChange, disabled, ...props}) => {
+// types
+import {TTagInput} from "@/types/modules.ts";
+
+const TagInput = ({name, value, placeholder = null, onChange, disabled = false, ...props}: TTagInput) => {
     return (
         <div
             {...props}
-            className='position-relative w-100'
+            className={classNames('position-relative w-100', props.className)}
         >
             <TagsInput
                 name={name}
@@ -21,4 +25,4 @@ const MultiTextInput = ({name, value, placeholder, onChange, disabled, ...props}
     )
 }
 
-export default MultiTextInput;
+export default TagInput;

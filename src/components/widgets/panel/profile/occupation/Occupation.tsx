@@ -13,11 +13,14 @@ import Loading from "@/components/partials/panel/Loading.tsx";
 import usePart from "@/hooks/usePart.tsx";
 
 // modules
-import toast from "@/modules/Toast.tsx";
+import toast from "@/helpers/Toast.tsx";
 
 // services
 import {updateOccupationService} from "@/services/profileService.ts";
 import {readAllJobService} from "@/services/publicService.ts";
+
+// types
+import {IUpdateOccupation} from "@/types/services";
 
 // utils
 import {occupationSchema} from "@/utils/validations.ts";
@@ -30,7 +33,7 @@ const Occupation = ({readMyProfileAction, readAllMyJobAction}) => {
     });
 
     const updateOccupationAction = useMutation({
-        mutationFn: (data) => updateOccupationService(data),
+        mutationFn: (data: IUpdateOccupation) => updateOccupationService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -58,6 +61,7 @@ const Occupation = ({readMyProfileAction, readAllMyJobAction}) => {
     }, []);
 
     useEffect(() => {
+        // @ts-ignore
         if (updateOccupationForm.errors.fields_of_activity) toast("error", updateOccupationForm.errors.fields_of_activity);
     }, [updateOccupationForm.errors.fields_of_activity, updateOccupationForm.touched.fields_of_activity]);
 

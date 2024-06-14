@@ -14,12 +14,13 @@ import useFilter from "@/hooks/useFilter.tsx";
 
 // services
 import {readAllProjectMemberService} from "@/services/projectMemberService.ts";
+import {IReadAllProjectMember} from "@/types/services";
 
 const Content = () => {
     const params = useParams();
     const {value: isListView , toggle: toggleView} = useBoolean(false);
 
-    const {filter, initialFilter, isOpenFilter, showFilter, hideFilter, resetFilter, changeFilter} = useFilter({
+    const {filter, initialFilter, isOpenFilter, showFilter, hideFilter, resetFilter, changeFilter} = useFilter<IReadAllProjectMember>({
         text: "",
         foa_child_id: "",
         foa_parent_id: "",
@@ -28,7 +29,7 @@ const Content = () => {
     });
 
     const readAllProjectMemberAction = useMutation({
-        mutationFn: (data) => readAllProjectMemberService(data),
+        mutationFn: (data:IReadAllProjectMember ) => readAllProjectMemberService(data),
     });
 
     useLayoutEffect(() => {

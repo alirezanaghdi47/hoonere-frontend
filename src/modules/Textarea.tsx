@@ -1,10 +1,17 @@
-const Textarea = ({name, value, placeholder, rows = 5, onChange , disabled, ...props}) => {
+// libraries
+import classNames from "classnames";
+
+// types
+import {TTextarea} from "@/types/modules.ts";
+
+const Textarea = ({id , name, value, placeholder = null, rows = 5, onChange, disabled = false, ...props}: TTextarea) => {
     return (
         <div
             {...props}
-            className='position-relative w-100'
+            className={classNames('position-relative w-100', props.className)}
         >
             <textarea
+                id={id}
                 name={name}
                 rows={rows}
                 placeholder={placeholder}

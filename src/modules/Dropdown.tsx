@@ -1,12 +1,16 @@
 // libraries
 import {useRef, useState} from 'react';
 import {ControlledMenu, SubMenu, MenuItem, useClick} from '@szhsin/react-menu';
+import classNames from "classnames";
 
 // styles
 import '@szhsin/react-menu/dist/index.css';
 import "@/styles/modules/dropdown.scss";
 
-const Dropdown = ({button, direction, alignment, gap, options}) => {
+// types
+import {TDropdown} from "@/types/modules.ts";
+
+const Dropdown = ({button, direction, alignment, gap, options , ...props}: TDropdown) => {
     const ref = useRef(null);
     const [isOpen, setOpen] = useState(false);
     const anchorProps = useClick(isOpen, setOpen);
@@ -16,7 +20,7 @@ const Dropdown = ({button, direction, alignment, gap, options}) => {
             <div
                 ref={ref}
                 {...anchorProps}
-                className="d-inline-block"
+                className={classNames("d-inline-block" , props.className)}
             >
                 {button}
             </div>

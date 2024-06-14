@@ -18,7 +18,7 @@ const Content = () => {
     const location = useLocation();
 
     const readMyProfileAction = useMutation({
-        mutationFn: (data) => readMyProfileService(data),
+        mutationFn: () => readMyProfileService(),
     });
 
     const readAllMyJobAction = useMutation({

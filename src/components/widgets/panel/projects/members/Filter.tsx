@@ -13,7 +13,7 @@ import Tooltip from "@/modules/Tooltip.tsx";
 // services
 import {readAllJobService, readAllProjectTypeService, readAllUserStatusService} from "@/services/publicService.ts";
 
-const AdvanceFilter = ({readAllProjectMemberAction , filter, initialFilter, changeFilter, hideFilter, resetFilter , isListView , toggleView}) => {
+const AdvanceFilter = ({readAllProjectMemberAction , filter, initialFilter, changeFilter, hideFilter, resetFilter}) => {
     const readAllProjectTypeAction = useMutation({
         mutationFn: () => readAllProjectTypeService(),
     });
@@ -43,6 +43,8 @@ const AdvanceFilter = ({readAllProjectMemberAction , filter, initialFilter, chan
                     />
 
                     <TextInput
+                        id="text"
+                        name="text"
                         value={filter.text}
                         onChange={(value) => changeFilter({text: value})}
                     />
@@ -58,6 +60,7 @@ const AdvanceFilter = ({readAllProjectMemberAction , filter, initialFilter, chan
                     />
 
                     <SelectBox
+                        id="foa_parent_id"
                         name="foa_parent_id"
                         value={filter.foa_parent_id}
                         options={(!readAllJobAction.isPending && readAllJobAction.data) ? readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id === null)?.map(item => ({
@@ -81,6 +84,7 @@ const AdvanceFilter = ({readAllProjectMemberAction , filter, initialFilter, chan
                     />
 
                     <SelectBox
+                        id="foa_child_id"
                         name="foa_child_id"
                         value={filter.foa_child_id}
                         disabled={!filter.foa_parent_id}
@@ -119,11 +123,13 @@ const AdvanceFilter = ({readAllProjectMemberAction , filter, initialFilter, chan
     )
 }
 
-const SimpleFilter = ({readAllProjectMemberAction , filter, changeFilter, showFilter , isListView , toggleView}) => {
+const SimpleFilter = ({readAllProjectMemberAction , filter, changeFilter, showFilter}) => {
     return (
         <div className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-5">
             <div className="w-200px">
                 <TextInput
+                    id="text"
+                    name="text"
                     value={filter.text}
                     placeholder="جستجو"
                     startAdornment={

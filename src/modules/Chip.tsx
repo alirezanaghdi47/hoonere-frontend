@@ -1,13 +1,16 @@
 // libraries
 import classNames from "classnames";
 
-const Chip = ({label, size = "md", color, circle , ...props}) => {
+// types
+import {TChip} from "@/types/modules.ts";
+
+const Chip = ({label, size = "sm", color, isCircle = false, ...props}: TChip) => {
     return (
         <span
-            className={classNames("badge" , props.className , {
+            className={classNames("badge", props.className, {
                 [`badge-${size}`]: true,
                 [`badge-${color}`]: true,
-                "badge-circle": circle,
+                "badge-circle": isCircle,
             })}
         >
             {label}

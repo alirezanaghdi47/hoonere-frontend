@@ -33,6 +33,8 @@ const AdvanceFilter = ({filter, initialFilter, changeFilter, hideFilter, resetFi
                     />
 
                     <TextInput
+                        id="text"
+                        name="text"
                         value={filter.text}
                         onChange={(value) => changeFilter({text: value})}
                     />
@@ -48,6 +50,7 @@ const AdvanceFilter = ({filter, initialFilter, changeFilter, hideFilter, resetFi
                     />
 
                     <SelectBox
+                        id="type_id"
                         name="type_id"
                         value={filter.type_id}
                         options={(!readAllProjectTypeAction.isPending && readAllProjectTypeAction.data) ? readAllProjectTypeAction.data?.data?.projectTypes?.map(projectType => ({
@@ -90,6 +93,8 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectAction}) 
         <div className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-5">
             <div className="w-200px">
                 <TextInput
+                    id="text"
+                    name="text"
                     value={filter.text}
                     placeholder="جستجو"
                     startAdornment={

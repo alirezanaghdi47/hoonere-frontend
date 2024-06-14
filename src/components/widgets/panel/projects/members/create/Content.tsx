@@ -8,13 +8,16 @@ import {useBoolean} from "usehooks-ts";
 import FormData from "@/components/widgets/panel/projects/members/create/FormData.tsx";
 
 // modules
-import toast from "@/modules/Toast.tsx";
+import toast from "@/helpers/Toast.tsx";
 
 // services
 import {createProjectMemberService} from "@/services/projectMemberService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
+
+// types
+import {ICreateProjectMember} from "@/types/services";
 
 // utils
 import {createProjectMemberWithFullNameSchema, createProjectMemberWithUserNameSchema} from "@/utils/validations.ts";
@@ -27,7 +30,7 @@ const Content = () => {
     const {value: isFullName, setValue: setIsFullName} = useBoolean(false);
 
     const createProjectMemberAction = useMutation({
-        mutationFn: (data) => createProjectMemberService(data),
+        mutationFn: (data: ICreateProjectMember) => createProjectMemberService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);

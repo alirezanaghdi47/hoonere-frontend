@@ -9,13 +9,16 @@ import PasswordInput from "@/modules/PasswordInput.tsx";
 import Button from "@/modules/Button.tsx";
 import Typography from "@/modules/Typography.tsx";
 import Form from "@/modules/Form.tsx";
-import toast from "@/modules/Toast.tsx";
+import toast from "@/helpers/Toast.tsx";
 
 // services
 import {registerService} from "@/services/authService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
+
+// types
+import {IRegister} from "@/types/services.ts";
 
 // utils
 import {registerSchema} from "@/utils/validations.ts";
@@ -25,7 +28,7 @@ const RegisterForm = ({resetStep}) => {
     const {auth , changeStatusId} = useAuthStore();
 
     const registerAction = useMutation({
-        mutationFn: (data) => registerService(data),
+        mutationFn: (data: IRegister) => registerService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -66,6 +69,7 @@ const RegisterForm = ({resetStep}) => {
 
             <Form.Group>
                 <TextInput
+                    id="username"
                     name="username"
                     placeholder="نام کاربری"
                     value={registerForm.values.username}
@@ -80,6 +84,7 @@ const RegisterForm = ({resetStep}) => {
 
             <Form.Group>
                 <PasswordInput
+                    id="password"
                     name="password"
                     placeholder="رمز عبور"
                     value={registerForm.values.password}
@@ -94,6 +99,7 @@ const RegisterForm = ({resetStep}) => {
 
             <Form.Group>
                 <PasswordInput
+                    id="password_confirmation"
                     name="password_confirmation"
                     placeholder="تکرار رمز عبور"
                     value={registerForm.values.password_confirmation}

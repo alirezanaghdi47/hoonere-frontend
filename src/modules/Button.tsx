@@ -3,25 +3,28 @@ import {Link} from "react-router-dom";
 import classNames from "classnames";
 import {BeatLoader} from "react-spinners";
 
+// types
+import {TButton} from "@/types/modules";
+
 const Button = ({
                     children,
                     size = "md",
-                    isBold,
-                    isDense,
-                    fullWidth,
+                    isBold = false,
+                    isDense = false,
+                    fullWidth = false,
                     direction = "center",
                     color,
                     activeColor,
                     bgColor,
                     textColor,
-                    href,
-                    startIcon,
-                    disabled,
-                    endIcon,
+                    href = null,
+                    startAdornment = null,
+                    disabled = false,
+                    endAdornment = null,
                     onClick,
-                    isLoading,
+                    isLoading = false,
                     ...props
-                }) => {
+                }: TButton) => {
     return href ? (
         <Link
             {...props}
@@ -41,9 +44,9 @@ const Button = ({
             })}
             onClick={onClick}
         >
-            {startIcon && startIcon}
+            {startAdornment && startAdornment}
             {children}
-            {endIcon && endIcon}
+            {endAdornment && endAdornment}
         </Link>
     ) : (
         <button
@@ -75,9 +78,9 @@ const Button = ({
                 )
             }
 
-            {startIcon && startIcon}
+            {startAdornment && startAdornment}
             {children}
-            {endIcon && endIcon}
+            {endAdornment && endAdornment}
         </button>
     )
 }

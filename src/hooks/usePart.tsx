@@ -2,12 +2,12 @@
 import {useState} from "react";
 
 const usePart = (initialData = null, activePart = null) => {
-    const [part, setPart] = useState(initialData);
-    const [currentPart, setCurrentPart] = useState(activePart);
+    const [part, setPart] = useState<unknown>(initialData);
+    const [currentPart, setCurrentPart] = useState<string | number>(activePart);
 
-    const changePart = (value) => setPart(value);
+    const changePart = (value: unknown) => setPart(value);
 
-    const changeCurrentPart = (value) => setCurrentPart(value);
+    const changeCurrentPart = (value: string | number) => setCurrentPart(value);
 
     const resetPart = () => {
         setPart(initialData);

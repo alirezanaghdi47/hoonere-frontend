@@ -19,14 +19,18 @@ import {readAllProjectTypeService, readUserInquiryService} from "@/services/publ
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
+// types
+
+
 // utils
 import {readUserInquirySchema} from "@/utils/validations.ts";
+import {IReadUserInquiry} from "@/types/services";
 
 const FormData = ({readProjectAction, updateProjectForm, updateProjectAction}) => {
     const {auth} = useAuthStore();
 
     const readUserInquiryAction = useMutation({
-        mutationFn: (data) => readUserInquiryService(data),
+        mutationFn: (data: IReadUserInquiry) => readUserInquiryService(data),
         onSuccess: async (data) => {
             if (!data?.error) {
                 updateProjectForm.setFieldValue("producer", data?.data?.user_info?.id.toString());
@@ -80,6 +84,7 @@ const FormData = ({readProjectAction, updateProjectForm, updateProjectAction}) =
                                     />
 
                                     <FileInput
+                                        id="logo"
                                         name="logo"
                                         preview={readProjectAction.data?.data?.project_info?.logo}
                                         value={updateProjectForm.values.logo}
@@ -109,6 +114,7 @@ const FormData = ({readProjectAction, updateProjectForm, updateProjectAction}) =
                                     />
 
                                     <SelectBox
+                                        id="type_id"
                                         name="type_id"
                                         value={updateProjectForm.values.type_id}
                                         options={(!readAllProjectTypeAction.isPending && readAllProjectTypeAction.data) ? readAllProjectTypeAction.data?.data?.projectTypes?.map(projectType => ({
@@ -146,6 +152,7 @@ const FormData = ({readProjectAction, updateProjectForm, updateProjectAction}) =
                                     />
 
                                     <TextInput
+                                        id="title"
                                         name="title"
                                         value={updateProjectForm.values.title}
                                         onChange={(value) => updateProjectForm.setFieldValue("title", value)}
@@ -168,6 +175,7 @@ const FormData = ({readProjectAction, updateProjectForm, updateProjectAction}) =
                                     />
 
                                     <Textarea
+                                        id="description"
                                         name="description"
                                         value={updateProjectForm.values.description}
                                         onChange={(value) => updateProjectForm.setFieldValue("description", value)}
@@ -196,6 +204,7 @@ const FormData = ({readProjectAction, updateProjectForm, updateProjectAction}) =
                                     />
 
                                     <NumberInput
+                                        id="count_of_parts"
                                         name="count_of_parts"
                                         options={{
                                             numericOnly: true,
@@ -223,6 +232,7 @@ const FormData = ({readProjectAction, updateProjectForm, updateProjectAction}) =
                                     />
 
                                     <NumberInput
+                                        id="time_of_parts"
                                         name="time_of_parts"
                                         options={{
                                             numericOnly: true,
@@ -256,6 +266,7 @@ const FormData = ({readProjectAction, updateProjectForm, updateProjectAction}) =
                                     />
 
                                     <TextInput
+                                        id="username"
                                         name="username"
                                         value={readUserInquiryForm.values.username}
                                         disabled={readUserInquiryAction.isPending}
@@ -297,6 +308,7 @@ const FormData = ({readProjectAction, updateProjectForm, updateProjectAction}) =
                                     />
 
                                     <Textarea
+                                        id="location"
                                         name="location"
                                         value={updateProjectForm.values.location}
                                         onChange={(value) => updateProjectForm.setFieldValue("location", value)}

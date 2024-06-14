@@ -1,6 +1,9 @@
 // libraries
 import classNames from "classnames";
 
+// types
+import {TTypography} from "@/types/modules.ts";
+
 const typographySizes = {
     xxs: "7",
     xs: "6",
@@ -11,8 +14,8 @@ const typographySizes = {
     xxl: "1",
 }
 
-const Typography = ({children, variant = "p", size, color, isBold, ...props}) => {
-    const Tag = `${variant}`;
+const Typography = ({children, variant = "p", size, color, isBold = false, ...props}: TTypography) => {
+    const Tag = `${variant}` as keyof React.JSX.IntrinsicElements;
 
     return (
         <Tag

@@ -16,13 +16,16 @@ import PasswordInput from "@/modules/PasswordInput.tsx";
 import Button from "@/modules/Button.tsx";
 import Typography from "@/modules/Typography.tsx";
 import Form from "@/modules/Form.tsx";
-import toast from "@/modules/Toast.tsx";
+import toast from "@/helpers/Toast.tsx";
 
 // services
 import {loginService, captchaService} from "@/services/authService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
+
+// types
+import {ILogin} from "@/types/services.ts";
 
 // utils
 import {loginSchema} from "@/utils/validations.ts";
@@ -36,7 +39,7 @@ const LoginForm = () => {
     const {uuid, regenerateUUID} = useId();
 
     const loginAction = useMutation({
-        mutationFn: (data) => loginService(data),
+        mutationFn: (data: ILogin) => loginService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -101,6 +104,7 @@ const LoginForm = () => {
 
             <Form.Group>
                 <TextInput
+                    id="username"
                     name="username"
                     placeholder="نام کاربری"
                     value={loginForm.values.username}
@@ -115,6 +119,7 @@ const LoginForm = () => {
 
             <Form.Group>
                 <PasswordInput
+                    id="password"
                     name="password"
                     placeholder="رمز عبور"
                     value={loginForm.values.password}
@@ -129,6 +134,7 @@ const LoginForm = () => {
 
             <Form.Group>
                 <Captcha
+                    id="captcha"
                     name="captcha"
                     value={loginForm.values.captcha}
                     placeholder="کد امنیتی"

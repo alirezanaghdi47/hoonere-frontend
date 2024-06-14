@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {v4 as uuidv4} from 'uuid';
 
 const useId = (initialData = null) => {
-    const [uuid, setUuid] = useState(initialData);
+    const [uuid, setUuid] = useState<string>(initialData);
 
     const regenerateUUID = () => setUuid(uuidv4());
 

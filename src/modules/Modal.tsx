@@ -10,6 +10,9 @@ import IconButton from "@/modules/IconButton.tsx";
 // styles
 import "@/styles/modules/modal.scss";
 
+// types
+import {TModal, TModalBody, TModalFooter, TModalHeader} from "@/types/modules.ts";
+
 const styles = {
     width: {
         sm: "w-100 w-md-250px",
@@ -28,21 +31,21 @@ const styles = {
     }
 }
 
-const Modal = ({children, isOpen, onClose, width = "md", height = "content", position = "any" , ...props}) => {
+const Modal = ({children, isOpen, onClose, width = "md", height = "content", position = "any", ...props}: TModal) => {
     return (
         <ReactModal
             isOpen={isOpen}
             onRequestClose={onClose}
             ariaHideApp={false}
             closeTimeoutMS={300}
-            className={classNames("d-flex flex-column justify-content-start align-items-center gap-5 bg-light p-5" , props.className.content , {
+            className={classNames("d-flex flex-column justify-content-start align-items-center gap-5 bg-light p-5", props.className.content, {
                 [`${styles.width[width]}`]: true,
                 [`${styles.height[height]}`]: true,
                 "rounded-0": position === "any",
                 "rounded-2": position === "center",
                 "rounded-tl-lg rounded-tr-lg": position === "bottom",
             })}
-            overlayClassName={classNames("position-fixed top-0 left-0 z-index-2 d-flex w-100 h-100 bg-dark bg-opacity-75" , props.className.overlay , {
+            overlayClassName={classNames("position-fixed top-0 left-0 z-index-2 d-flex w-100 h-100 bg-dark bg-opacity-75", props.className.overlay, {
                 [`${styles.position[position]}`]: true,
                 "p-5": position === "center",
             })}
@@ -52,7 +55,7 @@ const Modal = ({children, isOpen, onClose, width = "md", height = "content", pos
     )
 }
 
-const ModalHeader = ({title, onClose}) => {
+const ModalHeader = ({title, onClose}: TModalHeader) => {
     return (
         <div className="d-flex justify-content-between align-items-center w-100 gap-5">
             <Typography
@@ -65,7 +68,6 @@ const ModalHeader = ({title, onClose}) => {
             </Typography>
 
             <IconButton
-                variant="contained"
                 size="sm"
                 color="light-danger"
                 onClick={onClose}
@@ -76,12 +78,12 @@ const ModalHeader = ({title, onClose}) => {
     )
 }
 
-const ModalBody = ({children, center, ...props}) => {
+const ModalBody = ({children, isCenter = true, ...props}: TModalBody) => {
     return (
         <div
             {...props}
             className={classNames("d-flex flex-column justify-content-start align-items-center gap-5 w-100 h-max overflow-y-auto remove-scrollbar", props.className, {
-                "my-auto": center
+                "my-auto": isCenter
             })}
         >
             {children}
@@ -89,11 +91,11 @@ const ModalBody = ({children, center, ...props}) => {
     )
 }
 
-const ModalFooter = ({cancelButton, submitButton, ...props}) => {
+const ModalFooter = ({cancelButton, submitButton, ...props}: TModalFooter) => {
     return (
         <div
             {...props}
-            className="d-flex justify-content-end align-items-center gap-2 w-100 mt-auto"
+            className={classNames("d-flex justify-content-end align-items-center gap-2 w-100 mt-auto", props.className)}
         >
             {cancelButton}
             {submitButton}

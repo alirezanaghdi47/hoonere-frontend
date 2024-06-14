@@ -5,8 +5,8 @@ import {LuMoreVertical, LuPlus} from "react-icons/lu";
 
 // typography
 import Form from "@/modules/Form.tsx";
-import toast from "@/modules/Toast.tsx";
-import dialog from "@/modules/dialog.tsx";
+import toast from "@/helpers/Toast.tsx";
+import dialog from "@/helpers/dialog.tsx";
 import Dropdown from "@/modules/Dropdown.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import Chip from "@/modules/Chip.tsx";
@@ -14,6 +14,9 @@ import Typography from "@/modules/Typography.tsx";
 
 // services
 import {deleteBankCardService, changeStatusOfBankCardService} from "@/services/profileService.ts";
+
+// types
+import {IChangeStatusOfBankCard, IDeleteBankCard} from "@/types/services";
 
 // utils
 import {getBankInfoFromCardNumber, hexToRgba} from "@/utils/functions.ts";
@@ -136,7 +139,7 @@ export const BankCard = ({card, dropdownOptions}) => {
 
 const Banks = ({readMyAllBankCardAction , readMyProfileAction, changePart, changeCurrentPart}) => {
     const changeStatusOfBankCardAction = useMutation({
-        mutationFn: (data) => changeStatusOfBankCardService(data),
+        mutationFn: (data: IChangeStatusOfBankCard) => changeStatusOfBankCardService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -149,7 +152,7 @@ const Banks = ({readMyAllBankCardAction , readMyProfileAction, changePart, chang
     });
 
     const deleteBankCardAction = useMutation({
-        mutationFn: (data) => deleteBankCardService(data),
+        mutationFn: (data: IDeleteBankCard) => deleteBankCardService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);

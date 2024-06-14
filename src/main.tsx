@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
+import Loadable from "@loadable/component";
 import {BrowserRouter} from "react-router-dom";
-import { ErrorBoundary } from "react-error-boundary";
+import {ErrorBoundary} from "react-error-boundary";
+import App from './App.tsx';
 
 // pages
-import ServerErrorPage from "@/pages/error/server";
+const Server = Loadable(() => import('@/pages/error/server'));
 
 // providers
 import QueryProvider from "@/providers/QueryProvider.tsx";
@@ -13,7 +14,8 @@ import ThemeProvider from "@/providers/ThemeProvider.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.Fragment>
-        <ErrorBoundary FallbackComponent={<ServerErrorPage/>}>
+        {/* @ts-ignore */}
+        <ErrorBoundary FallbackComponent={<Server/>}>
             <BrowserRouter>
                 <QueryProvider>
                     <ThemeProvider>

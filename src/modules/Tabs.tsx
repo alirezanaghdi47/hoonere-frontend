@@ -1,7 +1,10 @@
 // libraries
 import classNames from "classnames";
 
-const Tabs = ({children, variant = "link", isVertical, ...props}) => {
+// types
+import {TTabs, TTabsItem} from "@/types/modules.ts";
+
+const Tabs = ({children, variant = "link", isVertical = false, ...props}: TTabs) => {
     return (
         <ul
             {...props}
@@ -16,14 +19,14 @@ const Tabs = ({children, variant = "link", isVertical, ...props}) => {
     )
 }
 
-const TabsItem = ({label, isActive, onClick, ...props}) => {
+const TabsItem = ({label, isActive = false, onClick, ...props}: TTabsItem) => {
     return (
         <li
             {...props}
             className="nav-item"
         >
             <span
-                className={classNames("nav-link fs-5 text-active-primary fw-bold ms-0 me-10 py-5 cursor-pointer", {
+                className={classNames("nav-link fs-5 text-active-primary fw-bold ms-0 me-10 py-5 cursor-pointer", props.className, {
                     "active": isActive
                 })}
                 onClick={onClick}

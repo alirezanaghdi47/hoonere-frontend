@@ -3,20 +3,23 @@ import {Link} from "react-router-dom";
 import classNames from "classnames";
 import {BeatLoader} from "react-spinners";
 
+// types
+import {TIconButton} from "@/types/modules.ts";
+
 const IconButton = ({
                         size = "md",
                         color,
                         activeColor,
-                        isDense,
+                        isDense = false,
                         bgColor,
                         textColor,
-                        href,
+                        href = null,
                         onClick,
                         children,
-                        disabled,
-                        isLoading,
+                        disabled = false,
+                        isLoading = false,
                         ...props
-                    }) => {
+                    }: TIconButton) => {
     return href ? (
         <Link
             {...props}

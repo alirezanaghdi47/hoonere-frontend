@@ -72,11 +72,11 @@ export const getBankInfoFromCardNumber = (card_number) => card_number.length > 6
 
 export const encodeData = (data) => {
     let encoded = btoa(encodeURIComponent(data).replace(/%([0-9A-F]{2})/g, function toSolidBytes(match, p1) {
-        return String.fromCharCode(('0x' + p1))
+        return String.fromCharCode(parseInt(('0x' + p1)))
     })) + generateRandomString(372);
 
     encoded = btoa(encodeURIComponent(encoded).replace(/%([0-9A-F]{2})/g, function toSolidBytes(match, p1) {
-        return String.fromCharCode(('0x' + p1))
+        return String.fromCharCode(parseInt(('0x' + p1)))
     }));
 
     return encoded;
@@ -89,7 +89,7 @@ export const decodeData = (data) => {
     decodedString = decodedString.substring(0, decodedString.length - 372);
 
     bytes = Uint8Array.from(atob(decodedString).split("").map(char => char.charCodeAt(0)));
-    let secondDecodedString = decoder.decode(bytes);
+    const secondDecodedString = decoder.decode(bytes);
 
     return secondDecodedString;
 }
@@ -97,7 +97,7 @@ export const decodeData = (data) => {
 export const cleaningObject = (sourceObject) => {
     const clonedObject = JSON.parse(JSON.stringify(sourceObject));
 
-    for (var propName in clonedObject) {
+    for (const propName in clonedObject) {
         if (clonedObject[propName] === null || clonedObject[propName] === undefined || clonedObject[propName] === "") {
             delete clonedObject[propName];
         }

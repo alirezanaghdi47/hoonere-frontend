@@ -21,12 +21,15 @@ import {readAllJobService, readUserInquiryService} from "@/services/publicServic
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
+// types
+import {IReadUserInquiry} from "@/types/services";
+
 // utils
 import {readUserInquirySchema} from "@/utils/validations.ts";
 
 const FormDataWithUserName = ({readAllJobAction, createProjectMemberFormWithUserName}) => {
     const readUserInquiryAction = useMutation({
-        mutationFn: (data) => readUserInquiryService(data),
+        mutationFn: (data: IReadUserInquiry) => readUserInquiryService(data),
         onSuccess: async (data) => {
             if (!data?.error) {
                 createProjectMemberFormWithUserName.setFieldValue("user_id", data?.data?.user_info?.id.toString());
@@ -61,6 +64,7 @@ const FormDataWithUserName = ({readAllJobAction, createProjectMemberFormWithUser
                             />
 
                             <SelectBox
+                                id="foa_parent_id"
                                 name="foa_parent_id"
                                 value={createProjectMemberFormWithUserName.values.foa_parent_id}
                                 options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id === null)?.map(item => ({
@@ -90,6 +94,7 @@ const FormDataWithUserName = ({readAllJobAction, createProjectMemberFormWithUser
                             />
 
                             <SelectBox
+                                id="foa_child_id"
                                 name="foa_child_id"
                                 value={createProjectMemberFormWithUserName.values.foa_child_id}
                                 options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id !== null && parseInt(foa.parent_id) === parseInt(createProjectMemberFormWithUserName.values.foa_parent_id))?.map(item => ({
@@ -120,8 +125,8 @@ const FormDataWithUserName = ({readAllJobAction, createProjectMemberFormWithUser
                             />
 
                             <TextInput
+                                id="username"
                                 name="username"
-                                placeholder=""
                                 value={readUserInquiryForm.values.username}
                                 onChange={(value) => readUserInquiryForm.setFieldValue("username", value)}
                                 onBlur={() => readUserInquiryForm.handleSubmit()}
@@ -166,6 +171,7 @@ const FormDataWithFullName = ({readAllJobAction, createProjectMemberFormWithFull
                             />
 
                             <SelectBox
+                                id="foa_parent_id"
                                 name="foa_parent_id"
                                 value={createProjectMemberFormWithFullName.values.foa_parent_id}
                                 options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id === null)?.map(item => ({
@@ -194,6 +200,7 @@ const FormDataWithFullName = ({readAllJobAction, createProjectMemberFormWithFull
                             />
 
                             <SelectBox
+                                id="foa_child_id"
                                 name="foa_child_id"
                                 value={createProjectMemberFormWithFullName.values.foa_child_id}
                                 options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id !== null && parseInt(foa.parent_id) === parseInt(createProjectMemberFormWithFullName.values.foa_parent_id))?.map(item => ({
@@ -224,8 +231,8 @@ const FormDataWithFullName = ({readAllJobAction, createProjectMemberFormWithFull
                             />
 
                             <TextInput
+                                id="name"
                                 name="name"
-                                placeholder=""
                                 value={createProjectMemberFormWithFullName.values.name}
                                 onChange={(value) => createProjectMemberFormWithFullName.setFieldValue("name", value)}
                                 disabled={!createProjectMemberFormWithFullName.values.foa_child_id}
@@ -280,6 +287,7 @@ const FormData = ({
             <div className="d-flex flex-column justify-content-between align-items-center gap-5 w-100">
                 <div className="d-flex justify-content-start align-items-center gap-5 w-100">
                     <SwitchBox
+                        id="isFullName"
                         name="isFullName"
                         value={isFullName}
                         checked={isFullName}

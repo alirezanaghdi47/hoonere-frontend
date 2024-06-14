@@ -2,12 +2,15 @@
 import {create} from 'zustand';
 import {persist} from "zustand/middleware";
 
-const initialState = {
+// types
+import {IAppState , IAppStore} from "@/types/stores";
+
+const initialState: IAppState = {
     isOpenDrawer: false,
     isDark: false,
 }
 
-const useAppStore = create(persist((set) => ({
+const useAppStore = create<IAppStore>()(persist((set) => ({
         app: initialState,
         showDrawer: () => set((state) => ({
             app: {

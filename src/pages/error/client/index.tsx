@@ -9,10 +9,17 @@ const ClientError = () => {
     const location = useLocation();
 
     useEffect(() => {
-        window.history.pushState(null, document.title, window.location.href);
-        window.addEventListener('popstate', function(event) {
+        const handlePopstate = () => {
             window.history.pushState(null, document.title, window.location.href);
-        });
+        };
+
+        window.history.pushState(null, document.title, window.location.href);
+
+        window.addEventListener('popstate', handlePopstate);
+
+        return () => {
+            window.removeEventListener('popstate', handlePopstate);
+        };
     }, [location]);
 
     return (

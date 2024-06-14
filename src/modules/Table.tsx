@@ -8,11 +8,16 @@ import {
 } from '@tanstack/react-table';
 import {LuArrowDown, LuArrowUp} from "react-icons/lu";
 
-const Table = ({data, columns}) => {
+// types
+import {TTable} from "@/types/modules.ts";
+
+const Table = ({data, columns}: TTable) => {
     const [sorting, setSorting] = useState([]);
 
     const table = useReactTable({
+        // @ts-ignore
         data,
+        // @ts-ignore
         columns,
         state: {sorting},
         onSortingChange: setSorting,
@@ -64,8 +69,8 @@ const Table = ({data, columns}) => {
                                                                             color="currentColor"
                                                                             className="text-gray-500 ms-2"
                                                                         />,
-                                                                    }
-                                                                        [header.column.getIsSorted()] ?? null}
+                                                                        // @ts-ignore
+                                                                    } [header.column.getIsSorted()] ?? null}
                                                             </div>
                                                         )
                                                     }

@@ -7,12 +7,15 @@ import {useFormik} from "formik";
 import NumberInput from "@/modules/NumberInput.tsx";
 import Form from "@/modules/Form.tsx";
 import Button from "@/modules/Button.tsx";
-import toast from "@/modules/Toast.tsx";
+import toast from "@/helpers/Toast.tsx";
 import TextInput from "@/modules/TextInput.tsx";
 import Typography from "@/modules/Typography.tsx";
 
 // services
 import {updateBankCardService} from "@/services/profileService.ts";
+
+// types
+import {IUpdateBankCard} from "@/types/services";
 
 // utils
 import {financialSchema} from "@/utils/validations.ts";
@@ -83,16 +86,16 @@ export const PreviewBankCard = ({card}) => {
     )
 }
 
-const UpdateBankFormData = ({readMyAllBankCardAction , readMyProfileAction, part, resetPart}) => {
+const UpdateBankFormData = ({readMyAllBankCardAction, readMyProfileAction, part, resetPart}) => {
     const updateBankCardAction = useMutation({
-        mutationFn: (data) => updateBankCardService(data),
+        mutationFn: (data: IUpdateBankCard) => updateBankCardService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
 
                 resetPart();
 
-                updateBankCardForm.handleReset();
+                updateBankCardForm.handleReset(updateBankCardForm);
 
                 readMyAllBankCardAction.mutate();
             } else {
@@ -104,7 +107,7 @@ const UpdateBankFormData = ({readMyAllBankCardAction , readMyProfileAction, part
     const updateBankCardForm = useFormik({
         enableReinitialize: true,
         initialValues: {
-            name: readMyProfileAction.data?.data?.user_info?.first_name + " " + readMyProfileAction.data?.data?.user_info?.last_name ?? "",
+            name: readMyProfileAction.data?.data?.user_info?.first_name && readMyProfileAction.data?.data?.user_info?.last_name ? readMyProfileAction.data?.data?.user_info?.first_name + " " + readMyProfileAction.data?.data?.user_info?.last_name : "",
             card_number: part?.card_number ? part.card_number : "",
             card_shaba: part?.card_shaba ? part.card_shaba : "",
             account_id: part?.account_id ? part.account_id : ""
@@ -142,6 +145,7 @@ const UpdateBankFormData = ({readMyAllBankCardAction , readMyProfileAction, part
                     <div className="col-lg-8">
                         <Form.Group>
                             <TextInput
+                                id="name"
                                 name="name"
                                 value={updateBankCardForm.values.name}
                                 onChange={(value) => updateBankCardForm.setFieldValue("name", value)}
@@ -168,6 +172,7 @@ const UpdateBankFormData = ({readMyAllBankCardAction , readMyProfileAction, part
                     <div className="col-lg-8">
                         <Form.Group>
                             <NumberInput
+                                id="card_number"
                                 name="card_number"
                                 value={updateBankCardForm.values.card_number}
                                 onChange={(value) => updateBankCardForm.setFieldValue("card_number", value)}
@@ -194,6 +199,7 @@ const UpdateBankFormData = ({readMyAllBankCardAction , readMyProfileAction, part
                     <div className="col-lg-8">
                         <Form.Group>
                             <NumberInput
+                                id="card_shaba"
                                 name="card_shaba"
                                 value={updateBankCardForm.values.card_shaba}
                                 onChange={(value) => updateBankCardForm.setFieldValue("card_shaba", value)}
@@ -219,6 +225,7 @@ const UpdateBankFormData = ({readMyAllBankCardAction , readMyProfileAction, part
                     <div className="col-lg-8">
                         <Form.Group>
                             <NumberInput
+                                id="account_id"
                                 name="account_id"
                                 value={updateBankCardForm.values.account_id}
                                 onChange={(value) => updateBankCardForm.setFieldValue("account_id", value)}
@@ -236,7 +243,7 @@ const UpdateBankFormData = ({readMyAllBankCardAction , readMyProfileAction, part
                     <div className="col-12 d-flex justify-content-end align-items-center gap-5">
                         <Button
                             color="light-danger"
-                            onClick={updateBankCardForm.handleReset}
+                            onClick={() => updateBankCardForm.handleReset(updateBankCardForm)}
                         >
                             انصراف
                         </Button>

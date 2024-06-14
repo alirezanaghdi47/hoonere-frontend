@@ -1,9 +1,13 @@
 // modules
 import {Link} from "react-router-dom";
+import classNames from "classnames";
 
-const Breadcrumbs = ({links, activeLink}) => {
+// types
+import {TBreadcrumbs} from "@/types/modules.ts";
+
+const Breadcrumbs = ({links, activeLink, ...props}: TBreadcrumbs) => {
     return (
-        <ol className="breadcrumb breadcrumb-line">
+        <ol className={classNames("breadcrumb breadcrumb-line", props.className)}>
             {
                 links.map(link =>
                     <li

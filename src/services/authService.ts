@@ -80,7 +80,7 @@ export const registerService = async (data) => {
 
 export const captchaService = async (data) => {
     try {
-        const response = await axios.get(process.env.API_URL + `/auth/getCaptcha/${data.code}?id=${data.id}`);
+        await axios.get(process.env.API_URL + `/auth/getCaptcha/${data.code}?id=${data.id}`);
         return process.env.API_URL + `/auth/getCaptcha/${data.code}?id=${data.id}`;
     } catch (err) {
         if (err?.response.status === 500) return window.location.replace("/server-down");

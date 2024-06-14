@@ -1,15 +1,16 @@
 // libraries
 import {create} from 'zustand';
-import {persist, createJSONStorage} from 'zustand/middleware';
+import {persist} from 'zustand/middleware';
+import {IAuthState, IAuthStore} from "@/types/stores";
 
-const initialState = {
+const initialState: IAuthState = {
     token: null,
     username: null,
     panel_url: null,
     status_id: null
 }
 
-const useAuthStore = create(persist((set) => ({
+const useAuthStore = create<IAuthStore>()(persist((set) => ({
         auth: initialState,
         login: (data) => set((state) => ({
             auth: {
@@ -30,10 +31,7 @@ const useAuthStore = create(persist((set) => ({
             auth: initialState
         }),
     }),
-    {
-        name: "panel-auth",
-        // storage: createJSONStorage(() => sessionStorage)
-    }
+    {name: "panel-auth"}
 ));
 
 export default useAuthStore;

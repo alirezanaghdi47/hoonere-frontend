@@ -21,6 +21,7 @@ const ResumeFormData = ({readMyProfileAction ,updateOccupationForm , updateOccup
                         <div className="col-lg-8">
                             <Form.Group>
                                 <FileInput
+                                    id="resume_file"
                                     name="resume_file"
                                     preview={readMyProfileAction.data?.data?.user_info?.resume_file}
                                     value={updateOccupationForm.values.resume_file}
@@ -48,6 +49,7 @@ const ResumeFormData = ({readMyProfileAction ,updateOccupationForm , updateOccup
                         <div className="col-lg-8">
                             <Form.Group>
                                 <Textarea
+                                    id="resume_text"
                                     name="resume_text"
                                     value={updateOccupationForm.values.resume_text}
                                     onChange={(value) => updateOccupationForm.setFieldValue("resume_text", value)}

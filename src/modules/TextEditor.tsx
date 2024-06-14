@@ -1,14 +1,18 @@
 // libraries
 import {Editor} from '@tinymce/tinymce-react';
+import classNames from "classnames";
 
 // styles
 import "@/styles/modules/text-editor.scss";
 
-const TextEditor = ({name, value, placeholder, disabled, onChange , ...props}) => {
+// types
+import {TTextEditor} from "@/types/modules.ts";
+
+const TextEditor = ({name, value, placeholder = null, onChange, disabled = false, ...props}: TTextEditor) => {
     return (
         <div
             {...props}
-            className='position-relative w-100'
+            className={classNames('position-relative w-100', props.className)}
         >
 
             <Editor

@@ -2,21 +2,37 @@
 import Cleave from 'cleave.js/react';
 import classNames from "classnames";
 
-const NumberInput = ({name, value, placeholder , options, onChange, startAdornment, endAdornment , disabled , ...props}) => {
+// types
+import {TNumberInput} from "@/types/modules.ts";
+
+const NumberInput = ({
+                         id,
+                         name,
+                         value,
+                         placeholder = null,
+                         options = {},
+                         onChange,
+                         startAdornment = null,
+                         endAdornment = null,
+                         disabled = false,
+                         ...props
+                     }: TNumberInput) => {
     return (
         <div
             {...props}
-            className='position-relative w-100'
+            className={classNames('position-relative w-100', props.className)}
         >
             {
                 startAdornment && (
-                    <span className="position-absolute start-0 top-0 d-flex justify-content-center align-items-center w-43px h-43px m-1">
+                    <span
+                        className="position-absolute start-0 top-0 d-flex justify-content-center align-items-center w-43px h-43px m-1">
                         {startAdornment}
                     </span>
                 )
             }
 
             <Cleave
+                id={id}
                 name={name}
                 placeholder={placeholder}
                 className={classNames("form-control form-control-solid", {

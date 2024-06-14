@@ -8,13 +8,16 @@ import Button from "@/modules/Button.tsx";
 import Typography from "@/modules/Typography.tsx";
 import CodeInput from "@/modules/CodeInput.tsx";
 import Form from "@/modules/Form.tsx";
-import toast from "@/modules/Toast.tsx";
+import toast from "@/helpers/Toast.tsx";
 
 // services
 import {verifyService, authService} from "@/services/authService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
+
+// types
+import {IAuth, IVerify} from "@/types/services.ts";
 
 // utils
 import {verifySchema} from "@/utils/validations.ts";
@@ -25,7 +28,7 @@ const VerifyCode = ({nextStep, resetStep, step}) => {
     const {login} = useAuthStore();
 
     const verifyAction = useMutation({
-        mutationFn: (data) => verifyService(data),
+        mutationFn: (data: IVerify) => verifyService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -49,7 +52,7 @@ const VerifyCode = ({nextStep, resetStep, step}) => {
     });
 
     const authAction = useMutation({
-        mutationFn: (data) => authService(data),
+        mutationFn: (data: IAuth) => authService(data),
         onSuccess: async (data) => {
             console.log(data.data)
             if (!data.error) {
@@ -88,6 +91,7 @@ const VerifyCode = ({nextStep, resetStep, step}) => {
 
             <Form.Group>
                 <CodeInput
+                    id="code"
                     name="code"
                     placeholder="کد اعتبارسنجی"
                     value={verifyForm.values.code}

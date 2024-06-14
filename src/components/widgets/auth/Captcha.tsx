@@ -14,7 +14,7 @@ const Skeleton = () => {
     )
 }
 
-const Captcha = ({name ,value , placeholder , isLoading , preview, onChange, onResend}) => {
+const Captcha = ({id , name ,value , placeholder , isLoading , preview, onChange, onResend}) => {
     return (
         <div className="d-flex justify-content-between align-items-center gap-5 w-100">
             {
@@ -32,6 +32,7 @@ const Captcha = ({name ,value , placeholder , isLoading , preview, onChange, onR
             }
 
             <TextInput
+                id={id}
                 name={name}
                 value={value}
                 placeholder={placeholder}

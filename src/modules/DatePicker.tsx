@@ -10,6 +10,9 @@ import IconButton from "@/modules/IconButton.tsx";
 // styles
 import "@/styles/modules/date-picker.scss";
 
+// types
+import {TDatePicker} from "@/types/modules.ts";
+
 // utils
 import {toEnglishDigits} from "@/utils/functions.js";
 
@@ -37,7 +40,19 @@ const RenderButton = ({direction, handleClick}) => {
     )
 }
 
-const DatePicker = ({name, value, onChange, range, minDate, maxDate, disabled, readOnly, holidayDates = [] , ...props}) => {
+const DatePicker = ({
+                        id,
+                        name,
+                        value,
+                        onChange,
+                        range = false,
+                        minDate = null,
+                        maxDate = null,
+                        disabled = false,
+                        readOnly = false,
+                        holidayDates = [],
+                        ...props
+                    }: TDatePicker) => {
     const customizeDays = (date) => {
         let color;
 
@@ -55,6 +70,7 @@ const DatePicker = ({name, value, onChange, range, minDate, maxDate, disabled, r
     return (
         <ReactDatePicker
             {...props}
+            id={id}
             name={name}
             inputClass="form-control form-control-solid w-100"
             containerClassName="w-100"

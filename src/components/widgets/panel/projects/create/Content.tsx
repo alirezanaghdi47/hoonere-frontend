@@ -7,13 +7,16 @@ import {useFormik} from "formik";
 import FormData from "@/components/widgets/panel/projects/create/FormData.tsx";
 
 // modules
-import toast from "@/modules/Toast.tsx";
+import toast from "@/helpers/Toast.tsx";
 
 // services
 import {createProjectService} from "@/services/projectService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
+
+// types
+import {ICreateProject} from "@/types/services";
 
 // utils
 import {createProjectSchema} from "@/utils/validations.ts";
@@ -24,7 +27,7 @@ const Content = () => {
     const {auth} = useAuthStore();
 
     const createProjectAction = useMutation({
-        mutationFn: (data) => createProjectService(data),
+        mutationFn: (data: ICreateProject) => createProjectService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);

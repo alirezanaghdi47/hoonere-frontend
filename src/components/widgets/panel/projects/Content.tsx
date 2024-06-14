@@ -12,8 +12,11 @@ import useFilter from "@/hooks/useFilter.tsx";
 // services
 import {readAllProjectService} from "@/services/projectService.ts";
 
+// types
+import {IReadAllProject} from "@/types/services";
+
 const Content = () => {
-    const {filter, initialFilter, isOpenFilter, showFilter, hideFilter, resetFilter, changeFilter} = useFilter({
+    const {filter, initialFilter, isOpenFilter, showFilter, hideFilter, resetFilter, changeFilter} = useFilter<IReadAllProject>({
         text: "",
         type_id: "",
         page: 1,
@@ -21,7 +24,7 @@ const Content = () => {
     });
 
     const readAllProjectAction = useMutation({
-        mutationFn: (data) => readAllProjectService(data),
+        mutationFn: (data: IReadAllProject) => readAllProjectService(data),
     });
 
     useLayoutEffect(() => {
