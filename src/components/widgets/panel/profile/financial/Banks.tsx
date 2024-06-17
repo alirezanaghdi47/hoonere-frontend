@@ -5,7 +5,7 @@ import {LuMoreVertical, LuPlus} from "react-icons/lu";
 
 // typography
 import Form from "@/modules/Form.tsx";
-import toast from "@/helpers/Toast.tsx";
+import toast from "@/helpers/toast.tsx";
 import dialog from "@/helpers/dialog.tsx";
 import Dropdown from "@/modules/Dropdown.tsx";
 import IconButton from "@/modules/IconButton.tsx";

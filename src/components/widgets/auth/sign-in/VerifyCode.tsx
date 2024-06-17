@@ -8,7 +8,7 @@ import Button from "@/modules/Button.tsx";
 import Typography from "@/modules/Typography.tsx";
 import CodeInput from "@/modules/CodeInput.tsx";
 import Form from "@/modules/Form.tsx";
-import toast from "@/helpers/Toast.tsx";
+import toast from "@/helpers/toast.tsx";
 
 // services
 import {verifyService, authService} from "@/services/authService.ts";

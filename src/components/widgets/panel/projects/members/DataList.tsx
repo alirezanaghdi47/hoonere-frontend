@@ -5,7 +5,6 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {LuPlus} from "react-icons/lu";
 
 // components
-import Actions from "@/components/widgets/panel/projects/members/Actions.tsx";
 import Filter from "@/components/widgets/panel/projects/members/Filter.tsx";
 import Finder from "@/components/widgets/panel/projects/members/Finder.tsx";
 
@@ -13,7 +12,7 @@ import Finder from "@/components/widgets/panel/projects/members/Finder.tsx";
 import Typography from "@/modules/Typography.tsx";
 import Button from "@/modules/Button.tsx";
 import dialog from "@/helpers/dialog.tsx";
-import toast from "@/helpers/Toast.tsx";
+import toast from "@/helpers/toast.tsx";
 
 // services
 import {deleteProjectMemberService} from "@/services/projectMemberService.ts";
@@ -165,11 +164,6 @@ const DataList = ({
     return (
         <div className="card w-100">
             <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
-                <Actions
-                    isListView={isListView}
-                    toggleView={toggleView}
-                />
-
                 <Filter
                     readAllProjectMemberAction={readAllProjectMemberAction}
                     filter={filter}
@@ -179,6 +173,8 @@ const DataList = ({
                     showFilter={showFilter}
                     hideFilter={hideFilter}
                     resetFilter={resetFilter}
+                    isListView={isListView}
+                    toggleView={toggleView}
                 />
 
                 <div className="row gy-5 w-100">

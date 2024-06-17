@@ -9,7 +9,7 @@ import FormData from "@/components/widgets/panel/projects/members/update/FormDat
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // modules
-import toast from "@/helpers/Toast.tsx";
+import toast from "@/helpers/toast.tsx";
 
 // services
 import {updateProjectMemberService, readProjectMemberService} from "@/services/projectMemberService.ts";

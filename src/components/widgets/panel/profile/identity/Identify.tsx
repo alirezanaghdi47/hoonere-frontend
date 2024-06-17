@@ -11,7 +11,7 @@ import Button from "@/modules/Button.tsx";
 import Textarea from "@/modules/Textarea.tsx";
 import NumberInput from "@/modules/NumberInput.tsx";
 import AvatarInput from "@/modules/AvatarInput.tsx";
-import toast from "@/helpers/Toast.tsx";
+import toast from "@/helpers/toast.tsx";
 
 // services
 import {updateProfileService} from "@/services/profileService.ts";

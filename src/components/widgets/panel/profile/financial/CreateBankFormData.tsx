@@ -7,7 +7,7 @@ import {useFormik} from "formik";
 import Form from "@/modules/Form.tsx";
 import NumberInput from "@/modules/NumberInput.tsx";
 import Button from "@/modules/Button.tsx";
-import toast from "@/helpers/Toast.tsx";
+import toast from "@/helpers/toast.tsx";
 import TextInput from "@/modules/TextInput.tsx";
 import Typography from "@/modules/Typography.tsx";
 

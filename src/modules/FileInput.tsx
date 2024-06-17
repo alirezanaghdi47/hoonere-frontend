@@ -11,9 +11,10 @@ import IconButton from "@/modules/IconButton.tsx";
 
 // types
 import {TFileInput} from "@/types/modules.ts";
+import {ExtendedFile} from "@/types/interfaces.ts";
 
 const FileInput = ({id , name, value, preview = null, onChange, disabled = false, ...props}: TFileInput) => {
-    const [files, setFiles] = useState([value]);
+    const [files, setFiles] = useState<ExtendedFile[]>([value]);
 
     const {getRootProps, getInputProps} = useDropzone({
         disabled: disabled,

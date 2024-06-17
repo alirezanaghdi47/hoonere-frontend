@@ -1,5 +1,5 @@
 // libraries
-import {useEffect} from "react";
+import {useLayoutEffect} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 
 // components
@@ -17,7 +17,7 @@ const Profile = () => {
     const location = useLocation();
     const {auth} = useAuthStore();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (!["#review", "#identify", "#occupation", "#financial"].includes(location.hash)) {
             navigate(auth.panel_url + "profile#review");
         }

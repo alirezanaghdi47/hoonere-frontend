@@ -31,7 +31,7 @@ const Content = () => {
             <Button
                 color="light-danger"
                 isBold
-                onClick={() => window.location.replace(auth.panel_url + "dashboard" || "/admin-panel/dashboard")}
+                onClick={() => window.location.replace(auth.panel_url ? auth.panel_url + "dashboard" : "/panel/dashboard")}
             >
                 بازگشت به صفحه اصلی
             </Button>

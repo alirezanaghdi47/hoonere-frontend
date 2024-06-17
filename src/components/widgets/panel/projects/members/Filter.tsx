@@ -1,6 +1,6 @@
 // libraries
 import {useMutation} from "@tanstack/react-query";
-import {LuSearch, LuX} from "react-icons/lu";
+import {LuList, LuSearch, LuTable, LuX} from "react-icons/lu";
 
 // modules
 import TextInput from "@/modules/TextInput.tsx";
@@ -123,7 +123,7 @@ const AdvanceFilter = ({readAllProjectMemberAction , filter, initialFilter, chan
     )
 }
 
-const SimpleFilter = ({readAllProjectMemberAction , filter, changeFilter, showFilter}) => {
+const SimpleFilter = ({readAllProjectMemberAction , filter, changeFilter, showFilter , isListView , toggleView}) => {
     return (
         <div className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-5">
             <div className="w-200px">
@@ -171,6 +171,28 @@ const SimpleFilter = ({readAllProjectMemberAction , filter, changeFilter, showFi
             >
                 فیلتر پیشرفته
             </Button>
+
+            <IconButton
+                color="light-dark"
+                className="ms-auto"
+                onClick={toggleView}
+                data-tooltip-id="my-tooltip"
+                data-tooltip-content={isListView ? "نمایش جدولی" : "نمایش لیستی"}
+            >
+                {
+                    isListView ? (
+                        <LuTable
+                            size={20}
+                            color="currentColor"
+                        />
+                    ) : (
+                        <LuList
+                            size={20}
+                            color="currentColor"
+                        />
+                    )
+                }
+            </IconButton>
         </div>
     )
 }
@@ -184,6 +206,8 @@ const Filter = ({
                     showFilter,
                     hideFilter,
                     resetFilter,
+                    isListView,
+                    toggleView
                 }) => {
     return (
         <>
@@ -204,6 +228,8 @@ const Filter = ({
                             filter={filter}
                             changeFilter={changeFilter}
                             showFilter={showFilter}
+                            isListView={isListView}
+                            toggleView={toggleView}
                         />
                     )
                 }

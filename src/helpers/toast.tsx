@@ -4,7 +4,7 @@ import Swal, {SweetAlertIcon} from "sweetalert2";
 // styles
 import "@/styles/modules/sweet-alert.scss";
 
-const ToastWrapper = Swal.mixin({
+const toastWrapper = Swal.mixin({
     toast: true,
     position: "top-right",
     showConfirmButton: false,
@@ -16,9 +16,9 @@ const ToastWrapper = Swal.mixin({
     }
 });
 
-const Toast = (icon: SweetAlertIcon , title: string) => ToastWrapper.fire({
+const toast = (icon: SweetAlertIcon , title: string) => toastWrapper.fire({
     icon: icon,
     title: title
 });
 
-export default Toast;
+export default toast;

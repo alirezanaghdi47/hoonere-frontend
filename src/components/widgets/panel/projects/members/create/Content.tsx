@@ -8,7 +8,7 @@ import {useBoolean} from "usehooks-ts";
 import FormData from "@/components/widgets/panel/projects/members/create/FormData.tsx";
 
 // modules
-import toast from "@/helpers/Toast.tsx";
+import toast from "@/helpers/toast.tsx";
 
 // services
 import {createProjectMemberService} from "@/services/projectMemberService.ts";

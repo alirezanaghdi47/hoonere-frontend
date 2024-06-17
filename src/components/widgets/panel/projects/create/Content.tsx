@@ -7,7 +7,7 @@ import {useFormik} from "formik";
 import FormData from "@/components/widgets/panel/projects/create/FormData.tsx";
 
 // modules
-import toast from "@/helpers/Toast.tsx";
+import toast from "@/helpers/toast.tsx";
 
 // services
 import {createProjectService} from "@/services/projectService.ts";

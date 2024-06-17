@@ -16,7 +16,7 @@ import PasswordInput from "@/modules/PasswordInput.tsx";
 import Button from "@/modules/Button.tsx";
 import Typography from "@/modules/Typography.tsx";
 import Form from "@/modules/Form.tsx";
-import toast from "@/helpers/Toast.tsx";
+import toast from "@/helpers/toast.tsx";
 
 // services
 import {loginService, captchaService} from "@/services/authService.ts";

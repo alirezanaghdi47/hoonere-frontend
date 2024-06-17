@@ -13,6 +13,7 @@ const RouteGuardHoc = <P extends TWrappedComponent>(WrappedComponent: ComponentT
         const navigate = useNavigate();
         const location = useLocation();
         const {auth} = useAuthStore();
+
         const isAuth = Boolean(auth.token);
 
         useLayoutEffect(() => {
@@ -21,7 +22,7 @@ const RouteGuardHoc = <P extends TWrappedComponent>(WrappedComponent: ComponentT
             }
 
             if (isAuth && location.pathname.startsWith("/auth")) {
-                navigate("/panel/dashboard", {replace: true});
+                navigate(auth.panel_url ? auth.panel_url + "dashboard" : "/panel/dashboard", {replace: true});
             }
         }, []);
 

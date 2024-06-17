@@ -15,7 +15,7 @@ import Table from "@/modules/Table.tsx";
 import Tooltip from "@/modules/Tooltip.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import dialog from "@/helpers/dialog.tsx";
-import toast from "@/helpers/Toast.tsx";
+import toast from "@/helpers/toast.tsx";
 
 // services
 import {deleteProjectService} from "@/services/projectService.ts";

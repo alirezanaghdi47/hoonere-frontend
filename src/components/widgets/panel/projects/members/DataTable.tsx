@@ -3,10 +3,9 @@ import {useMemo} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {format} from "date-fns-jalali";
-import {LuInfo, LuPen, LuTrash2} from "react-icons/lu";
+import {LuPen, LuTrash2} from "react-icons/lu";
 
 // components
-import Actions from "@/components/widgets/panel/projects/members/Actions.tsx";
 import Finder from "@/components/widgets/panel/projects/members/Finder.tsx";
 import Filter from "@/components/widgets/panel/projects/members/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
@@ -16,7 +15,7 @@ import Table from "@/modules/Table.tsx";
 import Tooltip from "@/modules/Tooltip.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import dialog from "@/helpers/dialog.tsx";
-import toast from "@/helpers/Toast.tsx";
+import toast from "@/helpers/toast.tsx";
 
 // services
 import {deleteProjectMemberService} from "@/services/projectMemberService.ts";
@@ -230,11 +229,6 @@ const DataTable = ({
         <>
             <div className="card w-100">
                 <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
-                    <Actions
-                        isListView={isListView}
-                        toggleView={toggleView}
-                    />
-
                     <Filter
                         readAllProjectMemberAction={readAllProjectMemberAction}
                         filter={filter}
@@ -244,6 +238,8 @@ const DataTable = ({
                         showFilter={showFilter}
                         hideFilter={hideFilter}
                         resetFilter={resetFilter}
+                        isListView={isListView}
+                        toggleView={toggleView}
                     />
 
                     {

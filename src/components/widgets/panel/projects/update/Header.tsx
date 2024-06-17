@@ -81,13 +81,6 @@ const Header = () => {
                             color="currentColor"
                         />
                     </IconButton>
-
-                    <Button
-                        href={auth.panel_url + "projects/create"}
-                        color="info"
-                    >
-                        افزودن پروژه
-                    </Button>
                 </div>
 
                 <div className="order-3 col-12 d-flex flex-column justify-content-center align-items-start gap-5">

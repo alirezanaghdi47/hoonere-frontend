@@ -13,7 +13,7 @@ import Loading from "@/components/partials/panel/Loading.tsx";
 import usePart from "@/hooks/usePart.tsx";
 
 // modules
-import toast from "@/helpers/Toast.tsx";
+import toast from "@/helpers/toast.tsx";
 
 // services
 import {updateOccupationService} from "@/services/profileService.ts";
