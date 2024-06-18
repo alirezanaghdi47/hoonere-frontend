@@ -1,7 +1,7 @@
-// Exports the "help" plugin for usage with module loaders
+// Exports the "help" modules for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/help')
+//     require('tinymce/modules/help')
 //   ES2015:
-//     import 'tinymce/plugins/help'
+//     import 'tinymce/modules/help'
 require('./plugin.js');

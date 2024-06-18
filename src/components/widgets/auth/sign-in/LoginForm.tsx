@@ -25,7 +25,7 @@ import {loginService, captchaService} from "@/services/authService.ts";
 import useAuthStore from "@/stores/authStore.ts";
 
 // types
-import {ILogin} from "@/types/services.ts";
+import {ILogin} from "@/types/serviceType.ts";
 
 // utils
 import {loginSchema} from "@/utils/validations.ts";

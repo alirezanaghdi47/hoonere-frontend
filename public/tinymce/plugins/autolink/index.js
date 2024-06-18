@@ -1,7 +1,7 @@
-// Exports the "autolink" plugin for usage with module loaders
+// Exports the "autolink" modules for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/autolink')
+//     require('tinymce/modules/autolink')
 //   ES2015:
-//     import 'tinymce/plugins/autolink'
+//     import 'tinymce/modules/autolink'
 require('./plugin.js');

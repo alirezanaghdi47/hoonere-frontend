@@ -15,7 +15,7 @@ import Typography from "@/modules/Typography.tsx";
 import {createBankCardService} from "@/services/profileService.ts";
 
 // types
-import {ICreateBankCard} from "@/types/services";
+import {ICreateBankCard} from "@/types/serviceType.ts";
 
 // utils
 import {financialSchema} from "@/utils/validations.ts";

@@ -1,7 +1,7 @@
-// Exports the "code" plugin for usage with module loaders
+// Exports the "code" modules for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/code')
+//     require('tinymce/modules/code')
 //   ES2015:
-//     import 'tinymce/plugins/code'
+//     import 'tinymce/modules/code'
 require('./plugin.js');

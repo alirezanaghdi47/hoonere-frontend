@@ -11,7 +11,7 @@ import Typography from "@/modules/Typography.tsx";
 import "@/styles/modules/select-box.scss";
 
 // types
-import {TSelectBox} from "@/types/modules.ts";
+import {TSelectBox} from "@/types/moduleType.ts";
 
 const NoOptionsMessage = () => (
     <div className="d-flex justify-content-center align-items-center w-100 py-8">

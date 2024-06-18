@@ -1,7 +1,7 @@
-// Exports the "visualblocks" plugin for usage with module loaders
+// Exports the "visualblocks" modules for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/visualblocks')
+//     require('tinymce/modules/visualblocks')
 //   ES2015:
-//     import 'tinymce/plugins/visualblocks'
+//     import 'tinymce/modules/visualblocks'
 require('./plugin.js');

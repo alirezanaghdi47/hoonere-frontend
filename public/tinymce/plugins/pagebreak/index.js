@@ -1,7 +1,7 @@
-// Exports the "pagebreak" plugin for usage with module loaders
+// Exports the "pagebreak" modules for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/pagebreak')
+//     require('tinymce/modules/pagebreak')
 //   ES2015:
-//     import 'tinymce/plugins/pagebreak'
+//     import 'tinymce/modules/pagebreak'
 require('./plugin.js');

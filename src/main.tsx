@@ -1,3 +1,4 @@
+// libraries
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Loadable from "@loadable/component";
@@ -6,7 +7,7 @@ import {ErrorBoundary} from "react-error-boundary";
 import App from './App.tsx';
 
 // pages
-const Server = Loadable(() => import('@/pages/error/server'));
+const Server = Loadable(() => import('@/pages/blank/server'));
 
 // providers
 import QueryProvider from "@/providers/QueryProvider.tsx";

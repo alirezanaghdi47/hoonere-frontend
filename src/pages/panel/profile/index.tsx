@@ -7,7 +7,7 @@ import Header from "@/components/widgets/panel/profile/Header.tsx";
 import Content from "@/components/widgets/panel/profile/Content.tsx";
 
 // hocs
-import RouteGuardHoc from "@/hocs/RouteGuardHoc.tsx";
+import RouteGuardHoc from "@/components/hocs/RouteGuardHoc.tsx";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";

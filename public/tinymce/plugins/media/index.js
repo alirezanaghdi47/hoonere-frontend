@@ -1,7 +1,7 @@
-// Exports the "media" plugin for usage with module loaders
+// Exports the "media" modules for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/media')
+//     require('tinymce/modules/media')
 //   ES2015:
-//     import 'tinymce/plugins/media'
+//     import 'tinymce/modules/media'
 require('./plugin.js');

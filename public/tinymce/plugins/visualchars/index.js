@@ -1,7 +1,7 @@
-// Exports the "visualchars" plugin for usage with module loaders
+// Exports the "visualchars" modules for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/visualchars')
+//     require('tinymce/modules/visualchars')
 //   ES2015:
-//     import 'tinymce/plugins/visualchars'
+//     import 'tinymce/modules/visualchars'
 require('./plugin.js');

@@ -3,7 +3,7 @@ import Cleave from 'cleave.js/react';
 import classNames from "classnames";
 
 // types
-import {TNumberInput} from "@/types/modules.ts";
+import {TNumberInput} from "@/types/moduleType.ts";
 
 const NumberInput = ({
                          id,

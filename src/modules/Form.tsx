@@ -5,7 +5,7 @@ import classNames from "classnames";
 import Typography from "@/modules/Typography.tsx";
 
 // types
-import {TFormError, TFormLabel} from "@/types/modules.ts";
+import {TFormError, TFormLabel} from "@/types/moduleType.ts";
 
 const FormGroup = ({children, ...props}) => {
     return (

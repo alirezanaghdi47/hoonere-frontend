@@ -6,7 +6,7 @@ import LoginWithAccount from "@/components/widgets/auth/sign-in/LoginWithAccount
 import LoginWithMobile from "@/components/widgets/auth/sign-in/LoginWithMobile.tsx";
 
 // hocs
-import RouteGuardHoc from "@/hocs/RouteGuardHoc.tsx";
+import RouteGuardHoc from "@/components/hocs/RouteGuardHoc.tsx";
 
 const SignIn = () => {
     const {value: isOtpWay, setTrue: setOtpWay, setFalse: unSetOtpWay} = useBoolean(false);

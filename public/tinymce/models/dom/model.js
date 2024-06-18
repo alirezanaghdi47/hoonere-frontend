@@ -7135,7 +7135,7 @@
       let handlers = [];
       const bind = handler => {
         if (handler === undefined) {
-          throw new Error('Event bind error: undefined handler');
+          throw new Error('Event bind blank: undefined handler');
         }
         handlers.push(handler);
       };

@@ -1,7 +1,7 @@
-// Exports the "importcss" plugin for usage with module loaders
+// Exports the "importcss" modules for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/importcss')
+//     require('tinymce/modules/importcss')
 //   ES2015:
-//     import 'tinymce/plugins/importcss'
+//     import 'tinymce/modules/importcss'
 require('./plugin.js');

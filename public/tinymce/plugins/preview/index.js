@@ -1,7 +1,7 @@
-// Exports the "preview" plugin for usage with module loaders
+// Exports the "preview" modules for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/preview')
+//     require('tinymce/modules/preview')
 //   ES2015:
-//     import 'tinymce/plugins/preview'
+//     import 'tinymce/modules/preview'
 require('./plugin.js');

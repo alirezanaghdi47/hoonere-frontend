@@ -1,11 +1,10 @@
 // libraries
 import {CSSProperties, HTMLProps, ReactNode} from "react";
 import {DateObject} from "react-multi-date-picker";
+import {FormikErrors, FormikTouched} from "formik";
 
 // types
-import * as t from "@/types/types.d.ts";
-import * as i from "@/types/interfaces.d.ts";
-import {FormikErrors, FormikTouched} from "formik";
+import * as t from "@/types/global.ts";
 
 export type TAlert = {
     color: t.colors,
@@ -19,7 +18,7 @@ export type TAlert = {
 export type TAvatarInput = {
     id: string,
     name: string,
-    value: ExtendedFile,
+    value: t.ExtendedFile | null,
     preview?: string | null,
     onChange?: (value: File | object) => void,
     disabled?: boolean,
@@ -129,7 +128,7 @@ export type TDropdown = {
 export type TFileInput = {
     id: string,
     name: string,
-    value: ExtendedFile,
+    value: t.ExtendedFile | null,
     preview?: string | null,
     onChange?: (value: File | object) => void,
     disabled?: boolean,
@@ -148,8 +147,8 @@ export type TFormLabel = {
 }
 
 export type TFormError = {
-    error: string | FormikErrors<>,
-    touched: boolean | FormikTouched<>,
+    error: any,
+    touched: any,
     style?: CSSProperties
 }
 

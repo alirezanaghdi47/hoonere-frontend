@@ -30,7 +30,7 @@ const Header = () => {
                 <div className="order-2 order-md-1 col-12 col-md-4 d-flex flex-column justify-content-center align-items-start gap-5">
                     <Typography
                         variant="h1"
-                        color="white"
+                        color="light"
                         size="xxl"
                         isBold
                     >
@@ -39,7 +39,7 @@ const Header = () => {
                 </div>
 
                 <div className="order-1 order-md-2 col-12 col-md-8 d-flex justify-content-end align-items-center gap-2">
-                    <IconButton color="primary">
+                    <IconButton textColor="light">
                         <Badge
                             color="light-primary"
                             size="sm"
@@ -54,7 +54,7 @@ const Header = () => {
                     </IconButton>
 
                     <IconButton
-                        color="primary"
+                        textColor="light"
                         onClick={toggleTheme}
                     >
                         {
@@ -73,8 +73,8 @@ const Header = () => {
                     </IconButton>
 
                     <IconButton
+                        textColor="light"
                         href={auth.panel_url + "profile"}
-                        color="primary"
                     >
                         <LuUser
                             size={20}

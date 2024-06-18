@@ -2,8 +2,7 @@
 import classNames from "classnames";
 
 // types
-import {TRadioBox} from "@/types/modules.ts";
-
+import {TRadioBox} from "@/types/moduleType.ts";
 
 const RadioBox = ({name , id, checked, value, onChange , disabled = false , ...props}: TRadioBox) => {
     return (

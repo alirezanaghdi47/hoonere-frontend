@@ -16,7 +16,7 @@ import Typography from "@/modules/Typography.tsx";
 import {deleteBankCardService, changeStatusOfBankCardService} from "@/services/profileService.ts";
 
 // types
-import {IChangeStatusOfBankCard, IDeleteBankCard} from "@/types/services";
+import {IChangeStatusOfBankCard, IDeleteBankCard} from "@/types/serviceType.ts";
 
 // utils
 import {getBankInfoFromCardNumber, hexToRgba} from "@/utils/functions.ts";

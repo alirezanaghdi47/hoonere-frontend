@@ -6,7 +6,7 @@ import classNames from "classnames";
 import "@/styles/modules/tag-input.scss";
 
 // types
-import {TTagInput} from "@/types/modules.ts";
+import {TTagInput} from "@/types/moduleType.ts";
 
 const TagInput = ({name, value, placeholder = null, onChange, disabled = false, ...props}: TTagInput) => {
     return (

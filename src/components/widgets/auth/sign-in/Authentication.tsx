@@ -13,7 +13,7 @@ import toast from "@/helpers/toast.tsx";
 import {authService} from "@/services/authService.ts";
 
 // types
-import {IAuth} from "@/types/services.ts";
+import {IAuth} from "@/types/serviceType.ts";
 
 // utils
 import {authSchema} from "@/utils/validations.ts";

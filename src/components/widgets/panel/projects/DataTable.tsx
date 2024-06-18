@@ -24,7 +24,7 @@ import {deleteProjectService} from "@/services/projectService.ts";
 import useAuthStore from "@/stores/authStore.ts";
 
 // types
-import {IDeleteProject} from "@/types/services";
+import {IDeleteProject} from "@/types/serviceType.ts";
 
 const DataTable = ({
                        readAllProjectAction,

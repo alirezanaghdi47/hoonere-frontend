@@ -16,7 +16,7 @@ import {createProjectService} from "@/services/projectService.ts";
 import useAuthStore from "@/stores/authStore.ts";
 
 // types
-import {ICreateProject} from "@/types/services";
+import {ICreateProject} from "@/types/serviceType.ts";
 
 // utils
 import {createProjectSchema} from "@/utils/validations.ts";
@@ -46,8 +46,8 @@ const Content = () => {
             title: "",
             description: "",
             producer: "",
-            count_of_parts: 0,
-            time_of_parts: 0,
+            count_of_parts: "",
+            time_of_parts: "",
             location: "",
         },
         validationSchema: createProjectSchema,

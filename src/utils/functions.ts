@@ -6,7 +6,7 @@ import persian from "react-date-object/calendars/persian";
 import persian_en from "react-date-object/locales/persian_en";
 
 // assets
-import iranianBanks from "@/assets/data/iranian-banks.json";
+import iranianBanks from "../../public/assets/data/iranian-banks.json";
 
 export const formattedSize = (bytes) => {
     if (!bytes) return '0 Bytes';

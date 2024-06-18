@@ -6,7 +6,7 @@ import 'reactjs-popup/dist/index.css';
 import "@/styles/modules/popover.scss";
 
 // types
-import {TPopover} from "@/types/modules.ts";
+import {TPopover} from "@/types/moduleType.ts";
 
 const Popover = ({children, content, trigger, position , ...props}: TPopover) => {
     return (

@@ -21,7 +21,7 @@ import {deleteProjectMemberService} from "@/services/projectMemberService.ts";
 import useAuthStore from "@/stores/authStore.ts";
 
 // types
-import {IDeleteProjectMember} from "@/types/services";
+import {IDeleteProjectMember} from "@/types/serviceType.ts";
 
 const BlankCard = ({onClick}) => {
     return (

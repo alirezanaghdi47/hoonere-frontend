@@ -10,7 +10,7 @@ import Overlay from "@/components/partials/panel/Overlay.tsx";
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-const Panel = () => {
+const PanelLayout = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const {auth} = useAuthStore();
@@ -44,4 +44,4 @@ const Panel = () => {
     );
 };
 
-export default Panel;
+export default PanelLayout;

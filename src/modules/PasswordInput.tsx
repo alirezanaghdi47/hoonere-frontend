@@ -7,7 +7,7 @@ import {LuEye, LuEyeOff} from "react-icons/lu";
 import IconButton from "@/modules/IconButton.tsx";
 
 // types
-import {TPasswordInput} from "@/types/modules.ts";
+import {TPasswordInput} from "@/types/moduleType.ts";
 
 const PasswordInput = ({
                            id,

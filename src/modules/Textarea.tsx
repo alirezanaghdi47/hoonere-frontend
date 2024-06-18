@@ -2,7 +2,7 @@
 import classNames from "classnames";
 
 // types
-import {TTextarea} from "@/types/modules.ts";
+import {TTextarea} from "@/types/moduleType.ts";
 
 const Textarea = ({id , name, value, placeholder = null, rows = 5, onChange, disabled = false, ...props}: TTextarea) => {
     return (

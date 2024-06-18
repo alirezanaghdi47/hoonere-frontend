@@ -18,7 +18,7 @@ import {registerService} from "@/services/authService.ts";
 import useAuthStore from "@/stores/authStore.ts";
 
 // types
-import {IRegister} from "@/types/services.ts";
+import {IRegister} from "@/types/serviceType.ts";
 
 // utils
 import {registerSchema} from "@/utils/validations.ts";

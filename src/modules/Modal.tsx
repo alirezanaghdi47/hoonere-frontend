@@ -7,11 +7,8 @@ import {LuX} from "react-icons/lu";
 import Typography from "@/modules/Typography.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 
-// styles
-import "@/styles/modules/modal.scss";
-
 // types
-import {TModal, TModalBody, TModalFooter, TModalHeader} from "@/types/modules.ts";
+import {TModal, TModalBody, TModalFooter, TModalHeader} from "@/types/moduleType.ts";
 
 const styles = {
     width: {

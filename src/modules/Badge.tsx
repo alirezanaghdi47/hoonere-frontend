@@ -2,7 +2,7 @@
 import classNames from "classnames";
 
 // types
-import {TBadge} from "@/types/modules.ts";
+import {TBadge} from "@/types/moduleType.ts";
 
 const Badge = ({color, size, label, placement, ...props}: TBadge) => {
     return (

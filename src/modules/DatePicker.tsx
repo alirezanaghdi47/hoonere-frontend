@@ -11,7 +11,7 @@ import IconButton from "@/modules/IconButton.tsx";
 import "@/styles/modules/date-picker.scss";
 
 // types
-import {TDatePicker} from "@/types/modules.ts";
+import {TDatePicker} from "@/types/moduleType.ts";
 
 // utils
 import {toEnglishDigits} from "@/utils/functions.js";

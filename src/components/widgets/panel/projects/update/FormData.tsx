@@ -24,7 +24,7 @@ import useAuthStore from "@/stores/authStore.ts";
 
 // utils
 import {readUserInquirySchema} from "@/utils/validations.ts";
-import {IReadUserInquiry} from "@/types/services";
+import {IReadUserInquiry} from "@/types/serviceType.ts";
 
 const FormData = ({readProjectAction, updateProjectForm, updateProjectAction}) => {
     const {auth} = useAuthStore();

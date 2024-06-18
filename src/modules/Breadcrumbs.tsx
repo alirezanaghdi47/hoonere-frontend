@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import classNames from "classnames";
 
 // types
-import {TBreadcrumbs} from "@/types/modules.ts";
+import {TBreadcrumbs} from "@/types/moduleType.ts";
 
 const Breadcrumbs = ({links, activeLink, ...props}: TBreadcrumbs) => {
     return (

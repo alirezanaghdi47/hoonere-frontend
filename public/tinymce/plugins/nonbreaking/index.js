@@ -1,7 +1,7 @@
-// Exports the "nonbreaking" plugin for usage with module loaders
+// Exports the "nonbreaking" modules for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/nonbreaking')
+//     require('tinymce/modules/nonbreaking')
 //   ES2015:
-//     import 'tinymce/plugins/nonbreaking'
+//     import 'tinymce/modules/nonbreaking'
 require('./plugin.js');

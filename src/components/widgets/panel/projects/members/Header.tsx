@@ -1,6 +1,6 @@
 // libraries
 import {useState} from "react";
-import {useLocation} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 import {LuBell, LuMoon, LuSun, LuUser} from "react-icons/lu";
 
 // modules
@@ -12,13 +12,15 @@ import Breadcrumbs from "@/modules/Breadcrumbs.tsx";
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 import useAppStore from "@/stores/appStore.ts";
+import Button from "@/modules/Button.tsx";
 
 const Header = () => {
+    const params = useParams();
     const location = useLocation();
-    const{auth} = useAuthStore();
+    const {auth} = useAuthStore();
     const {app: {isDark}, toggleTheme} = useAppStore();
 
-    const [breadcrumbLinks , setBreadcrumbLinks] = useState([
+    const [breadcrumbLinks, setBreadcrumbLinks] = useState([
         {id: 1, label: "داشبورد", href: auth.panel_url + "dashboard"},
         {id: 2, label: "پروژه ها", href: auth.panel_url + "projects"},
     ]);
@@ -26,10 +28,11 @@ const Header = () => {
     return (
         <div className="d-flex justify-content-center align-items-center w-100 bg-primary">
             <div className="row gy-5 w-100 mw-950px p-5 mb-lg-15">
-                <div className="order-2 order-md-1 col-12 col-md-4 d-flex flex-column justify-content-center align-items-start gap-5">
+                <div
+                    className="order-2 order-md-1 col-12 col-md-4 d-flex flex-column justify-content-center align-items-start gap-5">
                     <Typography
                         variant="h1"
-                        color="white"
+                        color="light"
                         size="xxl"
                         isBold
                     >
@@ -38,7 +41,7 @@ const Header = () => {
                 </div>
 
                 <div className="order-1 order-md-2 col-12 col-md-8 d-flex justify-content-end align-items-center gap-2">
-                    <IconButton color="primary">
+                    <IconButton textColor="light">
                         <Badge
                             color="light-primary"
                             size="sm"
@@ -53,7 +56,7 @@ const Header = () => {
                     </IconButton>
 
                     <IconButton
-                        color="primary"
+                        textColor="light"
                         onClick={toggleTheme}
                     >
                         {
@@ -72,14 +75,21 @@ const Header = () => {
                     </IconButton>
 
                     <IconButton
+                        textColor="light"
                         href={auth.panel_url + "profile"}
-                        color="primary"
                     >
                         <LuUser
                             size={20}
                             color="currentColor"
                         />
                     </IconButton>
+
+                    <Button
+                        href={auth.panel_url + `projects/${params.id}/members/create`}
+                        color="info"
+                    >
+                        افزودن عضو
+                    </Button>
                 </div>
 
                 <div className="order-3 col-12 d-flex flex-column justify-content-center align-items-start gap-5">

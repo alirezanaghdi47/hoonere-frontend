@@ -2,7 +2,7 @@
 import classNames from "classnames";
 
 // types
-import {TTabs, TTabsItem} from "@/types/modules.ts";
+import {TTabs, TTabsItem} from "@/types/moduleType.ts";
 
 const Tabs = ({children, variant = "link", isVertical = false, ...props}: TTabs) => {
     return (

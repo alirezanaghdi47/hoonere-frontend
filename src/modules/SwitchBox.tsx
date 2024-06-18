@@ -2,7 +2,7 @@
 import classNames from "classnames";
 
 // types
-import {TSwitchBox} from "@/types/modules.ts";
+import {TSwitchBox} from "@/types/moduleType.ts";
 
 const SwitchBox = ({name , id, checked, value, onChange , disabled = false , ...props}: TSwitchBox) => {
     return (

@@ -6,8 +6,8 @@ import classNames from "classnames";
 import {LuUser} from "react-icons/lu";
 
 // types
-import {TAvatarInput} from "@/types/modules.ts";
-import {ExtendedFile} from "@/types/interfaces.ts";
+import {TAvatarInput} from "@/types/moduleType.ts";
+import {ExtendedFile} from "@/types/global.ts";
 
 const AvatarInput = ({id, name, value, preview = null, onChange, disabled = false, ...props}: TAvatarInput) => {
     const [files, setFiles] = useState<ExtendedFile[]>([value]);

@@ -1,7 +1,7 @@
-// Exports the "table" plugin for usage with module loaders
+// Exports the "table" modules for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/table')
+//     require('tinymce/modules/table')
 //   ES2015:
-//     import 'tinymce/plugins/table'
+//     import 'tinymce/modules/table'
 require('./plugin.js');

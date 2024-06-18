@@ -2,7 +2,7 @@
 import classNames from "classnames";
 
 // types
-import {TCheckBox} from "@/types/modules.ts";
+import {TCheckBox} from "@/types/moduleType.ts";
 
 const Checkbox = ({name , id, checked, value, onChange , disabled = false , ...props}: TCheckBox) => {
     return (

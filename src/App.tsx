@@ -2,8 +2,7 @@
 import RouterProvider from "@/providers/RouterProvider.tsx";
 
 // styles
-import "@/styles/theme.css";
-import "@/styles/addon.scss";
+import "@/styles/global.scss";
 
 const App = () => {
     return (

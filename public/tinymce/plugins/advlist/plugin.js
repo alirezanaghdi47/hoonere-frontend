@@ -249,7 +249,7 @@
           register(editor);
           register$2(editor);
         } else {
-          console.error('Please use the Lists plugin together with the List Styles plugin.');
+          console.error('Please use the Lists modules together with the List Styles modules.');
         }
       });
     };

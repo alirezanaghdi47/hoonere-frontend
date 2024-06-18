@@ -1,5 +1,5 @@
+// libraries
 import {convertGregorianToJalali} from "@/utils/functions.ts";
-import {array} from "yup";
 
 export interface IAuth {
     mobile: string,
@@ -37,7 +37,7 @@ export interface IUpdateProfile {
 }
 
 export interface IUpdateOccupation {
-    fields_of_activity: array,
+    fields_of_activity: unknown,
     resume_file: File | object,
     resume_text: string | null,
 }

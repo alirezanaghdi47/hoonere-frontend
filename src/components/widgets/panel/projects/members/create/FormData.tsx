@@ -22,7 +22,7 @@ import {readAllJobService, readUserInquiryService} from "@/services/publicServic
 import useAuthStore from "@/stores/authStore.ts";
 
 // types
-import {IReadUserInquiry} from "@/types/services";
+import {IReadUserInquiry} from "@/types/serviceType.ts";
 
 // utils
 import {readUserInquirySchema} from "@/utils/validations.ts";

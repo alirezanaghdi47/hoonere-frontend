@@ -8,7 +8,7 @@ import '@szhsin/react-menu/dist/index.css';
 import "@/styles/modules/dropdown.scss";
 
 // types
-import {TDropdown} from "@/types/modules.ts";
+import {TDropdown} from "@/types/moduleType.ts";
 
 const Dropdown = ({button, direction, alignment, gap, options , ...props}: TDropdown) => {
     const ref = useRef(null);

@@ -13,7 +13,7 @@ import useFilter from "@/hooks/useFilter.tsx";
 import {readAllProjectService} from "@/services/projectService.ts";
 
 // types
-import {IReadAllProject} from "@/types/services";
+import {IReadAllProject} from "@/types/serviceType.ts";
 
 const Content = () => {
     const {filter, initialFilter, isOpenFilter, showFilter, hideFilter, resetFilter, changeFilter} = useFilter<IReadAllProject>({

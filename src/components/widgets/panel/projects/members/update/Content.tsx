@@ -18,7 +18,7 @@ import {updateProjectMemberService, readProjectMemberService} from "@/services/p
 import useAuthStore from "@/stores/authStore.ts";
 
 // types
-import {IUpdateProjectMember, IReadProjectMember} from "@/types/services";
+import {IUpdateProjectMember, IReadProjectMember} from "@/types/serviceType.ts";
 
 // utils
 import {updateProjectMemberWithUserNameSchema, updateProjectMemberWithFullNameSchema} from "@/utils/validations.ts";

@@ -6,7 +6,7 @@ import classNames from "classnames";
 import "@/styles/modules/text-editor.scss";
 
 // types
-import {TTextEditor} from "@/types/modules.ts";
+import {TTextEditor} from "@/types/moduleType.ts";
 
 const TextEditor = ({name, value, placeholder = null, onChange, disabled = false, ...props}: TTextEditor) => {
     return (

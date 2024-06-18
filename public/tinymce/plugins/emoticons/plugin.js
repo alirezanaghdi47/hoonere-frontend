@@ -271,7 +271,7 @@
 
     var global = tinymce.util.Tools.resolve('tinymce.Resource');
 
-    const DEFAULT_ID = 'tinymce.plugins.emoticons';
+    const DEFAULT_ID = 'tinymce.modules.emoticons';
     const option = name => editor => editor.options.get(name);
     const register$2 = (editor, pluginUrl) => {
       const registerOption = editor.options.register;

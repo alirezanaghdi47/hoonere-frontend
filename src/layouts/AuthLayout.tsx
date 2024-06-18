@@ -6,7 +6,7 @@ import {LazyLoadImage} from 'react-lazy-load-image-component';
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-const Auth = () => {
+const AuthLayout = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const {auth} = useAuthStore();
@@ -45,4 +45,4 @@ const Auth = () => {
     )
 }
 
-export default Auth;
+export default AuthLayout;

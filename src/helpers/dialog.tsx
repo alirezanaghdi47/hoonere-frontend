@@ -2,7 +2,7 @@
 import Swal, {SweetAlertIcon} from "sweetalert2";
 
 // types
-import * as t from "@/types/types.ts";
+import * as t from "@/types/global.ts";
 
 const dialog = (
     title: string,

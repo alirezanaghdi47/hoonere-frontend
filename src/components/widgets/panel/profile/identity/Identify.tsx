@@ -17,7 +17,7 @@ import toast from "@/helpers/toast.tsx";
 import {updateProfileService} from "@/services/profileService.ts";
 
 // types
-import {IUpdateProfile} from "@/types/services";
+import {IUpdateProfile} from "@/types/serviceType.ts";
 
 // utils
 import {updateProfileSchema} from "@/utils/validations.ts";

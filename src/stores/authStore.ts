@@ -1,7 +1,7 @@
 // libraries
 import {create} from 'zustand';
 import {persist} from 'zustand/middleware';
-import {IAuthState, IAuthStore} from "@/types/stores";
+import {IAuthState, IAuthStore} from "@/types/storesType.ts";
 
 const initialState: IAuthState = {
     token: null,

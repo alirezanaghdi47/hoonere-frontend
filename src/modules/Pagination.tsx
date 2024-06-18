@@ -6,7 +6,7 @@ import {LuChevronLeft, LuChevronRight, LuMoreHorizontal} from "react-icons/lu";
 import "@/styles/modules/pagination.scss";
 
 // types
-import {TPagination} from "@/types/modules.ts";
+import {TPagination} from "@/types/moduleType.ts";
 
 const PrevIcon = () => {
     return (

@@ -1,7 +1,7 @@
-// Exports the "charmap" plugin for usage with module loaders
+// Exports the "charmap" modules for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/charmap')
+//     require('tinymce/modules/charmap')
 //   ES2015:
-//     import 'tinymce/plugins/charmap'
+//     import 'tinymce/modules/charmap'
 require('./plugin.js');

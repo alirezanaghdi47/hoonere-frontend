@@ -2,7 +2,7 @@
 import classNames from "classnames";
 
 // types
-import {TChip} from "@/types/modules.ts";
+import {TChip} from "@/types/moduleType.ts";
 
 const Chip = ({label, size = "sm", color, isCircle = false, ...props}: TChip) => {
     return (

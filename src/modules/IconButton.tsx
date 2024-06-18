@@ -4,7 +4,7 @@ import classNames from "classnames";
 import {BeatLoader} from "react-spinners";
 
 // types
-import {TIconButton} from "@/types/modules.ts";
+import {TIconButton} from "@/types/moduleType.ts";
 
 const IconButton = ({
                         size = "md",

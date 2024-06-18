@@ -16,7 +16,7 @@ import useFilter from "@/hooks/useFilter.tsx";
 import {readAllProjectMemberService} from "@/services/projectMemberService.ts";
 
 // types
-import {IReadAllProjectMember} from "@/types/services";
+import {IReadAllProjectMember} from "@/types/serviceType.ts";
 
 const Content = () => {
     const params = useParams();

@@ -5,7 +5,7 @@ import classNames from "classnames";
 import Typography from "@/modules/Typography.tsx";
 
 // types
-import {TAlert} from "@/types/modules.ts";
+import {TAlert} from "@/types/moduleType.ts";
 
 const Alert = ({color, size = "md", icon = null, message, ...props}: TAlert) => {
     return (

@@ -1,7 +1,7 @@
-// Exports the "insertdatetime" plugin for usage with module loaders
+// Exports the "insertdatetime" modules for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/insertdatetime')
+//     require('tinymce/modules/insertdatetime')
 //   ES2015:
-//     import 'tinymce/plugins/insertdatetime'
+//     import 'tinymce/modules/insertdatetime'
 require('./plugin.js');

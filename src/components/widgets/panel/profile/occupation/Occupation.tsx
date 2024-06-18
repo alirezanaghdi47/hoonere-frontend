@@ -20,7 +20,7 @@ import {updateOccupationService} from "@/services/profileService.ts";
 import {readAllJobService} from "@/services/publicService.ts";
 
 // types
-import {IUpdateOccupation} from "@/types/services";
+import {IUpdateOccupation} from "@/types/serviceType.ts";
 
 // utils
 import {occupationSchema} from "@/utils/validations.ts";

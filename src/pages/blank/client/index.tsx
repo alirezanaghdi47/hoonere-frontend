@@ -3,9 +3,9 @@ import {useEffect} from "react";
 import {useLocation} from "react-router-dom";
 
 // components
-import Content from "@/components/widgets/error/server/Content.tsx";
+import Content from "@/components/widgets/blank/client/Content.tsx";
 
-const ServerError = () => {
+const ClientError = () => {
     const location = useLocation();
 
     useEffect(() => {
@@ -27,4 +27,4 @@ const ServerError = () => {
     )
 }
 
-export default ServerError;
+export default ClientError;

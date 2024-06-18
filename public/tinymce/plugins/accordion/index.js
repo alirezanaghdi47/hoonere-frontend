@@ -1,7 +1,7 @@
-// Exports the "accordion" plugin for usage with module loaders
+// Exports the "accordion" modules for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/accordion')
+//     require('tinymce/modules/accordion')
 //   ES2015:
-//     import 'tinymce/plugins/accordion'
+//     import 'tinymce/modules/accordion'
 require('./plugin.js');

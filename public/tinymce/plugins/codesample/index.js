@@ -1,7 +1,7 @@
-// Exports the "codesample" plugin for usage with module loaders
+// Exports the "codesample" modules for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/codesample')
+//     require('tinymce/modules/codesample')
 //   ES2015:
-//     import 'tinymce/plugins/codesample'
+//     import 'tinymce/modules/codesample'
 require('./plugin.js');

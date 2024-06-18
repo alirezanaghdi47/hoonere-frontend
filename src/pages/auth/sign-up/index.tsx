@@ -2,7 +2,7 @@
 import Register from "@/components/widgets/auth/sign-up/Register.tsx";
 
 // hocs
-import RouteGuardHoc from "@/hocs/RouteGuardHoc.tsx";
+import RouteGuardHoc from "@/components/hocs/RouteGuardHoc.tsx";
 
 const SignUp = () => {
     return (

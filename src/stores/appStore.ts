@@ -3,7 +3,7 @@ import {create} from 'zustand';
 import {persist} from "zustand/middleware";
 
 // types
-import {IAppState , IAppStore} from "@/types/stores";
+import {IAppState , IAppStore} from "@/types/storesType.ts";
 
 const initialState: IAppState = {
     isOpenDrawer: false,

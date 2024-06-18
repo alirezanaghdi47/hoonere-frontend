@@ -3,7 +3,7 @@ import Header from "@/components/widgets/panel/projects/members/update/Header.ts
 import Content from "@/components/widgets/panel/projects/members/update/Content.tsx";
 
 // hocs
-import RouteGuardHoc from "@/hocs/RouteGuardHoc.tsx";
+import RouteGuardHoc from "@/components/hocs/RouteGuardHoc.tsx";
 
 const UpdateProjectMember = () => {
     return (

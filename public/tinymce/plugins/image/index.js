@@ -1,7 +1,7 @@
-// Exports the "image" plugin for usage with module loaders
+// Exports the "image" modules for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/image')
+//     require('tinymce/modules/image')
 //   ES2015:
-//     import 'tinymce/plugins/image'
+//     import 'tinymce/modules/image'
 require('./plugin.js');

@@ -4,7 +4,7 @@ import classNames from "classnames";
 import {BeatLoader} from "react-spinners";
 
 // types
-import {TButton} from "@/types/modules";
+import {TButton} from "@/types/moduleType.ts";
 
 const Button = ({
                     children,

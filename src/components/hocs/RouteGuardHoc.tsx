@@ -6,7 +6,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import useAuthStore from "@/stores/authStore.ts";
 
 // types
-import {TWrappedComponent} from "@/types/hocs";
+import {TWrappedComponent} from "@/types/componentType.ts";
 
 const RouteGuardHoc = <P extends TWrappedComponent>(WrappedComponent: ComponentType<P>): ComponentType<P> => {
     const RouteGuardHoc = (props) => {

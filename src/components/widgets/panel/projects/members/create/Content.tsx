@@ -17,7 +17,7 @@ import {createProjectMemberService} from "@/services/projectMemberService.ts";
 import useAuthStore from "@/stores/authStore.ts";
 
 // types
-import {ICreateProjectMember} from "@/types/services";
+import {ICreateProjectMember} from "@/types/serviceType.ts";
 
 // utils
 import {createProjectMemberWithFullNameSchema, createProjectMemberWithUserNameSchema} from "@/utils/validations.ts";

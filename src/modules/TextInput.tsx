@@ -3,7 +3,7 @@ import classNames from "classnames";
 import MoonLoader from "react-spinners/MoonLoader";
 
 // types
-import {TTextInput} from "@/types/modules.ts";
+import {TTextInput} from "@/types/moduleType.ts";
 
 const TextInput = ({
                        id,

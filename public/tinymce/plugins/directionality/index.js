@@ -1,7 +1,7 @@
-// Exports the "directionality" plugin for usage with module loaders
+// Exports the "directionality" modules for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/directionality')
+//     require('tinymce/modules/directionality')
 //   ES2015:
-//     import 'tinymce/plugins/directionality'
+//     import 'tinymce/modules/directionality'
 require('./plugin.js');

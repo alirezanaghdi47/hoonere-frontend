@@ -17,6 +17,7 @@ export type colors =
     | "light-dark"
     | "gray-600"
     | "transparent";
+
 export type sizes =
     "xxl"
     | "xl"
@@ -25,3 +26,7 @@ export type sizes =
     | "sm"
     | "xs"
     | "xxs";
+
+export interface ExtendedFile extends File {
+    preview?: string,
+}

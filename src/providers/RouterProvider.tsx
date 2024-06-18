@@ -3,14 +3,14 @@ import {Route, Routes} from "react-router-dom";
 import Loadable from '@loadable/component';
 
 // layouts
-const Panel = Loadable(() => import('@/layouts/panel'));
-const Auth = Loadable(() => import('@/layouts/auth'));
-const Blank = Loadable(() => import('@/layouts/error'));
+const Panel = Loadable(() => import('@/layouts/PanelLayout.tsx'));
+const Auth = Loadable(() => import('@/layouts/AuthLayout.tsx'));
+const Blank = Loadable(() => import('@/layouts/BlankLayout.tsx'));
 
 // pages
-const Home = Loadable(() => import('@/pages/home'));
-const Server = Loadable(() => import('@/pages/error/server'));
-const Client = Loadable(() => import('@/pages/error/client'));
+const Home = Loadable(() => import('@/pages/blank/home'));
+const Server = Loadable(() => import('@/pages/blank/server'));
+const Client = Loadable(() => import('@/pages/blank/client'));
 const SignIn = Loadable(() => import('@/pages/auth/sign-in'));
 const SignUp = Loadable(() => import('@/pages/auth/sign-up'));
 const Dashboard = Loadable(() => import('@/pages/panel/dashboard'));

@@ -9,7 +9,7 @@ import IconButton from "@/modules/IconButton.tsx";
 import NumberInput from "@/modules/NumberInput.tsx";
 
 // types
-import {TCodeInput} from "@/types/modules.ts";
+import {TCodeInput} from "@/types/moduleType.ts";
 
 const CodeInput = ({
                        id,

@@ -17,7 +17,7 @@ import {verifyService, authService} from "@/services/authService.ts";
 import useAuthStore from "@/stores/authStore.ts";
 
 // types
-import {IAuth, IVerify} from "@/types/services.ts";
+import {IAuth, IVerify} from "@/types/serviceType.ts";
 
 // utils
 import {verifySchema} from "@/utils/validations.ts";

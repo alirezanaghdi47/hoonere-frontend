@@ -9,7 +9,7 @@ import {
 import {LuArrowDown, LuArrowUp} from "react-icons/lu";
 
 // types
-import {TTable} from "@/types/modules.ts";
+import {TTable} from "@/types/moduleType.ts";
 
 const Table = ({data, columns}: TTable) => {
     const [sorting, setSorting] = useState([]);

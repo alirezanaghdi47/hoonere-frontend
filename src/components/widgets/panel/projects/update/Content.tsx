@@ -18,7 +18,7 @@ import {readProjectService, updateProjectService} from "@/services/projectServic
 import useAuthStore from "@/stores/authStore.ts";
 
 // types
-import {IReadProject, IUpdateProject} from "@/types/services";
+import {IReadProject, IUpdateProject} from "@/types/serviceType.ts";
 
 // utils
 import {updateProjectSchema} from "@/utils/validations.ts";
