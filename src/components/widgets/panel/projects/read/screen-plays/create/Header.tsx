@@ -1,6 +1,6 @@
 // libraries
 import {useState} from "react";
-import {useLocation} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 import {LuBell, LuMoon, LuSun, LuUser} from "react-icons/lu";
 
 // modules
@@ -14,25 +14,30 @@ import useAuthStore from "@/stores/authStore.ts";
 import useAppStore from "@/stores/appStore.ts";
 
 const Header = () => {
+    const params = useParams();
     const location = useLocation();
     const {auth} = useAuthStore();
     const {app: {isDark}, toggleTheme} = useAppStore();
 
-    const [breadcrumbLinks , setBreadcrumbLinks] = useState([
+    const [breadcrumbLinks, setBreadcrumbLinks] = useState([
         {id: 1, label: "داشبورد", href: auth.panel_url + "dashboard"},
+        {id: 2, label: "پروژه ها", href: auth.panel_url + "projects"},
+        {id: 3, label: ` پروژه ${params.id} `, href: auth.panel_url + `projects/${params.id}`},
+        {id: 4, label: "فیلم نامه ها", href: auth.panel_url + `projects/${params.id}/screen-plays`},
     ]);
 
     return (
         <div className="d-flex justify-content-center align-items-center w-100 bg-primary">
             <div className="row gy-5 w-100 mw-950px p-5 mb-lg-15">
-                <div className="order-2 order-md-1 col-12 col-md-4 d-flex flex-column justify-content-center align-items-start gap-5">
+                <div
+                    className="order-2 order-md-1 col-12 col-md-4 d-flex flex-column justify-content-center align-items-start gap-5">
                     <Typography
                         variant="h1"
                         color="light"
                         size="xxl"
                         isBold
                     >
-                        حساب کاربری
+                        افزودن فیلم نامه
                     </Typography>
                 </div>
 
@@ -72,7 +77,7 @@ const Header = () => {
 
                     <IconButton
                         textColor="light"
-                        href={auth.panel_url + "profile#review"}
+                        href={auth.panel_url + "profile"}
                     >
                         <LuUser
                             size={20}

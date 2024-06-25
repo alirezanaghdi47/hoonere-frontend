@@ -6,6 +6,7 @@ import {LuBell, LuMoon, LuSun, LuUser} from "react-icons/lu";
 // modules
 import Typography from "@/modules/Typography.tsx";
 import IconButton from "@/modules/IconButton.tsx";
+import Button from "@/modules/Button.tsx";
 import Badge from "@/modules/Badge.tsx";
 import Breadcrumbs from "@/modules/Breadcrumbs.tsx";
 
@@ -16,26 +17,28 @@ import useAppStore from "@/stores/appStore.ts";
 const Header = () => {
     const params = useParams();
     const location = useLocation();
-    const{auth} = useAuthStore();
+    const {auth} = useAuthStore();
     const {app: {isDark}, toggleTheme} = useAppStore();
 
-    const [breadcrumbLinks , setBreadcrumbLinks] = useState([
+    const [breadcrumbLinks, setBreadcrumbLinks] = useState([
         {id: 1, label: "داشبورد", href: auth.panel_url + "dashboard"},
         {id: 2, label: "پروژه ها", href: auth.panel_url + "projects"},
-        {id: 3, label: "اعضا", href: auth.panel_url + "projects/" + params.id + "/members"},
     ]);
 
     return (
         <div className="d-flex justify-content-center align-items-center w-100 bg-primary">
             <div className="row gy-5 w-100 mw-950px p-5 mb-lg-15">
-                <div className="order-2 order-md-1 col-12 col-md-4 d-flex flex-column justify-content-center align-items-start gap-5">
+                <div
+                    className="order-2 order-md-1 col-12 col-md-4 d-flex flex-column justify-content-center align-items-start gap-5">
                     <Typography
                         variant="h1"
                         color="light"
                         size="xxl"
                         isBold
                     >
-                        ویرایش عضو
+                        پروژه
+                        &nbsp;
+                        {params.id}
                     </Typography>
                 </div>
 

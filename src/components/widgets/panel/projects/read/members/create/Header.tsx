@@ -1,6 +1,6 @@
 // libraries
 import {useState} from "react";
-import {useLocation} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 import {LuBell, LuMoon, LuSun, LuUser} from "react-icons/lu";
 
 // modules
@@ -14,12 +14,16 @@ import useAuthStore from "@/stores/authStore.ts";
 import useAppStore from "@/stores/appStore.ts";
 
 const Header = () => {
+    const params = useParams();
     const location = useLocation();
-    const {auth} = useAuthStore();
+    const{auth} = useAuthStore();
     const {app: {isDark}, toggleTheme} = useAppStore();
 
     const [breadcrumbLinks , setBreadcrumbLinks] = useState([
         {id: 1, label: "داشبورد", href: auth.panel_url + "dashboard"},
+        {id: 2, label: "پروژه ها", href: auth.panel_url + "projects"},
+        {id: 3, label: ` پروژه ${params.id} `, href: auth.panel_url + `projects/${params.id}`},
+        {id: 4, label: "اعضا", href: auth.panel_url + "projects/" + params.id + "/members"},
     ]);
 
     return (
@@ -32,7 +36,7 @@ const Header = () => {
                         size="xxl"
                         isBold
                     >
-                        حساب کاربری
+                        افزودن عضو
                     </Typography>
                 </div>
 
@@ -72,7 +76,7 @@ const Header = () => {
 
                     <IconButton
                         textColor="light"
-                        href={auth.panel_url + "profile#review"}
+                        href={auth.panel_url + "profile"}
                     >
                         <LuUser
                             size={20}

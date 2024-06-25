@@ -8402,7 +8402,7 @@
     ]);
     const svgDisallowed = freeze([
       'animate',
-      'color-profile',
+      'color-read',
       'cursor',
       'discard',
       'font-face',
@@ -8607,7 +8607,7 @@
       'color',
       'color-interpolation',
       'color-interpolation-filters',
-      'color-profile',
+      'color-read',
       'color-rendering',
       'cx',
       'cy',

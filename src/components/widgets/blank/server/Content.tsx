@@ -14,7 +14,7 @@ const Content = () => {
     return (
         <div className="d-flex flex-column justify-content-center align-items-center gap-10 w-100 h-100">
             <LazyLoadImage
-                src="/assets/images/server-down.svg"
+                src="/assets/images/illustrations/server-down.svg"
                 alt="500"
                 width={250}
             />

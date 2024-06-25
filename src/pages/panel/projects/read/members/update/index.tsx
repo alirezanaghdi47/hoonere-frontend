@@ -1,6 +1,6 @@
 // components
-import Header from "@/components/widgets/panel/projects/members/update/Header.tsx";
-import Content from "@/components/widgets/panel/projects/members/update/Content.tsx";
+import Header from "@/components/widgets/panel/projects/read/members/update/Header.tsx";
+import Content from "@/components/widgets/panel/projects/read/members/update/Content.tsx";
 
 // hocs
 import RouteGuardHoc from "@/components/hocs/RouteGuardHoc.tsx";

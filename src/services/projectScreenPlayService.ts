@@ -5,126 +5,16 @@ import axios from "axios";
 import useAuthStore from "@/stores/authStore.ts";
 
 // utils
-import {decodeData, encodeData} from "@/utils/functions.ts";
+import {cleaningObject, decodeData, encodeData} from "@/utils/functions.ts";
 
-export const readAllJobService = async () => {
-    try {
-        const {token} = useAuthStore.getState().auth;
-
-        const response = await axios.post(process.env.API_URL + "/panel/public/getAllFieldsOfActivity", null, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        });
-
-        return {
-            ...response.data,
-            data: JSON.parse(decodeData(response.data.data))
-        }
-    } catch (err) {
-        const {logout} = useAuthStore.getState();
-
-        if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
-    }
-}
-
-export const readAllUserStatusService = async () => {
-    try {
-        const {token} = useAuthStore.getState().auth;
-
-        const response = await axios.post(process.env.API_URL + "/admin-panel/public/getUserStatuses", null, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        });
-
-        return {
-            ...response.data,
-            data: JSON.parse(decodeData(response.data.data))
-        }
-    } catch (err) {
-        const {logout} = useAuthStore.getState();
-
-        if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
-    }
-}
-
-export const readAllProjectTypeService = async () => {
-    try {
-        const {token} = useAuthStore.getState().auth;
-
-        const response = await axios.post(process.env.API_URL + "/panel/public/getAllProjectTypes", null, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        });
-
-        return {
-            ...response.data,
-            data: JSON.parse(decodeData(response.data.data))
-        }
-    } catch (err) {
-        const {logout} = useAuthStore.getState();
-
-        if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
-    }
-}
-
-export const readAllInvestorService = async () => {
-    try {
-        const {token} = useAuthStore.getState().auth;
-
-        const response = await axios.post(process.env.API_URL + "/panel/public/getAllInvestors", null, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        });
-
-        return {
-            ...response.data,
-            data: JSON.parse(decodeData(response.data.data))
-        }
-    } catch (err) {
-        const {logout} = useAuthStore.getState();
-
-        if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
-    }
-}
-
-export const readUserInquiryService = async (data) => {
+export const readAllProjectScreenPlayService = async (data) => {
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(data)));
+        formData.append("data", encodeData(JSON.stringify(cleaningObject(data))));
 
-        const response = await axios.post(process.env.API_URL + "/panel/public/userInquiry", formData, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        });
-
-        return {
-            ...response.data,
-            data: JSON.parse(decodeData(response.data.data))
-        }
-    } catch (err) {
-        const {logout} = useAuthStore.getState();
-
-        if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
-    }
-}
-
-export const readAllScreenPlayTimeType = async () => {
-    try {
-        const {token} = useAuthStore.getState().auth;
-
-        const response = await axios.post(process.env.API_URL + "/panel/public/getScreenplayTimeTypes", null, {
+        const response = await axios.post(process.env.API_URL + "/panel/projects/screenplays/index", formData, {
             headers: {
                 "Authorization": "Bearer " + token
             }
@@ -142,11 +32,89 @@ export const readAllScreenPlayTimeType = async () => {
     }
 }
 
-export const readAllScreenPlayLocationSide = async () => {
+export const readProjectScreenPlayService = async (data) => {
     try {
+        const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        const response = await axios.post(process.env.API_URL + "/panel/public/getScreenplayLocationSides", null, {
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/screenplays/show", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const createProjectScreenPlayService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/screenplays/create", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const updateProjectScreenPlayService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/screenplays/update", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const deleteProjectScreenPlayService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/screenplays/destroy", formData, {
             headers: {
                 "Authorization": "Bearer " + token
             }

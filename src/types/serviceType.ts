@@ -146,3 +146,44 @@ export interface IDeleteProjectMember {
     foa_parent_id?: string,
     foa_child_id?: string,
 }
+
+export interface IReadAllProjectScreenPlay {
+    project_id: string,
+    // text: string | null,
+    // foa_child_id: string | null,
+    // foa_parent_id: string | null,
+    page: number,
+    per_page: number,
+}
+
+export interface IReadProjectScreenPlay {
+    project_id: string,
+    screenplay_id: string,
+}
+
+export interface ICreateProjectScreenPlay {
+    project_id: string,
+    description: string,
+    address: string,
+    time_type_id: string,
+    location_side_id: string,
+    part: string,
+    sequence: string,
+    fields: {title: string , value: string}[]
+}
+
+export interface IUpdateProjectScreenPlay {
+    project_id: string,
+    screenplay_id: string,
+    description: string,
+    address: string,
+    time_type_id: string,
+    location_side_id: string,
+    part: string,
+    sequence: string,
+    fields: {title: string , value: string}[]
+}
+
+export interface IDeleteProjectScreenPlay {
+    screenplay_id: string,
+}

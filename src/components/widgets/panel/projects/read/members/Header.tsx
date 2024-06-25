@@ -23,6 +23,7 @@ const Header = () => {
     const [breadcrumbLinks, setBreadcrumbLinks] = useState([
         {id: 1, label: "داشبورد", href: auth.panel_url + "dashboard"},
         {id: 2, label: "پروژه ها", href: auth.panel_url + "projects"},
+        {id: 3, label: ` پروژه ${params.id} `, href: auth.panel_url + `projects/${params.id}`},
     ]);
 
     return (
@@ -36,7 +37,7 @@ const Header = () => {
                         size="xxl"
                         isBold
                     >
-                        اعضای پروژه
+                        اعضا
                     </Typography>
                 </div>
 

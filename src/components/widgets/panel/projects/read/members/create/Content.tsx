@@ -5,7 +5,7 @@ import {useFormik} from "formik";
 import {useBoolean} from "usehooks-ts";
 
 // components
-import FormData from "@/components/widgets/panel/projects/members/create/FormData.tsx";
+import FormData from "@/components/widgets/panel/projects/read/members/create/FormData.tsx";
 
 // modules
 import toast from "@/helpers/toast.tsx";

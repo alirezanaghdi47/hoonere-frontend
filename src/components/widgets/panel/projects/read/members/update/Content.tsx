@@ -5,7 +5,7 @@ import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
 // components
-import FormData from "@/components/widgets/panel/projects/members/update/FormData.tsx";
+import FormData from "@/components/widgets/panel/projects/read/members/update/FormData.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // modules

@@ -6,8 +6,8 @@ import {format} from "date-fns-jalali";
 import {LuPen, LuTrash2} from "react-icons/lu";
 
 // components
-import Finder from "@/components/widgets/panel/projects/members/Finder.tsx";
-import Filter from "@/components/widgets/panel/projects/members/Filter.tsx";
+import Finder from "@/components/widgets/panel/projects/read/members/Finder.tsx";
+import Filter from "@/components/widgets/panel/projects/read/members/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
 // modules

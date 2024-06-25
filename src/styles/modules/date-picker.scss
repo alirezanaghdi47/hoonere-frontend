@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 .rmdp {
   &-shadow {
     box-shadow: var(--bs-box-shadow-sm) !important;

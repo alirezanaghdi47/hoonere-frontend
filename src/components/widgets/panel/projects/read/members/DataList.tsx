@@ -5,8 +5,8 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {LuPlus} from "react-icons/lu";
 
 // components
-import Filter from "@/components/widgets/panel/projects/members/Filter.tsx";
-import Finder from "@/components/widgets/panel/projects/members/Finder.tsx";
+import Filter from "@/components/widgets/panel/projects/read/members/Filter.tsx";
+import Finder from "@/components/widgets/panel/projects/read/members/Finder.tsx";
 
 // modules
 import Typography from "@/modules/Typography.tsx";

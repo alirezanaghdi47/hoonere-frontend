@@ -166,3 +166,34 @@ export const updateProjectMemberWithUserNameSchema = Yup.object().shape({
     foa_child_id: Yup.string().required("عنوان شغلی الزامی است"),
     user_id: Yup.string().trim().required("نام کاربری الزامی است")
 });
+
+export const createProjectScreenPlaySchema = Yup.object().shape({
+    description: Yup.string().trim().required("توضیحات فیلم نامه الزامی است"),
+    address: Yup.string().trim().required("موقعیت فیلم نامه الزامی است"),
+    time_type_id: Yup.string().trim().required("زمان اجرا فیلم نامه الزامی است"),
+    location_side_id: Yup.string().trim().required("سمت مکان فیلم نامه الزامی است"),
+    part: Yup.number().min(1, "قسمت فیلم نامه از 1 باید بیشتر باشد").required("قسمت فیلم نامه الزامی است"),
+    sequence: Yup.number().min(1, "سکانس فیلم نامه از 1 باید بیشتر باشد").required("سکانس فیلم نامه الزامی است"),
+    fields: Yup.array().of(Yup.object().shape({
+        title: Yup.string(),
+        value: Yup.string(),
+    })),
+});
+
+export const createFieldSchema = Yup.object().shape({
+    title: Yup.string().required("عنوان الزامی است"),
+    value: Yup.string().required("مقدار الزامی است"),
+});
+
+export const updateProjectScreenPlaySchema = Yup.object().shape({
+    description: Yup.string().trim().required("توضیحات فیلم نامه الزامی است"),
+    address: Yup.string().trim().required("موقعیت فیلم نامه الزامی است"),
+    time_type_id: Yup.string().trim().required("زمان اجرا فیلم نامه الزامی است"),
+    location_side_id: Yup.string().trim().required("سمت مکان فیلم نامه الزامی است"),
+    part: Yup.number().min(1, "قسمت فیلم نامه از 1 باید بیشتر باشد").required("قسمت فیلم نامه الزامی است"),
+    sequence: Yup.number().min(1, "سکانس فیلم نامه از 1 باید بیشتر باشد").required("سکانس فیلم نامه الزامی است"),
+    fields: Yup.array().of(Yup.object().shape({
+        title: Yup.string(),
+        value: Yup.string(),
+    })),
+});

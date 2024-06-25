@@ -1,13 +1,13 @@
 // libraries
 import {useMemo} from "react";
+import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
-import {LazyLoadImage} from "react-lazy-load-image-component";
 import {format} from "date-fns-jalali";
-import {LuInfo, LuPen, LuTrash2} from "react-icons/lu";
+import {LuPen, LuTrash2} from "react-icons/lu";
 
 // components
-import Finder from "@/components/widgets/panel/projects/Finder.tsx";
-import Filter from "@/components/widgets/panel/projects/Filter.tsx";
+import Finder from "@/components/widgets/panel/projects/read/screen-plays/Finder.tsx";
+import Filter from "@/components/widgets/panel/projects/read/screen-plays/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
 // helpers
@@ -18,19 +18,19 @@ import toast from "@/helpers/toast.tsx";
 import Table from "@/modules/Table.tsx";
 import Tooltip from "@/modules/Tooltip.tsx";
 import IconButton from "@/modules/IconButton.tsx";
-import Button from "@/modules/Button.tsx";
+import Chip from "@/modules/Chip.tsx";
 
 // services
-import {deleteProjectService} from "@/services/projectService.ts";
+import {deleteProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
 // types
-import {IDeleteProject} from "@/types/serviceType.ts";
+import {IDeleteProjectScreenPlay} from "@/types/serviceType.ts";
 
 const DataTable = ({
-                       readAllProjectAction,
+                       readAllProjectScreenPlayAction,
                        filter,
                        initialFilter,
                        isOpenFilter,
@@ -39,15 +39,19 @@ const DataTable = ({
                        showFilter,
                        hideFilter
                    }) => {
+    const params = useParams();
     const {auth} = useAuthStore();
 
-    const deleteProjectAction = useMutation({
-        mutationFn: (data: IDeleteProject) => deleteProjectService(data),
+    const deleteProjectScreenPlayAction = useMutation({
+        mutationFn: (data: IDeleteProjectScreenPlay) => deleteProjectScreenPlayService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
 
-                readAllProjectAction.mutate(filter);
+                readAllProjectScreenPlayAction.mutate({
+                    ...filter,
+                    project_id: params.id
+                });
             } else {
                 toast("error", data.message);
             }
@@ -62,76 +66,64 @@ const DataTable = ({
                 sortingFn: (rowA, rowB, columnId) => rowA.index - rowB.index
             },
             {
-                accessorKey: 'logo',
-                header: () => 'لوگو',
-                cell: ({row}) => (
-                    <div
-                        className="w-100px fs-6 text-dark text-truncate"
-                    >
-                        <LazyLoadImage
-                            src={row.original.logo}
-                            alt={row.original.title}
-                            width={50}
-                            height={50}
-                        />
-                    </div>
-                ),
-                enableSorting: false
-            },
-            {
-                accessorKey: 'title',
-                header: () => 'عنوان',
-                cell: ({row}) => (
-                    <div
-                        className="w-150px fs-6 text-dark text-truncate"
-                        data-tooltip-id="my-tooltip"
-                        data-tooltip-content={row.original.title}
-                    >
-                        <Button
-                            textColor="light-primary"
-                            href={auth.panel_url + "projects/" + row.original.id}
-                            direction='start'
-                            isDense
-                        >
-                            {row.original.title}
-                        </Button>
-                    </div>
-                ),
-                sortingFn: "text"
-            },
-            {
-                accessorKey: 'description',
-                header: () => 'توضیحات',
+                accessorKey: 'address',
+                header: () => 'آدرس',
                 cell: ({row}) => (
                     <div
                         className="w-250px fs-6 text-dark text-truncate"
                         data-tooltip-id="my-tooltip"
-                        data-tooltip-content={row.original.description}
+                        data-tooltip-content={row.original.address}
                     >
-                        {row.original.description}
+                        {row.original.address}
                     </div>
                 ),
                 sortingFn: "text"
             },
             {
-                accessorKey: 'count_of_parts',
-                header: () => 'تعداد قسمت ها',
+                accessorKey: 'time_type',
+                header: () => 'زمان اجرا',
                 cell: ({row}) => (
-                    <div className="w-100px fs-6 text-dark text-truncate">
-                        {row.original.count_of_parts}
+                    <div className="w-150px fs-6 text-dark text-truncate">
+                        <Chip
+                            color={row.original.time_type.class_name}
+                            label={row.original.time_type.title}
+                        />
                     </div>
                 ),
                 sortingFn: "text"
             },
             {
-                accessorKey: 'time_of_parts',
-                header: () => 'مدت زمان ( دقیقه )',
+                accessorKey: 'location_side',
+                header: () => 'سمت مکان',
                 cell: ({row}) => (
-                    <div className="w-100px fs-6 text-dark text-truncate">
-                        {row.original.time_of_parts}
+                    <div className="w-150px fs-6 text-dark text-truncate">
+                        <Chip
+                            color={row.original.location_side.class_name}
+                            label={row.original.location_side.title}
+                        />
                     </div>
                 ),
                 sortingFn: "text"
+            },
+            {
+                accessorKey: 'part',
+                header: () => 'بخش',
+                cell: ({row}) => (
+                    <div className="w-100px fs-6 text-dark text-truncate">
+                        {row.original.part}
+                    </div>
+                ),
+                sortingFn: (rowA, rowB, columnId) => rowA.original.part - rowB.original.part
+            },
+            {
+                accessorKey: 'sequence',
+                header: () => 'سکانس',
+                cell: ({row}) => (
+                    <div className="w-100px fs-6 text-dark text-truncate">
+                        {row.original.sequence}
+                    </div>
+                ),
+                sortingFn: (rowA, rowB, columnId) => rowA.original.sequence - rowB.original.sequence
             },
             {
                 accessorKey: 'created_at',
@@ -151,7 +143,7 @@ const DataTable = ({
                 cell: ({row}) => (
                     <div className="d-flex justify-content-start align-items-center w-max gap-2">
                         <IconButton
-                            href={auth.panel_url + "projects/" + row.original.id + "/update"}
+                            href={auth.panel_url + "projects/" + row.original.project_id + "/screen-plays/" + row.original.id + "/update"}
                             color="light-warning"
                             size="sm"
                             data-tooltip-id="my-tooltip"
@@ -168,8 +160,8 @@ const DataTable = ({
                             size="sm"
                             onClick={() => {
                                 dialog(
-                                    "حذف پروژه",
-                                    "آیا میخواهید این پروژه را حذف کنید ؟",
+                                    "حذف بخش فیلم نامه",
+                                    "آیا میخواهید این بخش فیلم نامه را حذف کنید ؟",
                                     "info",
                                     {
                                         show: true,
@@ -181,7 +173,7 @@ const DataTable = ({
                                         text: "انصراف",
                                         color: "light-dark",
                                     },
-                                    async () => deleteProjectAction.mutate({project_id: row.original.id.toString()})
+                                    async () => deleteProjectScreenPlayAction.mutate({screenplay_id: row.original.id.toString()})
                                 )
                             }}
                             data-tooltip-id="my-tooltip"
@@ -204,7 +196,7 @@ const DataTable = ({
             <div className="card w-100">
                 <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
                     <Filter
-                        readAllProjectAction={readAllProjectAction}
+                        readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
                         filter={filter}
                         initialFilter={initialFilter}
                         changeFilter={changeFilter}
@@ -215,16 +207,16 @@ const DataTable = ({
                     />
 
                     {
-                        readAllProjectAction.data?.data?.projects.length > 0 && (
+                        readAllProjectScreenPlayAction.data?.data?.screenplays.length > 0 && (
                             <Table
-                                data={readAllProjectAction?.data?.data?.projects}
+                                data={readAllProjectScreenPlayAction?.data?.data?.screenplays}
                                 columns={tableColumns}
                             />
                         )
                     }
 
                     {
-                        readAllProjectAction.data?.data?.projects.length === 0 && (
+                        readAllProjectScreenPlayAction.data?.data?.screenplays.length === 0 && (
                             <Empty
                                 title="پروژه ای یافت نشد"
                                 width="100%"
@@ -234,7 +226,7 @@ const DataTable = ({
                     }
 
                     <Finder
-                        readAllProjectAction={readAllProjectAction}
+                        readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
                         filter={filter}
                         changeFilter={changeFilter}
                     />
