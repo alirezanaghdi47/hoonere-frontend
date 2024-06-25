@@ -116,7 +116,7 @@ export const createProjectSchema = Yup.object().shape({
     description: Yup.string().trim().required("توضیحات پروژه الزامی است"),
     producer: Yup.string().trim().required("تهیه کننده پروژه الزامی است"),
     count_of_parts: Yup.number().min(1, "حداقل تعداد قسمت پروژه 1 می باشد").required("تعداد قسمت های پروژه الزامی است"),
-    time_of_parts: Yup.number().min(1, "حداقل مدت زمان هر قسمت پروژه 1 می باشد").required("مدت زمان هر قسمت پروژه الزامی است"),
+    time_of_parts: Yup.number().min(1, "حداقل زمان هر قسمت پروژه 1 می باشد").required("مدت زمان هر قسمت پروژه الزامی است"),
     location: Yup.string().trim().required("موقعیت فیلم برداری پروژه الزامی است")
 });
 
@@ -139,7 +139,7 @@ export const updateProjectSchema = Yup.object().shape({
     description: Yup.string().trim().required("توضیحات پروژه الزامی است"),
     producer: Yup.string().trim().required("تهیه کننده پروژه الزامی است"),
     count_of_parts: Yup.number().min(1, "حداقل تعداد قسمت پروژه 1 می باشد").required("تعداد قسمت های پروژه الزامی است"),
-    time_of_parts: Yup.number().min(1, "حداقل مدت زمان هر قسمت پروژه 1 می باشد").required("مدت زمان هر قسمت پروژه الزامی است"),
+    time_of_parts: Yup.number().min(1, "حداقل زمان هر قسمت پروژه 1 می باشد").required("مدت زمان هر قسمت پروژه الزامی است"),
     location: Yup.string().trim().required("موقعیت فیلم برداری پروژه الزامی است")
 });
 

@@ -177,7 +177,7 @@ const FormData = ({updateProjectScreenPlayForm, updateProjectScreenPlayAction}) 
                             <div className="col-12 col-sm-6 col-md-12">
                                 <Form.Group>
                                     <Form.Label
-                                        label="بخش"
+                                        label="قسمت"
                                         required
                                         size="sm"
                                         color="dark"

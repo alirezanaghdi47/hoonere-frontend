@@ -66,13 +66,13 @@ const DataTable = ({
                 header: () => 'لوگو',
                 cell: ({row}) => (
                     <div
-                        className="w-100px fs-6 text-dark text-truncate"
+                        className="w-50px fs-6 text-dark text-truncate"
                     >
                         <LazyLoadImage
                             src={row.original.logo}
                             alt={row.original.title}
-                            width={50}
-                            height={50}
+                            width={40}
+                            height={40}
                         />
                     </div>
                 ),
@@ -83,7 +83,7 @@ const DataTable = ({
                 header: () => 'عنوان',
                 cell: ({row}) => (
                     <div
-                        className="w-150px fs-6 text-dark text-truncate"
+                        className="w-100px fs-6 text-dark text-truncate"
                         data-tooltip-id="my-tooltip"
                         data-tooltip-content={row.original.title}
                     >
@@ -100,24 +100,10 @@ const DataTable = ({
                 sortingFn: "text"
             },
             {
-                accessorKey: 'description',
-                header: () => 'توضیحات',
-                cell: ({row}) => (
-                    <div
-                        className="w-250px fs-6 text-dark text-truncate"
-                        data-tooltip-id="my-tooltip"
-                        data-tooltip-content={row.original.description}
-                    >
-                        {row.original.description}
-                    </div>
-                ),
-                sortingFn: "text"
-            },
-            {
                 accessorKey: 'count_of_parts',
                 header: () => 'تعداد قسمت ها',
                 cell: ({row}) => (
-                    <div className="w-100px fs-6 text-dark text-truncate">
+                    <div className="w-50px fs-6 text-dark text-truncate">
                         {row.original.count_of_parts}
                     </div>
                 ),
@@ -125,25 +111,13 @@ const DataTable = ({
             },
             {
                 accessorKey: 'time_of_parts',
-                header: () => 'مدت زمان ( دقیقه )',
+                header: () => 'زمان ( دقیقه )',
                 cell: ({row}) => (
-                    <div className="w-100px fs-6 text-dark text-truncate">
+                    <div className="w-50px fs-6 text-dark text-truncate">
                         {row.original.time_of_parts}
                     </div>
                 ),
                 sortingFn: "text"
-            },
-            {
-                accessorKey: 'created_at',
-                header: () => 'زمان ایجاد',
-                cell: ({row}) => (
-                    <div className="w-150px fs-6 text-dark text-truncate">
-                        {format(new Date(row.original.created_at), "hh:mm | yyy/MM/dd")}
-                    </div>
-                ),
-                sortingFn: (rowA, rowB, columnId) => {
-                    return new Date(rowA.original.created_at).getTime() - new Date(rowB.original.created_at).getTime();
-                }
             },
             {
                 accessorKey: 'actions',

@@ -61,38 +61,26 @@ const DataTable = ({
                 sortingFn: (rowA, rowB, columnId) => rowA.index - rowB.index
             },
             {
-                accessorKey: 'profile_img',
-                header: () => 'عکس پروفایل',
-                cell: ({row}) => {
-                    const username = row.original.name ? row.original.name : null;
-                    const fullName = row.original.user_info ? row.original.user_info?.first_name + " " + row.original.user_info?.last_name : null;
-
-                    return (
-                        <div className="w-100px fs-6 text-dark text-truncate">
-                            <LazyLoadImage
-                                src={row.original.user_info?.profile_img}
-                                alt={fullName ?? username}
-                                width={50}
-                                height={50}
-                                className="rounded-circle"
-                            />
-                        </div>
-                    )
-                },
-                enableSorting: false
-            },
-            {
                 accessorKey: 'full_name',
                 header: () => 'نام و نام خانوادگی',
                 cell: ({row}) => {
+                    const username = row.original.name ? row.original.name : null;
                     const fullName = row.original.user_info ? row.original.user_info?.first_name + " " + row.original.user_info?.last_name : "-----";
 
                     return (
                         <div
-                            className="w-100px fs-6 text-dark text-truncate"
+                            className="w-150px fs-6 text-dark text-truncate"
                             data-tooltip-id="my-tooltip"
                             data-tooltip-content={fullName}
                         >
+                            <LazyLoadImage
+                                src={row.original.user_info?.profile_img}
+                                alt={fullName ?? username}
+                                width={40}
+                                height={40}
+                                className="rounded-circle me-2"
+                            />
+
                             {fullName}
                         </div>
                     )
@@ -114,62 +102,18 @@ const DataTable = ({
                 }
             },
             {
-                accessorKey: 'username',
-                header: () => 'نام کاربری',
-                cell: ({row}) => {
-                    const username = row.original.name ? row.original.name : "-----";
-
-                    return (
-                        <div
-                            className="w-100px fs-6 text-dark text-truncate"
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content={username}
-                        >
-                            {username}
-                        </div>
-                    )
-                },
-                sortingFn: "text"
-            },
-            {
-                accessorKey: 'foa_parent',
-                header: () => 'گروه شغلی',
+                accessorKey: 'jobs',
+                header: () => 'شغل',
                 cell: ({row}) => (
                     <div
-                        className="w-250px fs-6 text-dark text-truncate"
+                        className="w-200px fs-6 text-dark text-truncate"
                         data-tooltip-id="my-tooltip"
-                        data-tooltip-content={row.original.parent_info.title}
+                        data-tooltip-content={`${row.original.parent_info.title} ( ${row.original.child_info.title} )`}
                     >
-                        {row.original.parent_info.title}
+                        {`${row.original.parent_info.title} ( ${row.original.child_info.title} )`}
                     </div>
                 ),
                 sortingFn: "text"
-            },
-            {
-                accessorKey: 'foa_child',
-                header: () => 'عنوان شغلی',
-                cell: ({row}) => (
-                    <div
-                        className="w-250px fs-6 text-dark text-truncate"
-                        data-tooltip-id="my-tooltip"
-                        data-tooltip-content={row.original.child_info.title}
-                    >
-                        {row.original.child_info.title}
-                    </div>
-                ),
-                sortingFn: "text"
-            },
-            {
-                accessorKey: 'created_at',
-                header: () => 'زمان عضویت',
-                cell: ({row}) => (
-                    <div className="w-150px fs-6 text-dark text-truncate">
-                        {format(new Date(row.original.created_at), "hh:mm | yyy/MM/dd")}
-                    </div>
-                ),
-                sortingFn: (rowA, rowB, columnId) => {
-                    return new Date(rowA.original.created_at).getTime() - new Date(rowB.original.created_at).getTime();
-                }
             },
             {
                 accessorKey: 'actions',

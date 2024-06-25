@@ -66,6 +66,26 @@ const DataTable = ({
                 sortingFn: (rowA, rowB, columnId) => rowA.index - rowB.index
             },
             {
+                accessorKey: 'part',
+                header: () => 'قسمت',
+                cell: ({row}) => (
+                    <div className="w-50px fs-6 text-dark text-truncate">
+                        {row.original.part}
+                    </div>
+                ),
+                sortingFn: (rowA, rowB, columnId) => rowA.original.part - rowB.original.part
+            },
+            {
+                accessorKey: 'sequence',
+                header: () => 'سکانس',
+                cell: ({row}) => (
+                    <div className="w-50px fs-6 text-dark text-truncate">
+                        {row.original.sequence}
+                    </div>
+                ),
+                sortingFn: (rowA, rowB, columnId) => rowA.original.sequence - rowB.original.sequence
+            },
+            {
                 accessorKey: 'address',
                 header: () => 'آدرس',
                 cell: ({row}) => (
@@ -78,64 +98,6 @@ const DataTable = ({
                     </div>
                 ),
                 sortingFn: "text"
-            },
-            {
-                accessorKey: 'time_type',
-                header: () => 'زمان اجرا',
-                cell: ({row}) => (
-                    <div className="w-150px fs-6 text-dark text-truncate">
-                        <Chip
-                            color={row.original.time_type.class_name}
-                            label={row.original.time_type.title}
-                        />
-                    </div>
-                ),
-                sortingFn: "text"
-            },
-            {
-                accessorKey: 'location_side',
-                header: () => 'سمت مکان',
-                cell: ({row}) => (
-                    <div className="w-150px fs-6 text-dark text-truncate">
-                        <Chip
-                            color={row.original.location_side.class_name}
-                            label={row.original.location_side.title}
-                        />
-                    </div>
-                ),
-                sortingFn: "text"
-            },
-            {
-                accessorKey: 'part',
-                header: () => 'بخش',
-                cell: ({row}) => (
-                    <div className="w-100px fs-6 text-dark text-truncate">
-                        {row.original.part}
-                    </div>
-                ),
-                sortingFn: (rowA, rowB, columnId) => rowA.original.part - rowB.original.part
-            },
-            {
-                accessorKey: 'sequence',
-                header: () => 'سکانس',
-                cell: ({row}) => (
-                    <div className="w-100px fs-6 text-dark text-truncate">
-                        {row.original.sequence}
-                    </div>
-                ),
-                sortingFn: (rowA, rowB, columnId) => rowA.original.sequence - rowB.original.sequence
-            },
-            {
-                accessorKey: 'created_at',
-                header: () => 'زمان ایجاد',
-                cell: ({row}) => (
-                    <div className="w-150px fs-6 text-dark text-truncate">
-                        {format(new Date(row.original.created_at), "hh:mm | yyy/MM/dd")}
-                    </div>
-                ),
-                sortingFn: (rowA, rowB, columnId) => {
-                    return new Date(rowA.original.created_at).getTime() - new Date(rowB.original.created_at).getTime();
-                }
             },
             {
                 accessorKey: 'actions',

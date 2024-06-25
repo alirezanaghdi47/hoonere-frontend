@@ -52,7 +52,7 @@ const AdvanceFilter = ({
             <div className="col-12 col-sm-6 col-md-4">
                 <Form.Group>
                     <Form.Label
-                        label="بخش"
+                        label="قسمت"
                         color="dark"
                         size="sm"
                     />

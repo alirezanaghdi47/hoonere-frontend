@@ -1,14 +1,13 @@
 // libraries
-import {Link, useParams} from "react-router-dom";
-import {LuClapperboard, LuUsers} from "react-icons/lu";
+import {useState} from "react";
+import {useParams} from "react-router-dom";
+import {LuBriefcase, LuCalculator, LuClapperboard, LuScale, LuUsers, LuDollarSign} from "react-icons/lu";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
+import Button from "@/modules/Button.tsx";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
-import {useState} from "react";
-import Button from "@/modules/Button.tsx";
 
 const Content = () => {
     const params = useParams();
@@ -26,6 +25,30 @@ const Content = () => {
             label: "فیلم نامه ها",
             icon: LuClapperboard({size: 25, color: "currentColor"}),
             href: auth.panel_url + `projects/${params.id}/screen-plays`
+        },
+        {
+            id: 3,
+            label: "آفیش ها",
+            icon: LuBriefcase({size: 25, color: "currentColor"}),
+            href: ""
+        },
+        {
+            id: 4,
+            label: "قرارداد ها",
+            icon: LuScale({size: 25, color: "currentColor"}),
+            href: ""
+        },
+        {
+            id: 5,
+            label: "مالی",
+            icon: LuDollarSign({size: 25, color: "currentColor"}),
+            href: ""
+        },
+        {
+            id: 6,
+            label: "برآورد ها",
+            icon: LuCalculator({size: 25, color: "currentColor"}),
+            href: ""
         },
     ]);
 
