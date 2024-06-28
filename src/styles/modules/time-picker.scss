@@ -1,0 +1,49 @@
+.rmdp {
+  &-shadow {
+    box-shadow: var(--bs-box-shadow-sm) !important;
+  }
+
+  &-time-picker {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 10px !important;
+    min-width: unset !important;
+    background: var(--bs-body-bg) !important;
+    border-radius: 8px !important;
+    padding: 0 !important;
+
+    div {
+      margin: 0 !important;
+    }
+
+    div:nth-of-type(1), div:nth-of-type(2) {
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 10px !important;
+      width: 80px !important;
+
+      button {
+        display: none !important;
+      }
+
+      input {
+        width: 80px !important;
+        height: 40px !important;
+        background: var(--bs-gray-100) !important;
+        font-size: 0.95rem !important;
+        color: var(--bs-body-color) !important;
+        border-radius: 8px !important;
+        padding: 4px 8px !important;
+
+        &:focus {
+          background: var(--bs-gray-200) !important;
+          color: var(--bs-primary) !important;
+          outline: none !important;
+        }
+      }
+    }
+  }
+}

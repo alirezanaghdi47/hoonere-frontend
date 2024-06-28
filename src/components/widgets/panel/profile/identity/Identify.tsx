@@ -2,6 +2,9 @@
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
+// helpers
+import toast from "@/helpers/toast.tsx";
+
 // modules
 import FileInput from "@/modules/FileInput.tsx";
 import DatePicker from "@/modules/DatePicker.tsx";
@@ -11,7 +14,6 @@ import Button from "@/modules/Button.tsx";
 import Textarea from "@/modules/Textarea.tsx";
 import NumberInput from "@/modules/NumberInput.tsx";
 import AvatarInput from "@/modules/AvatarInput.tsx";
-import toast from "@/helpers/toast.tsx";
 
 // services
 import {updateProfileService} from "@/services/profileService.ts";

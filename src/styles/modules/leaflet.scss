@@ -1,0 +1,38 @@
+.leaflet {
+  &-bar {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    row-gap: 10px !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  &-control {
+    &-attribution {
+      display: none !important;
+    }
+
+    &-zoom-in, &-zoom-out {
+      width: 30px!important;
+      height: 30px!important;
+      background: var(--bs-body-bg) !important;
+      border-radius: 10px !important;
+      box-shadow: var(--bs-box-shadow-lg) !important;
+
+      span{
+        font-size: 1.5rem!important;
+        color: var(--bs-body-color) !important;
+      }
+
+      &:hover {
+        background: var(--bs-body-bg) !important;
+
+        span{
+          color: var(--bs-body-color) !important;
+        }
+      }
+    }
+  }
+}

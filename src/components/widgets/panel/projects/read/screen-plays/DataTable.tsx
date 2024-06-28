@@ -18,7 +18,6 @@ import toast from "@/helpers/toast.tsx";
 import Table from "@/modules/Table.tsx";
 import Tooltip from "@/modules/Tooltip.tsx";
 import IconButton from "@/modules/IconButton.tsx";
-import Chip from "@/modules/Chip.tsx";
 
 // services
 import {deleteProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";

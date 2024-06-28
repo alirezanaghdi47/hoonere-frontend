@@ -14,7 +14,7 @@ const SwitchBox = ({name , id, checked, value, onChange , disabled = false , ...
                 type="checkbox"
                 name={name}
                 id={id}
-                className="form-check-input"
+                className="form-check-input cursor-pointer"
                 value={value}
                 checked={checked}
                 onChange={(e) => onChange(e.target.checked)}

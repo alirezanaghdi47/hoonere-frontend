@@ -9,11 +9,11 @@ import CreateJobFormData from "@/components/widgets/panel/profile/occupation/Cre
 import Jobs from "@/components/widgets/panel/profile/occupation/Jobs.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
+// helpers
+import toast from "@/helpers/toast.tsx";
+
 // hooks
 import usePart from "@/hooks/usePart.tsx";
-
-// modules
-import toast from "@/helpers/toast.tsx";
 
 // services
 import {updateOccupationService} from "@/services/profileService.ts";

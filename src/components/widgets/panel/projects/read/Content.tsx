@@ -30,7 +30,7 @@ const Content = () => {
             id: 3,
             label: "آفیش ها",
             icon: LuBriefcase({size: 25, color: "currentColor"}),
-            href: ""
+            href: auth.panel_url + `projects/${params.id}/affiches`
         },
         {
             id: 4,

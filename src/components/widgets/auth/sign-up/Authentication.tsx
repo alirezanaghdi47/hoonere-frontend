@@ -2,12 +2,14 @@
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
+// helpers
+import toast from "@/helpers/toast.tsx";
+
 // modules
 import Button from "@/modules/Button.tsx";
 import Typography from "@/modules/Typography.tsx";
 import NumberInput from "@/modules/NumberInput.tsx";
 import Form from "@/modules/Form.tsx";
-import toast from "@/helpers/toast.tsx";
 
 // services
 import {authService} from "@/services/authService.ts";

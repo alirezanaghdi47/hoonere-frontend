@@ -10,12 +10,14 @@ import Finder from "@/components/widgets/panel/projects/read/members/Finder.tsx"
 import Filter from "@/components/widgets/panel/projects/read/members/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
+// helpers
+import dialog from "@/helpers/dialog.tsx";
+import toast from "@/helpers/toast.tsx";
+
 // modules
 import Table from "@/modules/Table.tsx";
 import Tooltip from "@/modules/Tooltip.tsx";
 import IconButton from "@/modules/IconButton.tsx";
-import dialog from "@/helpers/dialog.tsx";
-import toast from "@/helpers/toast.tsx";
 
 // services
 import {deleteProjectMemberService} from "@/services/projectMemberService.ts";
@@ -64,24 +66,23 @@ const DataTable = ({
                 accessorKey: 'full_name',
                 header: () => 'نام و نام خانوادگی',
                 cell: ({row}) => {
-                    const username = row.original.name ? row.original.name : null;
-                    const fullName = row.original.user_info ? row.original.user_info?.first_name + " " + row.original.user_info?.last_name : "-----";
+                    const name = (row.original.user_info?.first_name && row.original.user_info?.last_name) ? row.original.user_info.first_name + " " + row.original.user_info.last_name : row.original.name;
 
                     return (
                         <div
                             className="w-150px fs-6 text-dark text-truncate"
                             data-tooltip-id="my-tooltip"
-                            data-tooltip-content={fullName}
+                            data-tooltip-content={name}
                         >
                             <LazyLoadImage
                                 src={row.original.user_info?.profile_img}
-                                alt={fullName ?? username}
+                                alt={name}
                                 width={40}
                                 height={40}
                                 className="rounded-circle me-2"
                             />
 
-                            {fullName}
+                            {name}
                         </div>
                     )
                 },

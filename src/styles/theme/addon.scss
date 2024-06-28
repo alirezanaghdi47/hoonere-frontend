@@ -1,12 +1,7 @@
 
-
 * {
   scrollbar-width: thin !important;
   scrollbar-color: var(--bs-scrollbar-color) transparent !important;
-}
-
-.pe-30 {
-  padding-left: 10rem !important;
 }
 
 .w-max {
@@ -15,4 +10,32 @@
 
 .border-solid {
   border-style: solid !important;
+}
+
+.remove-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@for $i from 1 through 3 {
+  .text-truncate-#{$i} {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: $i;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+}
+
+.bg-opacity-90 {
+  background-color: rgba(var(--bs-bg-rgb-color), 0.9) !important;
+}
+
+.pe-30 {
+  padding-left: 10rem !important;
 }

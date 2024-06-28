@@ -19,7 +19,7 @@ import TextEditor from "@/modules/TextEditor.tsx";
 import Button from "@/modules/Button.tsx";
 
 // services
-import {readAllScreenPlayTimeType, readAllScreenPlayLocationSide} from "@/services/publicService.ts";
+import {readAllScreenPlayTimeTypeService, readAllScreenPlayLocationSideService} from "@/services/publicService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
@@ -30,11 +30,11 @@ const FormData = ({createProjectScreenPlayForm, createProjectScreenPlayAction}) 
     const {currentPart, resetPart, changeCurrentPart} = usePart(null, "read");
 
     const readAllScreenPlayTimeTypeAction = useMutation({
-        mutationFn: () => readAllScreenPlayTimeType(),
+        mutationFn: () => readAllScreenPlayTimeTypeService(),
     });
 
     const readAllScreenPlayLocationSideAction = useMutation({
-        mutationFn: () => readAllScreenPlayLocationSide(),
+        mutationFn: () => readAllScreenPlayLocationSideService(),
     });
 
     useLayoutEffect(() => {
@@ -73,6 +73,7 @@ const FormData = ({createProjectScreenPlayForm, createProjectScreenPlayAction}) 
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <div className="col-12 col-md-5 d-flex flex-column justify-content-start align-items-center gap-5">

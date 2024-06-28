@@ -1,0 +1,53 @@
+#RFS {
+  &-StepContainer {
+
+  }
+
+  &-StepMain {
+    button {
+      width: 40px !important;
+      height: 40px !important;
+      background: var(--bs-secondary) !important;
+      box-shadow: var(--bs-box-shadow-sm) !important;
+
+      span {
+        color: var(--bs-gray-600) !important;
+        font-family: IRANSansWeb !important;
+        font-weight: bold !important;
+        font-size: 1.1rem !important;
+      }
+
+      &.active{
+        background: var(--bs-light) !important;
+
+        span {
+          color: var(--bs-primary) !important;
+        }
+      }
+
+      &.active ~ #RFS-LabelContainer {
+        span {
+          color: var(--bs-primary) !important;
+        }
+      }
+    }
+  }
+
+  &-LabelContainer {
+    span {
+      font-family: IRANSansWeb !important;
+      font-size: 1.1rem !important;
+      font-weight: bold !important;
+      color: var(--bs-gray-600) !important;
+      margin-top: 10px !important;
+
+      &.active {
+        color: var(--bs-primary) !important;
+      }
+    }
+  }
+
+  &-ConnectorContainer {
+    display: none !important;
+  }
+}

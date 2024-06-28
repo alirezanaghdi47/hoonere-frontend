@@ -24,6 +24,9 @@ const UpdateProjectMember = Loadable(() => import('@/pages/panel/projects/read/m
 const ProjectScreenPlays = Loadable(() => import('@/pages/panel/projects/read/screen-plays'));
 const CreateProjectScreenPlay = Loadable(() => import('@/pages/panel/projects/read/screen-plays/create'));
 const UpdateProjectScreenPlay = Loadable(() => import('@/pages/panel/projects/read/screen-plays/update'));
+const ProjectAffiches = Loadable(() => import('@/pages/panel/projects/read/affiches'));
+const CreateProjectAffiche = Loadable(() => import('@/pages/panel/projects/read/affiches/create'));
+const UpdateProjectAffiche = Loadable(() => import('@/pages/panel/projects/read/affiches/update'));
 const Profile = Loadable(() => import('@/pages/panel/profile'));
 
 const routes = [
@@ -129,6 +132,21 @@ const routes = [
             },
             {
                 id: 12,
+                path: "projects/:id/affiches",
+                component: ProjectAffiches,
+            },
+            {
+                id: 13,
+                path: "projects/:id/affiches/create",
+                component: CreateProjectAffiche,
+            },
+            {
+                id: 14,
+                path: "projects/:id/affiches/:subId/update",
+                component: UpdateProjectAffiche,
+            },
+            {
+                id: 15,
                 path: "profile",
                 component: Profile,
             },

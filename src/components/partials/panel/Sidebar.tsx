@@ -6,9 +6,11 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {useMediaQuery} from "usehooks-ts";
 import {LuLayers, LuLogOut, LuPieChart} from "react-icons/lu";
 
+// helpers
+import toast from "@/helpers/toast.tsx";
+
 // modules
 import IconButton from "@/modules/IconButton.tsx";
-import toast from "@/helpers/toast.tsx";
 
 // services
 import {logoutService} from "@/services/authService.ts";

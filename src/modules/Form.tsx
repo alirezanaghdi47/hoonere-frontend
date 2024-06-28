@@ -5,13 +5,16 @@ import classNames from "classnames";
 import Typography from "@/modules/Typography.tsx";
 
 // types
-import {TFormError, TFormLabel} from "@/types/moduleType.ts";
+import {TFormGroup , TFormError, TFormLabel} from "@/types/moduleType.ts";
 
-const FormGroup = ({children, ...props}) => {
+const FormGroup = ({children, inline = false, ...props}: TFormGroup) => {
     return (
         <div
             {...props}
-            className={classNames("d-flex flex-column justify-content-center align-items-start gap-2 w-100", props.className)}
+            className={classNames("d-flex gap-2 w-100", props.className, {
+                "flex-row justify-content-start align-items-center": inline,
+                "flex-column justify-content-center align-items-start": !inline,
+            })}
         >
             {children}
         </div>

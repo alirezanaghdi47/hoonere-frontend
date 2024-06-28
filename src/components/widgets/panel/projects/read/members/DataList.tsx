@@ -8,11 +8,13 @@ import {LuPlus} from "react-icons/lu";
 import Filter from "@/components/widgets/panel/projects/read/members/Filter.tsx";
 import Finder from "@/components/widgets/panel/projects/read/members/Finder.tsx";
 
+// helpers
+import dialog from "@/helpers/dialog.tsx";
+import toast from "@/helpers/toast.tsx";
+
 // modules
 import Typography from "@/modules/Typography.tsx";
 import Button from "@/modules/Button.tsx";
-import dialog from "@/helpers/dialog.tsx";
-import toast from "@/helpers/toast.tsx";
 
 // services
 import {deleteProjectMemberService} from "@/services/projectMemberService.ts";

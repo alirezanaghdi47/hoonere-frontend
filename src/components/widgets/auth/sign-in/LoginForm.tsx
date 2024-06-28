@@ -7,6 +7,9 @@ import {useFormik} from "formik";
 // components
 import Captcha from "@/components/widgets/auth/Captcha.tsx";
 
+// helpers
+import toast from "@/helpers/toast.tsx";
+
 // hooks
 import useId from "@/hooks/useId.tsx";
 
@@ -16,7 +19,6 @@ import PasswordInput from "@/modules/PasswordInput.tsx";
 import Button from "@/modules/Button.tsx";
 import Typography from "@/modules/Typography.tsx";
 import Form from "@/modules/Form.tsx";
-import toast from "@/helpers/toast.tsx";
 
 // services
 import {loginService, captchaService} from "@/services/authService.ts";

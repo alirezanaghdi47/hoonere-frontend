@@ -68,7 +68,7 @@ export type TCheckBox = {
     name: string,
     checked: boolean,
     value: string | number | null,
-    onChange?: (value: string | number | null) => string | number | null,
+    onChange?: (value: string | number | null) => string | number | null | void,
     disabled?: boolean,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
@@ -136,6 +136,13 @@ export type TFileInput = {
     style?: CSSProperties
 }
 
+export type TFormGroup = {
+    children: ReactNode,
+    inline?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
+}
+
 export type TFormLabel = {
     label: string,
     size: t.sizes,
@@ -164,6 +171,15 @@ export type TIconButton = {
     isLoading?: boolean,
     disabled?: boolean,
     onClick?: (e) => void,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties,
+}
+
+export type TLocationPicker = {
+    width?: string | number,
+    height: number,
+    location?: [number, number]
+    setLocation?: (data: { lat: number, lon: number }) => void,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties,
 }
@@ -254,7 +270,7 @@ export type TRadioBox = {
     id: string,
     name: string,
     value: string | null,
-    onChange?: (e: string | null) => string | null,
+    onChange?: (value: string | null) => string | null | void,
     checked: boolean,
     disabled?: boolean,
     className?: HTMLProps<HTMLElement>["className"],
@@ -276,11 +292,18 @@ export type TSelectBox = {
     style?: CSSProperties
 }
 
+export type TStepper = {
+    steps: { label: string }[],
+    activeStep: number
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
+}
+
 export type TSwitchBox = {
     id: string,
     name: string,
     value: string | number | null,
-    onChange?: (value: boolean) => boolean,
+    onChange?: (value: boolean) => boolean | void,
     checked: boolean,
     disabled?: boolean,
     className?: HTMLProps<HTMLElement>["className"],
@@ -358,12 +381,25 @@ export type TTextInput = {
     style?: CSSProperties
 }
 
+export type TTimePicker = {
+    id: string,
+    name: string,
+    value: string | null,
+    onChange?: (value: DateObject | DateObject[] | null) => string | null,
+    disabled?: boolean,
+    readOnly?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
+}
+
 export type TTypography = {
     children: ReactNode,
     variant?: "p" | "h1" | "h2" | "h3" | "h4" | "span"
     size: t.sizes,
     color: t.colors,
     isBold?: boolean,
+    truncate?: 1 | 2 | 3,
+    lineHeight?: "sm" | "lg",
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }

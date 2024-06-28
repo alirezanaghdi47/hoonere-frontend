@@ -93,7 +93,11 @@ const DatePicker = ({
                 locale: persian_fa,
                 calendar: persian
             }).format("YYYY-MM-DD") : null}
-            onChange={(value) => onChange(value)}
+            onChange={(value) => onChange(new DateObject({
+                date: value,
+                locale: persian_fa,
+                calendar: persian
+            }).format("YYYY-MM-DD"))}
             renderButton={(direction, handleClick) => (
                 <RenderButton
                     direction={direction}
@@ -101,6 +105,7 @@ const DatePicker = ({
                 />
             )}
             mapDays={({date}) => customizeDays(date)}
+            editable={false}
             format="YYYY-MM-DD"
             arrow={false}
             dateSeparator=" تا "

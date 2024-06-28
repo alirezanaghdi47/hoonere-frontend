@@ -8,7 +8,7 @@ import {useFormik} from "formik";
 import FormData from "@/components/widgets/panel/projects/read/screen-plays/update/FormData.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
-// modules
+// helpers
 import toast from "@/helpers/toast.tsx";
 
 // services

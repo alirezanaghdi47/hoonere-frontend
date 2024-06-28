@@ -149,9 +149,6 @@ export interface IDeleteProjectMember {
 
 export interface IReadAllProjectScreenPlay {
     project_id: string,
-    // text: string | null,
-    // foa_child_id: string | null,
-    // foa_parent_id: string | null,
     page: number,
     per_page: number,
 }

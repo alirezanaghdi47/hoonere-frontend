@@ -120,7 +120,7 @@ export const readUserInquiryService = async (data) => {
     }
 }
 
-export const readAllScreenPlayTimeType = async () => {
+export const readAllScreenPlayTimeTypeService = async () => {
     try {
         const {token} = useAuthStore.getState().auth;
 
@@ -138,11 +138,11 @@ export const readAllScreenPlayTimeType = async () => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
-export const readAllScreenPlayLocationSide = async () => {
+export const readAllScreenPlayLocationSideService = async () => {
     try {
         const {token} = useAuthStore.getState().auth;
 
@@ -160,6 +160,50 @@ export const readAllScreenPlayLocationSide = async () => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readAllAfficheTypeService = async () => {
+    try {
+        const {token} = useAuthStore.getState().auth;
+
+        const response = await axios.post(process.env.API_URL + "/panel/public/getAfficheTypes", null, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readAllReceptionTypeService = async () => {
+    try {
+        const {token} = useAuthStore.getState().auth;
+
+        const response = await axios.post(process.env.API_URL + "/panel/public/getReceptionTypes", null, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
