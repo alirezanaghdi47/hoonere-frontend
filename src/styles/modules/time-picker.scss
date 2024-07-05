@@ -10,7 +10,7 @@
     gap: 10px !important;
     min-width: unset !important;
     background: var(--bs-body-bg) !important;
-    border-radius: 8px !important;
+    border-radius: 10px !important;
     padding: 0 !important;
 
     div {
@@ -35,8 +35,8 @@
         background: var(--bs-gray-100) !important;
         font-size: 0.95rem !important;
         color: var(--bs-body-color) !important;
-        border-radius: 8px !important;
-        padding: 4px 8px !important;
+        border-radius: 10px !important;
+        padding: 5px 10px !important;
 
         &:focus {
           background: var(--bs-gray-200) !important;

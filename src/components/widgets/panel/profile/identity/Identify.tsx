@@ -23,7 +23,7 @@ import {IUpdateProfile} from "@/types/serviceType.ts";
 
 // utils
 import {updateProfileSchema} from "@/utils/validations.ts";
-import {convertGregorianToJalali, convertJalaliToGregorian, toEnglishDigits} from "@/utils/functions.ts";
+import {convertJalaliToGregorian, toEnglishDigits} from "@/utils/functions.ts";
 
 const Identify = ({readMyProfileAction}) => {
     const updateProfileAction = useMutation({
@@ -49,7 +49,7 @@ const Identify = ({readMyProfileAction}) => {
             last_name: readMyProfileAction.data?.data?.user_info?.last_name ? readMyProfileAction.data?.data?.user_info.last_name : "",
             national_code: readMyProfileAction.data?.data?.user_info?.national_code ? readMyProfileAction.data?.data?.user_info.national_code : "",
             id_code: readMyProfileAction.data?.data?.user_info?.id_code ? readMyProfileAction.data?.data?.user_info.id_code : "",
-            birthdate: readMyProfileAction.data?.data?.user_info?.birthdate ? convertGregorianToJalali(readMyProfileAction.data?.data?.user_info.birthdate) : "",
+            birthdate: readMyProfileAction.data?.data?.user_info?.birthdate ? readMyProfileAction.data?.data?.user_info.birthdate : "",
             email: readMyProfileAction.data?.data?.user_info?.email ? readMyProfileAction.data?.data?.user_info.email : "",
             address: readMyProfileAction.data?.data?.user_info?.address ? readMyProfileAction.data?.data?.user_info.address : "",
         },

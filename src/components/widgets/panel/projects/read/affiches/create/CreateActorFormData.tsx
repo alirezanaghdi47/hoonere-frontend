@@ -14,6 +14,9 @@ import TextInput from "@/modules/TextInput.tsx";
 // services
 import {readAllProjectMemberByFoaService} from "@/services/projectService.ts";
 
+// types
+import {IReadAllProjectMembersByFoa} from "@/types/serviceType.ts";
+
 // utils
 import {createProjectAfficheActorSchema} from "@/utils/validations.ts";
 import {generateTimeWithSecond} from "@/utils/functions.ts";
@@ -21,8 +24,8 @@ import {generateTimeWithSecond} from "@/utils/functions.ts";
 const CreateActorFormData = ({createProjectAfficheP2Form, resetPart}) => {
     const params = useParams();
 
-    const realAllProjectMembersByFoaAction = useMutation({
-        mutationFn: (data) => readAllProjectMemberByFoaService(data),
+    const readAllProjectMembersByFoaAction = useMutation({
+        mutationFn: (data: IReadAllProjectMembersByFoa) => readAllProjectMemberByFoaService(data),
     });
 
     const createProjectAfficheActorForm = useFormik({
@@ -34,8 +37,7 @@ const CreateActorFormData = ({createProjectAfficheP2Form, resetPart}) => {
         },
         validationSchema: createProjectAfficheActorSchema,
         onSubmit: async (result) => {
-            const user = await realAllProjectMembersByFoaAction.data?.data?.members?.find(member => member.id.toString() === result.actor_id.toString());
-            const full_name = (user.first_name || user.last_name) ? user.first_name + " " + user.last_name: user.username
+            const user = await readAllProjectMembersByFoaAction.data?.data?.members?.find(member => member.id.toString() === result.actor_id.toString());
 
             createProjectAfficheP2Form.setFieldValue("actors", [
                 ...createProjectAfficheP2Form.values.actors.filter(actor => JSON.stringify(actor) !== JSON.stringify(result)),
@@ -43,7 +45,7 @@ const CreateActorFormData = ({createProjectAfficheP2Form, resetPart}) => {
                     ...result,
                     coming_time: generateTimeWithSecond(result.coming_time),
                     makeup_time: generateTimeWithSecond(result.makeup_time),
-                    full_name: full_name,
+                    full_name: user?.first_name + " " + user?.last_name,
                     is_fake: user?.is_fake
                 }
             ]);
@@ -56,7 +58,7 @@ const CreateActorFormData = ({createProjectAfficheP2Form, resetPart}) => {
     });
 
     useLayoutEffect(() => {
-        realAllProjectMembersByFoaAction.mutate({
+        readAllProjectMembersByFoaAction.mutate({
             foa_parent_id: "159",
             foa_id: "",
             project_id: params.id
@@ -82,7 +84,7 @@ const CreateActorFormData = ({createProjectAfficheP2Form, resetPart}) => {
                                 id="actor_id"
                                 name="actor_id"
                                 value={createProjectAfficheActorForm.values.actor_id}
-                                options={realAllProjectMembersByFoaAction.data?.data?.members?.map(member => {
+                                options={readAllProjectMembersByFoaAction.data?.data?.members?.map(member => {
                                     const name = (member.first_name || member.last_name) ? member.first_name + " " + member.last_name: member.username
 
                                     return {
@@ -93,7 +95,7 @@ const CreateActorFormData = ({createProjectAfficheP2Form, resetPart}) => {
                                 placeholder=""
                                 isSearchable
                                 onChange={(value) => createProjectAfficheActorForm.setFieldValue("actor_id", value)}
-                                isLoading={realAllProjectMembersByFoaAction.isPending}
+                                isLoading={readAllProjectMembersByFoaAction.isPending}
                             />
 
                             <Form.Error

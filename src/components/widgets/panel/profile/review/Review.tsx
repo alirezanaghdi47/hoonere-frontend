@@ -7,9 +7,6 @@ import Form from "@/modules/Form.tsx";
 import Alert from "@/modules/Alert.tsx";
 import Chip from "@/modules/Chip.tsx";
 
-// utils
-import {convertGregorianToJalali} from "@/utils/functions.ts";
-
 const Review = ({readMyProfileAction}) => {
     return (
         <div className="card w-100">
@@ -139,7 +136,7 @@ const Review = ({readMyProfileAction}) => {
                                         color="danger"
                                         label="ثبت نشده"
                                     />
-                                ) : convertGregorianToJalali(readMyProfileAction.data?.data?.user_info?.birthdate)
+                                ) : readMyProfileAction.data?.data?.user_info?.birthdate
                             }
                         </Typography>
                     </div>

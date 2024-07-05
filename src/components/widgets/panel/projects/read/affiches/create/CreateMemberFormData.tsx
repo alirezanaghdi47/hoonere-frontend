@@ -15,6 +15,9 @@ import Textarea from "@/modules/Textarea.tsx";
 import {readAllProjectMemberByFoaService} from "@/services/projectService.ts";
 import {readAllJobService} from "@/services/publicService.ts";
 
+// types
+import {IReadAllProjectMembersByFoa} from "@/types/serviceType.ts";
+
 // utils
 import {createProjectAfficheMemberSchema, createProjectAfficheUserSchema} from "@/utils/validations.ts";
 import {generateTimeWithSecond} from "@/utils/functions.ts";
@@ -22,8 +25,8 @@ import {generateTimeWithSecond} from "@/utils/functions.ts";
 const CreateMemberFormData = ({createProjectAfficheP2Form, resetPart}) => {
     const params = useParams();
 
-    const realAllProjectMembersByFoaAction = useMutation({
-        mutationFn: (data) => readAllProjectMemberByFoaService(data),
+    const readAllProjectMembersByFoaAction = useMutation({
+        mutationFn: (data: IReadAllProjectMembersByFoa) => readAllProjectMemberByFoaService(data),
     });
 
     const readAllJobAction = useMutation({
@@ -47,16 +50,14 @@ const CreateMemberFormData = ({createProjectAfficheP2Form, resetPart}) => {
         },
         validationSchema: createProjectAfficheMemberSchema,
         onSubmit: async (result) => {
-            const user = await realAllProjectMembersByFoaAction.data?.data?.members?.find(member => member.id.toString() === result.member_id.toString());
-            console.log(result)
-            const full_name = (user.first_name || user.last_name) ? user.first_name + " " + user.last_name: user.username
+            const user = await readAllProjectMembersByFoaAction.data?.data?.members?.find(member => member.id.toString() === result.member_id.toString());
 
             createProjectAfficheP2Form.setFieldValue("members", [
                 ...createProjectAfficheP2Form.values.members.filter(member => JSON.stringify(member) !== JSON.stringify(result)),
                 {
                     ...result,
                     coming_time: generateTimeWithSecond(result.coming_time),
-                    full_name: full_name,
+                    full_name: user?.first_name + " " + user?.last_name,
                     is_fake: user?.is_fake
                 }
             ]);
@@ -70,7 +71,7 @@ const CreateMemberFormData = ({createProjectAfficheP2Form, resetPart}) => {
 
     useEffect(() => {
         if (createProjectAfficheUserForm.values.foa_parent_id) {
-            realAllProjectMembersByFoaAction.mutate({
+            readAllProjectMembersByFoaAction.mutate({
                 foa_parent_id: createProjectAfficheUserForm.values.foa_parent_id,
                 foa_id: createProjectAfficheUserForm.values.foa_id,
                 project_id: params.id
@@ -169,7 +170,7 @@ const CreateMemberFormData = ({createProjectAfficheP2Form, resetPart}) => {
                                 id="member_id"
                                 name="member_id"
                                 value={createProjectAfficheMemberForm.values.member_id}
-                                options={realAllProjectMembersByFoaAction.data?.data?.members?.map(member => {
+                                options={readAllProjectMembersByFoaAction.data?.data?.members?.map(member => {
                                     const name = (member.first_name || member.last_name) ? member.first_name + " " + member.last_name : member.username
 
                                     return {
@@ -181,7 +182,7 @@ const CreateMemberFormData = ({createProjectAfficheP2Form, resetPart}) => {
                                 isSearchable
                                 disabled={!createProjectAfficheUserForm.values.foa_parent_id}
                                 onChange={(value) => createProjectAfficheMemberForm.setFieldValue("member_id", value)}
-                                isLoading={realAllProjectMembersByFoaAction.isPending}
+                                isLoading={readAllProjectMembersByFoaAction.isPending}
                             />
 
                             <Form.Error

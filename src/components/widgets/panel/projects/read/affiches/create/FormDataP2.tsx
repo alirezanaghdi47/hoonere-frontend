@@ -2,6 +2,10 @@
 import Loadable from "@loadable/component";
 
 // components
+const CreateActorFormData = Loadable(() => import("@/components/widgets/panel/projects/read/affiches/create/CreateActorFormData.tsx"));
+const CreateMemberFormData = Loadable(() => import("@/components/widgets/panel/projects/read/affiches/create/CreateMemberFormData.tsx"));
+const CreateReceptionFormData = Loadable(() => import("@/components/widgets/panel/projects/read/affiches/create/CreateReceptionFormData.tsx"));
+
 import Actors from "@/components/widgets/panel/projects/read/affiches/create/Actors.tsx";
 import Members from "@/components/widgets/panel/projects/read/affiches/create/Members.tsx";
 import Receptions from "@/components/widgets/panel/projects/read/affiches/create/Receptions.tsx";
@@ -11,11 +15,6 @@ import usePart from "@/hooks/usePart.tsx";
 
 // modules
 import Button from "@/modules/Button.tsx";
-
-// lazy components
-const CreateActorFormData = Loadable(() => import("@/components/widgets/panel/projects/read/affiches/create/CreateActorFormData.tsx"));
-const CreateMemberFormData = Loadable(() => import("@/components/widgets/panel/projects/read/affiches/create/CreateMemberFormData.tsx"));
-const CreateReceptionFormData = Loadable(() => import("@/components/widgets/panel/projects/read/affiches/create/CreateReceptionFormData.tsx"));
 
 const FormDataP2 = ({createProjectAfficheP2Form, prevStep}) => {
     const {

@@ -9,7 +9,6 @@ import "@/styles/modules/stepper.scss";
 import {TStepper} from "@/types/moduleType.ts";
 
 const Stepper = ({steps, activeStep = 1, ...props}: TStepper) => {
-
     return (
         <ReactStepper
             {...props}

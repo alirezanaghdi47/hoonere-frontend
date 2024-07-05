@@ -1,6 +1,3 @@
-// libraries
-import {convertGregorianToJalali} from "@/utils/functions.ts";
-
 export interface IAuth {
     mobile: string,
 }
@@ -151,6 +148,9 @@ export interface IReadAllProjectScreenPlay {
     project_id: string,
     page: number,
     per_page: number,
+    text: string,
+    part: string,
+    sequence: string,
 }
 
 export interface IReadProjectScreenPlay {
@@ -166,7 +166,7 @@ export interface ICreateProjectScreenPlay {
     location_side_id: string,
     part: string,
     sequence: string,
-    fields: {title: string , value: string}[]
+    fields: { title: string, value: string }[]
 }
 
 export interface IUpdateProjectScreenPlay {
@@ -178,9 +178,103 @@ export interface IUpdateProjectScreenPlay {
     location_side_id: string,
     part: string,
     sequence: string,
-    fields: {title: string , value: string}[]
+    fields: { title: string, value: string }[]
 }
 
 export interface IDeleteProjectScreenPlay {
     screenplay_id: string,
+}
+
+export interface IReadAllProjectAffiche {
+    project_id: string,
+    number_string: string,
+    type: string,
+    affiche_date: string,
+    page: number,
+    per_page: number,
+}
+
+export interface IReadProjectAffiche {
+    project_id: string,
+    affiche_id: string,
+}
+
+export interface IReadAllProjectMembersByFoa {
+    foa_parent_id: string,
+    foa_id: string,
+    project_id: string
+}
+
+export interface IReadAllProjectAfficheActor {
+    project_id: string,
+    affiche_id: string
+}
+
+export interface IReadAllProjectAfficheMember {
+    project_id: string,
+    affiche_id: string
+}
+
+export interface IReadAllProjectAfficheReception {
+    project_id: string,
+    affiche_id: string
+}
+
+export interface IReadAllProjectAfficheScreenPlay {
+    project_id: string,
+    affiche_id: string,
+    text: string,
+    part: string,
+    sequence: string,
+    page: number,
+    per_page: number,
+}
+
+export interface ICreateProjectAffiche {
+    project_id: string,
+    title: string,
+    description: string,
+    type: string,
+    is_off: number,
+    affiche_date: string,
+    start_date: string,
+    coming_time: string,
+    start_time: string,
+    address: string,
+    lat: string,
+    lon: string,
+    auto_motivation_sentence: number,
+    motivation_sentence: string,
+}
+
+export interface IUpdateProjectAffiche {
+    project_id: string,
+    affiche_id: string,
+    title: string,
+    description: string,
+    type: string,
+    is_off: number,
+    affiche_date: string,
+    start_date: string,
+    coming_time: string,
+    start_time: string,
+    address: string,
+    lat: string,
+    lon: string,
+    auto_motivation_sentence: number,
+    motivation_sentence: string,
+}
+
+export interface IDeleteProjectAffiche {
+    project_id: string,
+    affiche_id: string,
+}
+
+export interface IReadAllProjectAfficheHistory {
+    project_id: string,
+    affiche_id: string,
+    text: string,
+    date: string,
+    page: number,
+    per_page: number,
 }

@@ -1,20 +1,19 @@
 // libraries
 import ReactModal from 'react-modal';
 import classNames from "classnames";
-import {LuX} from "react-icons/lu";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import IconButton from "@/modules/IconButton.tsx";
+import Tooltip from "@/modules/Tooltip.tsx";
 
 // types
 import {TModal, TModalBody, TModalFooter, TModalHeader} from "@/types/moduleType.ts";
 
 const styles = {
     width: {
-        sm: "w-100 w-md-250px",
+        sm: "w-100 w-sm-250px",
         md: "w-100 w-md-500px",
-        lg: "w-100 w-md-750px",
+        lg: "w-100 w-lg-750px",
+        xl: "w-100 w-xl-1000px",
         full: "w-100"
     },
     height: {
@@ -42,7 +41,7 @@ const Modal = ({children, isOpen, onClose, width = "md", height = "content", pos
                 "rounded-2": position === "center",
                 "rounded-tl-lg rounded-tr-lg": position === "bottom",
             })}
-            overlayClassName={classNames("position-fixed top-0 left-0 d-flex w-100 h-100 bg-gray-600 bg-opacity-20", props.className?.overlay, {
+            overlayClassName={classNames("position-fixed top-0 left-0 d-flex w-100 h-100 bg-gray-600 bg-opacity-75", props.className?.overlay, {
                 [`${styles.position[position]}`]: true,
                 "p-5": position === "center",
             })}
@@ -51,29 +50,19 @@ const Modal = ({children, isOpen, onClose, width = "md", height = "content", pos
             }}
         >
             {children}
+
+            <Tooltip/>
         </ReactModal>
     )
 }
 
-const ModalHeader = ({title, onClose}: TModalHeader) => {
+const ModalHeader = ({children , ...props}: TModalHeader) => {
     return (
-        <div className="d-flex justify-content-between align-items-center w-100 gap-5">
-            <Typography
-                variant='h3'
-                size="lg"
-                color="dark"
-                isBold
-            >
-                {title}
-            </Typography>
-
-            <IconButton
-                size="sm"
-                color="light-danger"
-                onClick={onClose}
-            >
-                <LuX size={20}/>
-            </IconButton>
+        <div
+            {...props}
+            className={classNames("d-flex justify-content-between align-items-center w-100 gap-5" , props.className)}
+        >
+            {children}
         </div>
     )
 }

@@ -53,6 +53,7 @@ const DatePicker = ({
                         holidayDates = [],
                         ...props
                     }: TDatePicker) => {
+
     const customizeDays = (date) => {
         let color;
 

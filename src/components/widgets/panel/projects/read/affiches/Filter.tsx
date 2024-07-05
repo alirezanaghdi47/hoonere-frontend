@@ -9,10 +9,13 @@ import IconButton from "@/modules/IconButton.tsx";
 import Button from "@/modules/Button.tsx";
 import Form from "@/modules/Form.tsx";
 import SelectBox from "@/modules/SelectBox.tsx";
+import DatePicker from "@/modules/DatePicker.tsx";
 
 // services
-import {readAllProjectTypeService} from "@/services/publicService.ts";
-import {toEnglishDigits} from "@/utils/functions.ts";
+import {readAllAfficheTypeService} from "@/services/publicService.ts";
+
+// utils
+import {convertJalaliToGregorian} from "@/utils/functions.ts";
 
 const AdvanceFilter = ({
                            filter,
@@ -20,14 +23,15 @@ const AdvanceFilter = ({
                            changeFilter,
                            hideFilter,
                            resetFilter,
-                           readAllProjectScreenPlayAction
+                           readAllProjectAfficheAction
                        }) => {
-    const readAllProjectTypeAction = useMutation({
-        mutationFn: () => readAllProjectTypeService(),
+
+    const readAllAfficheTypeAction = useMutation({
+        mutationFn: () => readAllAfficheTypeService(),
     });
 
     useLayoutEffect(() => {
-        readAllProjectTypeAction.mutate();
+        readAllAfficheTypeAction.mutate();
     }, []);
 
     return (
@@ -35,16 +39,16 @@ const AdvanceFilter = ({
             <div className="col-12 col-sm-6 col-md-4">
                 <Form.Group>
                     <Form.Label
-                        label="جستجو"
+                        label="شماره آفیش"
                         color="dark"
                         size="sm"
                     />
 
                     <TextInput
-                        id="text"
-                        name="text"
-                        value={filter.text}
-                        onChange={(value) => changeFilter({text: value})}
+                        id="number_string"
+                        name="number_string"
+                        value={filter.number_string}
+                        onChange={(value) => changeFilter({number_string: value})}
                     />
                 </Form.Group>
             </div>
@@ -52,16 +56,23 @@ const AdvanceFilter = ({
             <div className="col-12 col-sm-6 col-md-4">
                 <Form.Group>
                     <Form.Label
-                        label="قسمت"
+                        label="نوع"
                         color="dark"
                         size="sm"
                     />
 
-                    <TextInput
-                        id="part"
-                        name="part"
-                        value={filter.part}
-                        onChange={(value) => changeFilter({part: value})}
+                    <SelectBox
+                        id="type"
+                        name="type"
+                        value={filter.type}
+                        options={(!readAllAfficheTypeAction.isPending && readAllAfficheTypeAction.data) ? readAllAfficheTypeAction.data?.data?.affiche_types?.map(affiche_type => ({
+                            label: affiche_type.title,
+                            value: affiche_type.id.toString()
+                        })) : []}
+                        placeholder=""
+                        isSearchable
+                        onChange={(value) => changeFilter({type: value})}
+                        isLoading={readAllAfficheTypeAction.isPending}
                     />
                 </Form.Group>
             </div>
@@ -69,16 +80,16 @@ const AdvanceFilter = ({
             <div className="col-12 col-sm-6 col-md-4">
                 <Form.Group>
                     <Form.Label
-                        label="سکانس"
+                        label="تاریخ"
                         color="dark"
                         size="sm"
                     />
 
-                    <TextInput
-                        id="sequence"
-                        name="sequence"
-                        value={filter.sequence}
-                        onChange={(value) => changeFilter({sequence: value})}
+                    <DatePicker
+                        id="affiche_date"
+                        name="affiche_date"
+                        value={filter.affiche_date}
+                        onChange={(value) => changeFilter({affiche_date: convertJalaliToGregorian(value)})}
                     />
                 </Form.Group>
             </div>
@@ -89,7 +100,7 @@ const AdvanceFilter = ({
                     onClick={() => {
                         resetFilter();
                         hideFilter();
-                        readAllProjectScreenPlayAction.mutate(initialFilter);
+                        readAllProjectAfficheAction.mutate(initialFilter);
                     }}
                 >
                     انصراف
@@ -97,10 +108,8 @@ const AdvanceFilter = ({
 
                 <Button
                     color='light-info'
-                    onClick={() => readAllProjectScreenPlayAction.mutate({
+                    onClick={() => readAllProjectAfficheAction.mutate({
                         ...filter,
-                        part: toEnglishDigits(filter.part),
-                        sequence: toEnglishDigits(filter.sequence),
                     })}
                 >
                     فیلتر
@@ -110,20 +119,20 @@ const AdvanceFilter = ({
     )
 }
 
-const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectScreenPlayAction}) => {
+const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectAfficheAction}) => {
     return (
         <div className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-5">
             <div className="w-200px">
                 <TextInput
-                    id="text"
-                    name="text"
-                    value={filter.text}
-                    placeholder="جستجو"
+                    id="number_string"
+                    name="number_string"
+                    value={filter.number_string}
+                    placeholder="شماره آفیش"
                     startAdornment={
                         <IconButton
                             size="sm"
                             color="light"
-                            onClick={() => readAllProjectScreenPlayAction.mutate(filter)}
+                            onClick={() => readAllProjectAfficheAction.mutate(filter)}
                         >
                             <LuSearch
                                 size={20}
@@ -132,13 +141,13 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectScreenPla
                         </IconButton>
                     }
                     endAdornment={
-                        filter.text.length > 0 ? (
+                        filter.number_string.length > 0 ? (
                             <IconButton
                                 size="sm"
                                 textColor="danger"
                                 onClick={() => {
-                                    changeFilter({text: ""});
-                                    readAllProjectScreenPlayAction.mutate({...filter, text: ""});
+                                    changeFilter({number_string: ""});
+                                    readAllProjectAfficheAction.mutate({...filter, number_string: ""});
                                 }}
                             >
                                 <LuX
@@ -148,7 +157,7 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectScreenPla
                             </IconButton>
                         ) : null
                     }
-                    onChange={(value) => changeFilter({text: value})}
+                    onChange={(value) => changeFilter({number_string: value})}
                 />
             </div>
 
@@ -163,7 +172,7 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectScreenPla
 }
 
 const Filter = ({
-                    readAllProjectScreenPlayAction,
+                    readAllProjectAfficheAction,
                     filter,
                     initialFilter,
                     changeFilter,
@@ -182,14 +191,14 @@ const Filter = ({
                         changeFilter={changeFilter}
                         hideFilter={hideFilter}
                         resetFilter={resetFilter}
-                        readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
+                        readAllProjectAfficheAction={readAllProjectAfficheAction}
                     />
                 ) : (
                     <SimpleFilter
                         filter={filter}
                         changeFilter={changeFilter}
                         showFilter={showFilter}
-                        readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
+                        readAllProjectAfficheAction={readAllProjectAfficheAction}
                     />
                 )
             }

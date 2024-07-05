@@ -1,5 +1,5 @@
 // libraries
-import {Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import Loadable from '@loadable/component';
 
 // layouts
@@ -8,7 +8,6 @@ const Auth = Loadable(() => import('@/layouts/AuthLayout.tsx'));
 const Blank = Loadable(() => import('@/layouts/BlankLayout.tsx'));
 
 // pages
-const Home = Loadable(() => import('@/pages/blank/home'));
 const Server = Loadable(() => import('@/pages/blank/server'));
 const Client = Loadable(() => import('@/pages/blank/client'));
 const SignIn = Loadable(() => import('@/pages/auth/sign-in'));
@@ -27,7 +26,11 @@ const UpdateProjectScreenPlay = Loadable(() => import('@/pages/panel/projects/re
 const ProjectAffiches = Loadable(() => import('@/pages/panel/projects/read/affiches'));
 const CreateProjectAffiche = Loadable(() => import('@/pages/panel/projects/read/affiches/create'));
 const UpdateProjectAffiche = Loadable(() => import('@/pages/panel/projects/read/affiches/update'));
+const ProjectAfficheHistories = Loadable(() => import('@/pages/panel/projects/read/affiches/histories'));
 const Profile = Loadable(() => import('@/pages/panel/profile'));
+
+// stores
+import useAuthStore from "@/stores/authStore.ts";
 
 const routes = [
     {
@@ -37,17 +40,11 @@ const routes = [
         children: [
             {
                 id: 1,
-                path: "",
-                component: Home,
-                requiredAuth: false,
-            },
-            {
-                id: 2,
                 path: "server-down",
                 component: Server,
             },
             {
-                id: 3,
+                id: 2,
                 path: "*",
                 component: Client,
             }
@@ -147,6 +144,11 @@ const routes = [
             },
             {
                 id: 15,
+                path: "projects/:id/affiches/:subId/histories",
+                component: ProjectAfficheHistories,
+            },
+            {
+                id: 16,
                 path: "profile",
                 component: Profile,
             },
@@ -155,8 +157,11 @@ const routes = [
 ]
 
 const RouterProvider = () => {
+    const {auth} = useAuthStore();
+
     return (
         <Routes>
+            <Route path="/" element={<Navigate to={auth.panel_url ? auth.panel_url + "dashboard" : "/panel/dashboard"}/>}/>
             {
                 routes.map(route => (
                         <Route

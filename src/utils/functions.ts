@@ -64,13 +64,13 @@ export const hexToRgba = (hex, alpha = 1) => {
 
 export const generateRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
-export const convertJalaliToGregorian = (date) => new DateObject(date).convert(gregorian, gregorian_en).format("YYYY-MM-DD");
+export const convertJalaliToGregorian = (date) => new DateObject(toEnglishDigits(date)).convert(gregorian, gregorian_en).format("YYYY-MM-DD");
 
-export const convertGregorianToJalali = (date) => new DateObject(date).convert(persian, persian_en).format("YYYY-MM-DD");
+export const convertGregorianToJalali = (date) => new DateObject(toEnglishDigits(date)).convert(persian, persian_en).format("YYYY-MM-DD");
 
 export const generateTimeWithSecond = (time) => time + ":00";
 
-export const generateTimeWithoutSecond = (time) => time.split(":")[0] + time.split(":")[1];
+export const generateTimeWithoutSecond = (time) => time.split(":")[0] + ":" + time.split(":")[1];
 
 export const getBankInfoFromCardNumber = (card_number) => card_number.length > 6 ? iranianBanks?.find(bank => card_number.startsWith(bank.bin)) : null;
 

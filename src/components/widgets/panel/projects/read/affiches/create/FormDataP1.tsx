@@ -72,8 +72,8 @@ const FormDataP1 = ({createProjectAfficheP1Form}) => {
                                     <LocationPicker
                                         height={300}
                                         location={{
-                                            lat: parseInt(createProjectAfficheP1Form.values.lat),
-                                            lon: parseInt(createProjectAfficheP1Form.values.lon)
+                                            lat: createProjectAfficheP1Form.values.lat ? Number(createProjectAfficheP1Form.values.lat) : 0,
+                                            lon: createProjectAfficheP1Form.values.lon ? Number(createProjectAfficheP1Form.values.lon) : 0
                                         }}
                                         setLocation={(value) => {
                                             createProjectAfficheP1Form.setFieldValue("lat", value.lat.toString());
@@ -82,8 +82,8 @@ const FormDataP1 = ({createProjectAfficheP1Form}) => {
                                     />
 
                                     <Form.Error
-                                        error={createProjectAfficheP1Form.errors.lat || createProjectAfficheP1Form.errors.lon}
-                                        touched={createProjectAfficheP1Form.touched.lat || createProjectAfficheP1Form.touched.lon}
+                                        error={createProjectAfficheP1Form.errors.lat && createProjectAfficheP1Form.errors.lon}
+                                        touched={createProjectAfficheP1Form.touched.lat && createProjectAfficheP1Form.touched.lon}
                                     />
                                 </Form.Group>
                             </div>

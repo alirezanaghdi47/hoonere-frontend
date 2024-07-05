@@ -2,7 +2,6 @@
 import {useMemo} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {LazyLoadImage} from "react-lazy-load-image-component";
-import {format} from "date-fns-jalali";
 import {LuPen, LuTrash2} from "react-icons/lu";
 
 // components

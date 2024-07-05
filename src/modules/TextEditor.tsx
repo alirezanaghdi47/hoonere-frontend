@@ -85,7 +85,7 @@ const TextEditor = ({name, value, placeholder = null, onChange, disabled = false
                             }
                         });
 
-                        editor.ui.registry.addContextMenu("caption" , {
+                        editor.ui.registry.addContextMenu("caption", {
                             update: (element) => element ? "caption" : ""
                         });
                     },

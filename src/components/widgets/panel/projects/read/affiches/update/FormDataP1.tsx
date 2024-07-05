@@ -1,0 +1,372 @@
+// libraries
+import {useLayoutEffect} from "react";
+import {useParams} from "react-router-dom";
+import {useMutation} from "@tanstack/react-query";
+
+// modules
+import Form from "@/modules/Form.tsx";
+import TextInput from "@/modules/TextInput.tsx";
+import Textarea from "@/modules/Textarea.tsx";
+import DatePicker from "@/modules/DatePicker.tsx";
+import TimePicker from "@/modules/TimePicker.tsx";
+import SwitchBox from "@/modules/SwitchBox.tsx";
+import SelectBox from "@/modules/SelectBox.tsx";
+import Button from "@/modules/Button.tsx";
+import LocationPicker from "@/modules/LocationPicker.tsx";
+
+// services
+import {readAllAfficheTypeService} from "@/services/publicService.ts";
+
+// stores
+import useAuthStore from "@/stores/authStore.ts";
+
+const FormDataP1 = ({updateProjectAfficheP1Form}) => {
+    const params = useParams();
+    const {auth} = useAuthStore();
+
+    const readAllAfficheTypeAction = useMutation({
+        mutationFn: () => readAllAfficheTypeService(),
+    });
+
+    useLayoutEffect(() => {
+        readAllAfficheTypeAction.mutate();
+    }, []);
+
+    return (
+        <div className="row gy-5 w-100">
+            <div className="col-12 col-md-7 d-flex flex-column justify-content-start align-items-center gap-5">
+                <div className="card w-100">
+                    <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
+                        <div className="row gy-5 w-100">
+                            <div className="col-12">
+                                <Form.Group>
+                                    <Form.Label
+                                        label="آدرس"
+                                        color="dark"
+                                        size="sm"
+                                    />
+
+                                    <Textarea
+                                        id="address"
+                                        name="address"
+                                        value={updateProjectAfficheP1Form.values.address}
+                                        onChange={(value) => updateProjectAfficheP1Form.setFieldValue("address", value)}
+                                    />
+
+                                    <Form.Error
+                                        error={updateProjectAfficheP1Form.errors.address}
+                                        touched={updateProjectAfficheP1Form.touched.address}
+                                    />
+                                </Form.Group>
+                            </div>
+
+                            <div className="col-12">
+                                <Form.Group>
+                                    <Form.Label
+                                        label="نقشه"
+                                        color="dark"
+                                        required
+                                        size="sm"
+                                    />
+
+                                    <LocationPicker
+                                        height={300}
+                                        location={{
+                                            lat: updateProjectAfficheP1Form.values.lat ? Number(updateProjectAfficheP1Form.values.lat) : 0,
+                                            lon: updateProjectAfficheP1Form.values.lon ? Number(updateProjectAfficheP1Form.values.lon) : 0
+                                        }}
+                                        setLocation={(value) => {
+                                            updateProjectAfficheP1Form.setFieldValue("lat", value.lat.toString());
+                                            updateProjectAfficheP1Form.setFieldValue("lon", value.lon.toString());
+                                        }}
+                                    />
+
+                                    <Form.Error
+                                        error={updateProjectAfficheP1Form.errors.lat && updateProjectAfficheP1Form.errors.lon}
+                                        touched={updateProjectAfficheP1Form.touched.lat && updateProjectAfficheP1Form.touched.lon}
+                                    />
+                                </Form.Group>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="card w-100">
+                    <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
+                        <div className="row gy-5 w-100">
+                            {
+                                !updateProjectAfficheP1Form.values.auto_motivation_sentence && (
+                                    <div className="col-12">
+                                        <Form.Group>
+                                            <Form.Label
+                                                label="جمله انگیزشی"
+                                                color="dark"
+                                                size="sm"
+                                                required
+                                            />
+
+                                            <Textarea
+                                                id="motivation_sentence"
+                                                name="motivation_sentence"
+                                                value={updateProjectAfficheP1Form.values.motivation_sentence}
+                                                onChange={(value) => updateProjectAfficheP1Form.setFieldValue("motivation_sentence", value)}
+                                            />
+
+                                            <Form.Error
+                                                error={updateProjectAfficheP1Form.errors.motivation_sentence}
+                                                touched={updateProjectAfficheP1Form.touched.motivation_sentence}
+                                            />
+                                        </Form.Group>
+                                    </div>
+                                )
+                            }
+
+                            <div className="col-12">
+                                <Form.Group inline>
+                                    <SwitchBox
+                                        id="auto_motivation_sentence"
+                                        name="auto_motivation_sentence"
+                                        value={updateProjectAfficheP1Form.values.auto_motivation_sentence}
+                                        onChange={(value) => updateProjectAfficheP1Form.setFieldValue("auto_motivation_sentence", value ? 1 : 0)}
+                                        checked={updateProjectAfficheP1Form.values.auto_motivation_sentence === 1}
+                                    />
+
+                                    <Form.Label
+                                        label="جمله انگیزشی خودکار"
+                                        color="dark"
+                                        size="sm"
+                                    />
+                                </Form.Group>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div className="col-12 col-md-5 d-flex flex-column justify-content-start align-items-center gap-5">
+                <div className="card w-100">
+                    <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
+                        <div className="row gy-5 w-100">
+                            <div className="col-12">
+                                <Form.Group>
+                                    <Form.Label
+                                        label="عنوان"
+                                        color="dark"
+                                        size="sm"
+                                        required
+                                    />
+
+                                    <TextInput
+                                        id="title"
+                                        name="title"
+                                        value={updateProjectAfficheP1Form.values.title}
+                                        onChange={(value) => updateProjectAfficheP1Form.setFieldValue("title", value)}
+                                    />
+
+                                    <Form.Error
+                                        error={updateProjectAfficheP1Form.errors.title}
+                                        touched={updateProjectAfficheP1Form.touched.title}
+                                    />
+                                </Form.Group>
+                            </div>
+
+                            <div className="col-12">
+                                <Form.Group>
+                                    <Form.Label
+                                        label="توضیحات"
+                                        color="dark"
+                                        size="sm"
+                                        required
+                                    />
+
+                                    <Textarea
+                                        id="description"
+                                        name="description"
+                                        value={updateProjectAfficheP1Form.values.description}
+                                        onChange={(value) => updateProjectAfficheP1Form.setFieldValue("description", value)}
+                                    />
+
+                                    <Form.Error
+                                        error={updateProjectAfficheP1Form.errors.description}
+                                        touched={updateProjectAfficheP1Form.touched.description}
+                                    />
+                                </Form.Group>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="card w-100">
+                    <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
+                        <div className="row gy-5 w-100">
+                            <div className="col-12">
+                                <Form.Group>
+                                    <Form.Label
+                                        label="نوع فنی"
+                                        color="dark"
+                                        size="sm"
+                                        required
+                                    />
+
+                                    <SelectBox
+                                        id="type"
+                                        name="type"
+                                        value={updateProjectAfficheP1Form.values.type}
+                                        options={(!readAllAfficheTypeAction.isPending && readAllAfficheTypeAction.data) ? readAllAfficheTypeAction.data?.data?.affiche_types?.map(affiche_type => ({
+                                            label: affiche_type.title,
+                                            value: affiche_type.id.toString()
+                                        })) : []}
+                                        placeholder=""
+                                        isSearchable
+                                        onChange={(value) => updateProjectAfficheP1Form.setFieldValue("type", value)}
+                                        isLoading={readAllAfficheTypeAction.isPending}
+                                    />
+
+                                    <Form.Error
+                                        error={updateProjectAfficheP1Form.errors.type}
+                                        touched={updateProjectAfficheP1Form.touched.type}
+                                    />
+                                </Form.Group>
+                            </div>
+
+                            <div className="col-12">
+                                <Form.Group inline>
+                                    <SwitchBox
+                                        id="is_off"
+                                        name="is_off"
+                                        value={updateProjectAfficheP1Form.values.is_off}
+                                        onChange={(value) => updateProjectAfficheP1Form.setFieldValue("is_off", value ? 1 : 0)}
+                                        checked={updateProjectAfficheP1Form.values.is_off === 1}
+                                    />
+
+                                    <Form.Label
+                                        label={` این یک آفیش از نوع off ${updateProjectAfficheP1Form.values.is_off ? "می باشد" : "نمی باشد"} `}
+                                        color="dark"
+                                        size="sm"
+                                    />
+                                </Form.Group>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="card w-100">
+                    <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
+                        <div className="row gy-5 w-100">
+                            <div className="col-12">
+                                <Form.Group>
+                                    <Form.Label
+                                        label="تاریخ آفیش"
+                                        required
+                                        size="sm"
+                                        color="dark"
+                                    />
+
+                                    <DatePicker
+                                        id="affiche_date"
+                                        name="affiche_date"
+                                        value={updateProjectAfficheP1Form.values.affiche_date}
+                                        onChange={(value) => updateProjectAfficheP1Form.setFieldValue("affiche_date", value)}
+                                    />
+
+                                    <Form.Error
+                                        error={updateProjectAfficheP1Form.errors.affiche_date}
+                                        touched={updateProjectAfficheP1Form.touched.affiche_date}
+                                    />
+                                </Form.Group>
+                            </div>
+
+                            <div className="col-12">
+                                <Form.Group>
+                                    <Form.Label
+                                        label="تاریخ اجرا"
+                                        required
+                                        size="sm"
+                                        color="dark"
+                                    />
+
+                                    <DatePicker
+                                        id="start_date"
+                                        name="start_date"
+                                        value={updateProjectAfficheP1Form.values.start_date}
+                                        onChange={(value) => updateProjectAfficheP1Form.setFieldValue("start_date", value)}
+                                    />
+
+                                    <Form.Error
+                                        error={updateProjectAfficheP1Form.errors.start_date}
+                                        touched={updateProjectAfficheP1Form.touched.start_date}
+                                    />
+                                </Form.Group>
+                            </div>
+
+                            <div className="col-12">
+                                <Form.Group>
+                                    <Form.Label
+                                        label="ساعت حضور"
+                                        required
+                                        size="sm"
+                                        color="dark"
+                                    />
+
+                                    <TimePicker
+                                        id="coming_time"
+                                        name="coming_time"
+                                        value={updateProjectAfficheP1Form.values.coming_time}
+                                        onChange={(value) => updateProjectAfficheP1Form.setFieldValue("coming_time", value)}
+                                    />
+
+                                    <Form.Error
+                                        error={updateProjectAfficheP1Form.errors.coming_time}
+                                        touched={updateProjectAfficheP1Form.touched.coming_time}
+                                    />
+                                </Form.Group>
+                            </div>
+
+                            <div className="col-12">
+                                <Form.Group>
+                                    <Form.Label
+                                        label="ساعت کلید"
+                                        required
+                                        size="sm"
+                                        color="dark"
+                                    />
+
+                                    <TimePicker
+                                        id="start_time"
+                                        name="start_time"
+                                        value={updateProjectAfficheP1Form.values.start_time}
+                                        onChange={(value) => updateProjectAfficheP1Form.setFieldValue("start_time", value)}
+                                    />
+
+                                    <Form.Error
+                                        error={updateProjectAfficheP1Form.errors.start_time}
+                                        touched={updateProjectAfficheP1Form.touched.start_time}
+                                    />
+                                </Form.Group>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="d-flex justify-content-end align-items-center gap-5 w-100">
+                    <Button
+                        href={auth.panel_url + `projects/${params.id}/affiches`}
+                        color="light-danger"
+                    >
+                        انصراف
+                    </Button>
+
+                    <Button
+                        color="warning"
+                        onClick={updateProjectAfficheP1Form.handleSubmit}
+                    >
+                        بعدی
+                    </Button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default FormDataP1;

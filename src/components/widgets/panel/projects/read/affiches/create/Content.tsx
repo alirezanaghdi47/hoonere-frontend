@@ -1,26 +1,34 @@
 // libraries
+import {useLayoutEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import Loadable from '@loadable/component';
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
 // components
+const FormDataP1 = Loadable(() => import('@/components/widgets/panel/projects/read/affiches/create/FormDataP1.tsx'));
+const FormDataP2 = Loadable(() => import('@/components/widgets/panel/projects/read/affiches/create/FormDataP2.tsx'));
+const FormDataP3 = Loadable(() => import('@/components/widgets/panel/projects/read/affiches/create/FormDataP3.tsx'));
+
 import Navigation from "@/components/widgets/panel/projects/read/affiches/create/Navigation.tsx";
+import Loading from "@/components/partials/panel/Loading.tsx";
 
 // helpers
 import toast from "@/helpers/toast.tsx";
 
 // hooks
 import useStep from "@/hooks/useStep.tsx";
+import useFilter from "@/hooks/useFilter.tsx";
 
 // services
-import {createProjectAfficheService} from "@/services/projectAffichesService.ts";
+import {createProjectAfficheService,} from "@/services/projectAffichesService.ts";
+import {readAllProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
 // types
-import {ICreateProjectScreenPlay} from "@/types/serviceType.ts";
+import {ICreateProjectAffiche, IReadAllProjectScreenPlay} from "@/types/serviceType.ts";
 
 // utils
 import {
@@ -29,25 +37,42 @@ import {
     createProjectAfficheP3Schema
 } from "@/utils/validations.ts";
 import {
-    convertGregorianToJalali,
     convertJalaliToGregorian,
     generateTimeWithSecond,
     toEnglishDigits
 } from "@/utils/functions.ts";
 
-// lazy components
-const FormDataP1 = Loadable(() => import('@/components/widgets/panel/projects/read/affiches/create/FormDataP1.tsx'));
-const FormDataP2 = Loadable(() => import('@/components/widgets/panel/projects/read/affiches/create/FormDataP2.tsx'));
-const FormDataP3 = Loadable(() => import('@/components/widgets/panel/projects/read/affiches/create/FormDataP3.tsx'));
-
 const Content = () => {
     const params = useParams();
     const navigate = useNavigate();
     const {auth} = useAuthStore();
-    const {step, changeStep, nextStep, prevStep, currentStep, resetStep} = useStep(null, 1);
+    const {step, changeStep, nextStep, prevStep, currentStep, resetStep} = useStep<ICreateProjectAffiche>(null, 1);
+
+    const {
+        filter,
+        initialFilter,
+        isOpenFilter,
+        showFilter,
+        hideFilter,
+        resetFilter,
+        changeFilter
+    } = useFilter<IReadAllProjectScreenPlay>({
+        text: "",
+        part: "",
+        sequence: "",
+        page: 1,
+        per_page: 12,
+    });
+
+    const readAllProjectScreenPlayAction = useMutation({
+        mutationFn: (data: IReadAllProjectScreenPlay) => readAllProjectScreenPlayService({
+            ...data,
+            project_id: params.id,
+        }),
+    });
 
     const createProjectAfficheAction = useMutation({
-        mutationFn: (data: ICreateProjectScreenPlay) => createProjectAfficheService(data),
+        mutationFn: (data: ICreateProjectAffiche) => createProjectAfficheService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -67,7 +92,7 @@ const Content = () => {
             description: "",
             type: "",
             is_off: 0,
-            affiche_date: convertGregorianToJalali(new Date()),
+            affiche_date: new Date(),
             start_date: "",
             coming_time: "",
             start_time: "",
@@ -122,6 +147,10 @@ const Content = () => {
         }
     });
 
+    useLayoutEffect(() => {
+        readAllProjectScreenPlayAction.mutate(filter);
+    }, []);
+
     return (
         <div
             className="d-flex flex-column flex-lg-row justify-content-start align-items-start gap-5 w-100 mw-950px p-5">
@@ -146,10 +175,27 @@ const Content = () => {
                 }
 
                 {
-                    currentStep === 3 && (
+                    readAllProjectScreenPlayAction.isPending && currentStep === 3 && (
+                        <Loading
+                            width="100%"
+                            height={300}
+                        />
+                    )
+                }
+
+                {
+                    !readAllProjectScreenPlayAction.isPending && currentStep === 3 && (
                         <FormDataP3
                             createProjectAfficheP3Form={createProjectAfficheP3Form}
+                            readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
                             prevStep={prevStep}
+                            filter={filter}
+                            initialFilter={initialFilter}
+                            changeFilter={changeFilter}
+                            isOpenFilter={isOpenFilter}
+                            showFilter={showFilter}
+                            hideFilter={hideFilter}
+                            resetFilter={resetFilter}
                         />
                     )
                 }

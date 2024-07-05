@@ -2,12 +2,11 @@
 import {useMemo} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
-import {format} from "date-fns-jalali";
-import {LuPen, LuTrash2} from "react-icons/lu";
+import {LuHistory, LuPen, LuTrash2} from "react-icons/lu";
 
 // components
-import Finder from "@/components/widgets/panel/projects/read/screen-plays/Finder.tsx";
-import Filter from "@/components/widgets/panel/projects/read/screen-plays/Filter.tsx";
+import Finder from "@/components/widgets/panel/projects/read/affiches/Finder.tsx";
+import Filter from "@/components/widgets/panel/projects/read/affiches/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
 // helpers
@@ -18,19 +17,18 @@ import toast from "@/helpers/toast.tsx";
 import Table from "@/modules/Table.tsx";
 import Tooltip from "@/modules/Tooltip.tsx";
 import IconButton from "@/modules/IconButton.tsx";
-import Chip from "@/modules/Chip.tsx";
 
 // services
-import {deleteProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
+import {deleteProjectAfficheService} from "@/services/projectAffichesService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
 // types
-import {IDeleteProjectScreenPlay} from "@/types/serviceType.ts";
+import {IDeleteProjectAffiche} from "@/types/serviceType.ts";
 
 const DataTable = ({
-                       readAllProjectScreenPlayAction,
+                       readAllProjectAfficheAction,
                        filter,
                        initialFilter,
                        isOpenFilter,
@@ -42,13 +40,13 @@ const DataTable = ({
     const params = useParams();
     const {auth} = useAuthStore();
 
-    const deleteProjectScreenPlayAction = useMutation({
-        mutationFn: (data: IDeleteProjectScreenPlay) => deleteProjectScreenPlayService(data),
+    const deleteProjectAfficheAction = useMutation({
+        mutationFn: (data: IDeleteProjectAffiche) => deleteProjectAfficheService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
 
-                readAllProjectScreenPlayAction.mutate({
+                readAllProjectAfficheAction.mutate({
                     ...filter,
                     project_id: params.id
                 });
@@ -66,38 +64,36 @@ const DataTable = ({
                 sortingFn: (rowA, rowB, columnId) => rowA.index - rowB.index
             },
             {
-                accessorKey: 'part',
-                header: () => 'قسمت',
+                accessorKey: 'number_string',
+                header: () => 'شماره',
                 cell: ({row}) => (
                     <div className="w-50px fs-6 text-dark text-truncate">
-                        {row.original.part}
-                    </div>
-                ),
-                sortingFn: (rowA, rowB, columnId) => rowA.original.part - rowB.original.part
-            },
-            {
-                accessorKey: 'sequence',
-                header: () => 'سکانس',
-                cell: ({row}) => (
-                    <div className="w-50px fs-6 text-dark text-truncate">
-                        {row.original.sequence}
-                    </div>
-                ),
-                sortingFn: (rowA, rowB, columnId) => rowA.original.sequence - rowB.original.sequence
-            },
-            {
-                accessorKey: 'address',
-                header: () => 'آدرس',
-                cell: ({row}) => (
-                    <div
-                        className="w-250px fs-6 text-dark text-truncate"
-                        data-tooltip-id="my-tooltip"
-                        data-tooltip-content={row.original.address}
-                    >
-                        {row.original.address}
+                        {row.original.number_string}
                     </div>
                 ),
                 sortingFn: "text"
+            },
+            {
+                accessorKey: 'type_info',
+                header: () => 'نوع',
+                cell: ({row}) => (
+                    <div className="w-100px fs-6 text-dark text-truncate">
+                        {row.original.type_info?.title}
+                    </div>
+                ),
+                sortingFn: (rowA, rowB, columnId) => rowA.original.type_id.title - rowB.original.type_id.title
+            },
+            {
+                accessorKey: 'affiche_date',
+                header: () => 'تاریخ',
+                cell: ({row}) => (
+                    <div className="w-100px fs-6 text-dark text-truncate">
+                        {row.original.affiche_date}
+                    </div>
+                ),
+                sortingFn: (rowA, rowB, columnId) => {
+                    return new Date(rowA.original.affiche_date).getTime() - new Date(rowB.original.affiche_date).getTime();
+                }
             },
             {
                 accessorKey: 'actions',
@@ -105,7 +101,20 @@ const DataTable = ({
                 cell: ({row}) => (
                     <div className="d-flex justify-content-start align-items-center w-max gap-2">
                         <IconButton
-                            href={auth.panel_url + "projects/" + row.original.project_id + "/screen-plays/" + row.original.id + "/update"}
+                            href={auth.panel_url + "projects/" + row.original.project_id + "/affiches/" + row.original.id + "/histories"}
+                            color="light-info"
+                            size="sm"
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content="تاریخچه"
+                        >
+                            <LuHistory
+                                size={20}
+                                color="currentColor"
+                            />
+                        </IconButton>
+
+                        <IconButton
+                            href={auth.panel_url + "projects/" + row.original.project_id + "/affiches/" + row.original.id + "/update"}
                             color="light-warning"
                             size="sm"
                             data-tooltip-id="my-tooltip"
@@ -122,8 +131,8 @@ const DataTable = ({
                             size="sm"
                             onClick={() => {
                                 dialog(
-                                    "حذف بخش فیلم نامه",
-                                    "آیا میخواهید این بخش فیلم نامه را حذف کنید ؟",
+                                    "حذف آفیش",
+                                    "آیا میخواهید این آفیش را حذف کنید ؟",
                                     "info",
                                     {
                                         show: true,
@@ -135,7 +144,10 @@ const DataTable = ({
                                         text: "انصراف",
                                         color: "light-dark",
                                     },
-                                    async () => deleteProjectScreenPlayAction.mutate({screenplay_id: row.original.id.toString()})
+                                    async () => deleteProjectAfficheAction.mutate({
+                                        project_id: row.original.project_id,
+                                        affiche_id: row.original.id.toString(),
+                                    })
                                 )
                             }}
                             data-tooltip-id="my-tooltip"
@@ -158,7 +170,7 @@ const DataTable = ({
             <div className="card w-100">
                 <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
                     <Filter
-                        readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
+                        readAllProjectAfficheAction={readAllProjectAfficheAction}
                         filter={filter}
                         initialFilter={initialFilter}
                         changeFilter={changeFilter}
@@ -169,18 +181,18 @@ const DataTable = ({
                     />
 
                     {
-                        readAllProjectScreenPlayAction.data?.data?.screenplays.length > 0 && (
+                        readAllProjectAfficheAction.data?.data?.affiches.length > 0 && (
                             <Table
-                                data={readAllProjectScreenPlayAction?.data?.data?.screenplays}
+                                data={readAllProjectAfficheAction?.data?.data?.affiches}
                                 columns={tableColumns}
                             />
                         )
                     }
 
                     {
-                        readAllProjectScreenPlayAction.data?.data?.screenplays.length === 0 && (
+                        readAllProjectAfficheAction.data?.data?.affiches.length === 0 && (
                             <Empty
-                                title="پروژه ای یافت نشد"
+                                title="آفیش یافت نشد"
                                 width="100%"
                                 height={300}
                             />
@@ -188,7 +200,7 @@ const DataTable = ({
                     }
 
                     <Finder
-                        readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
+                        readAllProjectAfficheAction={readAllProjectAfficheAction}
                         filter={filter}
                         changeFilter={changeFilter}
                     />

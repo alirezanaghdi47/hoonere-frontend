@@ -31,7 +31,7 @@ const FormDataWithUserName = ({readAllJobAction, createProjectMemberFormWithUser
     const readUserInquiryAction = useMutation({
         mutationFn: (data: IReadUserInquiry) => readUserInquiryService(data),
         onSuccess: async (data) => {
-            if (!data?.error) {
+            if (!data.error) {
                 createProjectMemberFormWithUserName.setFieldValue("user_id", data?.data?.user_info?.id.toString());
             }
         }

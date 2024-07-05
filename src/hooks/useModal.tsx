@@ -8,6 +8,11 @@ const useModal = (isOpen = false, data = null) => {
         data: data,
     });
 
+    const changeModal = (value: { [key: string]: string | number | null }) => setModal(prevState => ({
+        ...prevState,
+        data: {...prevState.data, ...value}
+    }));
+
     const _handleShowModal = (data?: any) => {
         setModal({
             isOpen: true,
@@ -29,7 +34,7 @@ const useModal = (isOpen = false, data = null) => {
         })
     }
 
-    return {modal, _handleShowModal, _handleToggleModal, _handleHideModal};
+    return {modal, changeModal, _handleShowModal, _handleToggleModal, _handleHideModal};
 }
 
 export default useModal;

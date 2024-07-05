@@ -99,7 +99,7 @@ export type TDatePicker = {
     id: string,
     name: string,
     value: string | null,
-    onChange?: (value: DateObject | DateObject[] | null) => void,
+    onChange?: (value: DateObject | DateObject[] | string) => void,
     minDate?: string | null,
     maxDate?: string | null,
     range?: boolean,
@@ -178,7 +178,10 @@ export type TIconButton = {
 export type TLocationPicker = {
     width?: string | number,
     height: number,
-    location?: [number, number]
+    location?: {
+        lat: number,
+        lon: number
+    }
     setLocation?: (data: { lat: number, lon: number }) => void,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties,
@@ -188,7 +191,7 @@ export type TModal = {
     children: ReactNode,
     isOpen: boolean,
     onClose: () => void,
-    width?: "sm" | "md" | "lg" | "full",
+    width?: "sm" | "md" | "lg" | "xl" | "full",
     height?: "content" | "full",
     position?: "any" | "center" | "bottom",
     className?: {
@@ -199,12 +202,8 @@ export type TModal = {
 }
 
 export type TModalHeader = {
-    title: string,
-    onClose: () => void,
-    className?: {
-        content: HTMLProps<HTMLElement>["className"],
-        overlay: HTMLProps<HTMLElement>["className"]
-    },
+    children: ReactNode,
+    className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }
 
@@ -385,7 +384,7 @@ export type TTimePicker = {
     id: string,
     name: string,
     value: string | null,
-    onChange?: (value: DateObject | DateObject[] | null) => string | null,
+    onChange?: (value: DateObject | DateObject[] | string) => void,
     disabled?: boolean,
     readOnly?: boolean,
     className?: HTMLProps<HTMLElement>["className"],
@@ -393,7 +392,7 @@ export type TTimePicker = {
 }
 
 export type TTypography = {
-    children: ReactNode,
+    children?: ReactNode,
     variant?: "p" | "h1" | "h2" | "h3" | "h4" | "span"
     size: t.sizes,
     color: t.colors,

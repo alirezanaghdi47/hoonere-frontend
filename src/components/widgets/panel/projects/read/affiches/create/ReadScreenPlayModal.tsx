@@ -1,8 +1,11 @@
 // libraries
 import parse from "html-react-parser";
+import {LuX} from "react-icons/lu";
 
 // modules
 import Modal from "@/modules/Modal.tsx";
+import Typography from "@/modules/Typography.tsx";
+import IconButton from "@/modules/IconButton.tsx";
 
 const ReadScreenPlayModal = ({modal , _handleHideModal}) => {
     return (
@@ -13,10 +16,26 @@ const ReadScreenPlayModal = ({modal , _handleHideModal}) => {
             width="lg"
             height="full"
         >
-            <Modal.Header
-                title="متن فیلم نامه"
-                onClose={_handleHideModal}
-            />
+            <Modal.Header>
+                <Typography
+                    variant='h3'
+                    size="lg"
+                    color="dark"
+                    isBold
+                >
+                    متن فیلم نامه
+                </Typography>
+
+                <IconButton
+                    size="sm"
+                    color="light-danger"
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content="خروج"
+                    onClick={_handleHideModal}
+                >
+                    <LuX size={20}/>
+                </IconButton>
+            </Modal.Header>
 
             <Modal.Body>
                 {parse(`${modal?.data?.description}`)}

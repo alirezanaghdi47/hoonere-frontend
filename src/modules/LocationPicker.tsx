@@ -13,58 +13,66 @@ import "@/styles/modules/leaflet.scss";
 // types
 import {TLocationPicker} from "@/types/moduleType.ts";
 
-const LocationPicker = ({width = "100%",  height , location , setLocation , ...props}: TLocationPicker) => {
+const customMarker = L.icon({
+    shadowUrl: null,
+    iconSize: [40, 40],
+    iconUrl: markerIcon
+});
+
+const LocationPicker = ({width = "100%", height, location, setLocation, ...props}: TLocationPicker) => {
     const mapRef = useRef(null);
+    const markerRef = useRef(null);
 
     useEffect(() => {
         if (typeof window !== "undefined") {
-            let marker = null;
-
             const layers = {
                 "osm": L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 }),
             };
 
-            // config leaflet
             mapRef.current = L.map('map', {
                 zoomControl: false,
+                // @ts-ignore
                 drawControl: false,
             }).setView(new L.LatLng(35.696, 51.362), 17);
 
-            // set initial layer
             mapRef.current.addLayer(layers.osm);
 
-            // add zoom button
             L.control.zoom({
                 position: "topright",
             }).addTo(mapRef.current);
 
-            // customize icon
-            const customMarker = L.icon({
-                shadowUrl: null,
-                iconSize: [40, 40],
-                iconUrl: markerIcon
-            });
-
-            // add new marker & remove old one
-            mapRef.current.on("click", (e) => {
-                if (marker) {
-                    mapRef.current.removeLayer(marker);
-                    setLocation({lat: 0, lon: 0});
-                }
-
-                marker = new L.marker(e.latlng, {icon: customMarker}).addTo(mapRef.current);
-
-                setLocation({lat: e.latlng?.lat, lon: e.latlng?.lng});
-            });
+            // @ts-ignore
+            markerRef.current = new L.marker({
+                lat: location?.lat,
+                lng: location?.lon
+            }, {icon: customMarker}).addTo(mapRef.current);
 
             return () => mapRef.current.remove();
         }
     }, []);
 
+    useEffect(() => {
+        mapRef.current.on("click", (e) => {
+            if (markerRef.current) {
+                mapRef.current.removeLayer(markerRef.current);
+
+                markerRef.current = null;
+
+                // @ts-ignore
+                markerRef.current = new L.marker({
+                    lat: e.latlng?.lat,
+                    lng: e.latlng?.lng
+                }, {icon: customMarker}).addTo(mapRef.current);
+            }
+
+            setLocation({lat: e.latlng?.lat, lon: e.latlng?.lng});
+        });
+    }, [location]);
+
     return (
-        <div style={{width: width , height: height}}>
+        <div style={{width: width, height: height}}>
             <div
                 {...props}
                 id="map"

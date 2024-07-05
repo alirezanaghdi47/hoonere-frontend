@@ -20261,7 +20261,7 @@
     };
     const LinkTargets = { find };
 
-    const STORAGE_KEY = 'tinymce-url-history';
+    const STORAGE_KEY = 'tinymce-url-histories';
     const HISTORY_LENGTH = 5;
     const isHttpUrl = url => isString(url) && /^https?/.test(url);
     const isArrayOfUrl = a => isArray(a) && a.length <= HISTORY_LENGTH && forall(a, isHttpUrl);
@@ -20289,7 +20289,7 @@
     };
     const setAllHistory = history => {
       if (!isRecordOfUrlArray(history)) {
-        throw new Error('Bad format for history:\n' + JSON.stringify(history));
+        throw new Error('Bad format for histories:\n' + JSON.stringify(history));
       }
       global$4.setItem(STORAGE_KEY, JSON.stringify(history));
     };

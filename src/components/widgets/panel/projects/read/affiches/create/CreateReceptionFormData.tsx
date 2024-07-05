@@ -13,15 +13,17 @@ import Button from "@/modules/Button.tsx";
 import {readAllProjectMemberByFoaService} from "@/services/projectService.ts";
 import {readAllJobService, readAllReceptionTypeService} from "@/services/publicService.ts";
 
+// types
+import {IReadAllProjectMembersByFoa} from "@/types/serviceType.ts";
+
 // utils
 import {createProjectAfficheReceptionSchema, createProjectAfficheUserSchema} from "@/utils/validations.ts";
-import receptions from "@/components/widgets/panel/projects/read/affiches/create/Receptions.tsx";
 
 const CreateReceptionFormData = ({createProjectAfficheP2Form, resetPart}) => {
     const params = useParams();
 
-    const realAllProjectMembersByFoaAction = useMutation({
-        mutationFn: (data) => readAllProjectMemberByFoaService(data),
+    const readAllProjectMembersByFoaAction = useMutation({
+        mutationFn: (data: IReadAllProjectMembersByFoa) => readAllProjectMemberByFoaService(data),
     });
 
     const readAllReceptionTypeAction = useMutation({
@@ -48,16 +50,15 @@ const CreateReceptionFormData = ({createProjectAfficheP2Form, resetPart}) => {
         },
         validationSchema: createProjectAfficheReceptionSchema,
         onSubmit: async (result) => {
-            const user = await realAllProjectMembersByFoaAction.data?.data?.members?.find(member => member.id.toString() === result.member_id.toString());
+            const user = await readAllProjectMembersByFoaAction.data?.data?.members?.find(member => member.id.toString() === result.member_id.toString());
             const reception = await readAllReceptionTypeAction.data?.data?.reception_types?.find(reception_type => reception_type.id.toString() === result.reception_type.toString());
-            const full_name = (user.first_name || user.last_name) ? user.first_name + " " + user.last_name : user.username;
 
             createProjectAfficheP2Form.setFieldValue("receptions", [
                 ...createProjectAfficheP2Form.values.receptions.filter(reception => JSON.stringify(reception) !== JSON.stringify(result)),
                 {
                     ...result,
                     reception_name: reception?.title,
-                    full_name: full_name,
+                    full_name: user?.first_name + " " + user?.last_name,
                     is_fake: user?.is_fake
                 }
             ]);
@@ -71,7 +72,7 @@ const CreateReceptionFormData = ({createProjectAfficheP2Form, resetPart}) => {
 
     useEffect(() => {
         if (createProjectAfficheUserForm.values.foa_parent_id) {
-            realAllProjectMembersByFoaAction.mutate({
+            readAllProjectMembersByFoaAction.mutate({
                 foa_parent_id: createProjectAfficheUserForm.values.foa_parent_id,
                 foa_id: createProjectAfficheUserForm.values.foa_id,
                 project_id: params.id
@@ -174,7 +175,7 @@ const CreateReceptionFormData = ({createProjectAfficheP2Form, resetPart}) => {
                                 id="member_id"
                                 name="member_id"
                                 value={createProjectAfficheMemberForm.values.member_id}
-                                options={realAllProjectMembersByFoaAction.data?.data?.members?.map(member => {
+                                options={readAllProjectMembersByFoaAction.data?.data?.members?.map(member => {
                                     const name = (member.first_name || member.last_name) ? member.first_name + " " + member.last_name : member.username
 
                                     return {
@@ -186,7 +187,7 @@ const CreateReceptionFormData = ({createProjectAfficheP2Form, resetPart}) => {
                                 isSearchable
                                 disabled={!createProjectAfficheUserForm.values.foa_parent_id}
                                 onChange={(value) => createProjectAfficheMemberForm.setFieldValue("member_id", value)}
-                                isLoading={realAllProjectMembersByFoaAction.isPending}
+                                isLoading={readAllProjectMembersByFoaAction.isPending}
                             />
 
                             <Form.Error

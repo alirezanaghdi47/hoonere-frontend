@@ -35,7 +35,7 @@ const Typography = ({
     return (
         <Tag
             {...props}
-            className={classNames("mb-0", props.className, {
+            className={classNames("mb-0 p-0", props.className, {
                 [`fs-${sizes[size]}`]: true,
                 [`lh-${lineHeights[lineHeight]}`]: true,
                 [`text-${color}`]: true,

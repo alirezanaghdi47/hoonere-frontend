@@ -264,3 +264,47 @@ export const createProjectAfficheReceptionSchema = Yup.object().shape({
     member_id: Yup.string().trim().required("عوامل پذیرایی الزامی است"),
     reception_type: Yup.string().trim().required("نوع پذیرایی الزامی است"),
 });
+
+export const updateProjectAfficheP1Schema = Yup.object().shape({
+    title: Yup.string().trim().required("عنوان آفیش الزامی است"),
+    description: Yup.string().trim().required("توضیحات آفیش الزامی است"),
+    is_off: Yup.number(),
+    type: Yup.string().trim().required("نوع فنی آفیش الزامی است"),
+    affiche_date: Yup.string().trim().required("تاریخ آفیش الزامی است"),
+    start_date: Yup.string().trim().required("تاریخ اجرای آفیش الزامی است"),
+    coming_time: Yup.string().trim().required("ساعت حضور آفیش الزامی است"),
+    start_time: Yup.string().trim().required("ساعت کلید آفیش الزامی است"),
+    address: Yup.string().trim(),
+    lat: Yup.number().required("موقعیت جغرافیای آفیش الزامی است"),
+    lon: Yup.number().required("موقعیت جغرافیای آفیش الزامی است"),
+    auto_motivation_sentence: Yup.number(),
+    motivation_sentence: Yup.string().when("auto_motivation_sentence", {
+        is: (value) => value === 0,
+        then: (source) => source.trim().required("جمله انگیزشی آفیش الزامی است")
+    }),
+});
+
+export const updateProjectAfficheP2Schema = Yup.object().shape({
+    actors: Yup.array().of(Yup.object().shape({
+        actor_id: Yup.string().trim().required("بازیگر الزامی است"),
+        full_name: Yup.string(),
+        role: Yup.string().trim().required("نقش بازیگر الزامی است"),
+        coming_time: Yup.string().trim().required("ساعت حضور بازیگر الزامی است"),
+        makeup_time: Yup.string().trim().required("ساعت گریم بازیگر الزامی است"),
+    })),
+    members: Yup.array().of(Yup.object().shape({
+        member_id: Yup.string().trim().required("عوامل الزامی است"),
+        full_name: Yup.string(),
+        coming_time: Yup.string().trim().required("ساعت حضور عوامل الزامی است"),
+        description: Yup.string().trim(),
+    })),
+    receptions: Yup.array().of(Yup.object().shape({
+        member_id: Yup.string().trim().required("عوامل پذیرایی الزامی است"),
+        full_name: Yup.string().trim(),
+        reception_type: Yup.string().trim().required("نوع پذیرایی الزامی است"),
+    })),
+});
+
+export const updateProjectAfficheP3Schema = Yup.object().shape({
+    screenplays: Yup.array().of(Yup.string().trim())
+});

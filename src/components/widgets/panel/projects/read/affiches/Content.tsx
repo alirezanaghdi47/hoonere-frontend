@@ -11,10 +11,10 @@ import DataTable from "@/components/widgets/panel/projects/read/affiches/DataTab
 import useFilter from "@/hooks/useFilter.tsx";
 
 // services
-import {readAllProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
+import {readAllProjectAfficheService} from "@/services/projectAffichesService.ts";
 
 // types
-import {IReadAllProjectScreenPlay} from "@/types/serviceType.ts";
+import {IReadAllProjectAffiche} from "@/types/serviceType.ts";
 
 const Content = () => {
     const params = useParams();
@@ -27,23 +27,23 @@ const Content = () => {
         hideFilter,
         resetFilter,
         changeFilter
-    } = useFilter<IReadAllProjectScreenPlay>({
-        text: "",
-        part: "",
-        sequence: "",
+    } = useFilter<IReadAllProjectAffiche>({
+        number_string: "",
+        type: "",
+        affiche_date: "",
         page: 1,
         per_page: 12,
     });
 
-    const readAllProjectScreenPlayAction = useMutation({
-        mutationFn: (data: IReadAllProjectScreenPlay) => readAllProjectScreenPlayService({
+    const readAllProjectAfficheAction = useMutation({
+        mutationFn: (data: IReadAllProjectAffiche) => readAllProjectAfficheService({
             ...data,
             project_id: params.id
         }),
     });
 
     useLayoutEffect(() => {
-        readAllProjectScreenPlayAction.mutate(filter);
+        readAllProjectAfficheAction.mutate(filter);
     }, []);
 
     return (
@@ -51,7 +51,7 @@ const Content = () => {
             className="d-flex flex-column flex-lg-row justify-content-start align-items-start gap-5 w-100 mw-950px p-5">
             <div className="d-flex flex-wrap justify-content-center gap-5 w-100 mt-lg-n20">
                 {
-                    readAllProjectScreenPlayAction.isPending && (
+                    readAllProjectAfficheAction.isPending && (
                         <Loading
                             width="100%"
                             height={500}
@@ -60,9 +60,9 @@ const Content = () => {
                 }
 
                 {
-                    !readAllProjectScreenPlayAction.isPending && (
+                    !readAllProjectAfficheAction.isPending && (
                         <DataTable
-                            readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
+                            readAllProjectAfficheAction={readAllProjectAfficheAction}
                             filter={filter}
                             initialFilter={initialFilter}
                             isOpenFilter={isOpenFilter}

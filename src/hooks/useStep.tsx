@@ -1,8 +1,8 @@
 // libraries
 import {useState} from "react";
 
-const useStep = (initialData = null, activeStep = 1) => {
-    const [step, setStep] = useState<unknown>(initialData);
+const useStep = <T,>(initialData = null, activeStep = 1) => {
+    const [step, setStep] = useState<T>(initialData);
     const [currentStep, setCurrentStep] = useState<number>(activeStep);
 
     const changeStep = (value: unknown) => setStep(value);

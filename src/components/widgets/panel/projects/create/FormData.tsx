@@ -31,7 +31,7 @@ const FormData = ({createProjectForm, createProjectAction}) => {
     const readUserInquiryAction = useMutation({
         mutationFn: (data: IReadUserInquiry) => readUserInquiryService(data),
         onSuccess: async (data) => {
-            if (!data?.error) {
+            if (!data.error) {
                 createProjectForm.setFieldValue("producer", data?.data?.user_info?.id.toString());
             }
         }

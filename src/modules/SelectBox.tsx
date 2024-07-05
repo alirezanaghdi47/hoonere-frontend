@@ -97,7 +97,7 @@ const SelectBox = ({
             className={classNames("react-select__container", props.className)}
             classNamePrefix="react-select"
             placeholder={placeholder}
-            value={options?.find(item => item.value === value)}
+            value={options?.find(item => item.value === value) || ""}
             // @ts-ignore
             onChange={(value) => isMulti ? onChange(value?.map(subValue => subValue.value)) : onChange(value.value)}
             isMulti={isMulti}
