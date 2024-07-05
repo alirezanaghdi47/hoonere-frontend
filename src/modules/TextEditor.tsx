@@ -35,7 +35,7 @@ const TextEditor = ({name, value, placeholder = null, onChange, disabled = false
                         editor.ui.registry.addButton('pdfExport', {
                             icon: 'pdfExport',
                             tooltip: "خروجی pdf",
-                            onAction: function () {
+                            onAction: async function () {
                                 const content = editor.getContent();
                                 return html2pdf().from(content).save();
                             }
