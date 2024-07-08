@@ -13,9 +13,6 @@ import "@/styles/modules/date-picker.scss";
 // types
 import {TDatePicker} from "@/types/moduleType.ts";
 
-// utils
-import {toEnglishDigits} from "@/utils/functions.js";
-
 const RenderButton = ({direction, handleClick}) => {
     return (
         <IconButton
@@ -63,7 +60,7 @@ const DatePicker = ({
             calendar: persian
         }).format("YYYY-MM-DD");
 
-        if (holidayDates.includes(toEnglishDigits(formattedDate))) color = "red";
+        if (holidayDates.includes(formattedDate)) color = "red";
 
         if (color) return {className: "highlight highlight-" + color};
     }

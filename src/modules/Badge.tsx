@@ -4,7 +4,7 @@ import classNames from "classnames";
 // types
 import {TBadge} from "@/types/moduleType.ts";
 
-const Badge = ({color, size, label, placement, ...props}: TBadge) => {
+const Badge = ({color, size = "sm", label, placement, ...props}: TBadge) => {
     return (
         <span
             {...props}

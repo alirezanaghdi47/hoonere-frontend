@@ -82,14 +82,14 @@ const Receptions = ({updateProjectAfficheP2Form, changeCurrentPart}) => {
             <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
                 <div className="row gy-5 w-100">
                     <div className="col-12">
-                        <Form.Label
-                            label="پذیرایی ها"
-                            size="sm"
-                            color="dark"
-                        />
+                        <div className='d-flex flex-column justify-content-center align-items-start gap-2 w-100'>
+                            <Form.Label
+                                label="پذیرایی ها"
+                                size="sm"
+                                color="dark"
+                            />
 
-                        <div className='w-100 mt-5'>
-                            <div className="row gy-5">
+                            <div className='row g-5 w-100'>
                                 {
                                     updateProjectAfficheP2Form.values.receptions?.map((reception, i) =>
                                         <ReceptionCard

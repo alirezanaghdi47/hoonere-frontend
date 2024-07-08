@@ -17,12 +17,11 @@ import useModal from "@/hooks/useModal.tsx";
 
 // modules
 import Table from "@/modules/Table.tsx";
-import Tooltip from "@/modules/Tooltip.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 
 // services
 import {
-    readAllProjectAfficheActorService,
+    readAllProjectAfficheActorService, readAllProjectAfficheAddressService,
     readAllProjectAfficheMemberService,
     readAllProjectAfficheReceptionService, readAllProjectAfficheScreenPlayService,
     readProjectAfficheService
@@ -30,7 +29,7 @@ import {
 
 // types
 import {
-    IReadAllProjectAfficheActor,
+    IReadAllProjectAfficheActor, IReadAllProjectAfficheAddress,
     IReadAllProjectAfficheMember,
     IReadAllProjectAfficheReception, IReadAllProjectAfficheScreenPlay,
     IReadProjectAffiche
@@ -61,7 +60,7 @@ const DataTable = ({
         mutationFn: (data: IReadAllProjectAfficheActor) => readAllProjectAfficheActorService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                changeModal({actors: data?.data?.actors});
+                changeModal({actors: data?.data?.actors || []});
             }
         }
     });
@@ -70,7 +69,7 @@ const DataTable = ({
         mutationFn: (data: IReadAllProjectAfficheMember) => readAllProjectAfficheMemberService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                changeModal({members: data?.data?.members});
+                changeModal({members: data?.data?.members || []});
             }
         }
     });
@@ -79,7 +78,7 @@ const DataTable = ({
         mutationFn: (data: IReadAllProjectAfficheReception) => readAllProjectAfficheReceptionService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                changeModal({receptions: data?.data?.receptions});
+                changeModal({receptions: data?.data?.receptions || []});
             }
         }
     });
@@ -88,7 +87,16 @@ const DataTable = ({
         mutationFn: (data: IReadAllProjectAfficheScreenPlay) => readAllProjectAfficheScreenPlayService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                changeModal({screenplays: data?.data?.screenplays});
+                changeModal({screenplays: data?.data?.screenplays || []});
+            }
+        }
+    });
+
+    const readAllProjectAfficheAddressAction = useMutation({
+        mutationFn: (data: IReadAllProjectAfficheAddress) => readAllProjectAfficheAddressService(data),
+        onSuccess: async (data) => {
+            if (!data.error) {
+                changeModal({addresses: data?.data?.addresses || []});
             }
         }
     });
@@ -155,6 +163,7 @@ const DataTable = ({
             readProjectAfficheAction.mutate({
                 project_id: modal?.data?.project_id,
                 affiche_id: modal?.data?.affiche_id,
+                get_last: 0
             });
         }
     }, [modal?.isOpen]);
@@ -164,6 +173,7 @@ const DataTable = ({
             readAllProjectAfficheActorAction.mutate({
                 project_id: modal?.data?.project_id,
                 affiche_id: modal?.data?.affiche_id,
+                get_last: 0
             });
         }
     }, [modal?.isOpen]);
@@ -173,6 +183,7 @@ const DataTable = ({
             readAllProjectAfficheMemberAction.mutate({
                 project_id: modal?.data?.project_id,
                 affiche_id: modal?.data?.affiche_id,
+                get_last: 0
             });
         }
     }, [modal?.isOpen]);
@@ -182,6 +193,7 @@ const DataTable = ({
             readAllProjectAfficheReceptionAction.mutate({
                 project_id: modal?.data?.project_id,
                 affiche_id: modal?.data?.affiche_id,
+                get_last: 0
             });
         }
     }, [modal?.isOpen]);
@@ -192,7 +204,18 @@ const DataTable = ({
                 project_id: modal?.data?.project_id,
                 affiche_id: modal?.data?.affiche_id,
                 page: 1,
-                per_page: 96
+                per_page: 96,
+                get_last: 0
+            });
+        }
+    }, [modal?.isOpen]);
+
+    useLayoutEffect(() => {
+        if (modal.data) {
+            readAllProjectAfficheAddressAction.mutate({
+                project_id: modal?.data?.project_id,
+                affiche_id: modal?.data?.affiche_id,
+                get_last: 0,
             });
         }
     }, [modal?.isOpen]);
@@ -252,8 +275,6 @@ const DataTable = ({
                     />
                 )
             }
-
-            <Tooltip/>
         </>
     )
 }

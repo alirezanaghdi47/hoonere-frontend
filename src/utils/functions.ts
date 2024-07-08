@@ -3,7 +3,7 @@ import {DateObject} from "react-multi-date-picker";
 import gregorian from "react-date-object/calendars/gregorian";
 import gregorian_en from "react-date-object/locales/gregorian_en";
 import persian from "react-date-object/calendars/persian";
-import persian_en from "react-date-object/locales/persian_en";
+import persian_fa from "react-date-object/locales/persian_fa";
 
 // assets
 import iranianBanks from "../../public/assets/data/iranian-banks.json";
@@ -64,9 +64,19 @@ export const hexToRgba = (hex, alpha = 1) => {
 
 export const generateRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
-export const convertJalaliToGregorian = (date) => new DateObject(toEnglishDigits(date)).convert(gregorian, gregorian_en).format("YYYY-MM-DD");
+export const convertJalaliToGregorian = (date) => new DateObject({
+    date: date,
+    format: "YYYY-MM-DD",
+    calendar: persian,
+    locale: persian_fa
+}).convert(gregorian, gregorian_en).format("YYYY-MM-DD");
 
-export const convertGregorianToJalali = (date) => new DateObject(toEnglishDigits(date)).convert(persian, persian_en).format("YYYY-MM-DD");
+export const convertGregorianToJalali = (date) => new DateObject({
+    date: date,
+    format: "YYYY-MM-DD",
+    calendar: gregorian,
+    locale: gregorian_en
+}).convert(persian, persian_fa).format("YYYY-MM-DD");
 
 export const generateTimeWithSecond = (time) => time + ":00";
 

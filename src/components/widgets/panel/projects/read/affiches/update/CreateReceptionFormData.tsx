@@ -57,6 +57,8 @@ const CreateReceptionFormData = ({updateProjectAfficheP2Form, resetPart}) => {
                 ...updateProjectAfficheP2Form.values.receptions.filter(reception => JSON.stringify(reception) !== JSON.stringify(result)),
                 {
                     ...result,
+                    foa_id: createProjectAfficheUserForm.values.foa_parent_id,
+                    foa_child_id: user?.foa_child_id,
                     reception_name: reception?.title,
                     full_name: user?.first_name + " " + user?.last_name,
                     is_fake: user?.is_fake

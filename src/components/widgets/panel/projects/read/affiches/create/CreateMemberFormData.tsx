@@ -56,6 +56,8 @@ const CreateMemberFormData = ({createProjectAfficheP2Form, resetPart}) => {
                 ...createProjectAfficheP2Form.values.members.filter(member => JSON.stringify(member) !== JSON.stringify(result)),
                 {
                     ...result,
+                    foa_id: createProjectAfficheUserForm.values.foa_parent_id,
+                    foa_child_id: user?.foa_child_id,
                     coming_time: generateTimeWithSecond(result.coming_time),
                     full_name: user?.first_name + " " + user?.last_name,
                     is_fake: user?.is_fake

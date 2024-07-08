@@ -2,6 +2,7 @@
 import {useRef} from "react";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import {format} from "date-fns-jalali";
 import {LuPrinter, LuX} from "react-icons/lu";
 
 // modules
@@ -10,10 +11,12 @@ import Modal from "@/modules/Modal.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 
 // utils
-import {generateTimeWithoutSecond} from "@/utils/functions.ts";
+import {convertGregorianToJalali, generateTimeWithoutSecond,} from "@/utils/functions.ts";
 
 const ReadHistoryModal = ({modal, _handleHideModal}) => {
     const printRef = useRef();
+
+    console.log(modal?.data)
 
     const _handlePrint = async () => {
         await html2canvas(printRef.current, {scale: 2}).then((canvas) => {
@@ -123,20 +126,22 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                 >
                                     جلسه :
                                     &nbsp;
+                                    {modal?.data?.number_string}
                                 </Typography>
                             </td>
 
                             <td
                                 colSpan={2}
                                 rowSpan={1}
-                                className="text-start align-center border-bottom-2 border-solid border-secondary p-2"
+                                className="text-start align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                             >
                                 <Typography
                                     size="xs"
                                     color="dark"
                                 >
-                                    روز :
+                                    ساعت کلید :
                                     &nbsp;
+                                    {generateTimeWithoutSecond(modal?.data?.start_time)}
                                 </Typography>
                             </td>
 
@@ -150,7 +155,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                     color="dark"
                                     isBold
                                 >
-
+                                    {modal?.data?.title}
                                 </Typography>
                             </td>
 
@@ -163,8 +168,9 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                     size="xs"
                                     color="dark"
                                 >
-                                    ایام هفته :
+                                    روز :
                                     &nbsp;
+                                    {format(modal?.data?.affiche_date, "EEEE")}
                                 </Typography>
                             </td>
 
@@ -179,6 +185,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                 >
                                     تاریخ :
                                     &nbsp;
+                                    {convertGregorianToJalali(modal?.data?.affiche_date)}
                                 </Typography>
                             </td>
                         </tr>
@@ -217,9 +224,9 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                         {/* وضعیت آفیش */}
                         <tr>
                             <td
-                                colSpan={1}
+                                colSpan={3}
                                 rowSpan={1}
-                                className="text-start align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                className="text-start align-center border-right-2 border-solid border-secondary p-2"
                             >
                                 <Typography
                                     size="xs"
@@ -227,13 +234,14 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                 >
                                     داخلی :
                                     &nbsp;
+                                    {["1" , "3"].includes(modal?.data?.location_side_id) && "*"}
                                 </Typography>
                             </td>
 
                             <td
-                                colSpan={1}
+                                colSpan={3}
                                 rowSpan={1}
-                                className="text-start align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                className="text-start align-center border-right-2 border-solid border-secondary p-2"
                             >
                                 <Typography
                                     size="xs"
@@ -241,13 +249,14 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                 >
                                     خارجی :
                                     &nbsp;
+                                    {["2" , "3"].includes(modal?.data?.location_side_id) && "*"}
                                 </Typography>
                             </td>
 
                             <td
-                                colSpan={1}
+                                colSpan={3}
                                 rowSpan={1}
-                                className="text-start align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                className="text-start align-center border-right-2 border-solid border-secondary p-2"
                             >
                                 <Typography
                                     size="xs"
@@ -255,13 +264,14 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                 >
                                     روز :
                                     &nbsp;
+                                    {["1" , "3"].includes(modal?.data?.time_type_id) && "*"}
                                 </Typography>
                             </td>
 
                             <td
-                                colSpan={1}
+                                colSpan={3}
                                 rowSpan={1}
-                                className="text-start align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                className="text-start align-center border-solid border-secondary p-2"
                             >
                                 <Typography
                                     size="xs"
@@ -269,36 +279,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                 >
                                     شب :
                                     &nbsp;
-                                </Typography>
-                            </td>
-
-                            <td
-                                colSpan={4}
-                                rowSpan={1}
-                                className="text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
-                            >
-                                <Typography
-                                    size="xs"
-                                    color="dark"
-                                >
-                                    ساعت کلید :
-                                    &nbsp;
-                                    {generateTimeWithoutSecond(modal?.data?.start_time)}
-                                </Typography>
-                            </td>
-
-                            <td
-                                colSpan={4}
-                                rowSpan={1}
-                                className="text-start align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
-                            >
-                                <Typography
-                                    size="xs"
-                                    color="dark"
-                                >
-                                    لوکیشن :
-                                    &nbsp;
-                                    {modal?.data?.address}
+                                    {["2" , "3"].includes(modal?.data?.time_type_id) && "*"}
                                 </Typography>
                             </td>
                         </tr>
@@ -482,7 +463,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                     }
 
                                     {
-                                        (Math.max(modal?.data?.actors?.length , modal?.data?.screenplays?.length) - modal?.data?.actors?.length > 0) && Array(Math.max(modal?.data?.actors?.length , modal?.data?.screenplays?.length) - modal?.data?.actors?.length).fill("").map((blank, index) =>
+                                        (Math.max(modal?.data?.actors?.length, modal?.data?.screenplays?.length) - modal?.data?.actors?.length > 0) && Array(Math.max(modal?.data?.actors?.length, modal?.data?.screenplays?.length) - modal?.data?.actors?.length).fill("").map((blank, index) =>
                                             <tr key={index}>
                                                 <td
                                                     colSpan={1}
@@ -914,7 +895,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                     }
 
                                     {
-                                        (Math.max(modal?.data?.members?.length , modal?.data?.receptions?.length) - modal?.data?.members?.length > 0) && Array(Math.max(modal?.data?.members?.length , modal?.data?.receptions?.length) - modal?.data?.members?.length).fill("").map((blank, index) =>
+                                        (Math.max(modal?.data?.members?.length, modal?.data?.receptions?.length) - modal?.data?.members?.length > 0) && Array(Math.max(modal?.data?.members?.length, modal?.data?.receptions?.length) - modal?.data?.members?.length).fill("").map((blank, index) =>
                                             <tr key={index}>
                                                 <td
                                                     colSpan={1}
@@ -1338,34 +1319,107 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                         {/*    </td>*/}
                         {/*</tr>*/}
 
-                        {/* آدرس و مدیر برنامه ریز */}
+                        {/* آدرس ها */}
                         <tr>
                             <td
-                                colSpan={9}
+                                colSpan={12}
                                 rowSpan={1}
-                                className="text-start align-center border-right-2 border-top-2 border-bottom-2 border-solid border-secondary p-2"
+                                className="p-0"
                             >
-                                <Typography
-                                    size="xs"
-                                    color="dark"
-                                >
-                                    آدرس استقرار گروه :
-                                    &nbsp;
-                                </Typography>
-                            </td>
+                                <table className="table table-borderless mb-0">
+                                    <colgroup>
+                                        <col width={100}/>
+                                        <col width={100}/>
+                                        <col width={100}/>
+                                        <col width={100}/>
+                                        <col width={100}/>
+                                        <col width={100}/>
+                                        <col width={100}/>
+                                        <col width={100}/>
+                                        <col width={100}/>
+                                        <col width={100}/>
+                                        <col width={100}/>
+                                        <col width={100}/>
+                                    </colgroup>
 
-                            <td
-                                colSpan={3}
-                                rowSpan={1}
-                                className="text-start align-center border-top-2 border-solid border-secondary p-2"
-                            >
-                                <Typography
-                                    size="xs"
-                                    color="dark"
-                                >
-                                    مدیر برنامه ریز :
-                                    &nbsp;
-                                </Typography>
+                                    <tbody>
+                                    <tr>
+                                        <td
+                                            colSpan={12}
+                                            rowSpan={1}
+                                            className="bg-secondary text-center align-center p-2"
+                                        >
+                                            <Typography
+                                                size="xs"
+                                                color="dark"
+                                                isBold
+                                            >
+                                                آدرس ها
+                                            </Typography>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td
+                                            colSpan={1}
+                                            rowSpan={1}
+                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                        >
+                                            <Typography
+                                                size="xs"
+                                                color="dark"
+                                            >
+                                                ردیف
+                                            </Typography>
+                                        </td>
+
+                                        <td
+                                            colSpan={11}
+                                            rowSpan={1}
+                                            className="bg-light-dark text-center align-center border-bottom-2 border-solid border-secondary p-2"
+                                        >
+                                            <Typography
+                                                size="xs"
+                                                color="dark"
+                                            >
+                                                لوکیشن
+                                            </Typography>
+                                        </td>
+                                    </tr>
+
+                                    {
+                                        modal?.data?.addresses?.map((address, index) =>
+                                            <tr key={address.id}>
+                                                <td
+                                                    colSpan={1}
+                                                    rowSpan={1}
+                                                    className="text-center align-center border-right-2 border-solid border-secondary p-2"
+                                                >
+                                                    <Typography
+                                                        size="xs"
+                                                        color="dark"
+                                                    >
+                                                        {index}
+                                                    </Typography>
+                                                </td>
+
+                                                <td
+                                                    colSpan={11}
+                                                    rowSpan={1}
+                                                    className="text-start align-center border-bottom-2 border-solid border-secondary p-2"
+                                                >
+                                                    <Typography
+                                                        size="xs"
+                                                        color="dark"
+                                                    >
+                                                        {address?.address}
+                                                    </Typography>
+                                                </td>
+                                            </tr>
+                                        )
+                                    }
+                                    </tbody>
+                                </table>
                             </td>
                         </tr>
                         </tbody>

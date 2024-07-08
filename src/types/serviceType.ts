@@ -197,6 +197,7 @@ export interface IReadAllProjectAffiche {
 export interface IReadProjectAffiche {
     project_id: string,
     affiche_id: string,
+    get_last: number
 }
 
 export interface IReadAllProjectMembersByFoa {
@@ -205,19 +206,28 @@ export interface IReadAllProjectMembersByFoa {
     project_id: string
 }
 
+export interface IReadAllProjectAfficheAddress {
+    project_id: string,
+    affiche_id: string,
+    get_last: number
+}
+
 export interface IReadAllProjectAfficheActor {
     project_id: string,
-    affiche_id: string
+    affiche_id: string,
+    get_last: number
 }
 
 export interface IReadAllProjectAfficheMember {
     project_id: string,
-    affiche_id: string
+    affiche_id: string,
+    get_last: number
 }
 
 export interface IReadAllProjectAfficheReception {
     project_id: string,
-    affiche_id: string
+    affiche_id: string,
+    get_last: number
 }
 
 export interface IReadAllProjectAfficheScreenPlay {
@@ -228,12 +238,15 @@ export interface IReadAllProjectAfficheScreenPlay {
     sequence: string,
     page: number,
     per_page: number,
+    get_last: number
 }
 
 export interface ICreateProjectAffiche {
     project_id: string,
     title: string,
     description: string,
+    time_type_id: string,
+    location_side_id: string,
     type: string,
     is_off: number,
     affiche_date: string,
@@ -252,6 +265,8 @@ export interface IUpdateProjectAffiche {
     affiche_id: string,
     title: string,
     description: string,
+    time_type_id: string,
+    location_side_id: string,
     type: string,
     is_off: number,
     affiche_date: string,

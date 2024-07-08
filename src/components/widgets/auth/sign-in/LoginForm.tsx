@@ -77,7 +77,7 @@ const LoginForm = () => {
         validationSchema: loginSchema,
         onSubmit: async (result) => {
             loginAction.mutate({
-                ...result ,
+                ...result,
                 captcha: toEnglishDigits(result.captcha)
             });
         }

@@ -8,7 +8,6 @@ import IconButton from "@/modules/IconButton.tsx";
 import Button from "@/modules/Button.tsx";
 import Form from "@/modules/Form.tsx";
 import SelectBox from "@/modules/SelectBox.tsx";
-import Tooltip from "@/modules/Tooltip.tsx";
 
 // services
 import {readAllJobService, readAllProjectTypeService, readAllUserStatusService} from "@/services/publicService.ts";
@@ -234,8 +233,6 @@ const Filter = ({
                     )
                 }
             </div>
-
-            <Tooltip/>
         </>
     )
 }

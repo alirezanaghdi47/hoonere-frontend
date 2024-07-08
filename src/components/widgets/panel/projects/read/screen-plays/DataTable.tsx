@@ -16,7 +16,6 @@ import toast from "@/helpers/toast.tsx";
 
 // modules
 import Table from "@/modules/Table.tsx";
-import Tooltip from "@/modules/Tooltip.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 
 // services
@@ -153,49 +152,45 @@ const DataTable = ({
     );
 
     return (
-        <>
-            <div className="card w-100">
-                <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
-                    <Filter
-                        readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
-                        filter={filter}
-                        initialFilter={initialFilter}
-                        changeFilter={changeFilter}
-                        isOpenFilter={isOpenFilter}
-                        showFilter={showFilter}
-                        hideFilter={hideFilter}
-                        resetFilter={resetFilter}
-                    />
+        <div className="card w-100">
+            <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
+                <Filter
+                    readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
+                    filter={filter}
+                    initialFilter={initialFilter}
+                    changeFilter={changeFilter}
+                    isOpenFilter={isOpenFilter}
+                    showFilter={showFilter}
+                    hideFilter={hideFilter}
+                    resetFilter={resetFilter}
+                />
 
-                    {
-                        readAllProjectScreenPlayAction.data?.data?.screenplays.length > 0 && (
-                            <Table
-                                data={readAllProjectScreenPlayAction?.data?.data?.screenplays}
-                                columns={tableColumns}
-                            />
-                        )
-                    }
+                {
+                    readAllProjectScreenPlayAction.data?.data?.screenplays.length > 0 && (
+                        <Table
+                            data={readAllProjectScreenPlayAction?.data?.data?.screenplays}
+                            columns={tableColumns}
+                        />
+                    )
+                }
 
-                    {
-                        readAllProjectScreenPlayAction.data?.data?.screenplays.length === 0 && (
-                            <Empty
-                                title="پروژه ای یافت نشد"
-                                width="100%"
-                                height={300}
-                            />
-                        )
-                    }
+                {
+                    readAllProjectScreenPlayAction.data?.data?.screenplays.length === 0 && (
+                        <Empty
+                            title="پروژه ای یافت نشد"
+                            width="100%"
+                            height={300}
+                        />
+                    )
+                }
 
-                    <Finder
-                        readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
-                        filter={filter}
-                        changeFilter={changeFilter}
-                    />
-                </div>
+                <Finder
+                    readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
+                    filter={filter}
+                    changeFilter={changeFilter}
+                />
             </div>
-
-            <Tooltip/>
-        </>
+        </div>
     )
 }
 

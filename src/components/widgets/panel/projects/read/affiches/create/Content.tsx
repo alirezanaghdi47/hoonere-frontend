@@ -36,11 +36,7 @@ import {
     createProjectAfficheP2Schema,
     createProjectAfficheP3Schema
 } from "@/utils/validations.ts";
-import {
-    convertJalaliToGregorian,
-    generateTimeWithSecond,
-    toEnglishDigits
-} from "@/utils/functions.ts";
+import {convertJalaliToGregorian, generateTimeWithSecond} from "@/utils/functions.ts";
 
 const Content = () => {
     const params = useParams();
@@ -90,15 +86,15 @@ const Content = () => {
         initialValues: {
             title: "",
             description: "",
+            time_type_id: "",
+            location_side_id: "",
             type: "",
             is_off: 0,
             affiche_date: new Date(),
             start_date: "",
             coming_time: "",
             start_time: "",
-            address: "",
-            lat: "",
-            lon: "",
+            addresses: [],
             auto_motivation_sentence: 1,
             motivation_sentence: "",
         },
@@ -106,8 +102,8 @@ const Content = () => {
         onSubmit: async (result) => {
             changeStep({
                 ...result,
-                affiche_date: convertJalaliToGregorian(toEnglishDigits(result.affiche_date)),
-                start_date: convertJalaliToGregorian(toEnglishDigits(result.start_date)),
+                affiche_date: convertJalaliToGregorian(result.affiche_date),
+                start_date: convertJalaliToGregorian(result.start_date),
                 coming_time: generateTimeWithSecond(result.coming_time),
                 start_time: generateTimeWithSecond(result.coming_time),
             });

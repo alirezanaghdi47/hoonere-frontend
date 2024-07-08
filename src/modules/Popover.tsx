@@ -8,7 +8,7 @@ import "@/styles/modules/popover.scss";
 // types
 import {TPopover} from "@/types/moduleType.ts";
 
-const Popover = ({children, content, trigger, position , ...props}: TPopover) => {
+const Popover = ({children, content, trigger, position = 'center center' , ...props}: TPopover) => {
     return (
         <Popup
             trigger={<span>{content}</span>}

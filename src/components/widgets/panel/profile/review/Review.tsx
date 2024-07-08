@@ -13,7 +13,7 @@ const Review = ({readMyProfileAction}) => {
             <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
                 <div className="row gy-5 w-100">
                     <div className="col-lg-4">
-                    <Form.Label
+                        <Form.Label
                             label="تصویر جلو کارت ملی"
                             size="sm"
                             color="muted"

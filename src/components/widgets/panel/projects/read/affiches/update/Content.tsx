@@ -22,7 +22,7 @@ import useFilter from "@/hooks/useFilter.tsx";
 
 // services
 import {
-    readAllProjectAfficheActorService,
+    readAllProjectAfficheActorService, readAllProjectAfficheAddressService,
     readAllProjectAfficheMemberService,
     readAllProjectAfficheReceptionService,
     readAllProjectAfficheScreenPlayService,
@@ -40,7 +40,7 @@ import {
     IReadAllProjectAfficheMember,
     IReadAllProjectAfficheReception,
     IReadAllProjectAfficheScreenPlay,
-    IReadProjectAffiche,
+    IReadProjectAffiche, IReadAllProjectAfficheAddress,
 } from "@/types/serviceType.ts";
 
 // utils
@@ -50,6 +50,7 @@ import {
     updateProjectAfficheP3Schema
 } from "@/utils/validations.ts";
 import {
+    convertGregorianToJalali,
     convertJalaliToGregorian,
     generateTimeWithoutSecond,
     generateTimeWithSecond,
@@ -86,6 +87,10 @@ const Content = () => {
         mutationFn: (data: IReadAllProjectAfficheActor) => readAllProjectAfficheActorService(data),
     });
 
+    const readAllProjectAfficheAddressAction = useMutation({
+        mutationFn: (data: IReadAllProjectAfficheAddress) => readAllProjectAfficheAddressService(data),
+    });
+
     const readAllProjectAfficheMemberAction = useMutation({
         mutationFn: (data: IReadAllProjectAfficheMember) => readAllProjectAfficheMemberService(data),
     });
@@ -99,6 +104,7 @@ const Content = () => {
             ...data,
             project_id: params.id,
             affiche_id: params.subId,
+            get_last: 1,
         }),
     });
 
@@ -122,13 +128,19 @@ const Content = () => {
         initialValues: {
             title: readProjectAfficheAction.data?.data?.affiche_info?.title ? readProjectAfficheAction.data?.data?.affiche_info.title : "",
             description: readProjectAfficheAction.data?.data?.affiche_info?.description ? readProjectAfficheAction.data?.data?.affiche_info.description : "",
+            time_type_id: readProjectAfficheAction.data?.data?.affiche_info?.time_type_id ? readProjectAfficheAction.data?.data?.affiche_info.time_type_id : "",
+            location_side_id: readProjectAfficheAction.data?.data?.affiche_info?.location_side_id ? readProjectAfficheAction.data?.data?.affiche_info.location_side_id : "",
             type: readProjectAfficheAction.data?.data?.affiche_info?.type ? readProjectAfficheAction.data?.data?.affiche_info.type : "",
             is_off: readProjectAfficheAction.data?.data?.affiche_info?.is_off ? parseInt(readProjectAfficheAction.data?.data?.affiche_info.is_off) : 0,
-            affiche_date: readProjectAfficheAction.data?.data?.affiche_info?.affiche_date ? readProjectAfficheAction.data?.data?.affiche_info.affiche_date : "",
-            start_date: readProjectAfficheAction.data?.data?.affiche_info?.start_date ? readProjectAfficheAction.data?.data?.affiche_info.start_date : "",
+            affiche_date: readProjectAfficheAction.data?.data?.affiche_info?.affiche_date ? convertGregorianToJalali(readProjectAfficheAction.data?.data?.affiche_info.affiche_date) : "",
+            start_date: readProjectAfficheAction.data?.data?.affiche_info?.start_date ? convertGregorianToJalali(readProjectAfficheAction.data?.data?.affiche_info.start_date) : "",
             coming_time: readProjectAfficheAction.data?.data?.affiche_info?.coming_time ? generateTimeWithoutSecond(readProjectAfficheAction.data?.data?.affiche_info.coming_time) : "",
             start_time: readProjectAfficheAction.data?.data?.affiche_info?.start_time ? generateTimeWithoutSecond(readProjectAfficheAction.data?.data?.affiche_info.start_time) : "",
-            address: readProjectAfficheAction.data?.data?.affiche_info?.address ? readProjectAfficheAction.data?.data?.affiche_info.address : "",
+            addresses: readAllProjectAfficheAddressAction.data?.data?.addresses.length > 0 ? readAllProjectAfficheAddressAction.data?.data?.addresses.map(address => ({
+                address: address?.address,
+                lat: address?.lat,
+                lon: address?.lon,
+            })) : [],
             lat: readProjectAfficheAction.data?.data?.affiche_info?.lat ? readProjectAfficheAction.data?.data?.affiche_info.lat : "",
             lon: readProjectAfficheAction.data?.data?.affiche_info?.lon ? readProjectAfficheAction.data?.data?.affiche_info.lon : "",
             auto_motivation_sentence: readProjectAfficheAction.data?.data?.affiche_info?.auto_motivation_sentence ? parseInt(readProjectAfficheAction.data?.data?.affiche_info.auto_motivation_sentence) : 1,
@@ -204,28 +216,40 @@ const Content = () => {
     useLayoutEffect(() => {
         readProjectAfficheAction.mutate({
             project_id: params.id,
-            affiche_id: params.subId
+            affiche_id: params.subId,
+            get_last: 1,
+        });
+    }, []);
+
+    useLayoutEffect(() => {
+        readAllProjectAfficheAddressAction.mutate({
+            project_id: params.id,
+            affiche_id: params.subId,
+            get_last: 1,
         });
     }, []);
 
     useLayoutEffect(() => {
         readAllProjectAfficheActorAction.mutate({
             project_id: params.id,
-            affiche_id: params.subId
+            affiche_id: params.subId,
+            get_last: 1,
         });
     }, []);
 
     useLayoutEffect(() => {
         readAllProjectAfficheMemberAction.mutate({
             project_id: params.id,
-            affiche_id: params.subId
+            affiche_id: params.subId,
+            get_last: 1,
         });
     }, []);
 
     useLayoutEffect(() => {
         readAllProjectAfficheReceptionAction.mutate({
             project_id: params.id,
-            affiche_id: params.subId
+            affiche_id: params.subId,
+            get_last: 1,
         });
     }, []);
 

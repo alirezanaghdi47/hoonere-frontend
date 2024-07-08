@@ -13,7 +13,6 @@ import Button from "@/modules/Button.tsx";
 import Alert from "@/modules/Alert.tsx";
 import SwitchBox from "@/modules/SwitchBox.tsx";
 import Typography from "@/modules/Typography.tsx";
-import Tooltip from "@/modules/Tooltip.tsx";
 
 // services
 import {readAllJobService, readUserInquiryService} from "@/services/publicService.ts";
@@ -331,8 +330,6 @@ const FormData = ({
                     </Button>
                 </div>
             </div>
-
-            <Tooltip/>
         </>
     )
 }

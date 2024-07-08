@@ -1,4 +1,5 @@
 // libraries
+import {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {LuUser} from "react-icons/lu";
@@ -10,16 +11,17 @@ import Tabs from "@/modules/Tabs.tsx";
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-const navbarLinks = [
-    {id: 1, label: "بررسی اجمالی", href: useAuthStore.getState().auth.panel_url + "profile#review", value: "#review"},
-    {id: 2, label: "هویتی", href: useAuthStore.getState().auth.panel_url + "profile#identify", value: "#identify"},
-    {id: 3, label: "شغلی", href: useAuthStore.getState().auth.panel_url + "profile#occupation", value: "#occupation"},
-    {id: 4, label: "مالی", href: useAuthStore.getState().auth.panel_url + "profile#financial", value: "#financial"},
-];
-
 const Summary = ({readMyProfileAction}) => {
     const location = useLocation();
     const navigate = useNavigate();
+    const {auth} = useAuthStore();
+
+    const [navbarLinks , setNavbarLinks] = useState([
+        {id: 1, label: "بررسی اجمالی", href: auth.panel_url + "profile#review", value: "#review"},
+        {id: 2, label: "هویتی", href: auth.panel_url + "profile#identify", value: "#identify"},
+        {id: 3, label: "شغلی", href: auth.panel_url + "profile#occupation", value: "#occupation"},
+        {id: 4, label: "مالی", href: auth.panel_url + "profile#financial", value: "#financial"},
+    ]);
 
     return (
         <div className="card w-100">
@@ -31,7 +33,7 @@ const Summary = ({readMyProfileAction}) => {
                         {
                             readMyProfileAction.data?.data?.user_info?.profile_img ? (
                                 <LazyLoadImage
-                                    src={readMyProfileAction?.data?.data?.user_info?.profile_img}
+                                    src={readMyProfileAction.data?.data?.user_info?.profile_img}
                                     alt="avatar"
                                     width={150}
                                     height={150}

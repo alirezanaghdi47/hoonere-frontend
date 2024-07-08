@@ -62,6 +62,7 @@ const FormDataP3 = ({
                         <Button
                             color="warning"
                             onClick={updateProjectAfficheP3Form.handleSubmit}
+                            isLoading={updateProjectAfficheP3Form.isPending}
                         >
                             ویرایش آفیش
                         </Button>

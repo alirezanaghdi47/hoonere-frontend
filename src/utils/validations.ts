@@ -201,15 +201,19 @@ export const updateProjectScreenPlaySchema = Yup.object().shape({
 export const createProjectAfficheP1Schema = Yup.object().shape({
     title: Yup.string().trim().required("عنوان آفیش الزامی است"),
     description: Yup.string().trim().required("توضیحات آفیش الزامی است"),
+    time_type_id: Yup.string().trim().required("زمان اجرا آفیش الزامی است"),
+    location_side_id: Yup.string().trim().required("سمت مکان آفیش الزامی است"),
     is_off: Yup.number(),
     type: Yup.string().trim().required("نوع فنی آفیش الزامی است"),
     affiche_date: Yup.string().trim().required("تاریخ آفیش الزامی است"),
     start_date: Yup.string().trim().required("تاریخ اجرای آفیش الزامی است"),
     coming_time: Yup.string().trim().required("ساعت حضور آفیش الزامی است"),
     start_time: Yup.string().trim().required("ساعت کلید آفیش الزامی است"),
-    address: Yup.string().trim(),
-    lat: Yup.number().required("موقعیت جغرافیای آفیش الزامی است"),
-    lon: Yup.number().required("موقعیت جغرافیای آفیش الزامی است"),
+    addresses: Yup.array().of(Yup.object().shape({
+        address: Yup.string().trim(),
+        lat: Yup.number(),
+        lon: Yup.number(),
+    })).min(1 , "آدرس آفیش الزامی است"),
     auto_motivation_sentence: Yup.number(),
     motivation_sentence: Yup.string().when("auto_motivation_sentence", {
         is: (value) => value === 0,
@@ -242,6 +246,12 @@ export const createProjectAfficheP3Schema = Yup.object().shape({
     screenplays: Yup.array().of(Yup.string().trim())
 });
 
+export const createAddressSchema = Yup.object().shape({
+    address: Yup.string().trim().required("آدرس آفیش الزامی است"),
+    lat: Yup.number(),
+    lon: Yup.number(),
+});
+
 export const createProjectAfficheUserSchema = Yup.object().shape({
     foa_parent_id: Yup.string().trim().required("گروه شغلی الزامی است"),
     foa_id: Yup.string().trim(),
@@ -268,15 +278,19 @@ export const createProjectAfficheReceptionSchema = Yup.object().shape({
 export const updateProjectAfficheP1Schema = Yup.object().shape({
     title: Yup.string().trim().required("عنوان آفیش الزامی است"),
     description: Yup.string().trim().required("توضیحات آفیش الزامی است"),
+    time_type_id: Yup.string().trim().required("زمان اجرا آفیش الزامی است"),
+    location_side_id: Yup.string().trim().required("سمت مکان آفیش الزامی است"),
     is_off: Yup.number(),
     type: Yup.string().trim().required("نوع فنی آفیش الزامی است"),
     affiche_date: Yup.string().trim().required("تاریخ آفیش الزامی است"),
     start_date: Yup.string().trim().required("تاریخ اجرای آفیش الزامی است"),
     coming_time: Yup.string().trim().required("ساعت حضور آفیش الزامی است"),
     start_time: Yup.string().trim().required("ساعت کلید آفیش الزامی است"),
-    address: Yup.string().trim(),
-    lat: Yup.number().required("موقعیت جغرافیای آفیش الزامی است"),
-    lon: Yup.number().required("موقعیت جغرافیای آفیش الزامی است"),
+    addresses: Yup.array().of(Yup.object().shape({
+        address: Yup.string().trim(),
+        lat: Yup.number(),
+        lon: Yup.number(),
+    })).min(1 , "آدرس آفیش الزامی است"),
     auto_motivation_sentence: Yup.number(),
     motivation_sentence: Yup.string().when("auto_motivation_sentence", {
         is: (value) => value === 0,

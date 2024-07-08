@@ -2,18 +2,18 @@
 import {LuPlus, LuTrash} from "react-icons/lu";
 
 // modules
-import Form from "@/modules/Form.tsx";
 import Typography from "@/modules/Typography.tsx";
 import IconButton from "@/modules/IconButton.tsx";
+import Form from "@/modules/Form.tsx";
 
 export const BlankCard = ({onClick}) => {
     return (
         <div
-            className="col-12 col-sm-6 col-md-4"
+            className="col-12"
             onClick={onClick}
         >
             <div
-                className="d-flex flex-column justify-content-center align-items-center gap-2 w-100 h-100px border-2 border-dashed border-secondary rounded-2 overflow-hidden p-5 cursor-pointer">
+                className="d-flex justify-content-center align-items-center gap-2 w-100 h-75px border-2 border-dashed border-secondary rounded-2 overflow-hidden p-5 cursor-pointer">
                 <LuPlus
                     size={20}
                     color="currentColor"
@@ -25,35 +25,26 @@ export const BlankCard = ({onClick}) => {
                     size="sm"
                     color="muted"
                 >
-                    افزودن شغل جدید
+                    افزودن آدرس جدید
                 </Typography>
             </div>
         </div>
     )
 }
 
-export const JobCard = ({group, title, onDelete}) => {
+export const AddressCard = ({location, onDelete}) => {
     return (
-        <div className="col-12 col-sm-6 col-md-4">
+        <div className="col-12">
             <div
-                className="d-flex flex-column justify-content-between align-items-center gap-5 w-100 h-100px bg-light rounded-2 p-5">
+                className="d-flex flex-column justify-content-between align-items-center gap-5 w-100 h-75px bg-light rounded-2 p-5">
                 <div className='d-flex justify-content-between align-items-center gap-2 w-100 h-100'>
-                    <div className="d-flex flex-column justify-content-center align-items-start gap-2">
-                        <Typography
-                            variant="p"
-                            size="sm"
-                            color="dark"
-                            isBold
-                        >
-                            {group?.title}
-                        </Typography>
-
+                    <div className="d-flex flex-column justify-content-start align-items-start gap-2 h-100">
                         <Typography
                             variant="p"
                             size="sm"
                             color="dark"
                         >
-                            {title?.title}
+                            {location?.address}
                         </Typography>
                     </div>
 
@@ -75,34 +66,38 @@ export const JobCard = ({group, title, onDelete}) => {
     )
 }
 
-const Jobs = ({readAllJobAction, updateOccupationForm, changeCurrentPart}) => {
+const Addresses = ({createProjectAfficheP1Form, changeCurrentPart}) => {
     return (
         <div className="card w-100">
             <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
-                <div className="row gy-5 w-100">
+                <div className="row g-5 w-100">
                     <div className="col-12">
                         <div className='d-flex flex-column justify-content-center align-items-start gap-2 w-100'>
                             <Form.Label
-                                label="مشاغل"
+                                label="آدرس ها"
                                 size="sm"
                                 color="dark"
                                 required
                             />
 
-                            <div className="row w-100 g-5">
+                            <div className='row g-5 w-100'>
                                 {
-                                    updateOccupationForm.values.fields_of_activity?.map((foa, i) =>
-                                        <JobCard
+                                    createProjectAfficheP1Form.values.addresses?.map((item, i) =>
+                                        <AddressCard
                                             key={i}
-                                            group={readAllJobAction.data?.data?.fieldsOfActivity.find(item => parseInt(item.id) === parseInt(foa.foa_parent_id))}
-                                            title={readAllJobAction.data?.data?.fieldsOfActivity.find(item => parseInt(item.id) === parseInt(foa.foa_child_id))}
-                                            onDelete={() => updateOccupationForm.setFieldValue("fields_of_activity", updateOccupationForm.values.fields_of_activity.filter((item, j) => i !== j))}
+                                            location={item}
+                                            onDelete={() => createProjectAfficheP1Form.setFieldValue("addresses", createProjectAfficheP1Form.values.addresses.filter((subItem, j) => i !== j))}
                                         />
                                     )
                                 }
 
                                 <BlankCard onClick={() => changeCurrentPart("create")}/>
                             </div>
+
+                            <Form.Error
+                                error={createProjectAfficheP1Form.errors.addresses}
+                                touched={createProjectAfficheP1Form.touched.addresses}
+                            />
                         </div>
                     </div>
                 </div>
@@ -111,4 +106,4 @@ const Jobs = ({readAllJobAction, updateOccupationForm, changeCurrentPart}) => {
     )
 }
 
-export default Jobs;
+export default Addresses;

@@ -29,7 +29,7 @@ export const readAllProjectMemberService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -54,7 +54,7 @@ export const createProjectMemberService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -79,7 +79,7 @@ export const updateProjectMemberService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -104,7 +104,7 @@ export const readProjectMemberService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -129,6 +129,6 @@ export const deleteProjectMemberService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }

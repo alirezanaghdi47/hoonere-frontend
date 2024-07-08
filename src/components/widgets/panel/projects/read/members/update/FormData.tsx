@@ -9,7 +9,6 @@ import SelectBox from "@/modules/SelectBox.tsx";
 import TextInput from "@/modules/TextInput.tsx";
 import Button from "@/modules/Button.tsx";
 import Alert from "@/modules/Alert.tsx";
-import Tooltip from "@/modules/Tooltip.tsx";
 
 // services
 import {readAllJobService} from "@/services/publicService.ts";
@@ -256,8 +255,6 @@ const FormData = ({
                     </Button>
                 </div>
             </div>
-
-            <Tooltip/>
         </>
     )
 }

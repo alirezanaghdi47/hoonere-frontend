@@ -139,7 +139,7 @@ export const BankCard = ({card, dropdownOptions}) => {
     )
 }
 
-const Banks = ({readMyAllBankCardAction , readMyProfileAction, changePart, changeCurrentPart}) => {
+const Banks = ({readMyAllBankCardAction, readMyProfileAction, changePart, changeCurrentPart}) => {
     const changeStatusOfBankCardAction = useMutation({
         mutationFn: (data: IChangeStatusOfBankCard) => changeStatusOfBankCardService(data),
         onSuccess: async (data) => {
@@ -168,66 +168,70 @@ const Banks = ({readMyAllBankCardAction , readMyProfileAction, changePart, chang
 
     return (
         <div className="card w-100">
-            <div className="card-body d-flex flex-column gap-5">
-                <div className="row">
-                    <Form.Label
-                        label="کارت های بانکی"
-                        size="sm"
-                        color="dark"
-                        required
-                    />
-                </div>
-
-                <div className="row gy-5">
-                    {
-                        readMyAllBankCardAction?.data?.data?.cards?.map(bankCard =>
-                            <BankCard
-                                key={bankCard.id}
-                                card={bankCard}
-                                dropdownOptions={[
-                                    {
-                                        id: 1,
-                                        label: "انتخاب پیش فرض",
-                                        onClick: () => {
-                                            changeStatusOfBankCardAction.mutate({card_id: bankCard?.id.toString()});
-                                        }
-                                    },
-                                    {
-                                        id: 2,
-                                        label: "ویرایش",
-                                        onClick: () => {
-                                            changePart(bankCard);
-                                            changeCurrentPart("update");
-                                        }
-                                    },
-                                    {
-                                        id: 3,
-                                        label: "حذف",
-                                        onClick: () => dialog(
-                                            "حذف کارت",
-                                            "آیا میخواهید این کارت را حذف کنید ؟",
-                                            "info",
-                                            {
-                                                show: true,
-                                                text: "حذف",
-                                                color: "danger",
-                                            },
-                                            {
-                                                show: true,
-                                                text: "انصراف",
-                                                color: "light-dark",
-                                            },
-                                            async () => {
-                                                deleteBankCardAction.mutate({card_id: bankCard?.id.toString()});
-                                            }
-                                        )
-                                    }
-                                ]}
+            <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
+                <div className="row gy-5 w-100">
+                    <div className="col-12">
+                        <div className='d-flex flex-column justify-content-center align-items-start gap-2 w-100'>
+                            <Form.Label
+                                label="کارت های بانکی"
+                                size="sm"
+                                color="dark"
+                                required
                             />
-                        )
-                    }
 
-                    <BlankCard onClick={() => changeCurrentPart("create")}/>
+                            <div className="row g-5 w-100">
+                                {
+                                    readMyAllBankCardAction?.data?.data?.cards?.map(bankCard =>
+                                        <BankCard
+                                            key={bankCard.id}
+                                            card={bankCard}
+                                            dropdownOptions={[
+                                                {
+                                                    id: 1,
+                                                    label: "انتخاب پیش فرض",
+                                                    onClick: () => {
+                                                        changeStatusOfBankCardAction.mutate({card_id: bankCard?.id.toString()});
+                                                    }
+                                                },
+                                                {
+                                                    id: 2,
+                                                    label: "ویرایش",
+                                                    onClick: () => {
+                                                        changePart(bankCard);
+                                                        changeCurrentPart("update");
+                                                    }
+                                                },
+                                                {
+                                                    id: 3,
+                                                    label: "حذف",
+                                                    onClick: () => dialog(
+                                                        "حذف کارت",
+                                                        "آیا میخواهید این کارت را حذف کنید ؟",
+                                                        "info",
+                                                        {
+                                                            show: true,
+                                                            text: "حذف",
+                                                            color: "danger",
+                                                        },
+                                                        {
+                                                            show: true,
+                                                            text: "انصراف",
+                                                            color: "light-dark",
+                                                        },
+                                                        async () => {
+                                                            deleteBankCardAction.mutate({card_id: bankCard?.id.toString()});
+                                                        }
+                                                    )
+                                                }
+                                            ]}
+                                        />
+                                    )
+                                }
+
+                                <BlankCard onClick={() => changeCurrentPart("create")}/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

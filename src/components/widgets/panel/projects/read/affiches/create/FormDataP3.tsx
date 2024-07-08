@@ -62,6 +62,7 @@ const FormDataP3 = ({
                         <Button
                             color="success"
                             onClick={createProjectAfficheP3Form.handleSubmit}
+                            isLoading={createProjectAfficheP3Form.isPending}
                         >
                             افزودن آفیش
                         </Button>

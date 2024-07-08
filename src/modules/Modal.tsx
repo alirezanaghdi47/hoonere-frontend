@@ -2,9 +2,6 @@
 import ReactModal from 'react-modal';
 import classNames from "classnames";
 
-// modules
-import Tooltip from "@/modules/Tooltip.tsx";
-
 // types
 import {TModal, TModalBody, TModalFooter, TModalHeader} from "@/types/moduleType.ts";
 
@@ -50,8 +47,6 @@ const Modal = ({children, isOpen, onClose, width = "md", height = "content", pos
             }}
         >
             {children}
-
-            <Tooltip/>
         </ReactModal>
     )
 }

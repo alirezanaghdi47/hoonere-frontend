@@ -116,44 +116,46 @@ const ScreenPlays = ({
             <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
                 <div className="row gy-5 w-100">
                     <div className="col-12">
-                        <Form.Label
-                            label="فیلم نامه ها"
-                            size="sm"
-                            color="dark"
-                            required
-                        />
-
-                        <div className="row w-100 mt-5">
-                            <ScreenPlaysFilter
-                                filter={filter}
-                                initialFilter={initialFilter}
-                                changeFilter={changeFilter}
-                                isOpenFilter={isOpenFilter}
-                                showFilter={showFilter}
-                                hideFilter={hideFilter}
-                                resetFilter={resetFilter}
-                                readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
+                        <div className='d-flex flex-column justify-content-center align-items-start gap-2 w-100'>
+                            <Form.Label
+                                label="فیلم نامه ها"
+                                size="sm"
+                                color="dark"
+                                required
                             />
-                        </div>
 
-                        <div className='row w-100'>
-                            {
-                                readAllProjectScreenPlayAction.data?.data?.screenplays?.map((screenPlay, i) =>
-                                    <ScreenPlayCard
-                                        key={i}
-                                        screenPlay={screenPlay}
-                                        createProjectAfficheP3Form={createProjectAfficheP3Form}
-                                    />
-                                )
-                            }
-                        </div>
+                            <div className="row w-100">
+                                <ScreenPlaysFilter
+                                    filter={filter}
+                                    initialFilter={initialFilter}
+                                    changeFilter={changeFilter}
+                                    isOpenFilter={isOpenFilter}
+                                    showFilter={showFilter}
+                                    hideFilter={hideFilter}
+                                    resetFilter={resetFilter}
+                                    readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
+                                />
+                            </div>
 
-                        <div className="row w-100 mt-5">
-                            <ScreenPlaysFinder
-                                readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
-                                filter={filter}
-                                changeFilter={changeFilter}
-                            />
+                            <div className='row g-5 w-100'>
+                                {
+                                    readAllProjectScreenPlayAction.data?.data?.screenplays?.map((screenPlay, i) =>
+                                        <ScreenPlayCard
+                                            key={i}
+                                            screenPlay={screenPlay}
+                                            createProjectAfficheP3Form={createProjectAfficheP3Form}
+                                        />
+                                    )
+                                }
+                            </div>
+
+                            <div className="row w-100">
+                                <ScreenPlaysFinder
+                                    readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
+                                    filter={filter}
+                                    changeFilter={changeFilter}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

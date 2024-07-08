@@ -6,6 +6,9 @@ import {BrowserRouter} from "react-router-dom";
 import {ErrorBoundary} from "react-error-boundary";
 import App from './App.tsx';
 
+// modules
+import Tooltip from "@/modules/Tooltip.tsx";
+
 // pages
 const Server = Loadable(() => import('@/pages/blank/server'));
 
@@ -21,6 +24,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 <QueryProvider>
                     <ThemeProvider>
                         <App/>
+
+                        <Tooltip/>
                     </ThemeProvider>
                 </QueryProvider>
             </BrowserRouter>

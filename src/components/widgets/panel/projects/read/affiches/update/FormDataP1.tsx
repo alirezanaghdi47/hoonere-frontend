@@ -3,6 +3,13 @@ import {useLayoutEffect} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 
+// components
+import Addresses from "@/components/widgets/panel/projects/read/affiches/update/Addresses.tsx";
+import CreateAddressFormData from "@/components/widgets/panel/projects/read/affiches/update/CreateAddressFormData.tsx";
+
+// hooks
+import usePart from "@/hooks/usePart.tsx";
+
 // modules
 import Form from "@/modules/Form.tsx";
 import TextInput from "@/modules/TextInput.tsx";
@@ -12,10 +19,13 @@ import TimePicker from "@/modules/TimePicker.tsx";
 import SwitchBox from "@/modules/SwitchBox.tsx";
 import SelectBox from "@/modules/SelectBox.tsx";
 import Button from "@/modules/Button.tsx";
-import LocationPicker from "@/modules/LocationPicker.tsx";
 
 // services
-import {readAllAfficheTypeService} from "@/services/publicService.ts";
+import {
+    readAllAfficheTypeService,
+    readAllScreenPlayLocationSideService,
+    readAllScreenPlayTimeTypeService
+} from "@/services/publicService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
@@ -23,6 +33,15 @@ import useAuthStore from "@/stores/authStore.ts";
 const FormDataP1 = ({updateProjectAfficheP1Form}) => {
     const params = useParams();
     const {auth} = useAuthStore();
+    const {currentPart, resetPart, changeCurrentPart} = usePart(null, "read");
+
+    const readAllScreenPlayTimeTypeAction = useMutation({
+        mutationFn: () => readAllScreenPlayTimeTypeService(),
+    });
+
+    const readAllScreenPlayLocationSideAction = useMutation({
+        mutationFn: () => readAllScreenPlayLocationSideService(),
+    });
 
     const readAllAfficheTypeAction = useMutation({
         mutationFn: () => readAllAfficheTypeService(),
@@ -32,64 +51,31 @@ const FormDataP1 = ({updateProjectAfficheP1Form}) => {
         readAllAfficheTypeAction.mutate();
     }, []);
 
+    useLayoutEffect(() => {
+        readAllScreenPlayTimeTypeAction.mutate();
+        readAllScreenPlayLocationSideAction.mutate();
+    }, []);
+
     return (
         <div className="row gy-5 w-100">
             <div className="col-12 col-md-7 d-flex flex-column justify-content-start align-items-center gap-5">
-                <div className="card w-100">
-                    <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
-                        <div className="row gy-5 w-100">
-                            <div className="col-12">
-                                <Form.Group>
-                                    <Form.Label
-                                        label="آدرس"
-                                        color="dark"
-                                        size="sm"
-                                    />
+                {
+                    currentPart === "read" && (
+                        <Addresses
+                            updateProjectAfficheP1Form={updateProjectAfficheP1Form}
+                            changeCurrentPart={changeCurrentPart}
+                        />
+                    )
+                }
 
-                                    <Textarea
-                                        id="address"
-                                        name="address"
-                                        value={updateProjectAfficheP1Form.values.address}
-                                        onChange={(value) => updateProjectAfficheP1Form.setFieldValue("address", value)}
-                                    />
-
-                                    <Form.Error
-                                        error={updateProjectAfficheP1Form.errors.address}
-                                        touched={updateProjectAfficheP1Form.touched.address}
-                                    />
-                                </Form.Group>
-                            </div>
-
-                            <div className="col-12">
-                                <Form.Group>
-                                    <Form.Label
-                                        label="نقشه"
-                                        color="dark"
-                                        required
-                                        size="sm"
-                                    />
-
-                                    <LocationPicker
-                                        height={300}
-                                        location={{
-                                            lat: updateProjectAfficheP1Form.values.lat ? Number(updateProjectAfficheP1Form.values.lat) : 0,
-                                            lon: updateProjectAfficheP1Form.values.lon ? Number(updateProjectAfficheP1Form.values.lon) : 0
-                                        }}
-                                        setLocation={(value) => {
-                                            updateProjectAfficheP1Form.setFieldValue("lat", value.lat.toString());
-                                            updateProjectAfficheP1Form.setFieldValue("lon", value.lon.toString());
-                                        }}
-                                    />
-
-                                    <Form.Error
-                                        error={updateProjectAfficheP1Form.errors.lat && updateProjectAfficheP1Form.errors.lon}
-                                        touched={updateProjectAfficheP1Form.touched.lat && updateProjectAfficheP1Form.touched.lon}
-                                    />
-                                </Form.Group>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {
+                    currentPart === "create" && (
+                        <CreateAddressFormData
+                            updateProjectAfficheP1Form={updateProjectAfficheP1Form}
+                            resetPart={resetPart}
+                        />
+                    )
+                }
 
                 <div className="card w-100">
                     <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
@@ -190,6 +176,72 @@ const FormDataP1 = ({updateProjectAfficheP1Form}) => {
                                     <Form.Error
                                         error={updateProjectAfficheP1Form.errors.description}
                                         touched={updateProjectAfficheP1Form.touched.description}
+                                    />
+                                </Form.Group>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="card w-100">
+                    <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
+                        <div className="row gy-5 w-100">
+                            <div className="col-12">
+                                <Form.Group>
+                                    <Form.Label
+                                        label="زمان اجرا"
+                                        color="dark"
+                                        size="sm"
+                                        required
+                                    />
+
+                                    <SelectBox
+                                        id="time_type_id"
+                                        name="time_type_id"
+                                        value={updateProjectAfficheP1Form.values.time_type_id}
+                                        options={(!readAllScreenPlayTimeTypeAction.isPending && readAllScreenPlayTimeTypeAction.data) ? readAllScreenPlayTimeTypeAction.data?.data?.screenplay_time_types?.map(screenplay_time_type => ({
+                                            label: screenplay_time_type.title,
+                                            value: screenplay_time_type.id.toString()
+                                        })) : []}
+                                        placeholder=""
+                                        isSearchable
+                                        onChange={(value) => updateProjectAfficheP1Form.setFieldValue("time_type_id", value)}
+                                        isLoading={readAllScreenPlayTimeTypeAction.isPending}
+                                    />
+
+                                    <Form.Error
+                                        error={updateProjectAfficheP1Form.errors.time_type_id}
+                                        touched={updateProjectAfficheP1Form.touched.time_type_id}
+                                    />
+                                </Form.Group>
+                            </div>
+
+                            <div className="col-12">
+                                <Form.Group>
+                                    <Form.Label
+                                        label="سمت مکان"
+                                        color="dark"
+                                        size="sm"
+                                        required
+                                    />
+
+                                    <SelectBox
+                                        id="location_side_id"
+                                        name="location_side_id"
+                                        value={updateProjectAfficheP1Form.values.location_side_id}
+                                        options={(!readAllScreenPlayLocationSideAction.isPending && readAllScreenPlayLocationSideAction.data) ? readAllScreenPlayLocationSideAction.data?.data?.screenplay_location_sides?.map(screenplay_location_side => ({
+                                            label: screenplay_location_side.title,
+                                            value: screenplay_location_side.id.toString()
+                                        })) : []}
+                                        placeholder=""
+                                        isSearchable
+                                        onChange={(value) => updateProjectAfficheP1Form.setFieldValue("location_side_id", value)}
+                                        isLoading={readAllScreenPlayLocationSideAction.isPending}
+                                    />
+
+                                    <Form.Error
+                                        error={updateProjectAfficheP1Form.errors.location_side_id}
+                                        touched={updateProjectAfficheP1Form.touched.location_side_id}
                                     />
                                 </Form.Group>
                             </div>
