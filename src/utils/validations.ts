@@ -185,6 +185,23 @@ export const createFieldSchema = Yup.object().shape({
     value: Yup.string().trim().required("مقدار الزامی است"),
 });
 
+export const createMoodBoardSchema = Yup.object().shape({
+    image: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 2 مگابایت باشد", (value: File) => {
+        if (Object.keys(value).length === 0) {
+            return true;
+        } else {
+            return value.size <= 2 * 1_024_000;
+        }
+    }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
+        if (Object.keys(value).length === 0) {
+            return true;
+        } else {
+            return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
+        }
+    }),
+    description: Yup.string().trim(),
+});
+
 export const updateProjectScreenPlaySchema = Yup.object().shape({
     description: Yup.string().trim().required("توضیحات فیلم نامه الزامی است"),
     address: Yup.string().trim().required("موقعیت فیلم نامه الزامی است"),
@@ -213,7 +230,7 @@ export const createProjectAfficheP1Schema = Yup.object().shape({
         address: Yup.string().trim(),
         lat: Yup.number(),
         lon: Yup.number(),
-    })).min(1 , "آدرس آفیش الزامی است"),
+    })).min(1, "آدرس آفیش الزامی است"),
     auto_motivation_sentence: Yup.number(),
     motivation_sentence: Yup.string().when("auto_motivation_sentence", {
         is: (value) => value === 0,
@@ -290,7 +307,7 @@ export const updateProjectAfficheP1Schema = Yup.object().shape({
         address: Yup.string().trim(),
         lat: Yup.number(),
         lon: Yup.number(),
-    })).min(1 , "آدرس آفیش الزامی است"),
+    })).min(1, "آدرس آفیش الزامی است"),
     auto_motivation_sentence: Yup.number(),
     motivation_sentence: Yup.string().when("auto_motivation_sentence", {
         is: (value) => value === 0,

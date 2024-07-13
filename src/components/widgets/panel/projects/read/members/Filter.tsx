@@ -1,4 +1,5 @@
 // libraries
+import {useLayoutEffect} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {LuList, LuSearch, LuTable, LuX} from "react-icons/lu";
 
@@ -12,7 +13,7 @@ import SelectBox from "@/modules/SelectBox.tsx";
 // services
 import {readAllJobService, readAllProjectTypeService, readAllUserStatusService} from "@/services/publicService.ts";
 
-const AdvanceFilter = ({readAllProjectMemberAction , filter, initialFilter, changeFilter, hideFilter, resetFilter}) => {
+const AdvanceFilter = ({readAllProjectMemberAction, filter, initialFilter, changeFilter, hideFilter, resetFilter}) => {
     const readAllProjectTypeAction = useMutation({
         mutationFn: () => readAllProjectTypeService(),
     });
@@ -25,11 +26,17 @@ const AdvanceFilter = ({readAllProjectMemberAction , filter, initialFilter, chan
         mutationFn: () => readAllUserStatusService(),
     });
 
-    // useLayoutEffect(() => {
-    //     readAllJobAction.mutate();
-    //     readAllUserStatusAction.mutate();
-    //     readAllProjectTypeAction.mutate();
-    // }, []);
+    useLayoutEffect(() => {
+        readAllJobAction.mutate();
+    }, []);
+
+    useLayoutEffect(() => {
+        readAllUserStatusAction.mutate();
+    }, []);
+
+    useLayoutEffect(() => {
+        readAllProjectTypeAction.mutate();
+    }, []);
 
     return (
         <div className='row gy-5 w-100'>
@@ -122,7 +129,7 @@ const AdvanceFilter = ({readAllProjectMemberAction , filter, initialFilter, chan
     )
 }
 
-const SimpleFilter = ({readAllProjectMemberAction , filter, changeFilter, showFilter , isListView , toggleView}) => {
+const SimpleFilter = ({readAllProjectMemberAction, filter, changeFilter, showFilter, isListView, toggleView}) => {
     return (
         <div className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-5">
             <div className="w-200px">
@@ -150,7 +157,7 @@ const SimpleFilter = ({readAllProjectMemberAction , filter, changeFilter, showFi
                                 textColor="danger"
                                 onClick={() => {
                                     changeFilter({text: ""});
-                                    readAllProjectMemberAction.mutate({...filter, text: ""});
+                                    readAllProjectMemberAction.mutate({text: ""});
                                 }}
                             >
                                 <LuX

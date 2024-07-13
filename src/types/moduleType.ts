@@ -19,8 +19,9 @@ export type TAvatarInput = {
     name: string,
     value: t.ExtendedFile | null,
     preview?: string | null,
-    onChange: (value: File | object) => void,
+    onChange?: (value: File | object) => void,
     disabled?: boolean,
+    readOnly?: boolean,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }
@@ -57,7 +58,7 @@ export type TButton = {
     fullWidth?: boolean,
     isLoading?: boolean,
     disabled?: boolean,
-    onClick?: () => void,
+    onClick?: (e: any) => void,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }
@@ -67,8 +68,9 @@ export type TCheckBox = {
     name: string,
     checked: boolean,
     value: string | number | null,
-    onChange: (value: string | number | null) => string | number | null | void,
+    onChange?: (value: string | number | null) => string | number | null | void,
     disabled?: boolean,
+    readOnly?: boolean,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }
@@ -87,10 +89,11 @@ export type TCodeInput = {
     name: string,
     value: string | null,
     placeholder?: string,
-    onChange: (value: string | null) => void,
+    onChange?: (value: string | null) => void,
     startAdornment?: ReactNode,
     onResend: () => void,
     disabled?: boolean,
+    readOnly?: boolean,
     style?: CSSProperties
 }
 
@@ -98,7 +101,7 @@ export type TDatePicker = {
     id: string,
     name: string,
     value: string | null,
-    onChange: (value: DateObject | DateObject[] | string) => void,
+    onChange?: (value: DateObject | DateObject[] | string) => void,
     minDate?: string | null,
     maxDate?: string | null,
     range?: boolean,
@@ -129,8 +132,9 @@ export type TFileInput = {
     name: string,
     value: t.ExtendedFile | null,
     preview?: string | null,
-    onChange: (value: File | object) => void,
+    onChange?: (value: File | object) => void,
     disabled?: boolean,
+    readOnly?: boolean,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }
@@ -169,7 +173,7 @@ export type TIconButton = {
     isDense?: boolean,
     isLoading?: boolean,
     disabled?: boolean,
-    onClick?: () => void,
+    onClick?: (e: any) => void,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties,
 }
@@ -214,8 +218,7 @@ export type TModalBody = {
 }
 
 export type TModalFooter = {
-    cancelButton: ReactNode,
-    submitButton: ReactNode,
+    children: ReactNode,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }
@@ -226,10 +229,11 @@ export type TNumberInput = {
     value: string | null,
     placeholder?: string,
     options?: unknown,
-    onChange: (value: string | null) => void,
+    onChange?: (value: string | null) => void,
     startAdornment?: ReactNode,
     endAdornment?: ReactNode,
     disabled?: boolean,
+    readOnly?: boolean,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }
@@ -248,9 +252,10 @@ export type TPasswordInput = {
     name: string,
     value: string | null,
     placeholder?: string,
-    onChange: (value: string | null) => void,
+    onChange?: (value: string | null) => void,
     startAdornment?: ReactNode,
     disabled?: boolean,
+    readOnly?: boolean,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }
@@ -268,9 +273,10 @@ export type TRadioBox = {
     id: string,
     name: string,
     value: string | null,
-    onChange: (value: string | null) => string | null | void,
+    onChange?: (value: string | null) => string | null | void,
     checked: boolean,
     disabled?: boolean,
+    readOnly?: boolean,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }
@@ -279,13 +285,14 @@ export type TSelectBox = {
     id: string,
     name: string,
     value: string | null,
-    onChange: (e: string | null) => void,
+    onChange?: (value: string | null) => void,
     options: { label: string, value: string | number }[]
     placeholder?: string,
     isSearchable?: boolean,
     isLoading?: boolean,
     isMulti?: boolean,
     disabled?: boolean,
+    readOnly?: boolean,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }
@@ -301,9 +308,10 @@ export type TSwitchBox = {
     id: string,
     name: string,
     value: string | number | null,
-    onChange: (value: boolean) => boolean | void,
+    onChange?: (value: boolean) => boolean | void,
     checked: boolean,
     disabled?: boolean,
+    readOnly?: boolean,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }
@@ -335,8 +343,9 @@ export type TTagInput = {
     name: string,
     value: string[] | null,
     placeholder?: string,
-    onChange: (value: string[] | null) => string[] | null,
+    onChange?: (value: string[] | null) => string[] | null,
     disabled?: boolean,
+    readOnly?: boolean,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }
@@ -346,9 +355,10 @@ export type TTextarea = {
     name: string,
     value: string | null,
     placeholder?: string,
-    onChange: (value: string | null) => void,
+    onChange?: (value: string | null) => void,
     rows?: number,
     disabled?: boolean,
+    readOnly?: boolean,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }
@@ -357,8 +367,11 @@ export type TTextEditor = {
     id: string,
     name: string,
     value: string | null,
+    setupAddon?: any,
+    toolbarAddon?:string,
+    contextMenuAddon?:string,
     placeholder?: string,
-    onChange: (value: string | null) => string | null,
+    onChange?: (value: string | null) => string | null,
     disabled?: boolean,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
@@ -369,12 +382,13 @@ export type TTextInput = {
     name: string,
     value: string | null,
     placeholder?: string,
-    onChange: (value: string | null) => void,
+    onChange?: (value: string | null) => void,
     onBlur?: (value: string | null) => void,
     startAdornment?: ReactNode
     endAdornment?: ReactNode,
     isLoading?: boolean,
     disabled?: boolean,
+    readOnly?: boolean,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }
@@ -383,7 +397,7 @@ export type TTimePicker = {
     id: string,
     name: string,
     value: string | null,
-    onChange: (value: DateObject | DateObject[] | string) => void,
+    onChange?: (value: DateObject | DateObject[] | string) => void,
     disabled?: boolean,
     readOnly?: boolean,
     className?: HTMLProps<HTMLElement>["className"],

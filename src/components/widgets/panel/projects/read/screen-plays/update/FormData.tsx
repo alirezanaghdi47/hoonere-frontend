@@ -2,9 +2,11 @@
 import {useLayoutEffect} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
+import Loadable from "@loadable/component";
 
 // components
-import CreateFieldFormData from "@/components/widgets/panel/projects/read/screen-plays/update/CreateFieldFormData.tsx";
+const CreateFieldFormData = Loadable(() => import("@/components/widgets/panel/projects/read/screen-plays/update/CreateFieldFormData.tsx"));
+
 import Fields from "@/components/widgets/panel/projects/read/screen-plays/update/Fields.tsx";
 
 // hooks
@@ -39,6 +41,9 @@ const FormData = ({updateProjectScreenPlayForm, updateProjectScreenPlayAction}) 
 
     useLayoutEffect(() => {
         readAllScreenPlayTimeTypeAction.mutate();
+    }, []);
+
+    useLayoutEffect(() => {
         readAllScreenPlayLocationSideAction.mutate();
     }, []);
 

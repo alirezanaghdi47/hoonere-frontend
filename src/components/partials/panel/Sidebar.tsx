@@ -84,8 +84,8 @@ const Sidebar = () => {
                             >
                                 <IconButton
                                     href={sidebarLink.href}
-                                    color={sidebarLink.href === location.pathname ? "primary" : "light"}
-                                    activeColor="light-primary"
+                                    color={sidebarLink.href === location.pathname ? "success" : "light"}
+                                    activeColor="light-success"
                                     onClick={hideDrawer}
                                 >
                                     {sidebarLink.icon}

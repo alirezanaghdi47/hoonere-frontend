@@ -1,7 +1,11 @@
+// libraries
+import Loadable from "@loadable/component";
+
 // components
+const CreateBankFormData = Loadable(() => import("@/components/widgets/panel/profile/financial/CreateBankFormData.tsx"));
+const UpdateBankFormData = Loadable(() => import("@/components/widgets/panel/profile/financial/UpdateBankFormData.tsx"));
+
 import Banks from "@/components/widgets/panel/profile/financial/Banks.tsx";
-import CreateBankFormData from "@/components/widgets/panel/profile/financial/CreateBankFormData.tsx";
-import UpdateBankFormData from "@/components/widgets/panel/profile/financial/UpdateBankFormData.tsx";
 
 // hooks
 import usePart from "@/hooks/usePart.tsx";

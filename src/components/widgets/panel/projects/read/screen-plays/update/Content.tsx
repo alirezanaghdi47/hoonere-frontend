@@ -22,7 +22,6 @@ import {IReadProjectScreenPlay, IUpdateProjectScreenPlay} from "@/types/serviceT
 
 // utils
 import {updateProjectScreenPlaySchema} from "@/utils/validations.ts";
-import {toEnglishDigits} from "@/utils/functions.ts";
 
 const Content = () => {
     const params = useParams();
@@ -63,8 +62,6 @@ const Content = () => {
                 ...result,
                 project_id: params.id,
                 screenplay_id: params.subId,
-                part: toEnglishDigits(result.part),
-                sequence: toEnglishDigits(result.sequence),
             });
         }
     });

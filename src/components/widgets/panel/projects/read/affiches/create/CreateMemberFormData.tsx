@@ -20,7 +20,6 @@ import {IReadAllProjectMembersByFoa} from "@/types/serviceType.ts";
 
 // utils
 import {createProjectAfficheMemberSchema, createProjectAfficheUserSchema} from "@/utils/validations.ts";
-import {generateTimeWithSecond} from "@/utils/functions.ts";
 
 const CreateMemberFormData = ({createProjectAfficheP2Form, resetPart}) => {
     const params = useParams();
@@ -58,7 +57,6 @@ const CreateMemberFormData = ({createProjectAfficheP2Form, resetPart}) => {
                     ...result,
                     foa_id: createProjectAfficheUserForm.values.foa_parent_id,
                     foa_child_id: user?.foa_child_id,
-                    coming_time: generateTimeWithSecond(result.coming_time),
                     full_name: user?.first_name + " " + user?.last_name,
                     is_fake: user?.is_fake
                 }
@@ -258,7 +256,7 @@ const CreateMemberFormData = ({createProjectAfficheP2Form, resetPart}) => {
                         </Button>
 
                         <Button
-                            color="primary"
+                            color="success"
                             onClick={() => {
                                 createProjectAfficheUserForm.handleSubmit();
                                 createProjectAfficheMemberForm.handleSubmit();

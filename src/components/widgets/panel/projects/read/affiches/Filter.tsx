@@ -14,9 +14,6 @@ import DatePicker from "@/modules/DatePicker.tsx";
 // services
 import {readAllAfficheTypeService} from "@/services/publicService.ts";
 
-// utils
-import {convertJalaliToGregorian} from "@/utils/functions.ts";
-
 const AdvanceFilter = ({
                            filter,
                            initialFilter,
@@ -88,8 +85,8 @@ const AdvanceFilter = ({
                     <DatePicker
                         id="affiche_date"
                         name="affiche_date"
-                        value={filter.affiche_date}
-                        onChange={(value) => changeFilter({affiche_date: convertJalaliToGregorian(value)})}
+                        value={filter.affiche_date ? filter.affiche_date : ""}
+                        onChange={(value) => changeFilter({affiche_date: value})}
                     />
                 </Form.Group>
             </div>
@@ -108,9 +105,7 @@ const AdvanceFilter = ({
 
                 <Button
                     color='light-info'
-                    onClick={() => readAllProjectAfficheAction.mutate({
-                        ...filter,
-                    })}
+                    onClick={() => readAllProjectAfficheAction.mutate(filter)}
                 >
                     فیلتر
                 </Button>

@@ -22,7 +22,7 @@ const RouteGuardHoc = <P extends TWrappedComponent>(WrappedComponent: ComponentT
             }
 
             if (isAuth && location.pathname.startsWith("/auth")) {
-                navigate(auth.panel_url ? auth.panel_url + "dashboard" : "/panel/dashboard", {replace: true});
+                navigate(auth.panel_url + "dashboard", {replace: true});
             }
         }, [isAuth]);
 

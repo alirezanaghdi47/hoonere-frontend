@@ -20,6 +20,7 @@ const CodeInput = ({
                        startAdornment = null,
                        onResend,
                        disabled = false,
+                       readOnly = false,
                        ...props
                    }: TCodeInput) => {
     const [count, {startCountdown, resetCountdown}] = useCountdown({
@@ -51,6 +52,7 @@ const CodeInput = ({
                 onChange={onChange}
                 startAdornment={startAdornment}
                 disabled={disabled}
+                readOnly={readOnly}
             />
 
             <span

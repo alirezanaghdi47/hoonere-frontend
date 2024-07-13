@@ -1,11 +1,13 @@
 // libraries
 import {useEffect, useLayoutEffect} from "react";
 import {useMutation} from "@tanstack/react-query";
+import Loadable from "@loadable/component";
 import {useFormik} from "formik";
 
 // components
+const CreateJobFormData = Loadable(() => import("@/components/widgets/panel/profile/occupation/CreateJobFormData.tsx"));
+
 import FormData from "@/components/widgets/panel/profile/occupation/ResumeFormData.tsx";
-import CreateJobFormData from "@/components/widgets/panel/profile/occupation/CreateJobFormData.tsx";
 import Jobs from "@/components/widgets/panel/profile/occupation/Jobs.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
@@ -27,10 +29,6 @@ import {occupationSchema} from "@/utils/validations.ts";
 
 const Occupation = ({readMyProfileAction, readAllMyJobAction}) => {
     const {currentPart, resetPart, changeCurrentPart} = usePart(null , "read");
-
-    const readAllJobAction = useMutation({
-        mutationFn: () => readAllJobService(),
-    });
 
     const updateOccupationAction = useMutation({
         mutationFn: (data: IUpdateOccupation) => updateOccupationService(data),
@@ -56,10 +54,6 @@ const Occupation = ({readMyProfileAction, readAllMyJobAction}) => {
         },
     });
 
-    useLayoutEffect(() => {
-        readAllJobAction.mutate();
-    }, []);
-
     useEffect(() => {
         // @ts-ignore
         if (updateOccupationForm.errors.fields_of_activity) toast("error", updateOccupationForm.errors.fields_of_activity);
@@ -68,18 +62,8 @@ const Occupation = ({readMyProfileAction, readAllMyJobAction}) => {
     return (
         <>
             {
-                readAllJobAction.isPending && (
-                    <Loading
-                        width="100%"
-                        height={200}
-                    />
-                )
-            }
-
-            {
-                !readAllJobAction.isPending && readAllMyJobAction.data && currentPart === "read" && (
+                currentPart === "read" && (
                     <Jobs
-                        readAllJobAction={readAllJobAction}
                         updateOccupationForm={updateOccupationForm}
                         changeCurrentPart={changeCurrentPart}
                     />
@@ -87,9 +71,8 @@ const Occupation = ({readMyProfileAction, readAllMyJobAction}) => {
             }
 
             {
-                !readAllJobAction.isPending && readAllMyJobAction.data && currentPart === "create" && (
+                currentPart === "create" && (
                     <CreateJobFormData
-                        readAllJobAction={readAllJobAction}
                         updateOccupationForm={updateOccupationForm}
                         resetPart={resetPart}
                     />

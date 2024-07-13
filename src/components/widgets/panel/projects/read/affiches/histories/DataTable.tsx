@@ -21,9 +21,11 @@ import IconButton from "@/modules/IconButton.tsx";
 
 // services
 import {
-    readAllProjectAfficheActorService, readAllProjectAfficheAddressService,
+    readAllProjectAfficheActorService,
+    readAllProjectAfficheAddressService,
     readAllProjectAfficheMemberService,
-    readAllProjectAfficheReceptionService, readAllProjectAfficheScreenPlayService,
+    readAllProjectAfficheReceptionService,
+    readAllProjectAfficheScreenPlayService,
     readProjectAfficheService
 } from "@/services/projectAffichesService.ts";
 

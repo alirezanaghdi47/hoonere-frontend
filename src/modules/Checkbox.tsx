@@ -4,11 +4,11 @@ import classNames from "classnames";
 // types
 import {TCheckBox} from "@/types/moduleType.ts";
 
-const Checkbox = ({name , id, checked, value, onChange , disabled = false , ...props}: TCheckBox) => {
+const Checkbox = ({name, id, checked, value, onChange, disabled = false, readOnly = false, ...props}: TCheckBox) => {
     return (
         <div
             {...props}
-            className={classNames("form-check form-check-custom form-check-solid" , props.className)}
+            className={classNames("form-check form-check-custom form-check-solid", props.className)}
         >
             <input
                 type="checkbox"
@@ -19,6 +19,7 @@ const Checkbox = ({name , id, checked, value, onChange , disabled = false , ...p
                 checked={checked}
                 onChange={(e) => onChange(e.target.value)}
                 disabled={disabled}
+                readOnly={readOnly}
             />
         </div>
     )

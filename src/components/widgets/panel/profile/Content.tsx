@@ -31,7 +31,13 @@ const Content = () => {
 
     useLayoutEffect(() => {
         readMyProfileAction.mutate();
+    } , []);
+
+    useLayoutEffect(() => {
         readAllMyJobAction.mutate();
+    } , []);
+
+    useLayoutEffect(() => {
         readMyAllBankCardAction.mutate();
     }, []);
 

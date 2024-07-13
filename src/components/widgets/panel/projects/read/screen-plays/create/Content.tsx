@@ -20,7 +20,6 @@ import {ICreateProjectScreenPlay} from "@/types/serviceType.ts";
 
 // utils
 import {createProjectScreenPlaySchema} from "@/utils/validations.ts";
-import {toEnglishDigits} from "@/utils/functions.ts";
 
 const Content = () => {
     const params = useParams();
@@ -55,8 +54,6 @@ const Content = () => {
             createProjectScreenPlayAction.mutate({
                 ...result,
                 project_id: params.id,
-                part: toEnglishDigits(result.part),
-                sequence: toEnglishDigits(result.sequence),
             });
         }
     });

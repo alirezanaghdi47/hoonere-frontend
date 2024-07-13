@@ -8,11 +8,11 @@ import Typography from "@/modules/Typography.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import Badge from "@/modules/Badge.tsx";
 import Breadcrumbs from "@/modules/Breadcrumbs.tsx";
+import Button from "@/modules/Button.tsx";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 import useAppStore from "@/stores/appStore.ts";
-import Button from "@/modules/Button.tsx";
 
 const Header = () => {
     const params = useParams();
@@ -44,7 +44,7 @@ const Header = () => {
                 <div className="order-1 order-md-2 col-12 col-md-8 d-flex justify-content-end align-items-center gap-2">
                     <IconButton textColor="light">
                         <Badge
-                            color="light-primary"
+                            color="light-success"
                             size="sm"
                             placement="top-start"
                             label="2"

@@ -8,11 +8,9 @@ import TextInput from "@/modules/TextInput.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import Button from "@/modules/Button.tsx";
 import Form from "@/modules/Form.tsx";
-import SelectBox from "@/modules/SelectBox.tsx";
 
 // services
 import {readAllProjectTypeService} from "@/services/publicService.ts";
-import {toEnglishDigits} from "@/utils/functions.ts";
 
 const AdvanceFilter = ({
                            filter,
@@ -97,11 +95,7 @@ const AdvanceFilter = ({
 
                 <Button
                     color='light-info'
-                    onClick={() => readAllProjectScreenPlayAction.mutate({
-                        ...filter,
-                        part: toEnglishDigits(filter.part),
-                        sequence: toEnglishDigits(filter.sequence),
-                    })}
+                    onClick={() => readAllProjectScreenPlayAction.mutate(filter)}
                 >
                     فیلتر
                 </Button>

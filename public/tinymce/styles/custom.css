@@ -13,7 +13,7 @@
 }
 
 body {
-    font-family: IRANSansWeb!important;
+    font-family: IRANSansWeb !important;
     background: var(--bs-gray-100) !important;
     color: var(--bs-gray-700) !important;
     line-height: 1.5 !important;

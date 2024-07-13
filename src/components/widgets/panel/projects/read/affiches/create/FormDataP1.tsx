@@ -2,10 +2,12 @@
 import {useLayoutEffect} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
+import Loadable from "@loadable/component";
 
 // components
+const CreateAddressFormData = Loadable(() => import("@/components/widgets/panel/projects/read/affiches/create/CreateAddressFormData.tsx"));
+
 import Addresses from "@/components/widgets/panel/projects/read/affiches/create/Addresses.tsx";
-import CreateAddressFormData from "@/components/widgets/panel/projects/read/affiches/create/CreateAddressFormData.tsx";
 
 // hooks
 import usePart from "@/hooks/usePart.tsx";
@@ -53,6 +55,9 @@ const FormDataP1 = ({createProjectAfficheP1Form}) => {
 
     useLayoutEffect(() => {
         readAllScreenPlayTimeTypeAction.mutate();
+    }, []);
+
+    useLayoutEffect(() => {
         readAllScreenPlayLocationSideAction.mutate();
     }, []);
 

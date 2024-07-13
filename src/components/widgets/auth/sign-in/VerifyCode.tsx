@@ -23,7 +23,6 @@ import {IAuth, IVerify} from "@/types/serviceType.ts";
 
 // utils
 import {verifySchema} from "@/utils/validations.ts";
-import {toEnglishDigits} from "@/utils/functions.ts";
 
 const VerifyCode = ({nextStep, resetStep, step}) => {
     const navigate = useNavigate();
@@ -42,7 +41,7 @@ const VerifyCode = ({nextStep, resetStep, step}) => {
                     status_id: data.data.status_id,
                 });
 
-                if (parseInt(data.data.status_id) > 1) {
+                if (Number(data.data.status_id) > 1) {
                     navigate(data.data.panel_url + "dashboard");
                 } else {
                     nextStep();
@@ -72,7 +71,7 @@ const VerifyCode = ({nextStep, resetStep, step}) => {
         validationSchema: verifySchema,
         onSubmit: async (result) => {
             verifyAction.mutate({
-                code: toEnglishDigits(result.code),
+                ...result,
                 mobile: step.mobile
             });
         }
@@ -118,7 +117,7 @@ const VerifyCode = ({nextStep, resetStep, step}) => {
                 </Button>
 
                 <Button
-                    color="primary"
+                    color="success"
                     fullWidth
                     onClick={verifyForm.handleSubmit}
                     isLoading={verifyAction.isPending}

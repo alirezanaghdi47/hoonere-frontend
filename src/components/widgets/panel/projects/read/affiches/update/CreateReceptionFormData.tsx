@@ -257,7 +257,7 @@ const CreateReceptionFormData = ({updateProjectAfficheP2Form, resetPart}) => {
                         </Button>
 
                         <Button
-                            color="primary"
+                            color="success"
                             onClick={() => {
                                 createProjectAfficheUserForm.handleSubmit();
                                 createProjectAfficheReceptionForm.handleSubmit();

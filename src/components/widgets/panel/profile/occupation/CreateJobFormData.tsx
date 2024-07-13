@@ -1,4 +1,6 @@
 // libraries
+import {useLayoutEffect} from "react";
+import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
 // modules
@@ -6,10 +8,17 @@ import Form from "@/modules/Form.tsx";
 import SelectBox from "@/modules/SelectBox.tsx";
 import Button from "@/modules/Button.tsx";
 
+// services
+import {readAllJobService} from "@/services/publicService.ts";
+
 // utils
 import {createJobSchema} from "@/utils/validations.ts";
 
-const CreateJobFormData = ({readAllJobAction, updateOccupationForm, resetPart}) => {
+const CreateJobFormData = ({updateOccupationForm, resetPart}) => {
+    const readAllJobAction = useMutation({
+        mutationFn: () => readAllJobService(),
+    });
+
     const createJobForm = useFormik({
         enableReinitialize: true,
         initialValues: {
@@ -32,6 +41,10 @@ const CreateJobFormData = ({readAllJobAction, updateOccupationForm, resetPart}) 
             resetPart();
         }
     });
+
+    useLayoutEffect(() => {
+        readAllJobAction.mutate();
+    } , []);
 
     return (
         <div className="card w-100">
@@ -86,7 +99,7 @@ const CreateJobFormData = ({readAllJobAction, updateOccupationForm, resetPart}) 
                                 id="foa_child_id"
                                 name="foa_child_id"
                                 value={createJobForm.values.foa_child_id}
-                                options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id !== null && parseInt(foa.parent_id) === parseInt(createJobForm.values.foa_parent_id)).map(item => ({
+                                options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id !== null && Number(foa.parent_id) === Number(createJobForm.values.foa_parent_id)).map(item => ({
                                     label: item.title,
                                     value: item.id
                                 }))}
@@ -114,7 +127,7 @@ const CreateJobFormData = ({readAllJobAction, updateOccupationForm, resetPart}) 
                         </Button>
 
                         <Button
-                            color="primary"
+                            color="success"
                             onClick={createJobForm.handleSubmit}
                         >
                             افزودن

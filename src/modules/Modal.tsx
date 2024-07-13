@@ -2,6 +2,12 @@
 import ReactModal from 'react-modal';
 import classNames from "classnames";
 
+// modules
+import Tooltip from "@/modules/Tooltip.tsx";
+
+// styles
+import "@/styles/modules/modal.scss";
+
 // types
 import {TModal, TModalBody, TModalFooter, TModalHeader} from "@/types/moduleType.ts";
 
@@ -31,14 +37,14 @@ const Modal = ({children, isOpen, onClose, width = "md", height = "content", pos
             onRequestClose={onClose}
             ariaHideApp={false}
             closeTimeoutMS={300}
-            className={classNames("d-flex flex-column justify-content-start align-items-center gap-5 bg-light p-5", props.className?.content, {
+            className={classNames(props.className?.content, {
                 [`${styles.width[width]}`]: true,
                 [`${styles.height[height]}`]: true,
                 "rounded-0": position === "any",
                 "rounded-2": position === "center",
                 "rounded-tl-lg rounded-tr-lg": position === "bottom",
             })}
-            overlayClassName={classNames("position-fixed top-0 left-0 d-flex w-100 h-100 bg-gray-600 bg-opacity-75", props.className?.overlay, {
+            overlayClassName={classNames(props.className?.overlay, {
                 [`${styles.position[position]}`]: true,
                 "p-5": position === "center",
             })}
@@ -47,6 +53,8 @@ const Modal = ({children, isOpen, onClose, width = "md", height = "content", pos
             }}
         >
             {children}
+
+            <Tooltip/>
         </ReactModal>
     )
 }
@@ -75,14 +83,13 @@ const ModalBody = ({children, isCenter = true, ...props}: TModalBody) => {
     )
 }
 
-const ModalFooter = ({cancelButton, submitButton, ...props}: TModalFooter) => {
+const ModalFooter = ({children, ...props}: TModalFooter) => {
     return (
         <div
             {...props}
-            className={classNames("d-flex justify-content-end align-items-center gap-2 w-100 mt-auto", props.className)}
+            className={classNames("d-flex justify-content-end align-items-center w-100 gap-5", props.className)}
         >
-            {cancelButton}
-            {submitButton}
+            {children}
         </div>
     )
 }

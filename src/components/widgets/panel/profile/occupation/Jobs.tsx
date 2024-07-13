@@ -75,7 +75,7 @@ export const JobCard = ({group, title, onDelete}) => {
     )
 }
 
-const Jobs = ({readAllJobAction, updateOccupationForm, changeCurrentPart}) => {
+const Jobs = ({updateOccupationForm, changeCurrentPart}) => {
     return (
         <div className="card w-100">
             <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
@@ -90,16 +90,16 @@ const Jobs = ({readAllJobAction, updateOccupationForm, changeCurrentPart}) => {
                             />
 
                             <div className="row w-100 g-5">
-                                {
-                                    updateOccupationForm.values.fields_of_activity?.map((foa, i) =>
-                                        <JobCard
-                                            key={i}
-                                            group={readAllJobAction.data?.data?.fieldsOfActivity.find(item => parseInt(item.id) === parseInt(foa.foa_parent_id))}
-                                            title={readAllJobAction.data?.data?.fieldsOfActivity.find(item => parseInt(item.id) === parseInt(foa.foa_child_id))}
-                                            onDelete={() => updateOccupationForm.setFieldValue("fields_of_activity", updateOccupationForm.values.fields_of_activity.filter((item, j) => i !== j))}
-                                        />
-                                    )
-                                }
+                                {/*{*/}
+                                {/*    updateOccupationForm.values.fields_of_activity?.map((foa, i) =>*/}
+                                {/*        <JobCard*/}
+                                {/*            key={i}*/}
+                                {/*            group={readAllJobAction.data?.data?.fieldsOfActivity.find(item => Number(item.id) === Number(foa.foa_parent_id))}*/}
+                                {/*            title={readAllJobAction.data?.data?.fieldsOfActivity.find(item => Number(item.id) === Number(foa.foa_child_id))}*/}
+                                {/*            onDelete={() => updateOccupationForm.setFieldValue("fields_of_activity", updateOccupationForm.values.fields_of_activity.filter((item, j) => i !== j))}*/}
+                                {/*        />*/}
+                                {/*    )*/}
+                                {/*}*/}
 
                                 <BlankCard onClick={() => changeCurrentPart("create")}/>
                             </div>

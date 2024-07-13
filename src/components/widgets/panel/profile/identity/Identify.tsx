@@ -23,7 +23,6 @@ import {IUpdateProfile} from "@/types/serviceType.ts";
 
 // utils
 import {updateProfileSchema} from "@/utils/validations.ts";
-import {convertJalaliToGregorian, toEnglishDigits} from "@/utils/functions.ts";
 
 const Identify = ({readMyProfileAction}) => {
     const updateProfileAction = useMutation({
@@ -55,12 +54,7 @@ const Identify = ({readMyProfileAction}) => {
         },
         validationSchema: updateProfileSchema,
         onSubmit: async (result) => {
-            updateProfileAction.mutate({
-                ...result,
-                national_code: toEnglishDigits(result.national_code),
-                id_code: toEnglishDigits(result.id_code),
-                birthdate: convertJalaliToGregorian(result.birthdate)
-            });
+            updateProfileAction.mutate(result);
         }
     });
 
@@ -350,7 +344,7 @@ const Identify = ({readMyProfileAction}) => {
 
             <div className="d-flex justify-content-end align-items-center gap-5 w-100">
                 <Button
-                    color="primary"
+                    color="success"
                     onClick={updateProfileForm.handleSubmit}
                     isLoading={updateProfileAction.isPending}
                 >

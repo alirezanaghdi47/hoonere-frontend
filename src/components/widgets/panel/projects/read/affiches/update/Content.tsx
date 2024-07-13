@@ -6,10 +6,10 @@ import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
 // components
-const FormDataP1 = Loadable(() => import('@/components/widgets/panel/projects/read/affiches/update/FormDataP1.tsx'));
 const FormDataP2 = Loadable(() => import('@/components/widgets/panel/projects/read/affiches/update/FormDataP2.tsx'));
 const FormDataP3 = Loadable(() => import('@/components/widgets/panel/projects/read/affiches/update/FormDataP3.tsx'));
 
+import FormDataP1 from "@/components/widgets/panel/projects/read/affiches/update/FormDataP1.tsx";
 import Navigation from "@/components/widgets/panel/projects/read/affiches/update/Navigation.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
@@ -49,19 +49,12 @@ import {
     updateProjectAfficheP2Schema,
     updateProjectAfficheP3Schema
 } from "@/utils/validations.ts";
-import {
-    convertGregorianToJalali,
-    convertJalaliToGregorian,
-    generateTimeWithoutSecond,
-    generateTimeWithSecond,
-    toEnglishDigits
-} from "@/utils/functions.ts";
 
 const Content = () => {
     const params = useParams();
     const navigate = useNavigate();
     const {auth} = useAuthStore();
-    const {step, changeStep, nextStep, prevStep, currentStep, resetStep} = useStep<IUpdateProjectAffiche>(null, 1);
+    const {step, changeStep, nextStep, prevStep, currentStep, resetStep} = useStep(null, 1);
 
     const {
         filter,
@@ -100,12 +93,7 @@ const Content = () => {
     });
 
     const readAllProjectScreenPlayAction = useMutation({
-        mutationFn: (data: IReadAllProjectAfficheScreenPlay) => readAllProjectAfficheScreenPlayService({
-            ...data,
-            project_id: params.id,
-            affiche_id: params.subId,
-            get_last: 1,
-        }),
+        mutationFn: (data: IReadAllProjectAfficheScreenPlay) => readAllProjectAfficheScreenPlayService(data),
     });
 
     const updateProjectAfficheAction = useMutation({
@@ -132,29 +120,21 @@ const Content = () => {
             location_side_id: readProjectAfficheAction.data?.data?.affiche_info?.location_side_id ? readProjectAfficheAction.data?.data?.affiche_info.location_side_id : "",
             type: readProjectAfficheAction.data?.data?.affiche_info?.type ? readProjectAfficheAction.data?.data?.affiche_info.type : "",
             is_off: readProjectAfficheAction.data?.data?.affiche_info?.is_off ? parseInt(readProjectAfficheAction.data?.data?.affiche_info.is_off) : 0,
-            affiche_date: readProjectAfficheAction.data?.data?.affiche_info?.affiche_date ? convertGregorianToJalali(readProjectAfficheAction.data?.data?.affiche_info.affiche_date) : "",
-            start_date: readProjectAfficheAction.data?.data?.affiche_info?.start_date ? convertGregorianToJalali(readProjectAfficheAction.data?.data?.affiche_info.start_date) : "",
-            coming_time: readProjectAfficheAction.data?.data?.affiche_info?.coming_time ? generateTimeWithoutSecond(readProjectAfficheAction.data?.data?.affiche_info.coming_time) : "",
-            start_time: readProjectAfficheAction.data?.data?.affiche_info?.start_time ? generateTimeWithoutSecond(readProjectAfficheAction.data?.data?.affiche_info.start_time) : "",
+            affiche_date: readProjectAfficheAction.data?.data?.affiche_info?.affiche_date ? readProjectAfficheAction.data?.data?.affiche_info.affiche_date : "",
+            start_date: readProjectAfficheAction.data?.data?.affiche_info?.start_date ? readProjectAfficheAction.data?.data?.affiche_info.start_date : "",
+            coming_time: readProjectAfficheAction.data?.data?.affiche_info?.coming_time ? readProjectAfficheAction.data?.data?.affiche_info.coming_time : "",
+            start_time: readProjectAfficheAction.data?.data?.affiche_info?.start_time ? readProjectAfficheAction.data?.data?.affiche_info.start_time : "",
             addresses: readAllProjectAfficheAddressAction.data?.data?.addresses.length > 0 ? readAllProjectAfficheAddressAction.data?.data?.addresses.map(address => ({
                 address: address?.address,
                 lat: address?.lat,
                 lon: address?.lon,
             })) : [],
-            lat: readProjectAfficheAction.data?.data?.affiche_info?.lat ? readProjectAfficheAction.data?.data?.affiche_info.lat : "",
-            lon: readProjectAfficheAction.data?.data?.affiche_info?.lon ? readProjectAfficheAction.data?.data?.affiche_info.lon : "",
             auto_motivation_sentence: readProjectAfficheAction.data?.data?.affiche_info?.auto_motivation_sentence ? parseInt(readProjectAfficheAction.data?.data?.affiche_info.auto_motivation_sentence) : 1,
             motivation_sentence: readProjectAfficheAction.data?.data?.affiche_info?.motivation_sentence ? readProjectAfficheAction.data?.data?.affiche_info.motivation_sentence : "",
         },
         validationSchema: updateProjectAfficheP1Schema,
         onSubmit: async (result) => {
-            changeStep({
-                ...result,
-                affiche_date: convertJalaliToGregorian(toEnglishDigits(result.affiche_date)),
-                start_date: convertJalaliToGregorian(toEnglishDigits(result.start_date)),
-                coming_time: generateTimeWithSecond(result.coming_time),
-                start_time: generateTimeWithSecond(result.coming_time),
-            });
+            changeStep(result);
 
             nextStep();
         }
@@ -254,7 +234,12 @@ const Content = () => {
     }, []);
 
     useLayoutEffect(() => {
-        readAllProjectScreenPlayAction.mutate(filter);
+        readAllProjectScreenPlayAction.mutate({
+            ...filter,
+            project_id: params.id,
+            affiche_id: params.subId,
+            get_last: 1,
+        });
     }, []);
 
     return (

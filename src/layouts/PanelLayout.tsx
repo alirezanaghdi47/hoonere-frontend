@@ -23,7 +23,7 @@ const PanelLayout = () => {
         }
 
         if (isAuth && ["/panel" , "/panel/" , auth.panel_url].includes(location.pathname)) {
-            navigate(auth.panel_url ? auth.panel_url + "dashboard" : "/panel/dashboard", {replace: true});
+            navigate(auth.panel_url + "dashboard", {replace: true});
         }
     }, [location.key]);
 

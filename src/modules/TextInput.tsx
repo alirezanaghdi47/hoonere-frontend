@@ -5,6 +5,9 @@ import MoonLoader from "react-spinners/MoonLoader";
 // types
 import {TTextInput} from "@/types/moduleType.ts";
 
+// utils
+import {toEnglishDigits} from "@/utils/functions.ts";
+
 const TextInput = ({
                        id,
                        name,
@@ -16,6 +19,7 @@ const TextInput = ({
                        endAdornment = null,
                        isLoading = false,
                        disabled = false,
+                       readOnly = false,
                        ...props
                    }: TTextInput) => {
     return (
@@ -44,9 +48,10 @@ const TextInput = ({
                     "pe-15": endAdornment,
                 })}
                 value={value}
-                onChange={(e) => onChange(e.target.value)}
-                onBlur={(e) => onBlur(e.target.value)}
+                onChange={(e) => onChange(toEnglishDigits((e.target.value)))}
+                onBlur={(e) => onBlur(toEnglishDigits(e.target.value))}
                 disabled={disabled || isLoading}
+                readOnly={readOnly}
             />
 
             {

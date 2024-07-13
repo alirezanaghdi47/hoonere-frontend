@@ -5,7 +5,7 @@ export interface IAuth {
 export interface ILogin {
     username: string,
     password: string,
-    captcha: number
+    captcha: string
     captcha_id: string,
 }
 
@@ -85,8 +85,8 @@ export interface ICreateProject {
     title: string | null,
     description: string | null,
     producer: string | null,
-    count_of_parts: number,
-    time_of_parts: number,
+    count_of_parts: string,
+    time_of_parts: string,
     location: string | null,
 }
 
@@ -233,9 +233,9 @@ export interface IReadAllProjectAfficheReception {
 export interface IReadAllProjectAfficheScreenPlay {
     project_id: string,
     affiche_id: string,
-    text: string,
-    part: string,
-    sequence: string,
+    text?: string,
+    part?: string,
+    sequence?: string,
     page: number,
     per_page: number,
     get_last: number
@@ -253,11 +253,13 @@ export interface ICreateProjectAffiche {
     start_date: string,
     coming_time: string,
     start_time: string,
-    address: string,
-    lat: string,
-    lon: string,
+    addresses: { address: string, lat: string, lon: string }[],
     auto_motivation_sentence: number,
     motivation_sentence: string,
+    actors: [],
+    members: [],
+    receptions: [],
+    screenplays: [],
 }
 
 export interface IUpdateProjectAffiche {
@@ -273,11 +275,13 @@ export interface IUpdateProjectAffiche {
     start_date: string,
     coming_time: string,
     start_time: string,
-    address: string,
-    lat: string,
-    lon: string,
+    addresses: { address: string, lat: string, lon: string }[],
     auto_motivation_sentence: number,
     motivation_sentence: string,
+    actors: [],
+    members: [],
+    receptions: [],
+    screenplays: [],
 }
 
 export interface IDeleteProjectAffiche {

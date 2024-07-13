@@ -33,7 +33,7 @@ const Navbar = () => {
 
                 <IconButton
                     color="light"
-                    activeColor="light-primary"
+                    activeColor="light-success"
                     onClick={showDrawer}
                 >
                     <LuMenu

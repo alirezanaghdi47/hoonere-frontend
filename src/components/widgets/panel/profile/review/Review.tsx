@@ -7,6 +7,9 @@ import Form from "@/modules/Form.tsx";
 import Alert from "@/modules/Alert.tsx";
 import Chip from "@/modules/Chip.tsx";
 
+// utils
+import {convertGregorianToJalali} from "@/utils/functions.ts";
+
 const Review = ({readMyProfileAction}) => {
     return (
         <div className="card w-100">
@@ -136,7 +139,7 @@ const Review = ({readMyProfileAction}) => {
                                         color="danger"
                                         label="ثبت نشده"
                                     />
-                                ) : readMyProfileAction.data?.data?.user_info?.birthdate
+                                ) : convertGregorianToJalali(readMyProfileAction.data?.data?.user_info?.birthdate)
                             }
                         </Typography>
                     </div>
@@ -230,7 +233,7 @@ const Review = ({readMyProfileAction}) => {
                 </div>
 
                 {
-                    parseInt(readMyProfileAction.data?.data?.user_info?.status_id) !== 5 && (
+                    Number(readMyProfileAction.data?.data?.user_info?.status_id) !== 5 && (
                         <div className="row gy-5 w-100">
                             <div className="col-12">
                                 <Alert

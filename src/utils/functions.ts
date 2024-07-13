@@ -15,7 +15,7 @@ export const formattedSize = (bytes) => {
     const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
+    return `${Number((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
 }
 
 export const toEnglishDigits = (data) => {
@@ -78,19 +78,22 @@ export const convertGregorianToJalali = (date) => new DateObject({
     locale: gregorian_en
 }).convert(persian, persian_fa).format("YYYY-MM-DD");
 
-export const generateTimeWithSecond = (time) => time + ":00";
+export const generateTimeWithSecond = (time) => {
+    const [hour, minute] = time.split(":");
 
-export const generateTimeWithoutSecond = (time) => time.split(":")[0] + ":" + time.split(":")[1];
+    return new DateObject().setHour(Number(hour)).setMinute(Number(minute));
+}
+export const generateTimeWithoutSecond = (time) => new DateObject(time).format("HH:mm");
 
 export const getBankInfoFromCardNumber = (card_number) => card_number.length > 6 ? iranianBanks?.find(bank => card_number.startsWith(bank.bin)) : null;
 
 export const encodeData = (data) => {
     let encoded = btoa(encodeURIComponent(data).replace(/%([0-9A-F]{2})/g, function toSolidBytes(match, p1) {
-        return String.fromCharCode(parseInt(('0x' + p1)))
+        return String.fromCharCode(Number(('0x' + p1)))
     })) + generateRandomString(372);
 
     encoded = btoa(encodeURIComponent(encoded).replace(/%([0-9A-F]{2})/g, function toSolidBytes(match, p1) {
-        return String.fromCharCode(parseInt(('0x' + p1)))
+        return String.fromCharCode(Number(('0x' + p1)))
     }));
 
     return encoded;

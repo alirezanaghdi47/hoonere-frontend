@@ -126,9 +126,9 @@ export const BankCard = ({card, dropdownOptions}) => {
                     </Typography>
 
                     {
-                        Boolean(parseInt(card?.is_main) > 0) && (
+                        Boolean(Number(card?.is_main) > 0) && (
                             <Chip
-                                color="primary"
+                                color="success"
                                 label="حساب پیش فرض"
                             />
                         )

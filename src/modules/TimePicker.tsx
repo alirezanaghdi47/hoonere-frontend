@@ -1,5 +1,5 @@
 // libraries
-import ReactDatePicker, {DateObject} from "react-multi-date-picker";
+import ReactDatePicker from "react-multi-date-picker";
 import ReactTimePicker from "react-multi-date-picker/plugins/time_picker";
 
 // styles
@@ -7,6 +7,9 @@ import "@/styles/modules/time-picker.scss";
 
 // types
 import {TTimePicker} from "@/types/moduleType.ts";
+
+// utils
+import {generateTimeWithoutSecond, generateTimeWithSecond} from "@/utils/functions.ts";
 
 const TimePicker = ({
                         id,
@@ -17,7 +20,6 @@ const TimePicker = ({
                         readOnly = false,
                         ...props
                     }: TTimePicker) => {
-    const [hour, minute] = value.split(":");
 
     return (
         <ReactDatePicker
@@ -30,14 +32,13 @@ const TimePicker = ({
             plugins={[
                 <ReactTimePicker hideSeconds/>
             ]}
-            value={value ? new DateObject().setHour(parseInt(hour)).setMinute(parseInt(minute)) : null}
-            onChange={(value) => onChange(new DateObject(value).format("HH:mm"))}
+            value={value ? generateTimeWithSecond(value) : ""}
+            onChange={(value) => onChange(generateTimeWithoutSecond(value))}
             editable={false}
             format="HH:mm"
             arrow={false}
             disabled={disabled}
             readOnly={readOnly}
-            className="abcdefg"
         />
     )
 }

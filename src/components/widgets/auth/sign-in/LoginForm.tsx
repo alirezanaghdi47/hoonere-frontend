@@ -31,7 +31,7 @@ import {ILogin} from "@/types/serviceType.ts";
 
 // utils
 import {loginSchema} from "@/utils/validations.ts";
-import {generateRandomNumber, toEnglishDigits} from "@/utils/functions.ts";
+import {generateRandomNumber} from "@/utils/functions.ts";
 
 const uniqueCode = Date.now() + "_" + generateRandomNumber(1, 1000);
 
@@ -76,10 +76,7 @@ const LoginForm = () => {
         },
         validationSchema: loginSchema,
         onSubmit: async (result) => {
-            loginAction.mutate({
-                ...result,
-                captcha: toEnglishDigits(result.captcha)
-            });
+            loginAction.mutate(result);
         }
     });
 
@@ -156,7 +153,7 @@ const LoginForm = () => {
             </Form.Group>
 
             <Button
-                color="primary"
+                color="success"
                 fullWidth
                 onClick={loginForm.handleSubmit}
                 isLoading={loginAction.isPending}

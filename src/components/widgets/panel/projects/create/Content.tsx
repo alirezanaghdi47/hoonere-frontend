@@ -20,7 +20,6 @@ import {ICreateProject} from "@/types/serviceType.ts";
 
 // utils
 import {createProjectSchema} from "@/utils/validations.ts";
-import {toEnglishDigits} from "@/utils/functions.ts";
 
 const Content = () => {
     const navigate = useNavigate();
@@ -52,11 +51,7 @@ const Content = () => {
         },
         validationSchema: createProjectSchema,
         onSubmit: async (result) => {
-            createProjectAction.mutate({
-                ...result,
-                count_of_parts: toEnglishDigits(result.count_of_parts),
-                time_of_parts: toEnglishDigits(result.time_of_parts),
-            });
+            createProjectAction.mutate(result);
         }
     });
 

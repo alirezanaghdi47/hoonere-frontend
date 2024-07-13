@@ -21,7 +21,7 @@ const Finder = ({readAllProjectScreenPlayAction, filter, changeFilter}) => {
                     options={options}
                     onChange={(value) => {
                         changeFilter({per_page: value});
-                        readAllProjectScreenPlayAction.mutate({...filter, per_page: value});
+                        readAllProjectScreenPlayAction.mutate({per_page: value});
                     }}
                 />
             </div>
@@ -34,7 +34,7 @@ const Finder = ({readAllProjectScreenPlayAction, filter, changeFilter}) => {
                         total={readAllProjectScreenPlayAction.data?.data?.pagination?.total}
                         onChange={(value) => {
                             changeFilter({page: value});
-                            readAllProjectScreenPlayAction.mutate({...filter, page: value});
+                            readAllProjectScreenPlayAction.mutate({page: value});
                         }}
                     />
                 )

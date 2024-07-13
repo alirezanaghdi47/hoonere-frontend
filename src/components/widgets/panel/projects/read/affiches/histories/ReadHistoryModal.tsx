@@ -11,12 +11,10 @@ import Modal from "@/modules/Modal.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 
 // utils
-import {convertGregorianToJalali, generateTimeWithoutSecond,} from "@/utils/functions.ts";
+import {convertGregorianToJalali, generateTimeWithoutSecond} from "@/utils/functions.ts";
 
 const ReadHistoryModal = ({modal, _handleHideModal}) => {
     const printRef = useRef();
-
-    console.log(modal?.data)
 
     const _handlePrint = async () => {
         await html2canvas(printRef.current, {scale: 2}).then((canvas) => {
@@ -861,7 +859,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                                         size="xs"
                                                         color="dark"
                                                     >
-
+                                                        {member?.child_info?.title}
                                                     </Typography>
                                                 </td>
 

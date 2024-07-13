@@ -59,7 +59,7 @@ const AdvanceFilter = ({
                     <DatePicker
                         id="date"
                         name="date"
-                        value={filter.date}
+                        value={filter.date ? filter.data : ""}
                         onChange={(value) => changeFilter({date: value})}
                     />
                 </Form.Group>
@@ -79,9 +79,7 @@ const AdvanceFilter = ({
 
                 <Button
                     color='light-info'
-                    onClick={() => readAllProjectAfficheHistoryAction.mutate({
-                        ...filter,
-                    })}
+                    onClick={() => readAllProjectAfficheHistoryAction.mutate(filter)}
                 >
                     فیلتر
                 </Button>

@@ -63,7 +63,7 @@ const FormDataWithUserName = ({readAllJobAction, readProjectMemberAction, update
                                 id="foa_child_id"
                                 name="foa_child_id"
                                 value={updateProjectMemberFormWithUserName.values.foa_child_id}
-                                options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id !== null && parseInt(foa.parent_id) === parseInt(updateProjectMemberFormWithUserName.values.foa_parent_id))?.map(item => ({
+                                options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id !== null && Number(foa.parent_id) === Number(updateProjectMemberFormWithUserName.values.foa_parent_id))?.map(item => ({
                                     label: item.title,
                                     value: item.id.toString()
                                 }))}
@@ -157,7 +157,7 @@ const FormDataWithFullName = ({readAllJobAction, updateProjectMemberFormWithFull
                                 id="foa_child_id"
                                 name="foa_child_id"
                                 value={updateProjectMemberFormWithFullName.values.foa_child_id}
-                                options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id !== null && parseInt(foa.parent_id) === parseInt(updateProjectMemberFormWithFullName.values.foa_parent_id))?.map(item => ({
+                                options={readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id !== null && Number(foa.parent_id) === Number(updateProjectMemberFormWithFullName.values.foa_parent_id))?.map(item => ({
                                     label: item.title,
                                     value: item.id.toString()
                                 }))}

@@ -4,11 +4,11 @@ import classNames from "classnames";
 // types
 import {TRadioBox} from "@/types/moduleType.ts";
 
-const RadioBox = ({name , id, checked, value, onChange , disabled = false , ...props}: TRadioBox) => {
+const RadioBox = ({name, id, checked, value, onChange, disabled = false, readOnly = false, ...props}: TRadioBox) => {
     return (
         <div
             {...props}
-            className={classNames("form-check form-check-custom form-check-solid" , props.className)}
+            className={classNames("form-check form-check-custom form-check-solid", props.className)}
         >
             <input
                 type="radio"
@@ -19,6 +19,7 @@ const RadioBox = ({name , id, checked, value, onChange , disabled = false , ...p
                 checked={checked}
                 onChange={(e) => onChange(e.target.value)}
                 disabled={disabled}
+                readOnly={readOnly}
             />
         </div>
     )

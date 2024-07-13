@@ -1,14 +1,12 @@
 #RFS {
-  &-StepContainer {
-
-  }
-
   &-StepMain {
     button {
-      width: 40px !important;
-      height: 40px !important;
+      z-index: 30 !important;
+      width: 50px !important;
+      height: 50px !important;
       background: var(--bs-secondary) !important;
       box-shadow: var(--bs-box-shadow-sm) !important;
+      border: 5px solid var(--bs-white) !important;
 
       span {
         color: var(--bs-gray-600) !important;
@@ -17,17 +15,17 @@
         font-size: 1.1rem !important;
       }
 
-      &.active{
-        background: var(--bs-light) !important;
+      &.active {
+        background: var(--bs-success) !important;
 
         span {
-          color: var(--bs-primary) !important;
+          color: var(--bs-light) !important;
         }
       }
 
       &.active ~ #RFS-LabelContainer {
         span {
-          color: var(--bs-primary) !important;
+          color: var(--bs-success) !important;
         }
       }
     }
@@ -42,12 +40,19 @@
       margin-top: 10px !important;
 
       &.active {
-        color: var(--bs-primary) !important;
+        color: var(--bs-success) !important;
       }
     }
   }
 
   &-ConnectorContainer {
-    display: none !important;
+    z-index: 20 !important;
+    top: 25% !important;
+    box-shadow: var(--bs-box-shadow-sm) !important;
+
+    span {
+      border-color: var(--bs-white) !important;
+      border-top-width: 5px !important;
+    }
   }
 }

@@ -1,13 +1,17 @@
+// libraries
+import Loadable from "@loadable/component";
+
 // components
+const VerifyCode = Loadable(() => import("@/components/widgets/auth/sign-in/VerifyCode.tsx"));
+const RegisterForm = Loadable(() => import("@/components/widgets/auth/sign-in/RegisterForm.tsx"));
+
 import Authentication from "@/components/widgets/auth/sign-in/Authentication.tsx";
-import VerifyCode from "@/components/widgets/auth/sign-in/VerifyCode.tsx";
-import RegisterForm from "@/components/widgets/auth/sign-in/RegisterForm.tsx";
 
 // hooks
 import useStep from "@/hooks/useStep.tsx";
 
 const LoginWithMobile = ({unSetOtpWay}) => {
-    const {step, currentStep,resetStep, nextStep, changeStep} = useStep();
+    const {step, currentStep, resetStep, nextStep, changeStep} = useStep();
     console.log(step)
     return (
         <>

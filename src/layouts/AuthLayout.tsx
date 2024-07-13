@@ -15,7 +15,7 @@ const AuthLayout = () => {
 
     useLayoutEffect(() => {
         if (isAuth) {
-            navigate(auth.panel_url ? auth.panel_url + "dashboard" : "/panel/dashboard", {replace: true});
+            navigate(auth.panel_url + "dashboard", {replace: true});
         }
 
         if (!isAuth && ["/auth", "/auth/"].includes(location.pathname)) {

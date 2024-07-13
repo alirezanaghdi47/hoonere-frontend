@@ -8,7 +8,7 @@ import "@/styles/modules/tag-input.scss";
 // types
 import {TTagInput} from "@/types/moduleType.ts";
 
-const TagInput = ({name, value, placeholder = null, onChange, disabled = false, ...props}: TTagInput) => {
+const TagInput = ({name, value, placeholder = null, onChange, disabled = false , readOnly = false, ...props}: TTagInput) => {
     return (
         <div
             {...props}
@@ -19,7 +19,7 @@ const TagInput = ({name, value, placeholder = null, onChange, disabled = false, 
                 value={value}
                 placeHolder={placeholder}
                 onChange={(value) => onChange(value)}
-                disabled={disabled}
+                disabled={disabled || readOnly}
             />
         </div>
     )

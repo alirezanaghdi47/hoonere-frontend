@@ -4,7 +4,20 @@ import classNames from "classnames";
 // types
 import {TTextarea} from "@/types/moduleType.ts";
 
-const Textarea = ({id , name, value, placeholder = null, rows = 5, onChange, disabled = false, ...props}: TTextarea) => {
+// utils
+import {toEnglishDigits} from "@/utils/functions.ts";
+
+const Textarea = ({
+                      id,
+                      name,
+                      value,
+                      placeholder = null,
+                      rows = 5,
+                      onChange,
+                      disabled = false,
+                      readOnly = false,
+                      ...props
+                  }: TTextarea) => {
     return (
         <div
             {...props}
@@ -17,8 +30,9 @@ const Textarea = ({id , name, value, placeholder = null, rows = 5, onChange, dis
                 placeholder={placeholder}
                 className="form-control form-control-solid"
                 value={value}
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) => onChange(toEnglishDigits(e.target.value))}
                 disabled={disabled}
+                readOnly={readOnly}
             />
         </div>
     )

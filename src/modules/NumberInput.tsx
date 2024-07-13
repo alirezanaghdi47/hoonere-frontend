@@ -5,6 +5,9 @@ import classNames from "classnames";
 // types
 import {TNumberInput} from "@/types/moduleType.ts";
 
+// utils
+import {toEnglishDigits} from "@/utils/functions.ts";
+
 const NumberInput = ({
                          id,
                          name,
@@ -15,6 +18,7 @@ const NumberInput = ({
                          startAdornment = null,
                          endAdornment = null,
                          disabled = false,
+                         readOnly = false,
                          ...props
                      }: TNumberInput) => {
     return (
@@ -40,9 +44,10 @@ const NumberInput = ({
                     "pe-15": endAdornment,
                 })}
                 value={value}
-                onChange={(e) => onChange(e.target.rawValue)}
+                onChange={(e) => onChange(toEnglishDigits(e.target.rawValue))}
                 options={options}
                 disabled={disabled}
+                readOnly={readOnly}
             />
 
             {

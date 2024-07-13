@@ -67,7 +67,7 @@ const ResumeFormData = ({readMyProfileAction ,updateOccupationForm , updateOccup
 
             <div className="d-flex justify-content-end align-items-center gap-5 w-100">
                 <Button
-                    color="primary"
+                    color="success"
                     onClick={updateOccupationForm.handleSubmit}
                     isLoading={updateOccupationAction.isPending}
                 >

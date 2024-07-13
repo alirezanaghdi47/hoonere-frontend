@@ -77,6 +77,7 @@ const SelectBox = ({
                        isLoading = false,
                        isMulti = false,
                        disabled = false,
+                       readOnly = false,
                        onChange,
                        ...props
                    }: TSelectBox) => {
@@ -101,7 +102,7 @@ const SelectBox = ({
             // @ts-ignore
             onChange={(value) => isMulti ? onChange(value?.map(subValue => subValue.value)) : onChange(value.value)}
             isMulti={isMulti}
-            isDisabled={disabled || isLoading}
+            isDisabled={disabled || isLoading || readOnly}
             isLoading={isLoading}
         />
     )

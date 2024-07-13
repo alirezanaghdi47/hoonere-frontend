@@ -21,7 +21,7 @@ import {ICreateBankCard} from "@/types/serviceType.ts";
 
 // utils
 import {financialSchema} from "@/utils/validations.ts";
-import {getBankInfoFromCardNumber, hexToRgba, toEnglishDigits} from "@/utils/functions.ts";
+import {getBankInfoFromCardNumber, hexToRgba} from "@/utils/functions.ts";
 
 export const PreviewBankCard = ({card}) => {
     return (
@@ -116,12 +116,7 @@ const CreateBankFormData = ({readMyAllBankCardAction, readMyProfileAction, reset
         },
         validationSchema: financialSchema,
         onSubmit: async (result) => {
-            createBankCardAction.mutate({
-                ...result,
-                card_number: toEnglishDigits(result.card_number),
-                card_shaba: toEnglishDigits(result.card_shaba),
-                account_id: toEnglishDigits(result.account_id),
-            });
+            createBankCardAction.mutate(result);
         },
         onReset: async () => {
             resetPart();
@@ -250,7 +245,7 @@ const CreateBankFormData = ({readMyAllBankCardAction, readMyProfileAction, reset
                         </Button>
 
                         <Button
-                            color="primary"
+                            color="success"
                             onClick={createBankCardForm.handleSubmit}
                             isLoading={createBankCardAction.isPending}
                         >

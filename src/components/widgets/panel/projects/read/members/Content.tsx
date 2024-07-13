@@ -2,10 +2,12 @@
 import {useLayoutEffect} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
+import Loadable from "@loadable/component";
 import {useBoolean} from "usehooks-ts";
 
 // components
-import DataList from "@/components/widgets/panel/projects/read/members/DataList.tsx";
+const DataList = Loadable(() => import("@/components/widgets/panel/projects/read/members/DataList.tsx"));
+
 import DataTable from "@/components/widgets/panel/projects/read/members/DataTable.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 

@@ -19,7 +19,6 @@ import {IReadAllProjectMembersByFoa} from "@/types/serviceType.ts";
 
 // utils
 import {createProjectAfficheActorSchema} from "@/utils/validations.ts";
-import {generateTimeWithSecond} from "@/utils/functions.ts";
 
 const CreateActorFormData = ({createProjectAfficheP2Form, resetPart}) => {
     const params = useParams();
@@ -43,8 +42,6 @@ const CreateActorFormData = ({createProjectAfficheP2Form, resetPart}) => {
                 ...createProjectAfficheP2Form.values.actors.filter(actor => JSON.stringify(actor) !== JSON.stringify(result)),
                 {
                     ...result,
-                    coming_time: generateTimeWithSecond(result.coming_time),
-                    makeup_time: generateTimeWithSecond(result.makeup_time),
                     full_name: user?.first_name + " " + user?.last_name,
                     is_fake: user?.is_fake
                 }
@@ -197,7 +194,7 @@ const CreateActorFormData = ({createProjectAfficheP2Form, resetPart}) => {
                         </Button>
 
                         <Button
-                            color="primary"
+                            color="success"
                             onClick={createProjectAfficheActorForm.handleSubmit}
                         >
                             افزودن

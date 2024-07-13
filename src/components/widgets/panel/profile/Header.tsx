@@ -39,7 +39,7 @@ const Header = () => {
                 <div className="order-1 order-md-2 col-12 col-md-8 d-flex justify-content-end align-items-center gap-2">
                     <IconButton textColor="light">
                         <Badge
-                            color="light-primary"
+                            color="light-success"
                             size="sm"
                             placement="top-start"
                             label="2"

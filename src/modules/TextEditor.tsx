@@ -1,4 +1,5 @@
 // libraries
+import {forwardRef} from "react";
 import {Editor} from '@tinymce/tinymce-react';
 import html2pdf from "html2pdf.js";
 import classNames from "classnames";
@@ -9,7 +10,18 @@ import "@/styles/modules/text-editor.scss";
 // types
 import {TTextEditor} from "@/types/moduleType.ts";
 
-const TextEditor = ({name, value, placeholder = null, onChange, disabled = false, ...props}: TTextEditor) => {
+const TextEditor = forwardRef(({
+                                   name,
+                                   value,
+                                   placeholder = null,
+                                   onChange,
+                                   disabled = false,
+                                   setupAddon,
+                                   toolbarAddon,
+                                   contextMenuAddon,
+                                   ...props
+                               }: TTextEditor,
+                               ref) => {
     return (
         <div
             {...props}
@@ -20,6 +32,7 @@ const TextEditor = ({name, value, placeholder = null, onChange, disabled = false
                 tinymceScriptSrc='/tinymce/tinymce.min.js'
                 licenseKey="gpl"
                 textareaName={name}
+                onInit={(evt, editor) => ref ? ref.current = editor : null}
                 initialValue=""
                 value={value}
                 disabled={disabled}
@@ -27,9 +40,9 @@ const TextEditor = ({name, value, placeholder = null, onChange, disabled = false
                     setup: (editor) => {
                         // export pdf
                         editor.ui.registry.addIcon('pdfExport', `
-                          <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M64 464l48 0 0 48-48 0c-35.3 0-64-28.7-64-64L0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 304l-48 0 0-144-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z"></path>
-                          </svg>
+                              <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M64 464l48 0 0 48-48 0c-35.3 0-64-28.7-64-64L0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 304l-48 0 0-144-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z"></path>
+                              </svg>
                         `);
 
                         editor.ui.registry.addButton('pdfExport', {
@@ -41,53 +54,7 @@ const TextEditor = ({name, value, placeholder = null, onChange, disabled = false
                             }
                         });
 
-                        // caption
-                        editor.ui.registry.addIcon('caption', `
-                         <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg">
-                            <path fill="none" d="M0 0h24v24H0V0z"></path><path d="M19.5 5.5v13h-15v-13h15zM19 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 7H9.5v-.5h-2v3h2V13H11v1c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1v-4c0-.55.45-1 1-1h3c.55 0 1 .45 1 1v1zm7 0h-1.5v-.5h-2v3h2V13H18v1c0 .55-.45 1-1 1h-3c-.55 0-1-.45-1-1v-4c0-.55.45-1 1-1h3c.55 0 1 .45 1 1v1z"></path>
-                         </svg>
-                        `);
-
-                        editor.ui.registry.addMenuItem('caption', {
-                            icon: 'caption',
-                            text: 'کپشن',
-                            onAction: () => {
-                                editor.windowManager.open({
-                                    title: "ایجاد کپشن",
-                                    body: {
-                                        type: 'panel',
-                                        items: [
-                                            {
-                                                type: 'input',
-                                                name: 'title',
-                                                label: 'عنوان'
-                                            }
-                                        ],
-                                    },
-                                    buttons: [
-                                        {
-                                            type: 'cancel',
-                                            text: 'بستن'
-                                        },
-                                        {
-                                            type: 'submit',
-                                            text: 'ذخیره',
-                                            buttonType: 'primary'
-                                        }
-                                    ],
-                                    onSubmit: (api) => {
-                                        const data = api.getData();
-                                        console.log(api)
-                                        // editor.insertContent('Title: ' + data.title);
-                                        api.close();
-                                    }
-                                });
-                            }
-                        });
-
-                        editor.ui.registry.addContextMenu("caption", {
-                            update: (element) => element ? "caption" : ""
-                        });
+                        setupAddon(editor);
                     },
                     width: "100%",
                     height: 400,
@@ -100,11 +67,11 @@ const TextEditor = ({name, value, placeholder = null, onChange, disabled = false
                     menubar: false,
                     placeholder: placeholder,
                     plugins: ['advlist', 'autolink', 'lists', 'link'],
-                    toolbar: 'undo redo | blocks fontfamily | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link pdfExport',
+                    toolbar: `undo redo | blocks fontfamily | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link pdfExport | ${toolbarAddon}`,
                     toolbar_location: 'top',
                     toolbar_mode: 'scrolling',
                     toolbar_sticky: true,
-                    contextmenu: 'caption',
+                    contextmenu: contextMenuAddon ? contextMenuAddon : "",
                     font_family_formats: "Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; IRANSansWeb=IRANSansWeb,sans-serif ; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats",
                     color_map: [
                         '#BFEDD2', 'Light Green',
@@ -138,9 +105,8 @@ const TextEditor = ({name, value, placeholder = null, onChange, disabled = false
                     onChange(editor.getContent());
                 }}
             />
-
         </div>
     )
-}
+})
 
 export default TextEditor;

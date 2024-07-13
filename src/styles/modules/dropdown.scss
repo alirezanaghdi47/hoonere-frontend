@@ -18,14 +18,14 @@
       }
 
       &.szh-menu__item--checked {
-        background: var(--bs-primary) !important;
+        background: var(--bs-success) !important;
         color: var(--bs-light) !important;
       }
     }
 
     &--hover {
       background: var(--bs-gray-200) !important;
-      color: var(--bs-primary) !important;
+      color: var(--bs-success) !important;
     }
 
     &--submenu {

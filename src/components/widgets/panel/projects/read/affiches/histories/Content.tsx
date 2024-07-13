@@ -35,15 +35,15 @@ const Content = () => {
     });
 
     const readAllProjectAfficheHistoryAction = useMutation({
-        mutationFn: (data: IReadAllProjectAfficheHistory) => readAllProjectAfficheHistoryService({
-            ...data,
-            project_id: params.id,
-            affiche_id: params.subId,
-        }),
+        mutationFn: (data: IReadAllProjectAfficheHistory) => readAllProjectAfficheHistoryService(data),
     });
 
     useLayoutEffect(() => {
-        readAllProjectAfficheHistoryAction.mutate(filter);
+        readAllProjectAfficheHistoryAction.mutate({
+            ...filter,
+            project_id: params.id,
+            affiche_id: params.subId,
+        });
     }, []);
 
     return (

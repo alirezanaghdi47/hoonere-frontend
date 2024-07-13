@@ -116,7 +116,7 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectAction}) 
                                 textColor="danger"
                                 onClick={() => {
                                     changeFilter({text: ""});
-                                    readAllProjectAction.mutate({...filter , text: ""});
+                                    readAllProjectAction.mutate({text: ""});
                                 }}
                             >
                                 <LuX

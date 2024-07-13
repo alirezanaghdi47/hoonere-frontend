@@ -5,7 +5,7 @@
 .tox {
   button {
     &.tox-button {
-      background-color: var(--bs-primary) !important;
+      background-color: var(--bs-success) !important;
       font-size: 1.1rem !important;
       font-weight: 500 !important;
       line-height: 1.5rem !important;
@@ -20,17 +20,29 @@
       &--secondary {
         background-color: var(--bs-danger-light) !important;
         color: var(--bs-danger) !important;
+        transition: all ease-in-out 100ms;
+
+        &:hover {
+          background-color: var(--bs-danger) !important;
+          color: var(--bs-light) !important;
+        }
       }
 
       &--naked {
-        background-color: transparent !important;
+        background-color: var(--bs-danger-light) !important;
         color: var(--bs-danger) !important;
+        transition: all ease-in-out 100ms;
+
+        &:hover {
+          background-color: var(--bs-danger) !important;
+          color: var(--bs-light) !important;
+        }
       }
     }
 
     &.tox-button--icon {
-      height: calc(1.5em + 1.55rem + 2px) !important;
-      width: calc(1.5em + 1.55rem + 2px) !important;
+      height: calc(1.5em + 1.1rem + 2px) !important;
+      width: calc(1.5em + 1.1rem + 2px) !important;
       padding: 0 !important;
     }
 
@@ -38,7 +50,7 @@
       background-color: var(--bs-gray-100) !important;
 
       &--enabled {
-        background-color: var(--bs-primary) !important;
+        background-color: var(--bs-success) !important;
 
         .tox-icon {
           svg {
@@ -174,7 +186,7 @@
       }
 
       &--enabled {
-        background: var(--bs-primary) !important;
+        background: var(--bs-success) !important;
         color: var(--bs-light) !important;
       }
     }
@@ -243,7 +255,7 @@
     padding: 25px !important;
 
     &-wrap__backdrop {
-      background: rgba(#{var(--bs-dark-rgb)}, 0.5) !important;
+      background: rgba(#{var(--bs-gray-600-rgb)}, 0.75) !important;
     }
 
     &__header {

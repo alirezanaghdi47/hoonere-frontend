@@ -94,7 +94,7 @@ const CreateFieldFormData = ({updateProjectScreenPlayForm, resetPart}) => {
                         </Button>
 
                         <Button
-                            color="primary"
+                            color="success"
                             onClick={createFieldForm.handleSubmit}
                         >
                             افزودن

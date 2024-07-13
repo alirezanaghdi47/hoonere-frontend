@@ -4,7 +4,7 @@ import classNames from "classnames";
 // types
 import {TSwitchBox} from "@/types/moduleType.ts";
 
-const SwitchBox = ({name , id, checked, value, onChange , disabled = false , ...props}: TSwitchBox) => {
+const SwitchBox = ({name, id, checked, value, onChange, disabled = false, readOnly = false, ...props}: TSwitchBox) => {
     return (
         <div
             {...props}
@@ -19,6 +19,7 @@ const SwitchBox = ({name , id, checked, value, onChange , disabled = false , ...
                 checked={checked}
                 onChange={(e) => onChange(e.target.checked)}
                 disabled={disabled}
+                readOnly={readOnly}
             />
         </div>
     )

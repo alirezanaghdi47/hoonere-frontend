@@ -86,7 +86,7 @@ const DataTable = ({
                         data-tooltip-content={row.original.title}
                     >
                         <Button
-                            textColor="light-primary"
+                            textColor="light-success"
                             href={auth.panel_url + "projects/" + row.original.id}
                             direction='start'
                             isDense

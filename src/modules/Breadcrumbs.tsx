@@ -1,6 +1,8 @@
+// libraries
+import classNames from "classnames";
+
 // modules
 import {Link} from "react-router-dom";
-import classNames from "classnames";
 
 // types
 import {TBreadcrumbs} from "@/types/moduleType.ts";

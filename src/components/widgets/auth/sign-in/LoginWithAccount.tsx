@@ -31,7 +31,7 @@ const LoginWithAccount = ({setOtpWay}) => {
 
                     <Button
                         href="/auth/sign-up"
-                        textColor="primary"
+                        textColor="success"
                         isDense
                         isBold
                     >

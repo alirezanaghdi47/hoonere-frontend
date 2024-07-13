@@ -9,7 +9,16 @@ import {LuUser} from "react-icons/lu";
 import {TAvatarInput} from "@/types/moduleType.ts";
 import {ExtendedFile} from "@/types/global.ts";
 
-const AvatarInput = ({id, name, value, preview = null, onChange, disabled = false, ...props}: TAvatarInput) => {
+const AvatarInput = ({
+                         id,
+                         name,
+                         value,
+                         preview = null,
+                         onChange,
+                         disabled = false,
+                         readOnly = false,
+                         ...props
+                     }: TAvatarInput) => {
     const [files, setFiles] = useState<ExtendedFile[]>([value]);
 
     const {getRootProps, getInputProps} = useDropzone({
@@ -33,7 +42,7 @@ const AvatarInput = ({id, name, value, preview = null, onChange, disabled = fals
             className={classNames("d-flex justify-content-center align-items-center form-control form-control-lg form-control-solid w-100px h-100px p-2 cursor-pointer", props.className)}
         >
             <input
-                {...getInputProps({id: id, name: name})}
+                {...getInputProps({id: id, name: name , readOnly: readOnly})}
                 className='d-none'
             />
 

@@ -1,7 +1,11 @@
+// libraries
+import Loadable from "@loadable/component";
+
 // components
+const VerifyCode = Loadable(() => import("@/components/widgets/auth/sign-up/VerifyCode.tsx"));
+const RegisterForm = Loadable(() => import("@/components/widgets/auth/sign-up/RegisterForm.tsx"));
+
 import Authentication from "@/components/widgets/auth/sign-up/Authentication.tsx";
-import VerifyCode from "@/components/widgets/auth/sign-up/VerifyCode.tsx";
-import RegisterForm from "@/components/widgets/auth/sign-up/RegisterForm.tsx";
 
 // hooks
 import useStep from "@/hooks/useStep.tsx";

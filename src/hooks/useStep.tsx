@@ -5,7 +5,7 @@ const useStep = <T,>(initialData = null, activeStep = 1) => {
     const [step, setStep] = useState<T>(initialData);
     const [currentStep, setCurrentStep] = useState<number>(activeStep);
 
-    const changeStep = (value: unknown) => setStep(value);
+    const changeStep = (value: T) => setStep(value);
 
     const nextStep = () => setCurrentStep(prev => prev + 1);
 

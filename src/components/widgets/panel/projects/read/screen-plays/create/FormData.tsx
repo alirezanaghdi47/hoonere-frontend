@@ -2,10 +2,13 @@
 import {useLayoutEffect} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
+import Loadable from "@loadable/component";
 
 // components
-import CreateFieldFormData from "@/components/widgets/panel/projects/read/screen-plays/create/CreateFieldFormData.tsx";
+const CreateFieldFormData = Loadable(() => import("@/components/widgets/panel/projects/read/screen-plays/create/CreateFieldFormData.tsx"));
+
 import Fields from "@/components/widgets/panel/projects/read/screen-plays/create/Fields.tsx";
+import MoodBoardEditor from "@/components/widgets/panel/projects/read/screen-plays/create/MoodBoardEditor.tsx";
 
 // hooks
 import usePart from "@/hooks/usePart.tsx";
@@ -39,6 +42,9 @@ const FormData = ({createProjectScreenPlayForm, createProjectScreenPlayAction}) 
 
     useLayoutEffect(() => {
         readAllScreenPlayTimeTypeAction.mutate();
+    }, []);
+
+    useLayoutEffect(() => {
         readAllScreenPlayLocationSideAction.mutate();
     }, []);
 
@@ -57,7 +63,7 @@ const FormData = ({createProjectScreenPlayForm, createProjectScreenPlayAction}) 
                                         required
                                     />
 
-                                    <TextEditor
+                                    <MoodBoardEditor
                                         id="description"
                                         name="description"
                                         value={createProjectScreenPlayForm.values.description}

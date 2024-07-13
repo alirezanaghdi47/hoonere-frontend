@@ -73,7 +73,7 @@
     &:hover {
       span {
         background: var(--bs-gray-200) !important;
-        color: var(--bs-primary) !important;
+        color: var(--bs-success) !important;
       }
 
       span.highlight {
@@ -109,22 +109,22 @@
 
     &.rmdp-selected {
       span {
-        background: var(--bs-primary) !important;
+        background: var(--bs-success) !important;
         color: var(--bs-light) !important;
       }
     }
 
     &.rmdp-range {
-      background: var(--bs-primary-light) !important;
+      background: var(--bs-success-light) !important;
       box-shadow: none !important;
 
       &.start {
-        background: var(--bs-primary) !important;
+        background: var(--bs-success) !important;
         border-radius: 0 8px 8px 0 !important;
       }
 
       &.end {
-        background: var(--bs-primary) !important;
+        background: var(--bs-success) !important;
         border-radius: 8px 0 0 8px !important;
       }
 

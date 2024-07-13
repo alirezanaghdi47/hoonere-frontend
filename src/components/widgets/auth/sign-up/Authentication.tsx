@@ -19,7 +19,6 @@ import {IAuth} from "@/types/serviceType.ts";
 
 // utils
 import {authSchema} from "@/utils/validations.ts";
-import {toEnglishDigits} from "@/utils/functions.ts";
 
 const Authentication = ({nextStep, changeStep}) => {
     const authAction = useMutation({
@@ -46,9 +45,7 @@ const Authentication = ({nextStep, changeStep}) => {
         },
         validationSchema: authSchema,
         onSubmit: async (result) => {
-            authAction.mutate({
-                mobile: toEnglishDigits(result.mobile)
-            });
+            authAction.mutate(result);
         }
     });
 
@@ -91,7 +88,7 @@ const Authentication = ({nextStep, changeStep}) => {
                 </Button>
 
                 <Button
-                    color="primary"
+                    color="success"
                     fullWidth
                     isLoading={authAction.isPending}
                     onClick={authForm.handleSubmit}

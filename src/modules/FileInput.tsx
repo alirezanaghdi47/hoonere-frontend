@@ -13,7 +13,16 @@ import IconButton from "@/modules/IconButton.tsx";
 import {TFileInput} from "@/types/moduleType.ts";
 import {ExtendedFile} from "@/types/global.ts";
 
-const FileInput = ({id , name, value, preview = null, onChange, disabled = false, ...props}: TFileInput) => {
+const FileInput = ({
+                       id,
+                       name,
+                       value,
+                       preview = null,
+                       onChange,
+                       disabled = false,
+                       readOnly = false,
+                       ...props
+                   }: TFileInput) => {
     const [files, setFiles] = useState<ExtendedFile[]>([value]);
 
     const {getRootProps, getInputProps} = useDropzone({
@@ -37,7 +46,7 @@ const FileInput = ({id , name, value, preview = null, onChange, disabled = false
             className={classNames("d-flex justify-content-center align-items-center form-control form-control-solid w-100 h-100 min-h-200px cursor-pointer", props.className)}
         >
             <input
-                {...getInputProps({id: id , name: name})}
+                {...getInputProps({id: id, name: name , readOnly: readOnly})}
                 className='d-none'
             />
 

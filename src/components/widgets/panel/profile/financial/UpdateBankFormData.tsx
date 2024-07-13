@@ -21,7 +21,7 @@ import {IUpdateBankCard} from "@/types/serviceType.ts";
 
 // utils
 import {financialSchema} from "@/utils/validations.ts";
-import {getBankInfoFromCardNumber, hexToRgba, toEnglishDigits} from "@/utils/functions.ts";
+import {getBankInfoFromCardNumber, hexToRgba} from "@/utils/functions.ts";
 
 export const PreviewBankCard = ({card}) => {
     return (
@@ -118,9 +118,6 @@ const UpdateBankFormData = ({readMyAllBankCardAction, readMyProfileAction, part,
         onSubmit: async (result) => {
             updateBankCardAction.mutate({
                 ...result,
-                card_number: toEnglishDigits(result.card_number),
-                card_shaba: toEnglishDigits(result.card_shaba),
-                account_id: toEnglishDigits(result.account_id),
                 card_id: part?.id.toString()
             });
         },

@@ -4,8 +4,8 @@ import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 
 // components
-import Loading from "@/components/partials/panel/Loading.tsx";
 import DataTable from "@/components/widgets/panel/projects/read/screen-plays/DataTable.tsx";
+import Loading from "@/components/partials/panel/Loading.tsx";
 
 // hooks
 import useFilter from "@/hooks/useFilter.tsx";

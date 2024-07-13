@@ -126,7 +126,7 @@ const RegisterForm = ({resetStep}) => {
                 </Button>
 
                 <Button
-                    color="primary"
+                    color="success"
                     fullWidth
                     onClick={registerForm.handleSubmit}
                     isLoading={registerAction.isPending}

@@ -1,5 +1,5 @@
 // libraries
-import ReactDatePicker, {DateObject} from "react-multi-date-picker";
+import ReactDatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import {LuChevronLeft, LuChevronRight} from "react-icons/lu";
@@ -12,6 +12,9 @@ import "@/styles/modules/date-picker.scss";
 
 // types
 import {TDatePicker} from "@/types/moduleType.ts";
+
+// utils
+import {convertGregorianToJalali, convertJalaliToGregorian} from "@/utils/functions.ts";
 
 const RenderButton = ({direction, handleClick}) => {
     return (
@@ -54,13 +57,7 @@ const DatePicker = ({
     const customizeDays = (date) => {
         let color;
 
-        const formattedDate = new DateObject({
-            date: date,
-            locale: persian_fa,
-            calendar: persian
-        }).format("YYYY-MM-DD");
-
-        if (holidayDates.includes(formattedDate)) color = "red";
+        if (holidayDates.includes(convertGregorianToJalali(date))) color = "red";
 
         if (color) return {className: "highlight highlight-" + color};
     }
@@ -74,28 +71,12 @@ const DatePicker = ({
             containerClassName="w-100"
             calendar={persian}
             locale={persian_fa}
-            value={value ? new DateObject({
-                date: value,
-                locale: persian_fa,
-                calendar: persian
-            }).format("YYYY-MM-DD") : null}
+            value={value ? convertGregorianToJalali(value) : ""}
             range={range}
             multiple={false}
-            minDate={minDate ? new DateObject({
-                date: minDate,
-                locale: persian_fa,
-                calendar: persian
-            }).format("YYYY-MM-DD") : null}
-            maxDate={maxDate ? new DateObject({
-                date: maxDate,
-                locale: persian_fa,
-                calendar: persian
-            }).format("YYYY-MM-DD") : null}
-            onChange={(value) => onChange(new DateObject({
-                date: value,
-                locale: persian_fa,
-                calendar: persian
-            }).format("YYYY-MM-DD"))}
+            minDate={minDate ? convertGregorianToJalali(minDate) : ""}
+            maxDate={maxDate ? convertGregorianToJalali(maxDate) : ""}
+            onChange={(value) => onChange(convertJalaliToGregorian(value))}
             renderButton={(direction, handleClick) => (
                 <RenderButton
                     direction={direction}

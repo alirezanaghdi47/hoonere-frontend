@@ -9,6 +9,9 @@ import IconButton from "@/modules/IconButton.tsx";
 // types
 import {TPasswordInput} from "@/types/moduleType.ts";
 
+// utils
+import {toEnglishDigits} from "@/utils/functions.ts";
+
 const PasswordInput = ({
                            id,
                            name,
@@ -17,6 +20,7 @@ const PasswordInput = ({
                            onChange,
                            startAdornment = null,
                            disabled = false,
+                           readOnly = false,
                            ...props
                        }: TPasswordInput) => {
     const [isVisible, onToggle] = useToggle();
@@ -46,8 +50,9 @@ const PasswordInput = ({
                     "ps-15": startAdornment
                 })}
                 value={value}
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) => onChange(toEnglishDigits(e.target.value))}
                 disabled={disabled}
+                readOnly={readOnly}
             />
 
             <span
