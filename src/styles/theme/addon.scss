@@ -1,7 +1,13 @@
-
 * {
   scrollbar-width: thin !important;
   scrollbar-color: var(--bs-scrollbar-color) transparent !important;
+  font-family: IRANSansWeb !important;
+}
+
+@media print {
+  * {
+    direction: rtl !important;
+  }
 }
 
 .w-max {

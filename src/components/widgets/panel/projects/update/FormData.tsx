@@ -10,7 +10,7 @@ import TextInput from "@/modules/TextInput.tsx";
 import Textarea from "@/modules/Textarea.tsx";
 import NumberInput from "@/modules/NumberInput.tsx";
 import Button from "@/modules/Button.tsx";
-import FileInput from "@/modules/FileInput.tsx";
+import ImageInput from "@/modules/ImageInput.tsx";
 import Alert from "@/modules/Alert.tsx";
 
 // services
@@ -20,11 +20,10 @@ import {readAllProjectTypeService, readUserInquiryService} from "@/services/publ
 import useAuthStore from "@/stores/authStore.ts";
 
 // types
-
+import {IReadUserInquiry} from "@/types/serviceType.ts";
 
 // utils
 import {readUserInquirySchema} from "@/utils/validations.ts";
-import {IReadUserInquiry} from "@/types/serviceType.ts";
 
 const FormData = ({readProjectAction, updateProjectForm, updateProjectAction}) => {
     const {auth} = useAuthStore();
@@ -83,7 +82,7 @@ const FormData = ({readProjectAction, updateProjectForm, updateProjectAction}) =
                                         size="sm"
                                     />
 
-                                    <FileInput
+                                    <ImageInput
                                         id="logo"
                                         name="logo"
                                         preview={readProjectAction.data?.data?.project_info?.logo}

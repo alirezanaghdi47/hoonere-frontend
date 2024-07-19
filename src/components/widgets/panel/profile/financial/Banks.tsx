@@ -23,14 +23,14 @@ import {IChangeStatusOfBankCard, IDeleteBankCard} from "@/types/serviceType.ts";
 // utils
 import {getBankInfoFromCardNumber, hexToRgba} from "@/utils/functions.ts";
 
-export const BlankCard = ({onClick}) => {
+export const BlankCard = ({changeCurrentPart}) => {
     return (
         <div
             className="col-12 col-md-6"
-            onClick={onClick}
+            onClick={() => changeCurrentPart("create")}
         >
             <div
-                className="d-flex flex-column flex-column justify-content-center align-items-center gap-2 w-100 h-200px border-2 border-dashed border-secondary rounded-2 overflow-hidden p-5 cursor-pointer">
+                className="d-flex justify-content-center align-items-center gap-2 w-100 h-200px bg-light rounded-2 p-5 cursor-pointer">
                 <LuPlus
                     size={20}
                     color="currentColor"
@@ -61,7 +61,6 @@ export const BankCard = ({card, dropdownOptions}) => {
                     <div className="d-flex justify-content-start align-items-center gap-2">
                         <LazyLoadImage
                             src={getBankInfoFromCardNumber(card?.card_number)?.bank ? `/assets/images/iranian-banks/${getBankInfoFromCardNumber(card?.card_number)?.bank}.png` : "/assets/images/placeholder.png"}
-                            alt={getBankInfoFromCardNumber(card?.card_number)?.bank}
                             width={50}
                             height={50}
                             className="object-fit-cover rounded-circle"
@@ -228,7 +227,7 @@ const Banks = ({readMyAllBankCardAction, readMyProfileAction, changePart, change
                                     )
                                 }
 
-                                <BlankCard onClick={() => changeCurrentPart("create")}/>
+                                <BlankCard changeCurrentPart={changeCurrentPart}/>
                             </div>
                         </div>
                     </div>

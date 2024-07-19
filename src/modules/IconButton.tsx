@@ -56,7 +56,7 @@ const IconButton = ({
                         className={`position-absolute top-0 left-0 d-flex justify-content-center align-items-center w-100 h-100 bg-${color || bgColor} rounded-2`}>
                         <BeatLoader
                             color='currentColor'
-                            size={10}
+                            size={size === "sm" ? 5 : 10}
                         />
                     </div>
                 )

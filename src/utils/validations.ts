@@ -185,23 +185,6 @@ export const createFieldSchema = Yup.object().shape({
     value: Yup.string().trim().required("مقدار الزامی است"),
 });
 
-export const createMoodBoardSchema = Yup.object().shape({
-    image: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 2 مگابایت باشد", (value: File) => {
-        if (Object.keys(value).length === 0) {
-            return true;
-        } else {
-            return value.size <= 2 * 1_024_000;
-        }
-    }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
-        if (Object.keys(value).length === 0) {
-            return true;
-        } else {
-            return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
-        }
-    }),
-    description: Yup.string().trim(),
-});
-
 export const updateProjectScreenPlaySchema = Yup.object().shape({
     description: Yup.string().trim().required("توضیحات فیلم نامه الزامی است"),
     address: Yup.string().trim().required("موقعیت فیلم نامه الزامی است"),
@@ -234,7 +217,7 @@ export const createProjectAfficheP1Schema = Yup.object().shape({
     auto_motivation_sentence: Yup.number(),
     motivation_sentence: Yup.string().when("auto_motivation_sentence", {
         is: (value) => value === 0,
-        then: (source) => source.trim().required("جمله انگیزشی آفیش الزامی است")
+        then: (schema) => schema.trim().required("جمله انگیزشی آفیش الزامی است")
     }),
 });
 
@@ -311,7 +294,7 @@ export const updateProjectAfficheP1Schema = Yup.object().shape({
     auto_motivation_sentence: Yup.number(),
     motivation_sentence: Yup.string().when("auto_motivation_sentence", {
         is: (value) => value === 0,
-        then: (source) => source.trim().required("جمله انگیزشی آفیش الزامی است")
+        then: (schema) => schema.trim().required("جمله انگیزشی آفیش الزامی است")
     }),
 });
 
@@ -338,4 +321,102 @@ export const updateProjectAfficheP2Schema = Yup.object().shape({
 
 export const updateProjectAfficheP3Schema = Yup.object().shape({
     screenplays: Yup.array().of(Yup.string().trim())
+});
+
+export const createProjectMoodBoardSchema = Yup.object().shape({
+    title: Yup.string().trim().required("عنوان مود بورد الزامی است"),
+    type: Yup.string().trim().required("نوع مود بورد الزامی است"),
+    image: Yup.mixed().when('type', {
+        is: (value) => value === "image",
+        then: (schema) => schema.test("fileExist", "محتوای مود بورد الزامی است", (value: File) => {
+            return Object.keys(value).length !== 0;
+        }).test("fileSize", "حجم عکس ارسالی حداکثر 2 مگابایت باشد", (value: File) => {
+            if (Object.keys(value).length === 0) {
+                return true;
+            } else {
+                return value.size <= 2 * 1_024_000;
+            }
+        }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
+            if (Object.keys(value).length === 0) {
+                return true;
+            } else {
+                return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
+            }
+        }).required("محتوای مود بورد الزامی است"),
+    }),
+    audio: Yup.mixed().when('type', {
+        is: (value) => value === "audio",
+        then: (schema) => schema.test("fileExist", "محتوای مود بورد الزامی است", (value: File) => {
+            return Object.keys(value).length !== 0;
+        }).test("fileSize", "حجم صدای ارسالی حداکثر 5 مگابایت باشد", (value: File) => {
+            if (Object.keys(value).length === 0) {
+                return true;
+            } else {
+                return value.size <= 2 * 1_024_000;
+            }
+        }).test("fileType", "فرمت صدای ارسالی باید از نوع (mpeg , wav , ogg) باشد", (value: File) => {
+            if (Object.keys(value).length === 0) {
+                return true;
+            } else {
+                return ['audio/mpeg', 'audio/wav', 'audio/ogg'].includes(value.type);
+            }
+        }),
+    }),
+    video: Yup.string().when("type", {
+        is: (value) => value === "video",
+        then: (schema) => schema.trim().required("محتوای مود بورد الزامی است")
+    }),
+    text: Yup.string().when("type", {
+        is: (value) => value === "text",
+        then: (schema) => schema.trim().required("محتوای مود بورد الزامی است")
+    }),
+});
+
+export const updateProjectMoodBoardSchema = Yup.object().shape({
+    title: Yup.string().trim().required("عنوان مود بورد الزامی است"),
+    type: Yup.string().trim().required("نوع مود بورد الزامی است"),
+    image: Yup.mixed().when('type', {
+        is: (value) => value === "image",
+        then: (schema) => schema.test("fileExist", "محتوای مود بورد الزامی است", (value: File) => {
+            return Object.keys(value).length !== 0;
+        }).test("fileSize", "حجم عکس ارسالی حداکثر 2 مگابایت باشد", (value: File) => {
+            if (Object.keys(value).length === 0) {
+                return true;
+            } else {
+                return value.size <= 2 * 1_024_000;
+            }
+        }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
+            if (Object.keys(value).length === 0) {
+                return true;
+            } else {
+                return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
+            }
+        }).required("محتوای مود بورد الزامی است"),
+    }),
+    audio: Yup.mixed().when('type', {
+        is: (value) => value === "audio",
+        then: (schema) => schema.test("fileExist", "محتوای مود بورد الزامی است", (value: File) => {
+            return Object.keys(value).length !== 0;
+        }).test("fileSize", "حجم صدای ارسالی حداکثر 5 مگابایت باشد", (value: File) => {
+            if (Object.keys(value).length === 0) {
+                return true;
+            } else {
+                return value.size <= 2 * 1_024_000;
+            }
+        }).test("fileType", "فرمت صدای ارسالی باید از نوع (mpeg , wav , ogg) باشد", (value: File) => {
+            if (Object.keys(value).length === 0) {
+                return true;
+            } else {
+                return ['audio/mpeg', 'audio/wav', 'audio/ogg'].includes(value.type);
+            }
+        }),
+    }),
+    video: Yup.string().when("type", {
+        is: (value) => value === "video",
+        then: (schema) => schema.trim().required("محتوای مود بورد الزامی است")
+    }),
+    text: Yup.string().when("type", {
+        is: (value) => value === "text",
+        then: (schema) => schema.trim().required("محتوای مود بورد الزامی است")
+    }),
 });

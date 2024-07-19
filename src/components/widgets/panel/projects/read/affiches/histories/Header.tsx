@@ -37,7 +37,7 @@ const Header = () => {
                         size="xxl"
                         isBold
                     >
-                         تاریخچه ها
+                         تاریخچه آفیش
                     </Typography>
                 </div>
 

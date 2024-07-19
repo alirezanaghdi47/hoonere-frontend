@@ -1,5 +1,5 @@
 // libraries
-import {Navigate, Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes, useLocation} from "react-router-dom";
 import Loadable from '@loadable/component';
 
 // layouts
@@ -21,18 +21,24 @@ const ProjectMembers = Loadable(() => import('@/pages/panel/projects/read/member
 const CreateProjectMember = Loadable(() => import('@/pages/panel/projects/read/members/create'));
 const UpdateProjectMember = Loadable(() => import('@/pages/panel/projects/read/members/update'));
 const ProjectScreenPlays = Loadable(() => import('@/pages/panel/projects/read/screen-plays'));
+const ProjectScreenPlay = Loadable(() => import('@/pages/panel/projects/read/screen-plays/read'));
 const CreateProjectScreenPlay = Loadable(() => import('@/pages/panel/projects/read/screen-plays/create'));
 const UpdateProjectScreenPlay = Loadable(() => import('@/pages/panel/projects/read/screen-plays/update'));
 const ProjectAffiches = Loadable(() => import('@/pages/panel/projects/read/affiches'));
 const CreateProjectAffiche = Loadable(() => import('@/pages/panel/projects/read/affiches/create'));
 const UpdateProjectAffiche = Loadable(() => import('@/pages/panel/projects/read/affiches/update'));
 const ProjectAfficheHistories = Loadable(() => import('@/pages/panel/projects/read/affiches/histories'));
+const ProjectAfficheHistory = Loadable(() => import('@/pages/panel/projects/read/affiches/histories/read'));
+const ProjectMoodBoards = Loadable(() => import('@/pages/panel/projects/read/mood-boards'));
+const ProjectMoodBoard = Loadable(() => import('@/pages/panel/projects/read/mood-boards/read'));
+const CreateProjectMoodBoard = Loadable(() => import('@/pages/panel/projects/read/mood-boards/create'));
+const UpdateProjectMoodBoard = Loadable(() => import('@/pages/panel/projects/read/mood-boards/update'));
 const Profile = Loadable(() => import('@/pages/panel/profile'));
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-const routes = [
+const pageRoutes = [
     {
         id: 1,
         path: "*",
@@ -149,41 +155,92 @@ const routes = [
             },
             {
                 id: 16,
+                path: "projects/:id/mood-boards",
+                component: ProjectMoodBoards,
+            },
+            {
+                id: 17,
+                path: "projects/:id/mood-boards/create",
+                component: CreateProjectMoodBoard,
+            },
+            {
+                id: 18,
+                path: "projects/:id/mood-boards/:subId/update",
+                component: UpdateProjectMoodBoard,
+            },
+            {
+                id: 19,
                 path: "profile",
                 component: Profile,
             },
         ]
     },
-]
+];
+
+const modalRoutes = [
+    {
+        id: 1,
+        path: "panel/projects/:id/affiches/:subId/histories/:subSubId",
+        component: ProjectAfficheHistory,
+    },
+    {
+        id: 2,
+        path: "panel/projects/:id/mood-boards/:subId",
+        component: ProjectMoodBoard,
+    },
+    {
+        id: 3,
+        path: "panel/projects/:id/screen-plays/:subId",
+        component: ProjectScreenPlay,
+    },
+];
 
 const RouterProvider = () => {
+    const location = useLocation();
     const {auth} = useAuthStore();
 
-    return (
-        <Routes>
-            <Route path="/" element={<Navigate to={auth.panel_url + "dashboard"}/>}/>
+    const background = location.state && location.state.background;
 
-            {
-                routes.map(route => (
-                        <Route
-                            key={route.id}
-                            path={route.path}
-                            element={<route.component/>}
-                        >
-                            {
-                                route.hasOwnProperty("children") && route.children?.map(subRoute =>
-                                    <Route
-                                        key={subRoute.id}
-                                        path={subRoute.path}
-                                        element={<subRoute.component/>}
-                                    />
-                                )
-                            }
-                        </Route>
+    return (
+        <>
+            <Routes location={background || location}>
+                <Route path="/" element={<Navigate to={auth.panel_url + "dashboard"}/>}/>
+
+                {
+                    pageRoutes.map(pageRoute => (
+                            <Route
+                                key={pageRoute.id}
+                                path={pageRoute.path}
+                                element={<pageRoute.component/>}
+                            >
+                                {
+                                    pageRoute.hasOwnProperty("children") && pageRoute.children?.map(subRoute =>
+                                        <Route
+                                            key={subRoute.id}
+                                            path={subRoute.path}
+                                            element={<subRoute.component/>}
+                                        />
+                                    )
+                                }
+                            </Route>
+                        )
                     )
-                )
-            }
-        </Routes>
+                }
+            </Routes>
+
+            <Routes>
+                {
+                    background && modalRoutes.map(modalRoute => (
+                            <Route
+                                key={modalRoute.id}
+                                path={modalRoute.path}
+                                element={<modalRoute.component/>}
+                            />
+                        )
+                    )
+                }
+            </Routes>
+        </>
     )
 }
 

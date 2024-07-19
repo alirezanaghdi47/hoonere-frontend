@@ -5,14 +5,14 @@ import {LuPlus, LuTrash} from "react-icons/lu";
 import Typography from "@/modules/Typography.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 
-export const BlankCard = ({onClick}) => {
+export const BlankCard = ({changeCurrentPart}) => {
     return (
         <div
             className="col-12"
-            onClick={onClick}
+            onClick={() => changeCurrentPart("create")}
         >
             <div
-                className="d-flex justify-content-center align-items-center gap-2 w-100 h-100px border-2 border-dashed border-secondary rounded-2 overflow-hidden p-5 cursor-pointer">
+                className="d-flex justify-content-center align-items-center gap-2 w-100 h-100px bg-light rounded-2 p-5 cursor-pointer">
                 <LuPlus
                     size={20}
                     color="currentColor"
@@ -31,11 +31,11 @@ export const BlankCard = ({onClick}) => {
     )
 }
 
-export const FieldCard = ({field, onDelete}) => {
+export const FieldCard = ({field, createProjectScreenPlayForm}) => {
     return (
         <div className="col-12">
             <div
-                className="d-flex flex-column justify-content-between align-items-center gap-5 w-100 h-100px bg-light rounded-2 p-5">
+                className="d-flex flex-column justify-content-between align-items-center gap-5 w-100 h-100px border border-dashed border-secondary rounded-2 p-5">
                 <div className='d-flex justify-content-between align-items-center gap-2 w-100 h-100'>
                     <div className="d-flex flex-column justify-content-center align-items-start gap-2">
                         <Typography
@@ -60,7 +60,7 @@ export const FieldCard = ({field, onDelete}) => {
                         <IconButton
                             color="light-danger"
                             size="sm"
-                            onClick={onDelete}
+                            onClick={() => createProjectScreenPlayForm.setFieldValue("fields", createProjectScreenPlayForm.values.fields.filter(item => (item.title && item.value) !== (field.title && field.value)))}
                         >
                             <LuTrash
                                 size={20}
@@ -84,12 +84,12 @@ const Fields = ({createProjectScreenPlayForm , changeCurrentPart}) => {
                             <FieldCard
                                 key={i}
                                 field={item}
-                                onDelete={() => createProjectScreenPlayForm.setFieldValue("fields", createProjectScreenPlayForm.values.fields.filter((subItem, j) => i !== j))}
+                                createProjectScreenPlayForm={createProjectScreenPlayForm}
                             />
                         )
                     }
 
-                    <BlankCard onClick={() => changeCurrentPart("create")}/>
+                    <BlankCard changeCurrentPart={changeCurrentPart}/>
                 </div>
             </div>
         </div>

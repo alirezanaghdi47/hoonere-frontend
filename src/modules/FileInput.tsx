@@ -1,9 +1,8 @@
 // libraries
 import {useEffect, useState} from "react";
 import {useDropzone} from 'react-dropzone';
-import {LazyLoadImage} from "react-lazy-load-image-component";
 import classNames from "classnames";
-import {LuFileUp, LuTrash2} from "react-icons/lu";
+import {LuFileInput, LuTrash2} from "react-icons/lu";
 
 // modules
 import Typography from "@/modules/Typography.tsx";
@@ -13,54 +12,64 @@ import IconButton from "@/modules/IconButton.tsx";
 import {TFileInput} from "@/types/moduleType.ts";
 import {ExtendedFile} from "@/types/global.ts";
 
+// utils
+import {formattedSize} from "@/utils/functions.ts";
+
 const FileInput = ({
                        id,
                        name,
                        value,
-                       preview = null,
+                       file = null,
                        onChange,
                        disabled = false,
                        readOnly = false,
                        ...props
                    }: TFileInput) => {
-    const [files, setFiles] = useState<ExtendedFile[]>([value]);
+    const [files, setFiles] = useState<ExtendedFile[] | object>([value]);
 
     const {getRootProps, getInputProps} = useDropzone({
         disabled: disabled,
         onDrop: acceptedFiles => {
-            setFiles(acceptedFiles.map(file => Object.assign(file, {
-                preview: URL.createObjectURL(file)
-            })));
+            setFiles(acceptedFiles);
 
             onChange(acceptedFiles[0]);
         },
     });
 
     useEffect(() => {
+        // @ts-ignore
         return () => files.forEach(file => URL.revokeObjectURL(file.preview));
     }, []);
 
     return (
         <div
             {...getRootProps()}
-            className={classNames("d-flex justify-content-center align-items-center form-control form-control-solid w-100 h-100 min-h-200px cursor-pointer", props.className)}
+            className={classNames("d-flex justify-content-center align-items-center form-control form-control-solid w-100 h-150px cursor-pointer", props.className)}
         >
             <input
-                {...getInputProps({id: id, name: name , readOnly: readOnly})}
+                {...getInputProps({id: id, name: name, readOnly: readOnly})}
                 className='d-none'
             />
 
             {
-                files[0]?.preview ? (
+                files[0] && Object.keys(files[0]).length > 0 ? (
                     <div
-                        className="position-relative d-flex flex-column justify-content-center align-items-center gap-2 w-100 h-100">
-                        <LazyLoadImage
-                            src={files[0]?.preview}
-                            alt="preview"
-                            width={100}
-                            height={100}
-                            className="w-100 h-200px object-fit-cover rounded-2"
-                        />
+                        className="position-relative d-flex flex-column justify-content-center align-items-center gap-5 w-100 h-100">
+                        <Typography
+                            variant="p"
+                            size="xs"
+                            color="muted"
+                        >
+                            {files[0]?.name}
+                        </Typography>
+
+                        <Typography
+                            variant="p"
+                            size="xs"
+                            color="muted"
+                        >
+                            {formattedSize(files[0]?.size)}
+                        </Typography>
 
                         <IconButton
                             color="light-danger"
@@ -68,6 +77,7 @@ const FileInput = ({
                             onClick={(e) => {
                                 e.stopPropagation();
 
+                                // @ts-ignore
                                 files.forEach(file => URL.revokeObjectURL(file.preview));
 
                                 setFiles([]);
@@ -83,20 +93,28 @@ const FileInput = ({
                             />
                         </IconButton>
                     </div>
-                ) : preview ? (
-                    <div className="d-flex flex-column justify-content-center align-items-center gap-2 w-100 h-100">
-                        <LazyLoadImage
-                            src={preview}
-                            alt="preview"
-                            width={100}
-                            height={100}
-                            className="w-100 h-200px object-fit-cover rounded-2"
-                        />
+                ) : file && Object.keys(file).length > 0 ? (
+                    <div className="d-flex flex-column justify-content-center align-items-center gap-5 w-100 h-100">
+                        <Typography
+                            variant="p"
+                            size="xs"
+                            color="muted"
+                        >
+                            {file?.name}
+                        </Typography>
+
+                        <Typography
+                            variant="p"
+                            size="xs"
+                            color="muted"
+                        >
+                            {formattedSize(file?.size)}
+                        </Typography>
                     </div>
                 ) : (
                     <div
-                        className="d-flex flex-column justify-content-center align-items-center gap-2 w-100 h-100 my-auto py-10">
-                        <LuFileUp
+                        className="d-flex flex-column justify-content-center align-items-center gap-5 w-100 h-100">
+                        <LuFileInput
                             size={20}
                             color="currentColor"
                             className="text-muted"

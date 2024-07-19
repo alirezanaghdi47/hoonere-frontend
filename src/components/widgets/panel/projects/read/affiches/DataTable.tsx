@@ -16,6 +16,7 @@ import toast from "@/helpers/toast.tsx";
 // modules
 import Table from "@/modules/Table.tsx";
 import IconButton from "@/modules/IconButton.tsx";
+import Typography from "@/modules/Typography.tsx";
 
 // services
 import {deleteProjectAfficheService} from "@/services/projectAffichesService.ts";
@@ -66,8 +67,14 @@ const DataTable = ({
                 accessorKey: 'number_string',
                 header: () => 'شماره',
                 cell: ({row}) => (
-                    <div className="w-50px fs-6 text-dark text-truncate">
-                        {row.original.number_string}
+                    <div className="w-50px">
+                        <Typography
+                            size="xs"
+                            color="dark"
+                            truncate={1}
+                        >
+                            {row.original.number_string}
+                        </Typography>
                     </div>
                 ),
                 sortingFn: "text"
@@ -76,8 +83,14 @@ const DataTable = ({
                 accessorKey: 'type_info',
                 header: () => 'نوع',
                 cell: ({row}) => (
-                    <div className="w-100px fs-6 text-dark text-truncate">
-                        {row.original.type_info?.title}
+                    <div className="w-100px">
+                        <Typography
+                            size="xs"
+                            color="dark"
+                            truncate={1}
+                        >
+                            {row.original.type_info?.title}
+                        </Typography>
                     </div>
                 ),
                 sortingFn: (rowA, rowB, columnId) => rowA.original.type_id.title - rowB.original.type_id.title
@@ -86,8 +99,14 @@ const DataTable = ({
                 accessorKey: 'affiche_date',
                 header: () => 'تاریخ',
                 cell: ({row}) => (
-                    <div className="w-100px fs-6 text-dark text-truncate">
-                        {row.original.affiche_date}
+                    <div className="w-100px">
+                        <Typography
+                            size="xs"
+                            color="dark"
+                            truncate={1}
+                        >
+                            {row.original.affiche_date}
+                        </Typography>
                     </div>
                 ),
                 sortingFn: (rowA, rowB, columnId) => {
@@ -98,7 +117,7 @@ const DataTable = ({
                 accessorKey: 'actions',
                 header: () => 'ابزار',
                 cell: ({row}) => (
-                    <div className="d-flex justify-content-start align-items-center w-max gap-2">
+                    <div className="d-flex justify-content-start align-items-center gap-2 w-max">
                         <IconButton
                             href={auth.panel_url + "projects/" + row.original.project_id + "/affiches/" + row.original.id + "/histories"}
                             color="light-info"

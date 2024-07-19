@@ -1,41 +1,21 @@
 // libraries
-import {useLayoutEffect, useMemo} from "react";
-import Loadable from "@loadable/component";
-import {useMutation} from "@tanstack/react-query";
+import {useMemo} from "react";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {format} from "date-fns-jalali";
 import {LuInfo} from "react-icons/lu";
 
 // components
-const ReadHistoryModal = Loadable(() => import("@/components/widgets/panel/projects/read/affiches/histories/ReadHistoryModal.tsx"));
-
 import Finder from "@/components/widgets/panel/projects/read/affiches/histories/Finder.tsx";
 import Filter from "@/components/widgets/panel/projects/read/affiches/histories/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
-// hooks
-import useModal from "@/hooks/useModal.tsx";
-
 // modules
 import Table from "@/modules/Table.tsx";
 import IconButton from "@/modules/IconButton.tsx";
+import Typography from "@/modules/Typography.tsx";
 
-// services
-import {
-    readAllProjectAfficheActorService,
-    readAllProjectAfficheAddressService,
-    readAllProjectAfficheMemberService,
-    readAllProjectAfficheReceptionService,
-    readAllProjectAfficheScreenPlayService,
-    readProjectAfficheService
-} from "@/services/projectAffichesService.ts";
-
-// types
-import {
-    IReadAllProjectAfficheActor, IReadAllProjectAfficheAddress,
-    IReadAllProjectAfficheMember,
-    IReadAllProjectAfficheReception, IReadAllProjectAfficheScreenPlay,
-    IReadProjectAffiche
-} from "@/types/serviceType.ts";
+// stores
+import useAuthStore from "@/stores/authStore.ts";
 
 const DataTable = ({
                        readAllProjectAfficheHistoryAction,
@@ -47,61 +27,10 @@ const DataTable = ({
                        showFilter,
                        hideFilter
                    }) => {
-    const {modal, changeModal, _handleShowModal, _handleHideModal} = useModal();
-
-    const readProjectAfficheAction = useMutation({
-        mutationFn: (data: IReadProjectAffiche) => readProjectAfficheService(data),
-        onSuccess: async (data) => {
-            if (!data.error) {
-                changeModal(data?.data?.affiche_info);
-            }
-        }
-    });
-
-    const readAllProjectAfficheActorAction = useMutation({
-        mutationFn: (data: IReadAllProjectAfficheActor) => readAllProjectAfficheActorService(data),
-        onSuccess: async (data) => {
-            if (!data.error) {
-                changeModal({actors: data?.data?.actors || []});
-            }
-        }
-    });
-
-    const readAllProjectAfficheMemberAction = useMutation({
-        mutationFn: (data: IReadAllProjectAfficheMember) => readAllProjectAfficheMemberService(data),
-        onSuccess: async (data) => {
-            if (!data.error) {
-                changeModal({members: data?.data?.members || []});
-            }
-        }
-    });
-
-    const readAllProjectAfficheReceptionAction = useMutation({
-        mutationFn: (data: IReadAllProjectAfficheReception) => readAllProjectAfficheReceptionService(data),
-        onSuccess: async (data) => {
-            if (!data.error) {
-                changeModal({receptions: data?.data?.receptions || []});
-            }
-        }
-    });
-
-    const readAllProjectAfficheScreenPlayAction = useMutation({
-        mutationFn: (data: IReadAllProjectAfficheScreenPlay) => readAllProjectAfficheScreenPlayService(data),
-        onSuccess: async (data) => {
-            if (!data.error) {
-                changeModal({screenplays: data?.data?.screenplays || []});
-            }
-        }
-    });
-
-    const readAllProjectAfficheAddressAction = useMutation({
-        mutationFn: (data: IReadAllProjectAfficheAddress) => readAllProjectAfficheAddressService(data),
-        onSuccess: async (data) => {
-            if (!data.error) {
-                changeModal({addresses: data?.data?.addresses || []});
-            }
-        }
-    });
+    const params = useParams();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const {auth} = useAuthStore();
 
     const tableColumns = useMemo(() => [
             {
@@ -114,8 +43,14 @@ const DataTable = ({
                 accessorKey: 'number_string',
                 header: () => 'شماره',
                 cell: ({row}) => (
-                    <div className="w-50px fs-6 text-dark text-truncate">
-                        {row.original.number_string}
+                    <div className="w-50px">
+                        <Typography
+                            size="xs"
+                            color="dark"
+                            truncate={1}
+                        >
+                            {row.original.number_string}
+                        </Typography>
                     </div>
                 ),
                 sortingFn: "text"
@@ -124,8 +59,14 @@ const DataTable = ({
                 accessorKey: 'date',
                 header: () => 'تاریخ',
                 cell: ({row}) => (
-                    <div className="w-100px fs-6 text-dark text-truncate">
-                        {format(row.original.created_at, "yyyy-MM-dd")}
+                    <div className="w-100px">
+                        <Typography
+                            size="xs"
+                            color="dark"
+                            truncate={1}
+                        >
+                            {format(row.original.created_at, "yyyy-MM-dd")}
+                        </Typography>
                     </div>
                 ),
                 sortingFn: (rowA, rowB, columnId) => {
@@ -136,17 +77,13 @@ const DataTable = ({
                 accessorKey: 'actions',
                 header: () => 'ابزار',
                 cell: ({row}) => (
-                    <div className="d-flex justify-content-start align-items-center w-max gap-2">
+                    <div className="d-flex justify-content-start align-items-center gap-2 w-max">
                         <IconButton
                             color="light-info"
                             size="sm"
-                            onClick={() => _handleShowModal({
-                                project_id: row.original.project_id,
-                                affiche_id: row.original.id.toString()
-                            })}
+                            onClick={() => navigate(auth.panel_url + "projects/" + params.id + "/affiches/" + params.subId + "/histories/" + row.original.id, {state: {background: location}})}
                             data-tooltip-id="my-tooltip"
-                            data-tooltip-content="جزییات آفیش"
-                            isLoading={readProjectAfficheAction.isPending && readAllProjectAfficheActorAction.isPending && readAllProjectAfficheMemberAction.isPending && readAllProjectAfficheReceptionAction.isPending && readAllProjectAfficheScreenPlayAction.isPending}
+                            data-tooltip-content="جزییات"
                         >
                             <LuInfo
                                 size={20}
@@ -159,68 +96,6 @@ const DataTable = ({
             },
         ], []
     );
-
-    useLayoutEffect(() => {
-        if (modal.data) {
-            readProjectAfficheAction.mutate({
-                project_id: modal?.data?.project_id,
-                affiche_id: modal?.data?.affiche_id,
-                get_last: 0
-            });
-        }
-    }, [modal?.isOpen]);
-
-    useLayoutEffect(() => {
-        if (modal.data) {
-            readAllProjectAfficheActorAction.mutate({
-                project_id: modal?.data?.project_id,
-                affiche_id: modal?.data?.affiche_id,
-                get_last: 0
-            });
-        }
-    }, [modal?.isOpen]);
-
-    useLayoutEffect(() => {
-        if (modal.data) {
-            readAllProjectAfficheMemberAction.mutate({
-                project_id: modal?.data?.project_id,
-                affiche_id: modal?.data?.affiche_id,
-                get_last: 0
-            });
-        }
-    }, [modal?.isOpen]);
-
-    useLayoutEffect(() => {
-        if (modal.data) {
-            readAllProjectAfficheReceptionAction.mutate({
-                project_id: modal?.data?.project_id,
-                affiche_id: modal?.data?.affiche_id,
-                get_last: 0
-            });
-        }
-    }, [modal?.isOpen]);
-
-    useLayoutEffect(() => {
-        if (modal.data) {
-            readAllProjectAfficheScreenPlayAction.mutate({
-                project_id: modal?.data?.project_id,
-                affiche_id: modal?.data?.affiche_id,
-                page: 1,
-                per_page: 96,
-                get_last: 0
-            });
-        }
-    }, [modal?.isOpen]);
-
-    useLayoutEffect(() => {
-        if (modal.data) {
-            readAllProjectAfficheAddressAction.mutate({
-                project_id: modal?.data?.project_id,
-                affiche_id: modal?.data?.affiche_id,
-                get_last: 0,
-            });
-        }
-    }, [modal?.isOpen]);
 
     return (
         <>
@@ -264,19 +139,19 @@ const DataTable = ({
                 </div>
             </div>
 
-            {
-                modal.isOpen &&
-                !readProjectAfficheAction.isPending && readProjectAfficheAction.data?.data?.affiche_info && Object.keys(readProjectAfficheAction.data?.data?.affiche_info).length > 0 &&
-                !readAllProjectAfficheActorAction.isPending &&
-                !readAllProjectAfficheMemberAction.isPending &&
-                !readAllProjectAfficheReceptionAction.isPending &&
-                !readAllProjectAfficheScreenPlayAction.isPending && (
-                    <ReadHistoryModal
-                        modal={modal}
-                        _handleHideModal={_handleHideModal}
-                    />
-                )
-            }
+            {/*{*/}
+            {/*    modal.isOpen &&*/}
+            {/*    !readProjectAfficheAction.isPending && readProjectAfficheAction.data?.data?.affiche_info && Object.keys(readProjectAfficheAction.data?.data?.affiche_info).length > 0 &&*/}
+            {/*    !readAllProjectAfficheActorAction.isPending &&*/}
+            {/*    !readAllProjectAfficheMemberAction.isPending &&*/}
+            {/*    !readAllProjectAfficheReceptionAction.isPending &&*/}
+            {/*    !readAllProjectAfficheScreenPlayAction.isPending && (*/}
+            {/*        <DataModal*/}
+            {/*            modal={modal}*/}
+            {/*            _handleHideModal={_handleHideModal}*/}
+            {/*        />*/}
+            {/*    )*/}
+            {/*}*/}
         </>
     )
 }

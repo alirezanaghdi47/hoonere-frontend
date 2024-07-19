@@ -1,8 +1,8 @@
 // modules
 import Button from "@/modules/Button.tsx";
 import Form from "@/modules/Form.tsx";
-import FileInput from "@/modules/FileInput.tsx";
 import Textarea from "@/modules/Textarea.tsx";
+import ImageInput from "@/modules/ImageInput.tsx";
 
 const ResumeFormData = ({readMyProfileAction ,updateOccupationForm , updateOccupationAction}) => {
     return (
@@ -20,7 +20,7 @@ const ResumeFormData = ({readMyProfileAction ,updateOccupationForm , updateOccup
 
                         <div className="col-lg-8">
                             <Form.Group>
-                                <FileInput
+                                <ImageInput
                                     id="resume_file"
                                     name="resume_file"
                                     preview={readMyProfileAction.data?.data?.user_info?.resume_file}

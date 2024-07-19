@@ -6,7 +6,7 @@
       height: 50px !important;
       background: var(--bs-secondary) !important;
       box-shadow: var(--bs-box-shadow-sm) !important;
-      border: 5px solid var(--bs-white) !important;
+      border: 5px solid var(--bs-body-bg) !important;
 
       span {
         color: var(--bs-gray-600) !important;
@@ -51,7 +51,7 @@
     box-shadow: var(--bs-box-shadow-sm) !important;
 
     span {
-      border-color: var(--bs-white) !important;
+      border-color: var(--bs-body-bg) !important;
       border-top-width: 5px !important;
     }
   }

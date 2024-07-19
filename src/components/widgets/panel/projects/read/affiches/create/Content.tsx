@@ -9,9 +9,8 @@ import {useFormik} from "formik";
 const FormDataP2 = Loadable(() => import('@/components/widgets/panel/projects/read/affiches/create/FormDataP2.tsx'));
 const FormDataP3 = Loadable(() => import('@/components/widgets/panel/projects/read/affiches/create/FormDataP3.tsx'));
 
-import FormDataP1 from "@/components/widgets/panel/projects/read/affiches/create/FormDataP1.tsx";
-
 import Navigation from "@/components/widgets/panel/projects/read/affiches/create/Navigation.tsx";
+import FormDataP1 from "@/components/widgets/panel/projects/read/affiches/create/FormDataP1.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // helpers
@@ -22,7 +21,7 @@ import useStep from "@/hooks/useStep.tsx";
 import useFilter from "@/hooks/useFilter.tsx";
 
 // services
-import {createProjectAfficheService,} from "@/services/projectAffichesService.ts";
+import {createProjectAfficheService} from "@/services/projectAffichesService.ts";
 import {readAllProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
 
 // stores
@@ -42,7 +41,7 @@ const Content = () => {
     const params = useParams();
     const navigate = useNavigate();
     const {auth} = useAuthStore();
-    const {step, changeStep, nextStep, prevStep, currentStep, resetStep} = useStep(null, 1);
+    const {step, changeStep, nextStep, prevStep, currentStep, resetStep} = useStep<any>(null, 1);
 
     const {
         filter,

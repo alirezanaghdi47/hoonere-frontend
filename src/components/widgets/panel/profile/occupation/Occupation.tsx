@@ -1,5 +1,5 @@
 // libraries
-import {useEffect, useLayoutEffect} from "react";
+import {useEffect} from "react";
 import {useMutation} from "@tanstack/react-query";
 import Loadable from "@loadable/component";
 import {useFormik} from "formik";
@@ -9,7 +9,6 @@ const CreateJobFormData = Loadable(() => import("@/components/widgets/panel/prof
 
 import FormData from "@/components/widgets/panel/profile/occupation/ResumeFormData.tsx";
 import Jobs from "@/components/widgets/panel/profile/occupation/Jobs.tsx";
-import Loading from "@/components/partials/panel/Loading.tsx";
 
 // helpers
 import toast from "@/helpers/toast.tsx";
@@ -19,7 +18,6 @@ import usePart from "@/hooks/usePart.tsx";
 
 // services
 import {updateOccupationService} from "@/services/profileService.ts";
-import {readAllJobService} from "@/services/publicService.ts";
 
 // types
 import {IUpdateOccupation} from "@/types/serviceType.ts";

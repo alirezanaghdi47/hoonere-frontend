@@ -12,7 +12,7 @@ const Empty = ({title, width, height}) => {
         >
             <LazyLoadImage
                 src="/assets/images/illustrations/no-data.svg"
-                alt="logo"
+                alt="no-data"
                 width={100}
                 height={100}
             />

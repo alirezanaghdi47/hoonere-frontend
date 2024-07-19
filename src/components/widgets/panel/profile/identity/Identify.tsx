@@ -6,14 +6,13 @@ import {useFormik} from "formik";
 import toast from "@/helpers/toast.tsx";
 
 // modules
-import FileInput from "@/modules/FileInput.tsx";
 import DatePicker from "@/modules/DatePicker.tsx";
 import Form from "@/modules/Form.tsx";
 import TextInput from "@/modules/TextInput.tsx";
 import Button from "@/modules/Button.tsx";
 import Textarea from "@/modules/Textarea.tsx";
 import NumberInput from "@/modules/NumberInput.tsx";
-import AvatarInput from "@/modules/AvatarInput.tsx";
+import ImageInput from "@/modules/ImageInput.tsx";
 
 // services
 import {updateProfileService} from "@/services/profileService.ts";
@@ -73,9 +72,10 @@ const Identify = ({readMyProfileAction}) => {
 
                         <div className="col-lg-8">
                             <Form.Group>
-                                <AvatarInput
+                                <ImageInput
                                     id="profile_img"
                                     name="profile_img"
+                                    isCircle
                                     preview={readMyProfileAction.data?.data?.user_info.profile_img}
                                     value={updateProfileForm.values.profile_img}
                                     onChange={(value) => updateProfileForm.setFieldValue("profile_img", value)}
@@ -100,7 +100,7 @@ const Identify = ({readMyProfileAction}) => {
 
                         <div className="col-lg-8">
                             <Form.Group>
-                                <FileInput
+                                <ImageInput
                                     id="national_card"
                                     name="national_card"
                                     preview={readMyProfileAction.data?.data?.user_info.national_card}

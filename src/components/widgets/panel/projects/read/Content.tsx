@@ -1,7 +1,15 @@
 // libraries
 import {useState} from "react";
 import {useParams} from "react-router-dom";
-import {LuBriefcase, LuCalculator, LuClapperboard, LuScale, LuUsers, LuDollarSign} from "react-icons/lu";
+import {
+    LuBriefcase,
+    LuCalculator,
+    LuClapperboard,
+    LuScale,
+    LuUsers,
+    LuDollarSign,
+    LuLayoutDashboard
+} from "react-icons/lu";
 
 // modules
 import Button from "@/modules/Button.tsx";
@@ -34,18 +42,24 @@ const Content = () => {
         },
         {
             id: 4,
+            label: "مود بورد ها",
+            icon: LuLayoutDashboard({size: 25, color: "currentColor"}),
+            href: auth.panel_url + `projects/${params.id}/mood-boards`
+        },
+        {
+            id: 5,
             label: "قرارداد ها",
             icon: LuScale({size: 25, color: "currentColor"}),
             href: ""
         },
         {
-            id: 5,
+            id: 6,
             label: "مالی",
             icon: LuDollarSign({size: 25, color: "currentColor"}),
             href: ""
         },
         {
-            id: 6,
+            id: 7,
             label: "برآورد ها",
             icon: LuCalculator({size: 25, color: "currentColor"}),
             href: ""

@@ -18,7 +18,6 @@ import Form from "@/modules/Form.tsx";
 import SelectBox from "@/modules/SelectBox.tsx";
 import Textarea from "@/modules/Textarea.tsx";
 import NumberInput from "@/modules/NumberInput.tsx";
-import TextEditor from "@/modules/TextEditor.tsx";
 import Button from "@/modules/Button.tsx";
 
 // services

@@ -1,14 +1,12 @@
 // libraries
 import {LuAlertTriangle} from "react-icons/lu";
+import {format} from "date-fns-jalali";
 
 // modules
 import Typography from "@/modules/Typography.tsx";
 import Form from "@/modules/Form.tsx";
 import Alert from "@/modules/Alert.tsx";
 import Chip from "@/modules/Chip.tsx";
-
-// utils
-import {convertGregorianToJalali} from "@/utils/functions.ts";
 
 const Review = ({readMyProfileAction}) => {
     return (
@@ -139,7 +137,7 @@ const Review = ({readMyProfileAction}) => {
                                         color="danger"
                                         label="ثبت نشده"
                                     />
-                                ) : convertGregorianToJalali(readMyProfileAction.data?.data?.user_info?.birthdate)
+                                ) : format(readMyProfileAction.data?.data?.user_info?.birthdate , "yyyy-MM-dd")
                             }
                         </Typography>
                     </div>

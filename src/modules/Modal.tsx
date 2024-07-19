@@ -1,4 +1,5 @@
 // libraries
+import {useEffect} from "react";
 import ReactModal from 'react-modal';
 import classNames from "classnames";
 
@@ -31,6 +32,12 @@ const styles = {
 }
 
 const Modal = ({children, isOpen, onClose, width = "md", height = "content", position = "any", ...props}: TModal) => {
+    // @ts-ignore
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => document.body.style.overflow = 'unset';
+    }, []);
+
     return (
         <ReactModal
             isOpen={isOpen}
@@ -59,11 +66,11 @@ const Modal = ({children, isOpen, onClose, width = "md", height = "content", pos
     )
 }
 
-const ModalHeader = ({children , ...props}: TModalHeader) => {
+const ModalHeader = ({children, ...props}: TModalHeader) => {
     return (
         <div
             {...props}
-            className={classNames("d-flex justify-content-between align-items-center w-100 gap-5" , props.className)}
+            className={classNames("d-flex justify-content-between align-items-center w-100 gap-5", props.className)}
         >
             {children}
         </div>
@@ -74,9 +81,10 @@ const ModalBody = ({children, isCenter = true, ...props}: TModalBody) => {
     return (
         <div
             {...props}
-            className={classNames("d-flex flex-column justify-content-start align-items-start gap-5 w-100 h-100 overflow-y-auto remove-scrollbar", props.className, {
+            className={classNames("d-flex flex-column justify-content-start align-items-start gap-5 w-100 h-100 overflow-auto", props.className, {
                 "mb-auto": isCenter
             })}
+                style={{maxHeight: "calc(100dvh - 190px)"}}
         >
             {children}
         </div>

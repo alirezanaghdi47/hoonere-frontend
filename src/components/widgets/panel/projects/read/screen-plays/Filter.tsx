@@ -8,6 +8,7 @@ import TextInput from "@/modules/TextInput.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import Button from "@/modules/Button.tsx";
 import Form from "@/modules/Form.tsx";
+import NumberInput from "@/modules/NumberInput.tsx";
 
 // services
 import {readAllProjectTypeService} from "@/services/publicService.ts";
@@ -55,7 +56,7 @@ const AdvanceFilter = ({
                         size="sm"
                     />
 
-                    <TextInput
+                    <NumberInput
                         id="part"
                         name="part"
                         value={filter.part}
@@ -72,7 +73,7 @@ const AdvanceFilter = ({
                         size="sm"
                     />
 
-                    <TextInput
+                    <NumberInput
                         id="sequence"
                         name="sequence"
                         value={filter.sequence}
@@ -167,7 +168,7 @@ const Filter = ({
                     resetFilter
                 }) => {
     return (
-        <div className='d-flex flex-column justify-content-start align-items-start w-100 gap-5 mb-5'>
+        <div className='d-flex flex-column justify-content-start align-items-start w-100 gap-5'>
             {
                 isOpenFilter ? (
                     <AdvanceFilter

@@ -1,7 +1,7 @@
 // libraries
 import {useRef} from "react";
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import {useNavigate} from "react-router-dom";
+import {useReactToPrint} from 'react-to-print';
 import {format} from "date-fns-jalali";
 import {LuPrinter, LuX} from "react-icons/lu";
 
@@ -11,46 +11,21 @@ import Modal from "@/modules/Modal.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 
 // utils
-import {convertGregorianToJalali, generateTimeWithoutSecond} from "@/utils/functions.ts";
+import {generateTimeWithoutSecond} from "@/utils/functions.ts";
 
-const ReadHistoryModal = ({modal, _handleHideModal}) => {
+const DataModal = ({history}) => {
+    const navigate = useNavigate();
     const printRef = useRef();
 
-    const _handlePrint = async () => {
-        await html2canvas(printRef.current, {scale: 2}).then((canvas) => {
-            const imgData = canvas.toDataURL('image/png', 1.0);
-
-            const pdf = new jsPDF('p', 'mm', 'a4');
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = pdf.internal.pageSize.getHeight();
-
-            const canvasWidth = canvas.width / 2;
-            const canvasHeight = canvas.height / 2;
-
-            const imgWidth = pdfWidth;
-            const imgHeight = (canvasHeight * pdfWidth) / canvasWidth;
-
-            let heightLeft = imgHeight;
-            let position = 0;
-
-            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight, null, 'FAST');  // Use 'FAST' compression for better quality
-            heightLeft -= pdfHeight;
-
-            while (heightLeft >= 0) {
-                position = heightLeft - imgHeight;
-                pdf.addPage();
-                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight, null, 'FAST');  // Use 'FAST' compression for better quality
-                heightLeft -= pdfHeight;
-            }
-
-            pdf.save(`affiche_${modal?.data?.affiche_date}.pdf`);
-        });
-    };
+    const _handlePrint = useReactToPrint({
+        content: () => printRef.current,
+        documentTitle: `affiche_${history?.affiche_date}`,
+    });
 
     return (
         <Modal
-            isOpen={modal.isOpen}
-            onClose={_handleHideModal}
+            isOpen={true}
+            onClose={() => navigate(-1)}
             position='center'
             width="xl"
             height="full"
@@ -81,7 +56,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                         color="light-danger"
                         data-tooltip-id="my-tooltip"
                         data-tooltip-content="خروج"
-                        onClick={_handleHideModal}
+                        onClick={() => navigate(-1)}
                     >
                         <LuX size={20}/>
                     </IconButton>
@@ -91,10 +66,9 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
             <Modal.Body>
                 <div
                     ref={printRef}
-                    className="d-flex flex-wrap justify-content-start align-items-start min-w-900px w-100 h-100 p-2 overflow-auto"
+                    className="min-w-900px w-100 h-100"
                 >
-                    <table
-                        className="table table-borderless border-2 border-solid border-secondary mb-0">
+                    <table className="table table-borderless border-2 border-solid border-secondary mb-0">
                         <colgroup>
                             <col width={100}/>
                             <col width={100}/>
@@ -124,7 +98,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                 >
                                     جلسه :
                                     &nbsp;
-                                    {modal?.data?.number_string}
+                                    {history?.number_string}
                                 </Typography>
                             </td>
 
@@ -139,7 +113,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                 >
                                     ساعت کلید :
                                     &nbsp;
-                                    {generateTimeWithoutSecond(modal?.data?.start_time)}
+                                    {generateTimeWithoutSecond(history?.start_time)}
                                 </Typography>
                             </td>
 
@@ -153,7 +127,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                     color="dark"
                                     isBold
                                 >
-                                    {modal?.data?.title}
+                                    {history?.title}
                                 </Typography>
                             </td>
 
@@ -168,7 +142,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                 >
                                     روز :
                                     &nbsp;
-                                    {format(modal?.data?.affiche_date, "EEEE")}
+                                    {format(history?.affiche_date, "EEEE")}
                                 </Typography>
                             </td>
 
@@ -183,7 +157,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                 >
                                     تاریخ :
                                     &nbsp;
-                                    {convertGregorianToJalali(modal?.data?.affiche_date)}
+                                    {format(history?.affiche_date , "dd-MM-yyyy")}
                                 </Typography>
                             </td>
                         </tr>
@@ -232,7 +206,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                 >
                                     داخلی :
                                     &nbsp;
-                                    {["1" , "3"].includes(modal?.data?.location_side_id) && "*"}
+                                    {["1", "3"].includes(history?.location_side_id) && "*"}
                                 </Typography>
                             </td>
 
@@ -247,7 +221,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                 >
                                     خارجی :
                                     &nbsp;
-                                    {["2" , "3"].includes(modal?.data?.location_side_id) && "*"}
+                                    {["2", "3"].includes(history?.location_side_id) && "*"}
                                 </Typography>
                             </td>
 
@@ -262,7 +236,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                 >
                                     روز :
                                     &nbsp;
-                                    {["1" , "3"].includes(modal?.data?.time_type_id) && "*"}
+                                    {["1", "3"].includes(history?.time_type_id) && "*"}
                                 </Typography>
                             </td>
 
@@ -277,7 +251,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                 >
                                     شب :
                                     &nbsp;
-                                    {["2" , "3"].includes(modal?.data?.time_type_id) && "*"}
+                                    {["2", "3"].includes(history?.time_type_id) && "*"}
                                 </Typography>
                             </td>
                         </tr>
@@ -310,7 +284,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={12}
                                             rowSpan={1}
-                                            className="bg-secondary text-center align-center border-right-2 border-solid border-active-secondary p-2"
+                                            className="bg-secondary text-center align-center p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -326,7 +300,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={1}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -339,7 +313,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={4}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -352,7 +326,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={3}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -365,7 +339,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={2}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -378,7 +352,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={2}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -390,7 +364,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                     </tr>
 
                                     {
-                                        modal?.data?.actors?.map((actor, index) =>
+                                        history?.actors?.map((actor, index) =>
                                             <tr key={actor.id}>
                                                 <td
                                                     colSpan={1}
@@ -461,7 +435,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                     }
 
                                     {
-                                        (Math.max(modal?.data?.actors?.length, modal?.data?.screenplays?.length) - modal?.data?.actors?.length > 0) && Array(Math.max(modal?.data?.actors?.length, modal?.data?.screenplays?.length) - modal?.data?.actors?.length).fill("").map((blank, index) =>
+                                        (Math.max(history?.actors?.length, history?.screenplays?.length) - history?.actors?.length > 0) && Array(Math.max(history?.actors?.length, history?.screenplays?.length) - history?.actors?.length).fill("").map((blank, index) =>
                                             <tr key={index}>
                                                 <td
                                                     colSpan={1}
@@ -472,7 +446,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                                         size="xs"
                                                         color="dark"
                                                     >
-                                                        {modal?.data?.actors?.length + index + 1}
+                                                        {history?.actors?.length + index + 1}
                                                     </Typography>
                                                 </td>
 
@@ -576,7 +550,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={2}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -589,7 +563,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={2}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -602,7 +576,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={2}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -615,7 +589,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={2}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -628,7 +602,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={4}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -640,7 +614,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                     </tr>
 
                                     {
-                                        modal?.data?.screenplays?.map(screenPlay =>
+                                        history?.screenplays?.map(screenPlay =>
                                             <tr key={screenPlay.id}>
                                                 <td
                                                     colSpan={2}
@@ -742,7 +716,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={12}
                                             rowSpan={1}
-                                            className="bg-secondary text-center align-center border-right-2 border-solid border-active-secondary p-2"
+                                            className="bg-secondary text-center align-center p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -758,7 +732,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={1}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -771,7 +745,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={4}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -784,7 +758,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={3}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -797,7 +771,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={1}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -810,7 +784,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={3}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -822,7 +796,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                     </tr>
 
                                     {
-                                        modal?.data?.members?.map((member, index) =>
+                                        history?.members?.map((member, index) =>
                                             <tr key={member.id}>
                                                 <td
                                                     colSpan={1}
@@ -893,7 +867,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                     }
 
                                     {
-                                        (Math.max(modal?.data?.members?.length, modal?.data?.receptions?.length) - modal?.data?.members?.length > 0) && Array(Math.max(modal?.data?.members?.length, modal?.data?.receptions?.length) - modal?.data?.members?.length).fill("").map((blank, index) =>
+                                        (Math.max(history?.members?.length, history?.receptions?.length) - history?.members?.length > 0) && Array(Math.max(history?.members?.length, history?.receptions?.length) - history?.members?.length).fill("").map((blank, index) =>
                                             <tr key={index}>
                                                 <td
                                                     colSpan={1}
@@ -904,7 +878,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                                         size="xs"
                                                         color="dark"
                                                     >
-                                                        {modal?.data?.members.length + index + 1}
+                                                        {history?.members.length + index + 1}
                                                     </Typography>
                                                 </td>
 
@@ -1008,7 +982,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={4}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -1021,7 +995,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={2}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -1034,7 +1008,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={2}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -1047,7 +1021,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={2}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -1060,7 +1034,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={2}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -1072,7 +1046,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                     </tr>
 
                                     {
-                                        modal?.data?.receptions?.map(reception =>
+                                        history?.receptions?.map(reception =>
                                             <tr key={reception.id}>
                                                 <td
                                                     colSpan={4}
@@ -1357,11 +1331,11 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         </td>
                                     </tr>
 
-                                    <tr>
+                                    <tr className="border-bottom-2 border-solid border-secondary">
                                         <td
                                             colSpan={1}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-right-2 border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -1374,7 +1348,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                         <td
                                             colSpan={11}
                                             rowSpan={1}
-                                            className="bg-light-dark text-center align-center border-bottom-2 border-solid border-secondary p-2"
+                                            className="bg-light text-center align-center border-bottom-2 border-solid border-secondary p-2"
                                         >
                                             <Typography
                                                 size="xs"
@@ -1386,7 +1360,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                     </tr>
 
                                     {
-                                        modal?.data?.addresses?.map((address, index) =>
+                                        history?.addresses?.map((address, index) =>
                                             <tr key={address.id}>
                                                 <td
                                                     colSpan={1}
@@ -1404,7 +1378,7 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
                                                 <td
                                                     colSpan={11}
                                                     rowSpan={1}
-                                                    className="text-start align-center border-bottom-2 border-solid border-secondary p-2"
+                                                    className="text-start align-center p-2"
                                                 >
                                                     <Typography
                                                         size="xs"
@@ -1428,4 +1402,4 @@ const ReadHistoryModal = ({modal, _handleHideModal}) => {
     )
 }
 
-export default ReadHistoryModal;
+export default DataModal;

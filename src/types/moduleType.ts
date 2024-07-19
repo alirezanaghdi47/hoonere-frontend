@@ -14,18 +14,6 @@ export type TAlert = {
     style?: CSSProperties
 }
 
-export type TAvatarInput = {
-    id: string,
-    name: string,
-    value: t.ExtendedFile | null,
-    preview?: string | null,
-    onChange?: (value: File | object) => void,
-    disabled?: boolean,
-    readOnly?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 export type TBadge = {
     color: t.colors,
     size?: "sm" | "lg",
@@ -130,8 +118,8 @@ export type TDropdown = {
 export type TFileInput = {
     id: string,
     name: string,
-    value: t.ExtendedFile | null,
-    preview?: string | null,
+    value: t.ExtendedFile | object,
+    file?: { name: string, size: number } | null,
     onChange?: (value: File | object) => void,
     disabled?: boolean,
     readOnly?: boolean,
@@ -178,6 +166,19 @@ export type TIconButton = {
     style?: CSSProperties,
 }
 
+export type TImageInput = {
+    id: string,
+    name: string,
+    value: t.ExtendedFile | object,
+    preview?: string | null,
+    onChange?: (value: File | object) => void,
+    disabled?: boolean,
+    readOnly?: boolean,
+    isCircle?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
+}
+
 export type TLocationPicker = {
     width?: string | number,
     height: number,
@@ -219,6 +220,12 @@ export type TModalBody = {
 
 export type TModalFooter = {
     children: ReactNode,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
+}
+
+export type TMusicPlayer = {
+    src: string,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }
@@ -368,8 +375,8 @@ export type TTextEditor = {
     name: string,
     value: string | null,
     setupAddon?: any,
-    toolbarAddon?:string,
-    contextMenuAddon?:string,
+    toolbarAddon?: string,
+    contextMenuAddon?: string,
     placeholder?: string,
     onChange?: (value: string | null) => string | null,
     disabled?: boolean,
@@ -412,6 +419,12 @@ export type TTypography = {
     isBold?: boolean,
     truncate?: 1 | 2 | 3,
     lineHeight?: "sm" | "lg",
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
+}
+
+export type TVideoPlayer = {
+    src: string,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }

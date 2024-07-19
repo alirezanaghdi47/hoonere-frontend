@@ -1,8 +1,8 @@
 .react-tooltip {
   z-index: 1000!important;
   max-width: 250px !important;
-  background: var(--bs-dark) !important;
-  color: var(--bs-light) !important;
+  background: var(--bs-body-color) !important;
+  color: var(--bs-body-bg) !important;
   line-height: 25px;
   border-radius: 10px !important;
 }

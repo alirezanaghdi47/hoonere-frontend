@@ -115,7 +115,7 @@ export const cleaningObject = (sourceObject) => {
     const clonedObject = JSON.parse(JSON.stringify(sourceObject));
 
     for (const propName in clonedObject) {
-        if (clonedObject[propName] === null || clonedObject[propName] === undefined || clonedObject[propName] === "") {
+        if (clonedObject[propName] === null || clonedObject[propName] === undefined || clonedObject[propName] === "" || clonedObject[propName]?.length === 0) {
             delete clonedObject[propName];
         }
     }

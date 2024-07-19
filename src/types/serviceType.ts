@@ -297,3 +297,7 @@ export interface IReadAllProjectAfficheHistory {
     page: number,
     per_page: number,
 }
+
+export interface IReadAllProjectMoodBoard {
+    project_id: string,
+}

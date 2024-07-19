@@ -34,7 +34,6 @@ const Summary = ({readMyProfileAction}) => {
                             readMyProfileAction.data?.data?.user_info?.profile_img ? (
                                 <LazyLoadImage
                                     src={readMyProfileAction.data?.data?.user_info?.profile_img}
-                                    alt="avatar"
                                     width={150}
                                     height={150}
                                     className="w-100 h-100 rounded-2"

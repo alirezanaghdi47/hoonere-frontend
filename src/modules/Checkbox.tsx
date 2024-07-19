@@ -4,7 +4,16 @@ import classNames from "classnames";
 // types
 import {TCheckBox} from "@/types/moduleType.ts";
 
-const Checkbox = ({name, id, checked, value, onChange, disabled = false, readOnly = false, ...props}: TCheckBox) => {
+const Checkbox = ({
+                      name,
+                      id,
+                      checked,
+                      value,
+                      onChange,
+                      disabled = false,
+                      readOnly = false,
+                      ...props
+                  }: TCheckBox) => {
     return (
         <div
             {...props}

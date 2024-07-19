@@ -151,7 +151,7 @@ const Filter = ({
                     resetFilter
                 }) => {
     return (
-        <div className='d-flex flex-column justify-content-start align-items-start w-100 gap-5 mb-5'>
+        <div className='d-flex flex-column justify-content-start align-items-start w-100 gap-5'>
             {
                 isOpenFilter ? (
                     <AdvanceFilter

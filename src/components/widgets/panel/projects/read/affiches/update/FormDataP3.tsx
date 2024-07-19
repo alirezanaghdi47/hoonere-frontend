@@ -1,5 +1,5 @@
 // components
-import ScreenPlays from "@/components/widgets/panel/projects/read/affiches/update/ScreenPlays.tsx";
+import ScreenPlaysDataList from "@/components/widgets/panel/projects/read/affiches/update/ScreenPlaysDataList.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
 // modules
@@ -24,7 +24,7 @@ const FormDataP3 = ({
                     <div className="col-12">
                         {
                             readAllProjectScreenPlayAction.data?.data.screenplays.length > 0 && (
-                                <ScreenPlays
+                                <ScreenPlaysDataList
                                     readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
                                     updateProjectAfficheP3Form={updateProjectAfficheP3Form}
                                     filter={filter}

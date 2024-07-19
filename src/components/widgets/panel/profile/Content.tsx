@@ -31,11 +31,11 @@ const Content = () => {
 
     useLayoutEffect(() => {
         readMyProfileAction.mutate();
-    } , []);
+    }, []);
 
     useLayoutEffect(() => {
         readAllMyJobAction.mutate();
-    } , []);
+    }, []);
 
     useLayoutEffect(() => {
         readMyAllBankCardAction.mutate();
@@ -89,7 +89,7 @@ const Content = () => {
             }
 
             {
-                readMyProfileAction.isPending && readAllMyJobAction.isPending && location.hash === "#occupation" && (
+                (readMyProfileAction.isPending || readAllMyJobAction.isPending) && location.hash === "#occupation" && (
                     <Loading
                         width="100%"
                         height={600}
@@ -107,7 +107,7 @@ const Content = () => {
             }
 
             {
-                readMyProfileAction.isPending && readMyAllBankCardAction.isPending && location.hash === "#financial" && (
+                (readMyProfileAction.isPending || readMyAllBankCardAction.isPending) && location.hash === "#financial" && (
                     <Loading
                         width="100%"
                         height={300}

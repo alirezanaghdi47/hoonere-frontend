@@ -36,7 +36,6 @@ export const PreviewBankCard = ({card}) => {
                         <div className="d-flex justify-content-start align-items-center gap-2">
                             <LazyLoadImage
                                 src={getBankInfoFromCardNumber(card?.card_number)?.bank ? `/assets/images/iranian-banks/${getBankInfoFromCardNumber(card?.card_number)?.bank}.png` : "/assets/images/placeholder.png"}
-                                alt={getBankInfoFromCardNumber(card?.card_number)?.bank}
                                 width={50}
                                 height={50}
                                 className="object-fit-cover rounded-circle"

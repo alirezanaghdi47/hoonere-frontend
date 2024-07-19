@@ -36,7 +36,6 @@ export const PreviewBankCard = ({card}) => {
                         <div className="d-flex justify-content-start align-items-center gap-2">
                             <LazyLoadImage
                                 src={getBankInfoFromCardNumber(card?.card_number)?.bank ? `/assets/images/iranian-banks/${getBankInfoFromCardNumber(card?.card_number)?.bank}.png` : "/assets/images/placeholder.png"}
-                                alt={getBankInfoFromCardNumber(card?.card_number)?.bank}
                                 width={50}
                                 height={50}
                                 className="object-fit-cover rounded-circle"
@@ -109,7 +108,7 @@ const UpdateBankFormData = ({readMyAllBankCardAction, readMyProfileAction, part,
     const updateBankCardForm = useFormik({
         enableReinitialize: true,
         initialValues: {
-            name: readMyProfileAction.data?.data?.user_info?.first_name && readMyProfileAction.data?.data?.user_info?.last_name ? readMyProfileAction.data?.data?.user_info?.first_name + " " + readMyProfileAction.data?.data?.user_info?.last_name : "",
+            name: readMyAllBankCardAction.data?.data?.cards.find(card => card.card_number === part?.card_number)?.name ? readMyAllBankCardAction.data?.data?.cards.find(card => card.card_number === part?.card_number).name : readMyProfileAction.data?.data?.user_info?.first_name + " " + readMyProfileAction.data?.data?.user_info?.last_name,
             card_number: part?.card_number ? part.card_number : "",
             card_shaba: part?.card_shaba ? part.card_shaba : "",
             account_id: part?.account_id ? part.account_id : ""

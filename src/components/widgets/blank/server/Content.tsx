@@ -15,7 +15,7 @@ const Content = () => {
         <div className="d-flex flex-column justify-content-center align-items-center gap-10 w-100 h-100">
             <LazyLoadImage
                 src="/assets/images/illustrations/server-down.svg"
-                alt="500"
+                alt="server-down"
                 width={250}
             />
 
@@ -39,7 +39,7 @@ const Content = () => {
             <Button
                 color="light-danger"
                 isBold
-                onClick={() => window.location.replace(auth.panel_url + "dashboard")}
+                onClick={() => window.location.replace(auth.panel_url ? process.env.BASE_URL + auth.panel_url + "dashboard" : process.env.BASE_URL + "/panel/dashboard")}
             >
                 بازگشت به صفحه اصلی
             </Button>

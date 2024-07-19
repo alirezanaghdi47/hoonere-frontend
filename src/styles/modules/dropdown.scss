@@ -7,7 +7,7 @@
 
   &__item {
     background: var(--bs-body-bg) !important;
-    color: var(--bs-dark) !important;
+    color: var(--bs-body-color) !important;
     font-size: 0.95rem !important;
     border-radius: 10px !important;
     padding: 10px !important;
@@ -24,8 +24,8 @@
     }
 
     &--hover {
-      background: var(--bs-gray-200) !important;
-      color: var(--bs-success) !important;
+      background: unset !important;
+      color: unset !important;
     }
 
     &--submenu {
@@ -36,7 +36,7 @@
         position: absolute !important;
         font-size: 0.95rem !important;
         right: calc(100% - 16px) !important;
-        color: var(--bs-dark) !important;
+        color: var(--bs-body-color) !important;
       }
     }
   }

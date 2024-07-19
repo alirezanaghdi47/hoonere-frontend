@@ -2,12 +2,8 @@
 import {useLayoutEffect} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
-import Loadable from "@loadable/component";
-import {useBoolean} from "usehooks-ts";
 
 // components
-const DataList = Loadable(() => import("@/components/widgets/panel/projects/read/members/DataList.tsx"));
-
 import DataTable from "@/components/widgets/panel/projects/read/members/DataTable.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
@@ -22,7 +18,6 @@ import {IReadAllProjectMember} from "@/types/serviceType.ts";
 
 const Content = () => {
     const params = useParams();
-    const {value: isListView , toggle: toggleView} = useBoolean(false);
 
     const {filter, initialFilter, isOpenFilter, showFilter, hideFilter, resetFilter, changeFilter} = useFilter<IReadAllProjectMember>({
         text: "",
@@ -57,24 +52,7 @@ const Content = () => {
                 }
 
                 {
-                    !readAllProjectMemberAction.isPending && isListView && (
-                        <DataList
-                            readAllProjectMemberAction={readAllProjectMemberAction}
-                            filter={filter}
-                            initialFilter={initialFilter}
-                            isOpenFilter={isOpenFilter}
-                            changeFilter={changeFilter}
-                            resetFilter={resetFilter}
-                            hideFilter={hideFilter}
-                            showFilter={showFilter}
-                            isListView={isListView}
-                            toggleView={toggleView}
-                        />
-                    )
-                }
-
-                {
-                    !readAllProjectMemberAction.isPending && !isListView && (
+                    !readAllProjectMemberAction.isPending && (
                         <DataTable
                             readAllProjectMemberAction={readAllProjectMemberAction}
                             filter={filter}
@@ -84,15 +62,12 @@ const Content = () => {
                             resetFilter={resetFilter}
                             hideFilter={hideFilter}
                             showFilter={showFilter}
-                            isListView={isListView}
-                            toggleView={toggleView}
                         />
                     )
                 }
             </div>
         </div>
     )
-
 }
 
 export default Content;

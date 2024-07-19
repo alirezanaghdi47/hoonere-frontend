@@ -17,6 +17,7 @@ import toast from "@/helpers/toast.tsx";
 import Table from "@/modules/Table.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import Button from "@/modules/Button.tsx";
+import Typography from "@/modules/Typography.tsx";
 
 // services
 import {deleteProjectService} from "@/services/projectService.ts";
@@ -63,12 +64,9 @@ const DataTable = ({
                 accessorKey: 'logo',
                 header: () => 'لوگو',
                 cell: ({row}) => (
-                    <div
-                        className="w-50px fs-6 text-dark text-truncate"
-                    >
+                    <div className="w-50px">
                         <LazyLoadImage
                             src={row.original.logo}
-                            alt={row.original.title}
                             width={40}
                             height={40}
                         />
@@ -81,7 +79,7 @@ const DataTable = ({
                 header: () => 'عنوان',
                 cell: ({row}) => (
                     <div
-                        className="w-100px fs-6 text-dark text-truncate"
+                        className="w-100px"
                         data-tooltip-id="my-tooltip"
                         data-tooltip-content={row.original.title}
                     >
@@ -101,8 +99,14 @@ const DataTable = ({
                 accessorKey: 'count_of_parts',
                 header: () => 'تعداد قسمت ها',
                 cell: ({row}) => (
-                    <div className="w-50px fs-6 text-dark text-truncate">
-                        {row.original.count_of_parts}
+                    <div className="w-50px">
+                        <Typography
+                            size="xs"
+                            color="dark"
+                            truncate={1}
+                        >
+                            {row.original.count_of_parts}
+                        </Typography>
                     </div>
                 ),
                 sortingFn: "text"
@@ -111,8 +115,14 @@ const DataTable = ({
                 accessorKey: 'time_of_parts',
                 header: () => 'زمان ( دقیقه )',
                 cell: ({row}) => (
-                    <div className="w-50px fs-6 text-dark text-truncate">
-                        {row.original.time_of_parts}
+                    <div className="w-50px">
+                        <Typography
+                            size="xs"
+                            color="dark"
+                            truncate={1}
+                        >
+                            {row.original.time_of_parts}
+                        </Typography>
                     </div>
                 ),
                 sortingFn: "text"
@@ -121,7 +131,7 @@ const DataTable = ({
                 accessorKey: 'actions',
                 header: () => 'ابزار',
                 cell: ({row}) => (
-                    <div className="d-flex justify-content-start align-items-center w-max gap-2">
+                    <div className="d-flex justify-content-start align-items-center gap-2 w-max">
                         <IconButton
                             href={auth.panel_url + "projects/" + row.original.id + "/update"}
                             color="light-warning"

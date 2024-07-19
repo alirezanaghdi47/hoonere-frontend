@@ -1,9 +1,8 @@
 // libraries
 import {useMemo} from "react";
-import {useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
-import {format} from "date-fns-jalali";
-import {LuPen, LuTrash2} from "react-icons/lu";
+import {LuInfo, LuPen, LuTrash2} from "react-icons/lu";
 
 // components
 import Finder from "@/components/widgets/panel/projects/read/screen-plays/Finder.tsx";
@@ -17,6 +16,7 @@ import toast from "@/helpers/toast.tsx";
 // modules
 import Table from "@/modules/Table.tsx";
 import IconButton from "@/modules/IconButton.tsx";
+import Typography from "@/modules/Typography.tsx";
 
 // services
 import {deleteProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
@@ -38,6 +38,8 @@ const DataTable = ({
                        hideFilter
                    }) => {
     const params = useParams();
+    const location = useLocation();
+    const navigate = useNavigate();
     const {auth} = useAuthStore();
 
     const deleteProjectScreenPlayAction = useMutation({
@@ -67,8 +69,14 @@ const DataTable = ({
                 accessorKey: 'part',
                 header: () => 'قسمت',
                 cell: ({row}) => (
-                    <div className="w-50px fs-6 text-dark text-truncate">
-                        {row.original.part}
+                    <div className="w-50px">
+                        <Typography
+                            size="xs"
+                            color="dark"
+                            truncate={1}
+                        >
+                            {row.original.part}
+                        </Typography>
                     </div>
                 ),
                 sortingFn: (rowA, rowB, columnId) => rowA.original.part - rowB.original.part
@@ -77,8 +85,14 @@ const DataTable = ({
                 accessorKey: 'sequence',
                 header: () => 'سکانس',
                 cell: ({row}) => (
-                    <div className="w-50px fs-6 text-dark text-truncate">
-                        {row.original.sequence}
+                    <div className="w-50px">
+                        <Typography
+                            size="xs"
+                            color="dark"
+                            truncate={1}
+                        >
+                            {row.original.sequence}
+                        </Typography>
                     </div>
                 ),
                 sortingFn: (rowA, rowB, columnId) => rowA.original.sequence - rowB.original.sequence
@@ -88,11 +102,17 @@ const DataTable = ({
                 header: () => 'آدرس',
                 cell: ({row}) => (
                     <div
-                        className="w-250px fs-6 text-dark text-truncate"
+                        className="w-250px"
                         data-tooltip-id="my-tooltip"
                         data-tooltip-content={row.original.address}
                     >
-                        {row.original.address}
+                        <Typography
+                            size="xs"
+                            color="dark"
+                            truncate={1}
+                        >
+                            {row.original.address}
+                        </Typography>
                     </div>
                 ),
                 sortingFn: "text"
@@ -101,7 +121,20 @@ const DataTable = ({
                 accessorKey: 'actions',
                 header: () => 'ابزار',
                 cell: ({row}) => (
-                    <div className="d-flex justify-content-start align-items-center w-max gap-2">
+                    <div className="d-flex justify-content-start align-items-center gap-2 w-max">
+                        <IconButton
+                            color="light-info"
+                            size="sm"
+                            onClick={() => navigate(auth.panel_url + "projects/" + params.id + "/screen-plays/" + row.original.id, {state: {background: location}})}
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content="جزییات"
+                        >
+                            <LuInfo
+                                size={20}
+                                color="currentColor"
+                            />
+                        </IconButton>
+
                         <IconButton
                             href={auth.panel_url + "projects/" + row.original.project_id + "/screen-plays/" + row.original.id + "/update"}
                             color="light-warning"

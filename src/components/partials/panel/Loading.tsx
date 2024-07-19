@@ -9,7 +9,6 @@ const Loading = ({width , height}) => {
         >
             <LazyLoadImage
                 src="/assets/images/loading.svg"
-                alt="logo"
                 width={100}
                 height={100}
             />

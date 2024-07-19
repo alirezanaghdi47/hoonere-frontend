@@ -6,14 +6,14 @@ import Form from "@/modules/Form.tsx";
 import Typography from "@/modules/Typography.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 
-export const BlankCard = ({onClick}) => {
+export const BlankCard = ({changeCurrentPart}) => {
     return (
         <div
             className="col-12 col-sm-6 col-md-4"
-            onClick={onClick}
+            onClick={() => changeCurrentPart("create")}
         >
             <div
-                className="d-flex flex-column justify-content-center align-items-center gap-2 w-100 h-100px border-2 border-dashed border-secondary rounded-2 overflow-hidden p-5 cursor-pointer">
+                className="d-flex justify-content-center align-items-center gap-2 w-100 h-100px bg-light rounded-2 p-5 cursor-pointer">
                 <LuPlus
                     size={20}
                     color="currentColor"
@@ -36,11 +36,10 @@ export const JobCard = ({group, title, onDelete}) => {
     return (
         <div className="col-12 col-sm-6 col-md-4">
             <div
-                className="d-flex flex-column justify-content-between align-items-center gap-5 w-100 h-100px bg-light rounded-2 p-5">
+                className="d-flex flex-column justify-content-between align-items-center gap-5 w-100 h-100px border border-dashed border-secondary rounded-2 p-5">
                 <div className='d-flex justify-content-between align-items-center gap-2 w-100 h-100'>
                     <div className="d-flex flex-column justify-content-center align-items-start gap-2">
                         <Typography
-                            variant="p"
                             size="sm"
                             color="dark"
                             isBold
@@ -49,7 +48,6 @@ export const JobCard = ({group, title, onDelete}) => {
                         </Typography>
 
                         <Typography
-                            variant="p"
                             size="sm"
                             color="dark"
                         >
@@ -89,7 +87,7 @@ const Jobs = ({updateOccupationForm, changeCurrentPart}) => {
                                 required
                             />
 
-                            <div className="row w-100 g-5">
+                            <div className="row g-5 w-100">
                                 {/*{*/}
                                 {/*    updateOccupationForm.values.fields_of_activity?.map((foa, i) =>*/}
                                 {/*        <JobCard*/}
@@ -101,7 +99,7 @@ const Jobs = ({updateOccupationForm, changeCurrentPart}) => {
                                 {/*    )*/}
                                 {/*}*/}
 
-                                <BlankCard onClick={() => changeCurrentPart("create")}/>
+                                <BlankCard changeCurrentPart={changeCurrentPart}/>
                             </div>
                         </div>
                     </div>

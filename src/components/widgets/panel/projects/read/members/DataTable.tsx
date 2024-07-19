@@ -16,6 +16,7 @@ import toast from "@/helpers/toast.tsx";
 // modules
 import Table from "@/modules/Table.tsx";
 import IconButton from "@/modules/IconButton.tsx";
+import Typography from "@/modules/Typography.tsx";
 
 // services
 import {deleteProjectMemberService} from "@/services/projectMemberService.ts";
@@ -35,8 +36,6 @@ const DataTable = ({
                        resetFilter,
                        showFilter,
                        hideFilter,
-                       isListView,
-                       toggleView
                    }) => {
     const {auth} = useAuthStore();
 
@@ -61,6 +60,25 @@ const DataTable = ({
                 sortingFn: (rowA, rowB, columnId) => rowA.index - rowB.index
             },
             {
+                accessorKey: 'avatar',
+                header: () => 'آواتار',
+                cell: ({row}) => {
+                    const name = (row.original.user_info?.first_name && row.original.user_info?.last_name) ? row.original.user_info.first_name + " " + row.original.user_info.last_name : row.original.name;
+
+                    return (
+                        <div className="w-50px">
+                            <LazyLoadImage
+                                src={row.original.user_info?.profile_img}
+                                width={40}
+                                height={40}
+                                className="rounded-circle me-2"
+                            />
+                        </div>
+                    )
+                },
+                enableSorting: false
+            },
+            {
                 accessorKey: 'full_name',
                 header: () => 'نام و نام خانوادگی',
                 cell: ({row}) => {
@@ -68,19 +86,17 @@ const DataTable = ({
 
                     return (
                         <div
-                            className="w-150px fs-6 text-dark text-truncate"
+                            className="w-100px"
                             data-tooltip-id="my-tooltip"
                             data-tooltip-content={name}
                         >
-                            <LazyLoadImage
-                                src={row.original.user_info?.profile_img}
-                                alt={name}
-                                width={40}
-                                height={40}
-                                className="rounded-circle me-2"
-                            />
-
-                            {name}
+                            <Typography
+                                size="xs"
+                                color="dark"
+                                truncate={1}
+                            >
+                                {name}
+                            </Typography>
                         </div>
                     )
                 },
@@ -105,11 +121,17 @@ const DataTable = ({
                 header: () => 'شغل',
                 cell: ({row}) => (
                     <div
-                        className="w-200px fs-6 text-dark text-truncate"
+                        className="w-200px"
                         data-tooltip-id="my-tooltip"
                         data-tooltip-content={`${row.original.parent_info.title} ( ${row.original.child_info.title} )`}
                     >
-                        {`${row.original.parent_info.title} ( ${row.original.child_info.title} )`}
+                        <Typography
+                            size="xs"
+                            color="dark"
+                            truncate={1}
+                        >
+                            {`${row.original.parent_info.title} ( ${row.original.child_info.title} )`}
+                        </Typography>
                     </div>
                 ),
                 sortingFn: "text"
@@ -118,7 +140,7 @@ const DataTable = ({
                 accessorKey: 'actions',
                 header: () => 'ابزار',
                 cell: ({row}) => (
-                    <div className="d-flex justify-content-start align-items-center w-max gap-2">
+                    <div className="d-flex justify-content-start align-items-center gap-2 w-max">
                         <IconButton
                             href={auth.panel_url + "projects/" + row.original.project_id + "/members/" + row.original.id + "/update"}
                             color="light-warning"
@@ -180,8 +202,6 @@ const DataTable = ({
                     showFilter={showFilter}
                     hideFilter={hideFilter}
                     resetFilter={resetFilter}
-                    isListView={isListView}
-                    toggleView={toggleView}
                 />
 
                 {

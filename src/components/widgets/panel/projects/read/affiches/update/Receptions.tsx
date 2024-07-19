@@ -5,15 +5,16 @@ import {LuPlus, LuTrash} from "react-icons/lu";
 import Typography from "@/modules/Typography.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import Form from "@/modules/Form.tsx";
+import receptions from "@/components/widgets/panel/projects/read/affiches/create/Receptions.tsx";
 
-export const BlankCard = ({onClick}) => {
+export const BlankCard = ({changeCurrentPart}) => {
     return (
         <div
             className="col-12 col-md-6"
-            onClick={onClick}
+            onClick={() => changeCurrentPart("create")}
         >
             <div
-                className="d-flex justify-content-center align-items-center gap-2 w-100 h-75px border-2 border-dashed border-secondary rounded-2 overflow-hidden p-5 cursor-pointer">
+                className="d-flex justify-content-center align-items-center gap-2 w-100 h-75px bg-light rounded-2 p-5 cursor-pointer">
                 <LuPlus
                     size={20}
                     color="currentColor"
@@ -32,11 +33,11 @@ export const BlankCard = ({onClick}) => {
     )
 }
 
-export const ReceptionCard = ({reception, onDelete}) => {
+export const ReceptionCard = ({reception, updateProjectAfficheP2Form}) => {
     return (
         <div className="col-12 col-md-6">
             <div
-                className="position-relative d-flex flex-column justify-content-between align-items-center gap-5 w-100 h-75px bg-light rounded-2 p-5">
+                className="position-relative d-flex flex-column justify-content-between align-items-center gap-5 w-100 h-75px border border-dashed border-secondary rounded-2 p-5">
                 <div className="d-flex flex-column justify-content-center align-items-start gap-4 w-100 h-100">
                     <Typography
                         variant="p"
@@ -62,7 +63,7 @@ export const ReceptionCard = ({reception, onDelete}) => {
                 <IconButton
                     color="light-danger"
                     size="sm"
-                    onClick={onDelete}
+                    onClick={() => updateProjectAfficheP2Form.setFieldValue("receptions", updateProjectAfficheP2Form.values.receptions.filter(item => item.member_id !== reception.member_id))}
                     className='position-absolute'
                     style={{top: 20, left: 20}}
                 >
@@ -95,12 +96,12 @@ const Receptions = ({updateProjectAfficheP2Form, changeCurrentPart}) => {
                                         <ReceptionCard
                                             key={i}
                                             reception={reception}
-                                            onDelete={() => updateProjectAfficheP2Form.setFieldValue("receptions", updateProjectAfficheP2Form.values.receptions.filter((item, j) => i !== j))}
+                                            updateProjectAfficheP2Form={updateProjectAfficheP2Form}
                                         />
                                     )
                                 }
 
-                                <BlankCard onClick={() => changeCurrentPart("create")}/>
+                                <BlankCard changeCurrentPart={changeCurrentPart}/>
                             </div>
                         </div>
                     </div>

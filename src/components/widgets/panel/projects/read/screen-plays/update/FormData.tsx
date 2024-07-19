@@ -17,7 +17,6 @@ import Form from "@/modules/Form.tsx";
 import SelectBox from "@/modules/SelectBox.tsx";
 import Textarea from "@/modules/Textarea.tsx";
 import NumberInput from "@/modules/NumberInput.tsx";
-import TextEditor from "@/modules/TextEditor.tsx";
 import Button from "@/modules/Button.tsx";
 
 // services
@@ -62,12 +61,7 @@ const FormData = ({updateProjectScreenPlayForm, updateProjectScreenPlayAction}) 
                                         required
                                     />
 
-                                    <TextEditor
-                                        id="description"
-                                        name="description"
-                                        value={updateProjectScreenPlayForm.values.description}
-                                        onChange={(value) => updateProjectScreenPlayForm.setFieldValue("description", value)}
-                                    />
+                                    {/* ????? copy moodboard editor from create screen plays ????? */}
 
                                     <Form.Error
                                         error={updateProjectScreenPlayForm.errors.description}

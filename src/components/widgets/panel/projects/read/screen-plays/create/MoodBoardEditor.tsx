@@ -1,137 +1,26 @@
 // libraries
 import {useRef} from "react";
-import {useFormik} from "formik";
-import {LuX} from "react-icons/lu";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
+import Loadable from "@loadable/component";
+
+// components
+const MoodBoardsModal = Loadable(() => import("@/components/widgets/panel/projects/read/screen-plays/create/MoodBoardsModal.tsx"));
 
 // hooks
 import useModal from "@/hooks/useModal.tsx";
 
 // modules
-import Form from "@/modules/Form.tsx";
-import FileInput from "@/modules/FileInput.tsx";
-import Textarea from "@/modules/Textarea.tsx";
-import Button from "@/modules/Button.tsx";
-import Modal from "@/modules/Modal.tsx";
-import Typography from "@/modules/Typography.tsx";
-import IconButton from "@/modules/IconButton.tsx";
 import TextEditor from "@/modules/TextEditor.tsx";
 
-// utils
-import {createMoodBoardSchema} from "@/utils/validations.ts";
-
-const CreateMoodBoardModal = ({modal, _handleHideModal}) => {
-    const createMoodBoardForm = useFormik({
-        initialValues: {
-            image: {},
-            description: "",
-        },
-        validationSchema: createMoodBoardSchema,
-        onSubmit: async (result, {resetForm}) => {
-            const data = modal?.data?.editorRef.current.selection.getContent();
-
-            modal?.data?.editorRef.current.selection.setContent(`<a href="https://www.google.com" data-mood-board="true" style="color: #50cd89">${data}</a>`);
-
-            resetForm();
-
-            _handleHideModal();
-        },
-        onReset: async () => {
-            _handleHideModal();
-        }
-    });
-
-    return (
-        <Modal
-            isOpen={modal.isOpen}
-            onClose={_handleHideModal}
-            position='center'
-            width="md"
-            height="content"
-        >
-            <Modal.Header>
-                <Typography
-                    variant='h3'
-                    size="lg"
-                    color="dark"
-                    isBold
-                >
-                    مود بورد
-                </Typography>
-
-                <IconButton
-                    size="sm"
-                    color="light-danger"
-                    data-tooltip-id="my-tooltip"
-                    data-tooltip-content="خروج"
-                    onClick={_handleHideModal}
-                >
-                    <LuX size={20}/>
-                </IconButton>
-            </Modal.Header>
-
-            <Modal.Body>
-                <Form.Group>
-                    <Form.Label
-                        label="عکس"
-                        color="dark"
-                        size="sm"
-                    />
-
-                    <FileInput
-                        id="image"
-                        name="image"
-                        value={createMoodBoardForm.values.image}
-                        onChange={(value) => createMoodBoardForm.setFieldValue("image", value)}
-                    />
-
-                    <Form.Error
-                        error={createMoodBoardForm.errors.image}
-                        touched={createMoodBoardForm.touched.image}
-                    />
-                </Form.Group>
-
-                <Form.Group>
-                    <Form.Label
-                        label="توضیحات"
-                        color="dark"
-                        size="sm"
-                    />
-
-                    <Textarea
-                        id="description"
-                        name="description"
-                        value={createMoodBoardForm.values.description}
-                        onChange={(value) => createMoodBoardForm.setFieldValue("description", value)}
-                    />
-
-                    <Form.Error
-                        error={createMoodBoardForm.errors.description}
-                        touched={createMoodBoardForm.touched.description}
-                    />
-                </Form.Group>
-            </Modal.Body>
-
-            <Modal.Footer>
-                <Button
-                    color="light-danger"
-                    onClick={() => createMoodBoardForm.handleReset(createMoodBoardForm)}
-                >
-                    لغو
-                </Button>
-
-                <Button
-                    color="success"
-                    onClick={() => createMoodBoardForm.handleSubmit()}
-                >
-                    ذخیره
-                </Button>
-            </Modal.Footer>
-        </Modal>
-    )
-}
+// stores
+import useAuthStore from "@/stores/authStore.ts";
 
 const MoodBoardEditor = ({id, name, value, onChange}) => {
+    const params = useParams();
+    const location = useLocation();
+    const navigate = useNavigate();
     const editorRef = useRef(null);
+    const {auth} = useAuthStore();
     const {modal, _handleShowModal, _handleHideModal} = useModal();
 
     return (
@@ -141,17 +30,24 @@ const MoodBoardEditor = ({id, name, value, onChange}) => {
                 id={id}
                 name={name}
                 value={value}
-                onChange={onChange}
+                toolbarAddon="print"
                 contextMenuAddon="moodBoard"
                 setupAddon={(editor) => {
-                    editor.ui.registry.addMenuItem('createModeBoard', {
+                    editor.ui.registry.addMenuItem('readMoodBoard', {
+                        text: 'نمایش مود بورد',
+                        onAction: (api) => {
+                            navigate(auth.panel_url + "projects/" + params.id + "/mood-boards/" + 1, {state: {background: location}});
+                        }
+                    });
+
+                    editor.ui.registry.addMenuItem('createMoodBoard', {
                         text: 'افزودن به مود بورد',
                         onAction: (api) => {
                             _handleShowModal({editorRef: editorRef});
                         }
                     });
 
-                    editor.ui.registry.addMenuItem('deleteModeBoard', {
+                    editor.ui.registry.addMenuItem('deleteMoodBoard', {
                         text: 'حذف از مود بورد',
                         onAction: () => {
                             modal?.data?.editorRef.current.selection.expand();
@@ -168,18 +64,19 @@ const MoodBoardEditor = ({id, name, value, onChange}) => {
                     editor.ui.registry.addContextMenu("moodBoard", {
                         update: (element) => {
                             if (element.hasAttribute("data-mood-board")) {
-                                return "deleteModeBoard";
+                                return ["readMoodBoard", "deleteMoodBoard"];
                             } else {
-                                return "createModeBoard";
+                                return "createMoodBoard";
                             }
                         }
                     });
                 }}
+                onChange={onChange}
             />
 
             {
                 modal.isOpen && (
-                    <CreateMoodBoardModal
+                    <MoodBoardsModal
                         modal={modal}
                         _handleHideModal={_handleHideModal}
                     />
