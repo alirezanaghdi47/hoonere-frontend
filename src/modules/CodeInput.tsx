@@ -61,7 +61,7 @@ const CodeInput = ({
                     count > 0 ? (
                         <Typography
                             variant="span"
-                            color="gray-600"
+                            color="muted"
                             size="xs"
                             className="mx-auto"
                         >

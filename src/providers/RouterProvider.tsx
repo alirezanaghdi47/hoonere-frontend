@@ -33,6 +33,10 @@ const ProjectMoodBoards = Loadable(() => import('@/pages/panel/projects/read/moo
 const ProjectMoodBoard = Loadable(() => import('@/pages/panel/projects/read/mood-boards/read'));
 const CreateProjectMoodBoard = Loadable(() => import('@/pages/panel/projects/read/mood-boards/create'));
 const UpdateProjectMoodBoard = Loadable(() => import('@/pages/panel/projects/read/mood-boards/update'));
+const ProjectContracts = Loadable(() => import('@/pages/panel/projects/read/contracts'));
+// const ProjectContract = Loadable(() => import('@/pages/panel/projects/read/contracts/read'));
+const CreateProjectContract = Loadable(() => import('@/pages/panel/projects/read/contracts/create'));
+// const UpdateProjectContract = Loadable(() => import('@/pages/panel/projects/read/contracts/update'));
 const Profile = Loadable(() => import('@/pages/panel/profile'));
 
 // stores
@@ -170,6 +174,21 @@ const pageRoutes = [
             },
             {
                 id: 19,
+                path: "projects/:id/contracts",
+                component: ProjectContracts,
+            },
+            {
+                id: 20,
+                path: "projects/:id/contracts/create",
+                component: CreateProjectContract,
+            },
+            // {
+            //     id: 21,
+            //     path: "projects/:id/contracts/:subId/update",
+            //     component: UpdateProjectContract,
+            // },
+            {
+                id: 22,
                 path: "profile",
                 component: Profile,
             },
@@ -193,6 +212,11 @@ const modalRoutes = [
         path: "panel/projects/:id/screen-plays/:subId",
         component: ProjectScreenPlay,
     },
+    // {
+    //     id: 4,
+    //     path: "panel/projects/:id/contracts/:subId",
+    //     component: ProjectContract,
+    // },
 ];
 
 const RouterProvider = () => {

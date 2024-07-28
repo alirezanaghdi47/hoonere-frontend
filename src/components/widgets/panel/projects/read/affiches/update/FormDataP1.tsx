@@ -208,7 +208,6 @@ const FormDataP1 = ({updateProjectAfficheP1Form}) => {
                                             label: screenplay_time_type.title,
                                             value: screenplay_time_type.id.toString()
                                         })) : []}
-                                        placeholder=""
                                         isSearchable
                                         onChange={(value) => updateProjectAfficheP1Form.setFieldValue("time_type_id", value)}
                                         isLoading={readAllScreenPlayTimeTypeAction.isPending}
@@ -238,7 +237,6 @@ const FormDataP1 = ({updateProjectAfficheP1Form}) => {
                                             label: screenplay_location_side.title,
                                             value: screenplay_location_side.id.toString()
                                         })) : []}
-                                        placeholder=""
                                         isSearchable
                                         onChange={(value) => updateProjectAfficheP1Form.setFieldValue("location_side_id", value)}
                                         isLoading={readAllScreenPlayLocationSideAction.isPending}
@@ -274,7 +272,6 @@ const FormDataP1 = ({updateProjectAfficheP1Form}) => {
                                             label: affiche_type.title,
                                             value: affiche_type.id.toString()
                                         })) : []}
-                                        placeholder=""
                                         isSearchable
                                         onChange={(value) => updateProjectAfficheP1Form.setFieldValue("type", value)}
                                         isLoading={readAllAfficheTypeAction.isPending}

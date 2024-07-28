@@ -12,7 +12,7 @@ const Content = () => {
     const {auth} = useAuthStore();
 
     return (
-        <div className="d-flex flex-column justify-content-center align-items-center gap-10 w-100 h-100">
+        <div className="d-flex flex-column justify-content-center align-items-center gap-10 w-100 h-100 py-20">
             <LazyLoadImage
                 src="/assets/images/illustrations/not-found.svg"
                 alt="not-found"
@@ -21,7 +21,7 @@ const Content = () => {
 
             <Typography
                 variant="h1"
-                color="gray-600"
+                color="muted"
                 size="lg"
                 isBold
             >

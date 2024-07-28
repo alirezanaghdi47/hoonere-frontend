@@ -1,10 +1,10 @@
 // libraries
 import {LazyLoadImage} from "react-lazy-load-image-component";
 
-const Loading = ({width , height}) => {
+const Loading = ({width , height , withCard = false}) => {
     return (
         <div
-            className="card d-flex justify-content-center align-items-center"
+            className={`${withCard ? "card" : ""} d-flex justify-content-center align-items-center`}
             style={{width: width , height: height}}
         >
             <LazyLoadImage

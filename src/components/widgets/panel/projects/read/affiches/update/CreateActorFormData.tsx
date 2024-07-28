@@ -89,7 +89,6 @@ const CreateActorFormData = ({updateProjectAfficheP2Form, resetPart}) => {
                                         value: member.id.toString(),
                                     }
                                 })}
-                                placeholder=""
                                 isSearchable
                                 onChange={(value) => createProjectAfficheActorForm.setFieldValue("actor_id", value)}
                                 isLoading={readAllProjectMembersByFoaAction.isPending}

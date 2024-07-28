@@ -30,7 +30,6 @@ const FormData = ({updateProjectMoodBoardForm , updateProjectMoodBoardAction}) =
 
                                 {/*<TextInput*/}
                                 {/*    name="title"*/}
-                                {/*    placeholder=""*/}
                                 {/*    value={createBlogCategoryForm.values.title}*/}
                                 {/*    onChange={(value) => createBlogCategoryForm.setFieldValue("title", value)}*/}
                                 {/*/>*/}
@@ -53,7 +52,6 @@ const FormData = ({updateProjectMoodBoardForm , updateProjectMoodBoardAction}) =
 
                                 {/*<TextInput*/}
                                 {/*    name="nickname"*/}
-                                {/*    placeholder=""*/}
                                 {/*    value={createBlogCategoryForm.values.nickname}*/}
                                 {/*    onChange={(value) => createBlogCategoryForm.setFieldValue("nickname", value)}*/}
                                 {/*/>*/}
@@ -84,7 +82,6 @@ const FormData = ({updateProjectMoodBoardForm , updateProjectMoodBoardAction}) =
                                 {/*            value: category.id.toString()*/}
                                 {/*        }))*/}
                                 {/*    ] : []}*/}
-                                {/*    placeholder=""*/}
                                 {/*    isSearchable*/}
                                 {/*    onChange={(value) => createBlogCategoryForm.setFieldValue("parent_id", value)}*/}
                                 {/*    isLoading={readAllParentBlogCategoryAction.isPending}*/}

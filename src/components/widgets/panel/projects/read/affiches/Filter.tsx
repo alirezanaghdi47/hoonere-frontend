@@ -66,7 +66,6 @@ const AdvanceFilter = ({
                             label: affiche_type.title,
                             value: affiche_type.id.toString()
                         })) : []}
-                        placeholder=""
                         isSearchable
                         onChange={(value) => changeFilter({type: value})}
                         isLoading={readAllAfficheTypeAction.isPending}

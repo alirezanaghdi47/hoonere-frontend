@@ -252,6 +252,7 @@ const Content = () => {
                 {
                     readProjectAfficheAction.isPending && currentStep === 1 && (
                         <Loading
+                            withCard
                             width="100%"
                             height={900}
                         />
@@ -278,6 +279,7 @@ const Content = () => {
                 {
                     readAllProjectScreenPlayAction.isPending && currentStep === 3 && (
                         <Loading
+                            withCard
                             width="100%"
                             height={300}
                         />

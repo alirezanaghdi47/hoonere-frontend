@@ -38,7 +38,6 @@ const FormDataWithUserName = ({readAllJobAction, readProjectMemberAction, update
                                     label: item.title,
                                     value: item.id.toString()
                                 }))}
-                                placeholder=""
                                 isSearchable
                                 onChange={(value) => updateProjectMemberFormWithUserName.setFieldValue("foa_parent_id", value)}
                             />
@@ -67,7 +66,6 @@ const FormDataWithUserName = ({readAllJobAction, readProjectMemberAction, update
                                     label: item.title,
                                     value: item.id.toString()
                                 }))}
-                                placeholder=""
                                 isSearchable
                                 disabled={!updateProjectMemberFormWithUserName.values.foa_parent_id}
                                 onChange={(value) => updateProjectMemberFormWithUserName.setFieldValue("foa_child_id", value)}
@@ -132,7 +130,6 @@ const FormDataWithFullName = ({readAllJobAction, updateProjectMemberFormWithFull
                                     label: item.title,
                                     value: item.id.toString()
                                 }))}
-                                placeholder=""
                                 isSearchable
                                 onChange={(value) => updateProjectMemberFormWithFullName.setFieldValue("foa_parent_id", value)}
                             />
@@ -161,7 +158,6 @@ const FormDataWithFullName = ({readAllJobAction, updateProjectMemberFormWithFull
                                     label: item.title,
                                     value: item.id.toString()
                                 }))}
-                                placeholder=""
                                 isSearchable
                                 disabled={!updateProjectMemberFormWithFullName.values.foa_parent_id}
                                 onChange={(value) => updateProjectMemberFormWithFullName.setFieldValue("foa_child_id", value)}

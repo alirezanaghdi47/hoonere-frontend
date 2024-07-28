@@ -109,7 +109,6 @@ const FormData = ({createProjectForm, createProjectAction}) => {
                                             label: projectType.title,
                                             value: projectType.id.toString()
                                         })) : []}
-                                        placeholder=""
                                         isSearchable
                                         onChange={(value) => createProjectForm.setFieldValue("type_id", value)}
                                         isLoading={readAllProjectTypeAction.isPending}

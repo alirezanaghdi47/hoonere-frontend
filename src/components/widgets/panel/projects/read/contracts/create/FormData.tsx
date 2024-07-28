@@ -1,0 +1,165 @@
+// libraries
+import {useParams} from "react-router-dom";
+import {LuTrash} from "react-icons/lu";
+
+// components
+import {Contract, Article} from "@/components/partials/panel/projects/read/contracts/Tools.tsx";
+import CreateEmployerFormData from "@/components/widgets/panel/projects/read/contracts/create/CreateEmployerFormData.tsx";
+import CreateContractorFormData from "@/components/widgets/panel/projects/read/contracts/create/CreateContractorFormData.tsx";
+import CreateExecutionTimeFormData from "@/components/widgets/panel/projects/read/contracts/create/CreateExecutionTimeFormData.tsx";
+import CreateAmountFormData from "@/components/widgets/panel/projects/read/contracts/create/CreateAmountFormData.tsx";
+import CreatePaymentFormData from "@/components/widgets/panel/projects/read/contracts/create/CreatePaymentFormData.tsx";
+import CreateRegularFormData from "@/components/widgets/panel/projects/read/contracts/create/CreateRegularFormData.tsx";
+
+// modules
+import Accordion from "@/modules/Accordion.tsx";
+import Button from "@/modules/Button.tsx";
+import IconButton from "@/modules/IconButton.tsx";
+
+// stores
+import useAuthStore from "@/stores/authStore.ts";
+
+const FormData = ({createProjectContractForm, createProjectContractAction}) => {
+    const params = useParams();
+    const {auth} = useAuthStore();
+
+    return (
+        <>
+            <div className="card w-100">
+                <div className="card-body d-flex justify-content-center align-items-center flex-column gap-5">
+                    <div className="row gy-5 w-100">
+                        <div className="col-12">
+                            <Contract createProjectContractForm={createProjectContractForm}>
+                                <Accordion>
+                                    {
+                                        createProjectContractForm.values.articles?.map(article =>
+                                            <Accordion.Item
+                                                key={article.number}
+                                                title={article.content}
+                                                number={article.number}
+                                                initialEntered={article.number === 1}
+                                                endAdornment={
+                                                    article.isAdded ? (
+                                                        <IconButton
+                                                            color="light-danger"
+                                                            size="sm"
+                                                            data-tooltip-id="my-tooltip"
+                                                            data-tooltip-content="حذف ماده"
+                                                            className='ms-auto'
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+
+                                                                createProjectContractForm.setFieldValue("articles" , createProjectContractForm.values.articles.filter(item => item.number !== article.number));
+                                                                createProjectContractForm.setFieldValue("sections", createProjectContractForm.values.sections.filter(item => item.article_number !== article.number));
+                                                                createProjectContractForm.setFieldValue("notes" , createProjectContractForm.values.notes.filter(item => item.article_number !== article.number));
+                                                            }}
+                                                        >
+                                                            <LuTrash
+                                                                size={20}
+                                                                color="currentColor"
+                                                            />
+                                                        </IconButton>
+                                                    ) : null
+                                                }
+                                            >
+                                                <Article
+                                                    article={article}
+                                                    createProjectContractForm={createProjectContractForm}
+                                                >
+                                                    {
+                                                        article.number === 1 && (
+                                                            <CreateEmployerFormData
+                                                                key={`${article.number}-1`}
+                                                                article={article}
+                                                                section={{number: 1 , article_number: 1 , content: ""}}
+                                                                createProjectContractForm={createProjectContractForm}
+                                                            />
+                                                        )
+                                                    }
+
+                                                    {
+                                                        article.number === 1 && (
+                                                            <CreateContractorFormData
+                                                                key={`${article.number}-2`}
+                                                                article={article}
+                                                                section={{number: 2 , article_number: 1 , content: ""}}
+                                                                createProjectContractForm={createProjectContractForm}
+                                                            />
+                                                        )
+                                                    }
+
+                                                    {
+                                                        article.number === 3 && (
+                                                            <CreateExecutionTimeFormData
+                                                                key={`${article.number}-1`}
+                                                                article={article}
+                                                                section={{number: 1 , article_number: 3 , content: ""}}
+                                                                createProjectContractForm={createProjectContractForm}
+                                                            />
+                                                        )
+                                                    }
+
+                                                    {
+                                                        article.number === 4 && (
+                                                            <CreateAmountFormData
+                                                                key={`${article.number}-1`}
+                                                                article={article}
+                                                                section={{number: 1 , article_number: 4 , content: ""}}
+                                                                createProjectContractForm={createProjectContractForm}
+                                                            />
+                                                        )
+                                                    }
+
+                                                    {
+                                                        article.number === 5 && (
+                                                            <CreatePaymentFormData
+                                                                key={`${article.number}-1`}
+                                                                article={article}
+                                                                section={{number: 1 , article_number: 5 , content: ""}}
+                                                                createProjectContractForm={createProjectContractForm}
+                                                            />
+                                                        )
+                                                    }
+
+                                                    {
+                                                        createProjectContractForm.values.sections.filter(section => section.article_number === article.number && !section.isStatic).map(section =>
+                                                            <CreateRegularFormData
+                                                                key={`${article.number}-${section.number}`}
+                                                                article={article}
+                                                                section={section}
+                                                                createProjectContractForm={createProjectContractForm}
+                                                            />
+                                                        )
+                                                    }
+                                                </Article>
+                                            </Accordion.Item>
+                                        )
+                                    }
+                                </Accordion>
+                            </Contract>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="d-flex justify-content-end align-items-center gap-5 w-100">
+                <Button
+                    href={auth.panel_url + `projects/${params.id}/contracts`}
+                    color="light-danger"
+                >
+                    انصراف
+                </Button>
+
+                <Button
+                    color="success"
+                    onClick={createProjectContractForm.handleSubmit}
+                    isLoading={createProjectContractAction.isPending}
+                >
+                    افزودن قرارداد
+                </Button>
+            </div>
+        </>
+    )
+}
+
+export default FormData;

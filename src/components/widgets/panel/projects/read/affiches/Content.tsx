@@ -53,6 +53,7 @@ const Content = () => {
                 {
                     readAllProjectAfficheAction.isPending && (
                         <Loading
+                            withCard
                             width="100%"
                             height={500}
                         />

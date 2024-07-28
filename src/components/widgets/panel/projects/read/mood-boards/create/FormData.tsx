@@ -39,7 +39,6 @@ const FormData = ({createProjectMoodBoardForm , createProjectMoodBoardAction}) =
                                 <TextInput
                                     id="title"
                                     name="title"
-                                    placeholder=""
                                     value={createProjectMoodBoardForm.values.title}
                                     onChange={(value) => createProjectMoodBoardForm.setFieldValue("title", value)}
                                 />
@@ -65,7 +64,6 @@ const FormData = ({createProjectMoodBoardForm , createProjectMoodBoardAction}) =
                                     name="type"
                                     value={createProjectMoodBoardForm.values.type}
                                     options={typeOptions}
-                                    placeholder=""
                                     onChange={(value) => createProjectMoodBoardForm.setFieldValue("type", value)}
                                 />
 
@@ -144,7 +142,6 @@ const FormData = ({createProjectMoodBoardForm , createProjectMoodBoardAction}) =
                                         <TextInput
                                             id="video"
                                             name="video"
-                                            placeholder=""
                                             value={createProjectMoodBoardForm.values.video}
                                             onChange={(value) => createProjectMoodBoardForm.setFieldValue("video", value)}
                                         />
@@ -172,7 +169,6 @@ const FormData = ({createProjectMoodBoardForm , createProjectMoodBoardAction}) =
                                         <Textarea
                                             id="text"
                                             name="text"
-                                            placeholder=""
                                             value={createProjectMoodBoardForm.values.text}
                                             onChange={(value) => createProjectMoodBoardForm.setFieldValue("text", value)}
                                         />

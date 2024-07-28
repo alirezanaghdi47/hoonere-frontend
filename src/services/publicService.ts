@@ -207,3 +207,47 @@ export const readAllReceptionTypeService = async () => {
         // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
+
+export const readAllProjectContractArticleService = async () => {
+    try {
+        const {token} = useAuthStore.getState().auth;
+
+        const response = await axios.post(process.env.API_URL + "/panel/public/getContractDefaultArticles", null, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readAllProjectContractSectionService = async () => {
+    try {
+        const {token} = useAuthStore.getState().auth;
+
+        const response = await axios.post(process.env.API_URL + "/panel/public/getContractReadySections", null, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}

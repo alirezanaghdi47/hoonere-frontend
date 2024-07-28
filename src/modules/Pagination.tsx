@@ -10,34 +10,31 @@ import {TPagination} from "@/types/moduleType.ts";
 
 const PrevIcon = () => {
     return (
-        <div className="text-muted">
-            <LuChevronRight
-                size={20}
-                color="currentColor"
-            />
-        </div>
+        <LuChevronRight
+            size={20}
+            color="currentColor"
+            className="text-muted"
+        />
     )
 }
 
 const NextIcon = () => {
     return (
-        <div className="text-muted">
-            <LuChevronLeft
-                size={20}
-                color="currentColor"
-            />
-        </div>
+        <LuChevronLeft
+            size={20}
+            color="currentColor"
+            className="text-muted"
+        />
     )
 }
 
 const JumpIcon = () => {
     return (
-        <div className="text-muted">
-            <LuMoreHorizontal
-                size={20}
-                color="currentColor"
-            />
-        </div>
+        <LuMoreHorizontal
+            size={20}
+            color="currentColor"
+            className="text-muted"
+        />
     )
 }
 

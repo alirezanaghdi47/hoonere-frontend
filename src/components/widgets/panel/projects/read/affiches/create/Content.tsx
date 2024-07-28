@@ -166,6 +166,7 @@ const Content = () => {
                 {
                     readAllProjectScreenPlayAction.isPending && currentStep === 3 && (
                         <Loading
+                            withCard
                             width="100%"
                             height={300}
                         />

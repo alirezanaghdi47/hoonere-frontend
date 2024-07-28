@@ -4,10 +4,10 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 // modules
 import Typography from "@/modules/Typography.tsx";
 
-const Empty = ({title, width, height}) => {
+const Empty = ({title, width, height , withCard = false}) => {
     return (
         <div
-            className="d-flex flex-column justify-content-center align-items-center gap-5"
+            className={`${withCard ? 'card' : ''} d-flex flex-column justify-content-center align-items-center gap-5`}
             style={{width: width, height: height}}
         >
             <LazyLoadImage
@@ -18,8 +18,7 @@ const Empty = ({title, width, height}) => {
             />
 
             <Typography
-                variant="p"
-                color="gray-600"
+                color="muted"
                 size="md"
                 isBold
             >

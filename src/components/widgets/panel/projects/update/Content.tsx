@@ -77,6 +77,7 @@ const Content = () => {
                 {
                     readProjectAction.isPending && (
                         <Loading
+                            withCard
                             width="100%"
                             height={950}
                         />

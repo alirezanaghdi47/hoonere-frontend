@@ -71,7 +71,7 @@ const MoodBoardCard = ({moodBoard}) => {
 
                 <Typography
                     size="sm"
-                    color="gray-600"
+                    color="muted"
                     className="mb-2"
                 >
                     عنوان
@@ -79,7 +79,7 @@ const MoodBoardCard = ({moodBoard}) => {
 
                 <Typography
                     size="sm"
-                    color="gray-600"
+                    color="muted"
                     className="mb-5"
                 >
                     ( 2 مورد )

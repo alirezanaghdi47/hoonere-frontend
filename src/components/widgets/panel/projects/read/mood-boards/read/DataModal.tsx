@@ -43,16 +43,16 @@ const DataModal = ({moodBoard}) => {
 
             <Modal.Body>
                 <div className='w-100 h-100'>
-                    <VideoPlayer src="https://caspian11.asset.aparat.com/aparat-video/988c1891d41df216e2ebe2bde6e7b4dd59863235-720p.mp4?wmsAuthSign=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjhiZDNkNDE0ODJkYzc5ZDlkNTdjNzVlNjkwMTExMGM1IiwiZXhwIjoxNzIxMzEwMDgwLCJpc3MiOiJTYWJhIElkZWEgR1NJRyJ9.Jakb7gJQnAo1kp9QsPdYUoCW0_Mhi6b4neb_JZmbYts"/>
+                    {/*<VideoPlayer src="https://caspian11.asset.aparat.com/aparat-video/988c1891d41df216e2ebe2bde6e7b4dd59863235-720p.mp4?wmsAuthSign=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjhiZDNkNDE0ODJkYzc5ZDlkNTdjNzVlNjkwMTExMGM1IiwiZXhwIjoxNzIxMzEwMDgwLCJpc3MiOiJTYWJhIElkZWEgR1NJRyJ9.Jakb7gJQnAo1kp9QsPdYUoCW0_Mhi6b4neb_JZmbYts"/>*/}
                     {/*<MusicPlayer src="https://irsv.upmusics.com/AliBZ/Farhad%20Shakhs%20-%20Babe%20delami%20(320).mp3"/>*/}
-                    {/*<LazyLoadImage*/}
-                    {/*    src="https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/wzmobile/meta-data/wzm_meta.jpg"*/}
-                    {/*    visibleByDefault*/}
-                    {/*    width="100%"*/}
-                    {/*    height="100%"*/}
-                    {/*    effect='blur'*/}
-                    {/*    style={{borderRadius: 10}}*/}
-                    {/*/>*/}
+                    <LazyLoadImage
+                        src="https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/wzmobile/meta-data/wzm_meta.jpg"
+                        visibleByDefault
+                        width="100%"
+                        height="100%"
+                        effect='blur'
+                        style={{borderRadius: 10}}
+                    />
                 </div>
             </Modal.Body>
         </Modal>

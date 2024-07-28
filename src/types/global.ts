@@ -15,7 +15,6 @@ export type colors =
     | "light-warning"
     | "light-info"
     | "light-dark"
-    | "gray-600"
     | "transparent";
 
 export type sizes =

@@ -69,7 +69,6 @@ const CreateJobFormData = ({updateOccupationForm, resetPart}) => {
                                     label: item.title,
                                     value: item.id
                                 }))}
-                                placeholder=""
                                 isSearchable
                                 onChange={(value) => createJobForm.setFieldValue("foa_parent_id", value)}
                                 isLoading={readAllJobAction.isPending}
@@ -103,7 +102,6 @@ const CreateJobFormData = ({updateOccupationForm, resetPart}) => {
                                     label: item.title,
                                     value: item.id
                                 }))}
-                                placeholder=""
                                 isSearchable
                                 disabled={!createJobForm.values.foa_parent_id}
                                 onChange={(value) => createJobForm.setFieldValue("foa_child_id", value)}

@@ -20,6 +20,7 @@ const DataModal = ({history}) => {
     const _handlePrint = useReactToPrint({
         content: () => printRef.current,
         documentTitle: `affiche_${history?.affiche_date}`,
+        bodyClass: "p-5"
     });
 
     return (
@@ -28,7 +29,6 @@ const DataModal = ({history}) => {
             onClose={() => navigate(-1)}
             position='center'
             width="xl"
-            height="full"
         >
             <Modal.Header>
                 <Typography

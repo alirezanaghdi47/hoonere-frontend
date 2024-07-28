@@ -113,7 +113,6 @@ const CreateReceptionFormData = ({createProjectAfficheP2Form, resetPart}) => {
                                     label: item.title,
                                     value: item.id.toString()
                                 }))}
-                                placeholder=""
                                 isSearchable
                                 onChange={(value) => createProjectAfficheUserForm.setFieldValue("foa_parent_id", value)}
                                 isLoading={readAllJobAction.isPending}
@@ -146,7 +145,6 @@ const CreateReceptionFormData = ({createProjectAfficheP2Form, resetPart}) => {
                                     label: item.title,
                                     value: item.id.toString()
                                 }))}
-                                placeholder=""
                                 isSearchable
                                 disabled={!createProjectAfficheUserForm.values.foa_parent_id}
                                 onChange={(value) => createProjectAfficheUserForm.setFieldValue("foa_id", value)}
@@ -185,7 +183,6 @@ const CreateReceptionFormData = ({createProjectAfficheP2Form, resetPart}) => {
                                         value: member.id.toString(),
                                     }
                                 })}
-                                placeholder=""
                                 isSearchable
                                 disabled={!createProjectAfficheUserForm.values.foa_parent_id}
                                 onChange={(value) => createProjectAfficheMemberForm.setFieldValue("member_id", value)}
@@ -220,7 +217,6 @@ const CreateReceptionFormData = ({createProjectAfficheP2Form, resetPart}) => {
                                     label: reception_type.title,
                                     value: reception_type.id.toString()
                                 }))}
-                                placeholder=""
                                 isSearchable
                                 onChange={(value) => createProjectAfficheMemberForm.setFieldValue("reception_type", value)}
                                 isLoading={readAllReceptionTypeAction.isPending}

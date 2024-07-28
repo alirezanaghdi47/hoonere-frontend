@@ -8,7 +8,7 @@ import persian_fa from "react-date-object/locales/persian_fa";
 // assets
 import iranianBanks from "../../public/assets/data/iranian-banks.json";
 
-export const formattedSize = (bytes) => {
+export const formattedSize = (bytes: number): string => {
     if (!bytes) return '0 Bytes';
 
     const k = 1024;
@@ -18,23 +18,23 @@ export const formattedSize = (bytes) => {
     return `${Number((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
 }
 
-export const toEnglishDigits = (data) => {
+export const toEnglishDigits = (data: string): string => {
     let e = '۰'.charCodeAt(0);
 
-    data = data.replace(/[۰-۹]/g, function (t) {
+    data = data.replace(/[۰-۹]/g, function (t: string) {
         return t.charCodeAt(0) - e;
     });
 
     e = '٠'.charCodeAt(0);
 
-    data = data.replace(/[٠-٩]/g, function (t) {
+    data = data.replace(/[٠-٩]/g, function (t: string) {
         return t.charCodeAt(0) - e;
     });
 
     return data;
 }
 
-export const generateRandomString = (length) => {
+export const generateRandomString = (length: number): string => {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     let result = ' ';
@@ -46,7 +46,7 @@ export const generateRandomString = (length) => {
     return result;
 }
 
-export const hexToRgba = (hex, alpha = 1) => {
+export const hexToRgba = (hex: string, alpha: number = 1): string => {
     let color;
 
     if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
@@ -62,32 +62,34 @@ export const hexToRgba = (hex, alpha = 1) => {
     }
 }
 
-export const generateRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+export const generateRandomNumber = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1) + min);
 
-export const convertJalaliToGregorian = (date) => new DateObject({
+export const convertJalaliToGregorian = (date: string): string => new DateObject({
     date: date,
     format: "YYYY-MM-DD",
     calendar: persian,
     locale: persian_fa
 }).convert(gregorian, gregorian_en).format("YYYY-MM-DD");
 
-export const convertGregorianToJalali = (date) => new DateObject({
+export const convertGregorianToJalali = (date: string): string => new DateObject({
     date: date,
     format: "YYYY-MM-DD",
     calendar: gregorian,
     locale: gregorian_en
 }).convert(persian, persian_fa).format("YYYY-MM-DD");
 
-export const generateTimeWithSecond = (time) => {
+export const generateTimeWithSecond = (time: string): DateObject => {
     const [hour, minute] = time.split(":");
 
     return new DateObject().setHour(Number(hour)).setMinute(Number(minute));
 }
-export const generateTimeWithoutSecond = (time) => new DateObject(time).format("HH:mm");
+export const generateTimeWithoutSecond = (time: string): string => new DateObject(time).format("HH:mm");
 
-export const getBankInfoFromCardNumber = (card_number) => card_number.length > 6 ? iranianBanks?.find(bank => card_number.startsWith(bank.bin)) : null;
+export const getBankInfoFromCardNumber = (cardNumber: string): object | null => cardNumber.length > 6 ? iranianBanks?.find(bank => cardNumber.startsWith(bank.bin)) : null;
 
-export const encodeData = (data) => {
+export const formattedBankCardNumber = (cardNumber: string): string => cardNumber.match(/.{1,4}/g).join('-');
+
+export const encodeData = (data: unknown): unknown => {
     let encoded = btoa(encodeURIComponent(data).replace(/%([0-9A-F]{2})/g, function toSolidBytes(match, p1) {
         return String.fromCharCode(Number(('0x' + p1)))
     })) + generateRandomString(372);
@@ -99,7 +101,7 @@ export const encodeData = (data) => {
     return encoded;
 }
 
-export const decodeData = (data) => {
+export const decodeData = (data: unknown): unknown => {
     let bytes = Uint8Array.from(atob(data).split("").map(char => char.charCodeAt(0)));
     const decoder = new TextDecoder("utf-8");
     let decodedString = decoder.decode(bytes);
@@ -111,7 +113,7 @@ export const decodeData = (data) => {
     return secondDecodedString;
 }
 
-export const cleaningObject = (sourceObject) => {
+export const cleaningObject = (sourceObject: object): unknown => {
     const clonedObject = JSON.parse(JSON.stringify(sourceObject));
 
     for (const propName in clonedObject) {
@@ -122,3 +124,7 @@ export const cleaningObject = (sourceObject) => {
 
     return clonedObject;
 }
+
+export const getNodeIndex = (node: Element): number => node ? [...node.parentNode!.children].indexOf(node) : -1;
+
+export const getNodeLength = (node: NodeListOf<Element>): number => node.length > 0 ? node.length : 0;

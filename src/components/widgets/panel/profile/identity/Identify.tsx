@@ -15,17 +15,17 @@ import NumberInput from "@/modules/NumberInput.tsx";
 import ImageInput from "@/modules/ImageInput.tsx";
 
 // services
-import {updateProfileService} from "@/services/profileService.ts";
+import {updateProfileIdentityService} from "@/services/profileService.ts";
 
 // types
-import {IUpdateProfile} from "@/types/serviceType.ts";
+import {IUpdateProfileIdentity} from "@/types/serviceType.ts";
 
 // utils
-import {updateProfileSchema} from "@/utils/validations.ts";
+import {updateProfileIdentitySchema} from "@/utils/validations.ts";
 
 const Identify = ({readMyProfileAction}) => {
-    const updateProfileAction = useMutation({
-        mutationFn: (data: IUpdateProfile) => updateProfileService(data),
+    const updateProfileIdentityAction = useMutation({
+        mutationFn: (data: IUpdateProfileIdentity) => updateProfileIdentityService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -37,7 +37,7 @@ const Identify = ({readMyProfileAction}) => {
         }
     });
 
-    const updateProfileForm = useFormik({
+    const updateProfileIdentityForm = useFormik({
         enableReinitialize: true,
         initialValues: {
             profile_img: {},
@@ -51,9 +51,9 @@ const Identify = ({readMyProfileAction}) => {
             email: readMyProfileAction.data?.data?.user_info?.email ? readMyProfileAction.data?.data?.user_info.email : "",
             address: readMyProfileAction.data?.data?.user_info?.address ? readMyProfileAction.data?.data?.user_info.address : "",
         },
-        validationSchema: updateProfileSchema,
+        validationSchema: updateProfileIdentitySchema,
         onSubmit: async (result) => {
-            updateProfileAction.mutate(result);
+            updateProfileIdentityAction.mutate(result);
         }
     });
 
@@ -77,13 +77,13 @@ const Identify = ({readMyProfileAction}) => {
                                     name="profile_img"
                                     isCircle
                                     preview={readMyProfileAction.data?.data?.user_info.profile_img}
-                                    value={updateProfileForm.values.profile_img}
-                                    onChange={(value) => updateProfileForm.setFieldValue("profile_img", value)}
+                                    value={updateProfileIdentityForm.values.profile_img}
+                                    onChange={(value) => updateProfileIdentityForm.setFieldValue("profile_img", value)}
                                 />
 
                                 <Form.Error
-                                    error={updateProfileForm.errors.profile_img}
-                                    touched={updateProfileForm.touched.profile_img}
+                                    error={updateProfileIdentityForm.errors.profile_img}
+                                    touched={updateProfileIdentityForm.touched.profile_img}
                                 />
                             </Form.Group>
                         </div>
@@ -104,13 +104,13 @@ const Identify = ({readMyProfileAction}) => {
                                     id="national_card"
                                     name="national_card"
                                     preview={readMyProfileAction.data?.data?.user_info.national_card}
-                                    value={updateProfileForm.values.national_card}
-                                    onChange={(value) => updateProfileForm.setFieldValue("national_card", value)}
+                                    value={updateProfileIdentityForm.values.national_card}
+                                    onChange={(value) => updateProfileIdentityForm.setFieldValue("national_card", value)}
                                 />
 
                                 <Form.Error
-                                    error={updateProfileForm.errors.national_card}
-                                    touched={updateProfileForm.touched.national_card}
+                                    error={updateProfileIdentityForm.errors.national_card}
+                                    touched={updateProfileIdentityForm.touched.national_card}
                                 />
                             </Form.Group>
                         </div>
@@ -131,13 +131,13 @@ const Identify = ({readMyProfileAction}) => {
                                 <TextInput
                                     id="username"
                                     name="username"
-                                    value={updateProfileForm.values.username}
-                                    onChange={(value) => updateProfileForm.setFieldValue("username", value)}
+                                    value={updateProfileIdentityForm.values.username}
+                                    onChange={(value) => updateProfileIdentityForm.setFieldValue("username", value)}
                                 />
 
                                 <Form.Error
-                                    error={updateProfileForm.errors.username}
-                                    touched={updateProfileForm.touched.username}
+                                    error={updateProfileIdentityForm.errors.username}
+                                    touched={updateProfileIdentityForm.touched.username}
                                 />
                             </Form.Group>
                         </div>
@@ -158,13 +158,13 @@ const Identify = ({readMyProfileAction}) => {
                                 <TextInput
                                     id="first_name"
                                     name="first_name"
-                                    value={updateProfileForm.values.first_name}
-                                    onChange={(value) => updateProfileForm.setFieldValue("first_name", value)}
+                                    value={updateProfileIdentityForm.values.first_name}
+                                    onChange={(value) => updateProfileIdentityForm.setFieldValue("first_name", value)}
                                 />
 
                                 <Form.Error
-                                    error={updateProfileForm.errors.first_name}
-                                    touched={updateProfileForm.touched.first_name}
+                                    error={updateProfileIdentityForm.errors.first_name}
+                                    touched={updateProfileIdentityForm.touched.first_name}
                                 />
                             </Form.Group>
                         </div>
@@ -185,13 +185,13 @@ const Identify = ({readMyProfileAction}) => {
                                 <TextInput
                                     id="last_name"
                                     name="last_name"
-                                    value={updateProfileForm.values.last_name}
-                                    onChange={(value) => updateProfileForm.setFieldValue("last_name", value)}
+                                    value={updateProfileIdentityForm.values.last_name}
+                                    onChange={(value) => updateProfileIdentityForm.setFieldValue("last_name", value)}
                                 />
 
                                 <Form.Error
-                                    error={updateProfileForm.errors.last_name}
-                                    touched={updateProfileForm.touched.last_name}
+                                    error={updateProfileIdentityForm.errors.last_name}
+                                    touched={updateProfileIdentityForm.touched.last_name}
                                 />
                             </Form.Group>
                         </div>
@@ -216,13 +216,13 @@ const Identify = ({readMyProfileAction}) => {
                                         numericOnly: true,
                                         delimiter: '',
                                     }}
-                                    value={updateProfileForm.values.id_code}
-                                    onChange={(value) => updateProfileForm.setFieldValue("id_code", value)}
+                                    value={updateProfileIdentityForm.values.id_code}
+                                    onChange={(value) => updateProfileIdentityForm.setFieldValue("id_code", value)}
                                 />
 
                                 <Form.Error
-                                    error={updateProfileForm.errors.id_code}
-                                    touched={updateProfileForm.touched.id_code}
+                                    error={updateProfileIdentityForm.errors.id_code}
+                                    touched={updateProfileIdentityForm.touched.id_code}
                                 />
                             </Form.Group>
                         </div>
@@ -247,13 +247,13 @@ const Identify = ({readMyProfileAction}) => {
                                         numericOnly: true,
                                         delimiter: '',
                                     }}
-                                    value={updateProfileForm.values.national_code}
-                                    onChange={(value) => updateProfileForm.setFieldValue("national_code", value)}
+                                    value={updateProfileIdentityForm.values.national_code}
+                                    onChange={(value) => updateProfileIdentityForm.setFieldValue("national_code", value)}
                                 />
 
                                 <Form.Error
-                                    error={updateProfileForm.errors.national_code}
-                                    touched={updateProfileForm.touched.national_code}
+                                    error={updateProfileIdentityForm.errors.national_code}
+                                    touched={updateProfileIdentityForm.touched.national_code}
                                 />
                             </Form.Group>
                         </div>
@@ -274,13 +274,13 @@ const Identify = ({readMyProfileAction}) => {
                                 <DatePicker
                                     id="birthdate"
                                     name="birthdate"
-                                    value={updateProfileForm.values.birthdate}
-                                    onChange={(value) => updateProfileForm.setFieldValue("birthdate", value)}
+                                    value={updateProfileIdentityForm.values.birthdate}
+                                    onChange={(value) => updateProfileIdentityForm.setFieldValue("birthdate", value)}
                                 />
 
                                 <Form.Error
-                                    error={updateProfileForm.errors.birthdate}
-                                    touched={updateProfileForm.touched.birthdate}
+                                    error={updateProfileIdentityForm.errors.birthdate}
+                                    touched={updateProfileIdentityForm.touched.birthdate}
                                 />
                             </Form.Group>
                         </div>
@@ -301,13 +301,13 @@ const Identify = ({readMyProfileAction}) => {
                                 <TextInput
                                     id="email"
                                     name="email"
-                                    value={updateProfileForm.values.email}
-                                    onChange={(value) => updateProfileForm.setFieldValue("email", value)}
+                                    value={updateProfileIdentityForm.values.email}
+                                    onChange={(value) => updateProfileIdentityForm.setFieldValue("email", value)}
                                 />
 
                                 <Form.Error
-                                    error={updateProfileForm.errors.email}
-                                    touched={updateProfileForm.touched.email}
+                                    error={updateProfileIdentityForm.errors.email}
+                                    touched={updateProfileIdentityForm.touched.email}
                                 />
                             </Form.Group>
                         </div>
@@ -328,13 +328,13 @@ const Identify = ({readMyProfileAction}) => {
                                 <Textarea
                                     id="address"
                                     name="address"
-                                    value={updateProfileForm.values.address}
-                                    onChange={(value) => updateProfileForm.setFieldValue("address", value)}
+                                    value={updateProfileIdentityForm.values.address}
+                                    onChange={(value) => updateProfileIdentityForm.setFieldValue("address", value)}
                                 />
 
                                 <Form.Error
-                                    error={updateProfileForm.errors.address}
-                                    touched={updateProfileForm.touched.address}
+                                    error={updateProfileIdentityForm.errors.address}
+                                    touched={updateProfileIdentityForm.touched.address}
                                 />
                             </Form.Group>
                         </div>
@@ -345,8 +345,8 @@ const Identify = ({readMyProfileAction}) => {
             <div className="d-flex justify-content-end align-items-center gap-5 w-100">
                 <Button
                     color="success"
-                    onClick={updateProfileForm.handleSubmit}
-                    isLoading={updateProfileAction.isPending}
+                    onClick={updateProfileIdentityForm.handleSubmit}
+                    isLoading={updateProfileIdentityAction.isPending}
                 >
                     ذخیره تغییرات
                 </Button>

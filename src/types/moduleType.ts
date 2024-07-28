@@ -5,6 +5,21 @@ import {DateObject} from "react-multi-date-picker";
 // types
 import * as t from "@/types/global.ts";
 
+export type TAccordion = {
+    children: ReactNode,
+    allowMultiple?: boolean
+}
+
+export type TAccordionItem = {
+    children: ReactNode,
+    title: string,
+    number?: string | number,
+    startAdornment?: ReactNode,
+    endAdornment?: ReactNode,
+    disabled?: boolean,
+    initialEntered?: boolean
+}
+
 export type TAlert = {
     color: t.colors,
     size?: t.sizes,

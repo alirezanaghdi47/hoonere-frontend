@@ -57,7 +57,6 @@ const AdvanceFilter = ({filter, initialFilter, changeFilter, hideFilter, resetFi
                             label: projectType.title,
                             value: projectType.id.toString()
                         })) : []}
-                        placeholder=""
                         isSearchable
                         onChange={(value) => changeFilter({type_id: value})}
                         isLoading={readAllProjectTypeAction.isPending}

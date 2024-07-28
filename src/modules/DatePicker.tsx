@@ -14,7 +14,7 @@ import "@/styles/modules/date-picker.scss";
 import {TDatePicker} from "@/types/moduleType.ts";
 
 // utils
-import {convertGregorianToJalali, convertJalaliToGregorian} from "@/utils/functions.ts";
+import {convertGregorianToJalali, convertJalaliToGregorian, toEnglishDigits} from "@/utils/functions.ts";
 
 const RenderButton = ({direction, handleClick}) => {
     return (
@@ -57,7 +57,7 @@ const DatePicker = ({
     const customizeDays = (date) => {
         let color;
 
-        if (holidayDates.includes(convertGregorianToJalali(date))) color = "red";
+        if (holidayDates.includes(toEnglishDigits(convertGregorianToJalali(date)))) color = "red";
 
         if (color) return {className: "highlight highlight-" + color};
     }
@@ -74,8 +74,8 @@ const DatePicker = ({
             value={value ? convertGregorianToJalali(value) : ""}
             range={range}
             multiple={false}
-            minDate={minDate ? convertGregorianToJalali(minDate) : ""}
-            maxDate={maxDate ? convertGregorianToJalali(maxDate) : ""}
+            minDate={minDate ? toEnglishDigits(convertGregorianToJalali(minDate)) : ""}
+            maxDate={maxDate ? toEnglishDigits(convertGregorianToJalali(maxDate)) : ""}
             onChange={(value) => onChange(convertJalaliToGregorian(value))}
             renderButton={(direction, handleClick) => (
                 <RenderButton

@@ -73,7 +73,6 @@ const AdvanceFilter = ({readAllProjectMemberAction, filter, initialFilter, chang
                             label: item.title,
                             value: item.id.toString()
                         })) : []}
-                        placeholder=""
                         isSearchable
                         onChange={(value) => changeFilter({foa_parent_id: value})}
                         isLoading={readAllJobAction.isPending}
@@ -98,7 +97,6 @@ const AdvanceFilter = ({readAllProjectMemberAction, filter, initialFilter, chang
                             label: item.title,
                             value: item.id.toString()
                         })) : []}
-                        placeholder=""
                         isSearchable
                         onChange={(value) => changeFilter({foa_child_id: value})}
                         isLoading={readAllJobAction.isPending}

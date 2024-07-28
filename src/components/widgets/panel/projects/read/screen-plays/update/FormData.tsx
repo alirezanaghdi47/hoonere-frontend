@@ -124,7 +124,6 @@ const FormData = ({updateProjectScreenPlayForm, updateProjectScreenPlayAction}) 
                                             label: screenplay_time_type.title,
                                             value: screenplay_time_type.id.toString()
                                         })) : []}
-                                        placeholder=""
                                         isSearchable
                                         onChange={(value) => updateProjectScreenPlayForm.setFieldValue("time_type_id", value)}
                                         isLoading={readAllScreenPlayTimeTypeAction.isPending}
@@ -154,7 +153,6 @@ const FormData = ({updateProjectScreenPlayForm, updateProjectScreenPlayAction}) 
                                             label: screenplay_location_side.title,
                                             value: screenplay_location_side.id.toString()
                                         })) : []}
-                                        placeholder=""
                                         isSearchable
                                         onChange={(value) => updateProjectScreenPlayForm.setFieldValue("location_side_id", value)}
                                         isLoading={readAllScreenPlayLocationSideAction.isPending}

@@ -20,7 +20,7 @@ import Button from "@/modules/Button.tsx";
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-const MoodBoardsModal = ({modal, _handleHideModal}) => {
+const ReadMoodBoardsModal = ({modal, _handleHideModal}) => {
     const params = useParams();
     const {auth} = useAuthStore();
 
@@ -50,8 +50,7 @@ const MoodBoardsModal = ({modal, _handleHideModal}) => {
             isOpen={modal.isOpen}
             onClose={_handleHideModal}
             position='center'
-            width="xl"
-            height="content"
+            width="lg"
         >
             <Modal.Header>
                 <Typography
@@ -100,6 +99,7 @@ const MoodBoardsModal = ({modal, _handleHideModal}) => {
                     {/*{*/}
                     {/*    readAllProjectMemberAction.isPending && (*/}
                     {/*        <Loading*/}
+                    {/*            withCard*/}
                     {/*            width="100%"*/}
                     {/*            height={500}*/}
                     {/*        />*/}
@@ -153,4 +153,4 @@ const MoodBoardsModal = ({modal, _handleHideModal}) => {
     )
 }
 
-export default MoodBoardsModal;
+export default ReadMoodBoardsModal;

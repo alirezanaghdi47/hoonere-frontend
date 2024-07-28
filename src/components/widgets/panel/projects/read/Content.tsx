@@ -50,7 +50,7 @@ const Content = () => {
             id: 5,
             label: "قرارداد ها",
             icon: LuScale({size: 25, color: "currentColor"}),
-            href: ""
+            href: auth.panel_url + `projects/${params.id}/contracts`
         },
         {
             id: 6,

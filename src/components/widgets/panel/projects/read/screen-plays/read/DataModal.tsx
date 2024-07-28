@@ -17,6 +17,7 @@ const DataModal = ({screenPlay}) => {
     const _handlePrint = useReactToPrint({
         content: () => printRef.current,
         documentTitle: `screenplay_${screenPlay?.created_at}`,
+        bodyClass: "p-5"
     });
 
     return (
@@ -25,7 +26,6 @@ const DataModal = ({screenPlay}) => {
             onClose={() => navigate(-1)}
             position='center'
             width="lg"
-            height="full"
         >
             <Modal.Header>
                 <Typography

@@ -21,7 +21,7 @@ export const loginSchema = Yup.object().shape({
     captcha: Yup.string().trim().required("کد کپچا الزامی است"),
 });
 
-export const updateProfileSchema = Yup.object().shape({
+export const updateProfileIdentitySchema = Yup.object().shape({
     profile_img: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 1 مگابایت باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
@@ -89,6 +89,49 @@ export const financialSchema = Yup.object().shape({
     card_number: Yup.string().trim().required("شماره کارت الزامی است"),
     card_shaba: Yup.string().trim().required("شماره شبا الزامی است"),
     account_id: Yup.string().trim()
+});
+
+export const updateProfileLegalSchema = Yup.object().shape({
+    profile_img: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 1 مگابایت باشد", (value: File) => {
+        if (Object.keys(value).length === 0) {
+            return true;
+        } else {
+            return value.size <= 1_024_000;
+        }
+    }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
+        if (Object.keys(value).length === 0) {
+            return true;
+        } else {
+            return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
+        }
+    }),
+    national_card: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 2 مگابایت باشد", (value: File) => {
+        if (Object.keys(value).length === 0) {
+            return true;
+        } else {
+            return value.size <= 2 * 1_024_000;
+        }
+    }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
+        if (Object.keys(value).length === 0) {
+            return true;
+        } else {
+            return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
+        }
+    }),
+    username: Yup.string().trim().required("نام کاربری الزامی است"),
+    first_name: Yup.string().trim().required("نام الزامی است"),
+    last_name: Yup.string().trim().required("نام خانوادگی الزامی است"),
+    national_code: Yup.string().trim().required("کد ملی الزامی است"),
+    id_code: Yup.string().trim().required("شماره شناسنامه الزامی است"),
+    birthdate: Yup.string().trim().required("تاریخ تولد الزامی است"),
+    email: Yup.string().trim().matches(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, "فرمت ایمیل نادرست است").required("ایمیل الزامی است"),
+    address: Yup.string().trim().required("آدرس الزامی است")
+});
+
+export const createRepresentativeSchema = Yup.object().shape({
+    full_name: Yup.string().trim().required("نام و نام خانوادگی الزامی است"),
+    national_code: Yup.string().trim().required("کد ملی الزامی است"),
+    post: Yup.string().trim().required("سمت کاری الزامی است"),
 });
 
 export const readUserInquirySchema = Yup.object().shape({
@@ -420,3 +463,33 @@ export const updateProjectMoodBoardSchema = Yup.object().shape({
         then: (schema) => schema.trim().required("محتوای مود بورد الزامی است")
     }),
 });
+
+export const createArticleSchema = Yup.object().shape({
+    article: Yup.string().trim().required("ماده الزامی است"),
+});
+
+export const createSectionSchema = Yup.object().shape({
+    section: Yup.string().trim().required("بند الزامی است"),
+});
+
+export const createNoteSchema = Yup.object().shape({
+    note: Yup.string().trim().required("تبصره الزامی است"),
+});
+
+export const createPartiesSchema = Yup.object().shape({
+    foa_parent_id: Yup.string().trim().required("گروه شغلی الزامی است"),
+    foa_child_id: Yup.string().trim(),
+    user_id: Yup.string().trim().required("کاربر الزامی است"),
+});
+
+export const createPaymentSchema = Yup.object().shape({
+    percent: Yup.number().min(1 , "مقدار درصد نادرست است").max(100 , "مقدار درصد نادرست است").required("درصد الزامی است"),
+    date: Yup.string().trim().required("تاریخ الزامی است"),
+});
+
+export const createProjectContractSchema = Yup.object().shape({
+    articles: Yup.array(),
+    sections: Yup.array(),
+    notes: Yup.array(),
+});
+

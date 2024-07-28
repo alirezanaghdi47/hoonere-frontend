@@ -21,7 +21,7 @@ import {deleteBankCardService, changeStatusOfBankCardService} from "@/services/p
 import {IChangeStatusOfBankCard, IDeleteBankCard} from "@/types/serviceType.ts";
 
 // utils
-import {getBankInfoFromCardNumber, hexToRgba} from "@/utils/functions.ts";
+import {formattedBankCardNumber, getBankInfoFromCardNumber, hexToRgba} from "@/utils/functions.ts";
 
 export const BlankCard = ({changeCurrentPart}) => {
     return (
@@ -110,7 +110,7 @@ export const BankCard = ({card, dropdownOptions}) => {
                         color="dark"
                         isBold
                     >
-                        {card?.card_number}
+                        {formattedBankCardNumber(card?.card_number)}
                     </Typography>
                 </div>
 

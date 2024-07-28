@@ -78,7 +78,7 @@ const Authentication = ({unSetOtpWay, nextStep, changeStep}) => {
 
             <div className='d-flex justify-content-center align-items-center gap-5 w-100'>
                 <Button
-                    textColor="gray-600"
+                    textcolor="muted"
                     direction="start"
                     isDense
                     fullWidth

@@ -101,6 +101,8 @@ const SelectBox = ({
             value={options?.find(item => item.value === value) || ""}
             // @ts-ignore
             onChange={(value) => isMulti ? onChange(value?.map(subValue => subValue.value)) : onChange(value.value)}
+            menuPosition="fixed"
+            menuPlacement="auto"
             isMulti={isMulti}
             isDisabled={disabled || isLoading || readOnly}
             isLoading={isLoading}

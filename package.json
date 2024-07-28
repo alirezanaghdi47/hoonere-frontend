@@ -2,16 +2,17 @@
   "name": "hoonere-frontend",
   "homepage": "https://panel.hoonere.com",
   "private": true,
-  "version": "0.8.1",
+  "version": "0.8.8",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
     "@loadable/component": "^5.16.3",
+    "@szhsin/react-accordion": "^1.2.4",
     "@szhsin/react-menu": "^4.1.0",
     "@tanstack/react-query": "^5.28.14",
     "@tanstack/react-table": "^8.16.0",
@@ -24,6 +25,7 @@
     "formik": "^2.4.5",
     "html-react-parser": "^5.1.10",
     "leaflet": "^1.9.4",
+    "num2persian": "^3.2.2",
     "plyr-react": "^5.3.0",
     "rc-pagination": "^4.0.4",
     "react": "^18.2.0",

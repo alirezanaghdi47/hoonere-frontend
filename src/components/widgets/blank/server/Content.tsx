@@ -12,7 +12,7 @@ const Content = () => {
     const {auth} = useAuthStore();
 
     return (
-        <div className="d-flex flex-column justify-content-center align-items-center gap-10 w-100 h-100">
+        <div className="d-flex flex-column justify-content-center align-items-center gap-10 w-100 h-100 py-20">
             <LazyLoadImage
                 src="/assets/images/illustrations/server-down.svg"
                 alt="server-down"
@@ -21,7 +21,7 @@ const Content = () => {
 
             <Typography
                 variant="h1"
-                color="gray-600"
+                color="muted"
                 size="lg"
                 isBold
             >
@@ -30,7 +30,7 @@ const Content = () => {
 
             <Typography
                 variant="h3"
-                color="gray-600"
+                color="muted"
                 size="sm"
             >
                 ارتباط خود را با سرور چک کنید
