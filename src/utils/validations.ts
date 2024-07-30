@@ -21,7 +21,7 @@ export const loginSchema = Yup.object().shape({
     captcha: Yup.string().trim().required("کد کپچا الزامی است"),
 });
 
-export const updateProfileIdentitySchema = Yup.object().shape({
+export const updateProfileRealSchema = Yup.object().shape({
     profile_img: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 1 مگابایت باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
@@ -55,7 +55,8 @@ export const updateProfileIdentitySchema = Yup.object().shape({
     id_code: Yup.string().trim().required("شماره شناسنامه الزامی است"),
     birthdate: Yup.string().trim().required("تاریخ تولد الزامی است"),
     email: Yup.string().trim().matches(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, "فرمت ایمیل نادرست است").required("ایمیل الزامی است"),
-    address: Yup.string().trim().required("آدرس الزامی است")
+    address: Yup.string().trim().required("آدرس الزامی است"),
+    postal_code: Yup.string().trim().required("کد پستی الزامی است"),
 });
 
 export const createJobSchema = Yup.object().shape({
@@ -92,7 +93,7 @@ export const financialSchema = Yup.object().shape({
 });
 
 export const updateProfileLegalSchema = Yup.object().shape({
-    profile_img: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 1 مگابایت باشد", (value: File) => {
+    profile_image: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 1 مگابایت باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
@@ -105,7 +106,7 @@ export const updateProfileLegalSchema = Yup.object().shape({
             return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
         }
     }),
-    national_card: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 2 مگابایت باشد", (value: File) => {
+    newspaper_file: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 2 مگابایت باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
@@ -118,14 +119,18 @@ export const updateProfileLegalSchema = Yup.object().shape({
             return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
         }
     }),
-    username: Yup.string().trim().required("نام کاربری الزامی است"),
-    first_name: Yup.string().trim().required("نام الزامی است"),
-    last_name: Yup.string().trim().required("نام خانوادگی الزامی است"),
-    national_code: Yup.string().trim().required("کد ملی الزامی است"),
-    id_code: Yup.string().trim().required("شماره شناسنامه الزامی است"),
-    birthdate: Yup.string().trim().required("تاریخ تولد الزامی است"),
+    company_name: Yup.string().trim().required("نام شرکت الزامی است"),
+    register_code: Yup.string().trim().required("نام الزامی است"),
+    economic_code: Yup.string().trim().required("کد اقتصادی الزامی است"),
+    address: Yup.string().trim().required("آدرس الزامی است"),
+    postal_code: Yup.string().trim().required("کد پستی الزامی است"),
+    telephone: Yup.string().trim().required("شماره تماس الزامی است"),
     email: Yup.string().trim().matches(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, "فرمت ایمیل نادرست است").required("ایمیل الزامی است"),
-    address: Yup.string().trim().required("آدرس الزامی است")
+    representatives: Yup.array().of(Yup.object().shape({
+        full_name: Yup.string().trim().required("نام و نام خانوادگی الزامی است"),
+        national_code: Yup.string().trim().required("کد ملی الزامی است"),
+        post: Yup.string().trim().required("سمت کاری الزامی است"),
+    }))
 });
 
 export const createRepresentativeSchema = Yup.object().shape({
@@ -478,8 +483,8 @@ export const createNoteSchema = Yup.object().shape({
 
 export const createPartiesSchema = Yup.object().shape({
     foa_parent_id: Yup.string().trim().required("گروه شغلی الزامی است"),
-    foa_child_id: Yup.string().trim(),
-    user_id: Yup.string().trim().required("کاربر الزامی است"),
+    foa_child_id: Yup.string().trim().required("عنوان شغلی الزامی است"),
+    user_info: Yup.object().test('has-one-key', 'کاربر الزامی است', value => value && Object.keys(value).length > 0)
 });
 
 export const createPaymentSchema = Yup.object().shape({

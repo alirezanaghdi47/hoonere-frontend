@@ -78,12 +78,12 @@ export const convertGregorianToJalali = (date: string): string => new DateObject
     locale: gregorian_en
 }).convert(persian, persian_fa).format("YYYY-MM-DD");
 
-export const generateTimeWithSecond = (time: string): DateObject => {
+export const generateTimeWithSecond = (time) => {
     const [hour, minute] = time.split(":");
-
-    return new DateObject().setHour(Number(hour)).setMinute(Number(minute));
+    return new DateObject(time).setHour(Number(hour)).setMinute(Number(minute));
 }
-export const generateTimeWithoutSecond = (time: string): string => new DateObject(time).format("HH:mm");
+
+export const generateTimeWithoutSecond = (time) => new DateObject(time).setSecond(0).format("HH:mm:ss");
 
 export const getBankInfoFromCardNumber = (cardNumber: string): object | null => cardNumber.length > 6 ? iranianBanks?.find(bank => cardNumber.startsWith(bank.bin)) : null;
 
@@ -128,3 +128,19 @@ export const cleaningObject = (sourceObject: object): unknown => {
 export const getNodeIndex = (node: Element): number => node ? [...node.parentNode!.children].indexOf(node) : -1;
 
 export const getNodeLength = (node: NodeListOf<Element>): number => node.length > 0 ? node.length : 0;
+
+export const getValueByKey = (array: unknown, key: string , subKey: string) => {
+    for (const item of array) {
+        if (item.hasOwnProperty(key)) {
+            if (subKey && Array.isArray(item[key])) {
+                if (item[key].length > 0 && item[key][0].hasOwnProperty(subKey)) {
+                    return item[key][0][subKey];
+                }
+            } else {
+                return item[key];
+            }
+        }
+    }
+
+    return null;
+}

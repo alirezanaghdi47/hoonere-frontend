@@ -9,7 +9,7 @@ import Review from "@/components/widgets/panel/profile/review/Review.tsx";
 import Identify from "@/components/widgets/panel/profile/identity/Identify.tsx";
 import Occupation from "@/components/widgets/panel/profile/occupation/Occupation.tsx";
 import Financial from "@/components/widgets/panel/profile/financial/Financial.tsx";
-import Legal from "@/components/widgets/panel/profile/legal/Legal.tsx";
+import Legal from "@/components/widgets/panel/profile/identity/Legal.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // services

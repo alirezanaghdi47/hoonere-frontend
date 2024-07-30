@@ -20,6 +20,7 @@ import useAuthStore from "@/stores/authStore.ts";
 
 // utils
 import {createProjectContractSchema} from "@/utils/validations.ts";
+import {getValueByKey} from "@/utils/functions.ts";
 
 const Content = () => {
     const params = useParams();
@@ -54,26 +55,26 @@ const Content = () => {
                 if (article.number === 1) {
                     return ({
                         ...article,
-                        contractors: [1, 2],
-                        employers: [1]
-                    })
+                        contractors: [],
+                        employers: []
+                    });
                 } else if (article.number === 3) {
                     return ({
                         ...article,
                         start_date: "",
                         end_date: ""
-                    })
+                    });
                 } else if (article.number === 4) {
                     return ({
                         ...article,
                         total_price: 0,
-                    })
+                    });
                 } else if (article.number === 5) {
                     return ({
                         ...article,
-                        payment_state: "1",
+                        payment_state: "",
                         payments: [],
-                    })
+                    });
                 } else {
                     return article;
                 }
@@ -90,14 +91,14 @@ const Content = () => {
                         isOff: false,
                         isAdded: false,
                         isStatic: true
-                    })
-                }  else {
+                    });
+                } else {
                     return ({
                         ...section,
                         isOff: false,
                         isAdded: false,
                         isStatic: false
-                    })
+                    });
                 }
             }) : [],
             notes: []
@@ -107,6 +108,13 @@ const Content = () => {
             createProjectContractAction.mutate({
                 ...result,
                 project_id: params.id,
+                employers: [],
+                contractors: [],
+                start_date: getValueByKey(createProjectContractForm.values.articles, "start_date"),
+                end_date: getValueByKey(createProjectContractForm.values.articles, "end_date"),
+                total_price: getValueByKey(createProjectContractForm.values.articles, "total_price"),
+                payment_state: getValueByKey(createProjectContractForm.values.articles, "payment_state"),
+                payments: getValueByKey(createProjectContractForm.values.articles, "payments")
             });
         }
     });
@@ -119,7 +127,7 @@ const Content = () => {
         readAllProjectContractSectionAction.mutate();
     }, []);
 
-    console.log(createProjectContractForm.values.sections)
+    console.log(getValueByKey(createProjectContractForm.values.articles, "employers", "id"))
 
     return (
         <div

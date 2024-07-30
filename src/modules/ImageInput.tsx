@@ -24,7 +24,7 @@ const ImageInput = ({
                         isCircle,
                         ...props
                     }: TImageInput) => {
-    const [files, setFiles] = useState<ExtendedFile[] | object>([value]);
+    const [files, setFiles] = useState<ExtendedFile[] | object>([]);
 
     const {getRootProps, getInputProps} = useDropzone({
         disabled: disabled,

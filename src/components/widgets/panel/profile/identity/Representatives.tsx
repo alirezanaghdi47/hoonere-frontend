@@ -81,7 +81,7 @@ export const RepresentativeCard = ({group, title, onDelete}) => {
     )
 }
 
-const Representatives = ({updateProfileLegalForm , updateProfileLegalAction, changeCurrentPart}) => {
+const Representatives = ({updateProfileLegalForm , updateProfileIdentityAction, changeCurrentPart}) => {
     return (
         <>
             <div className="card w-100">
@@ -119,7 +119,7 @@ const Representatives = ({updateProfileLegalForm , updateProfileLegalAction, cha
                 <Button
                     color="success"
                     onClick={updateProfileLegalForm.handleSubmit}
-                    isLoading={updateProfileLegalAction.isPending}
+                    isLoading={updateProfileIdentityAction.isPending}
                 >
                     ذخیره تغییرات
                 </Button>

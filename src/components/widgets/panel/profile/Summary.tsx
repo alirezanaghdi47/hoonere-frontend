@@ -18,8 +18,7 @@ const Summary = ({readMyProfileAction}) => {
 
     const [navbarLinks , setNavbarLinks] = useState([
         {id: 1, label: "بررسی اجمالی", href: auth.panel_url + "profile#review", value: "#review"},
-        {id: 2, label: "هویتی ( حقیقی )", href: auth.panel_url + "profile#identify", value: "#identify"},
-        {id: 2, label: "حقوقی", href: auth.panel_url + "profile#legal", value: "#legal"},
+        {id: 2, label: "هویتی", href: auth.panel_url + "profile#identify", value: "#identify"},
         {id: 3, label: "شغلی", href: auth.panel_url + "profile#occupation", value: "#occupation"},
         {id: 4, label: "مالی", href: auth.panel_url + "profile#financial", value: "#financial"},
     ]);

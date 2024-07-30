@@ -1,4 +1,5 @@
 // libraries
+import {Fragment} from "react";
 import Loadable from "@loadable/component";
 import {LuTrash} from "react-icons/lu";
 
@@ -50,7 +51,7 @@ const BlankEmployerCard = ({createProjectContractForm}) => {
     )
 }
 
-const EmployerCard = ({value , createProjectContractForm}) => {
+const EmployerRealCard = ({employer , createProjectContractForm}) => {
     return (
         <li className='d-flex flex-wrap justify-content-start align-items-center gap-5 border border-dashed border-secondary rounded-2 p-5'>
             <Typography
@@ -59,25 +60,16 @@ const EmployerCard = ({value , createProjectContractForm}) => {
             >
                 کارفرما :
                 &nbsp;
-                علیرضا نقدی
+                {(employer?.first_name && employer?.last_name) ? employer?.first_name + " " + employer?.last_name : "نا معلوم"}
             </Typography>
 
             <Typography
                 size="sm"
                 color="dark"
             >
-                به شماره ثبت :
+                به کد ملی :
                 &nbsp;
-                123456789
-            </Typography>
-
-            <Typography
-                size="sm"
-                color="dark"
-            >
-                شناسه ملی :
-                &nbsp;
-                1234567890
+                {employer?.national_code ? employer?.national_code : "نا معلوم"}
             </Typography>
 
             <Typography
@@ -86,7 +78,7 @@ const EmployerCard = ({value , createProjectContractForm}) => {
             >
                 نشانی :
                 &nbsp;
-                ایران ، تهران
+                {employer?.address ? employer?.address : "نا معلوم"}
             </Typography>
 
             <Typography
@@ -95,7 +87,7 @@ const EmployerCard = ({value , createProjectContractForm}) => {
             >
                 کدپستی :
                 &nbsp;
-                1234567890
+                {employer?.postal_code ? employer?.postal_code : "نا معلوم"}
             </Typography>
 
             <Typography
@@ -104,7 +96,81 @@ const EmployerCard = ({value , createProjectContractForm}) => {
             >
                 شماره تماس :
                 &nbsp;
-                1234567890
+                {employer?.mobile ? employer?.mobile : "نا معلوم"}
+            </Typography>
+
+            <IconButton
+                color="light-danger"
+                size="sm"
+                data-tooltip-id="my-tooltip"
+                data-tooltip-content="حذف کارفرما"
+                className='ms-auto'
+                onClick={() => createProjectContractForm.setFieldValue("articles[0].employers" , createProjectContractForm.values.articles[0].employers.filter(item => JSON.stringify(item) !== JSON.stringify(employer)))}
+            >
+                <LuTrash
+                    size={20}
+                    color="currentColor"
+                />
+            </IconButton>
+        </li>
+    )
+}
+
+const EmployerLegalCard = ({employer , createProjectContractForm}) => {
+    return (
+        <li className='d-flex flex-wrap justify-content-start align-items-center gap-5 border border-dashed border-secondary rounded-2 p-5'>
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                کارفرما :
+                &nbsp;
+                {employer?.company_name ? employer?.company_name : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                به شماره ثبت :
+                &nbsp;
+                {employer?.register_code ? employer?.register_code : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                شناسه ملی :
+                &nbsp;
+                {employer?.economic_code ? employer?.economic_code : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                نشانی :
+                &nbsp;
+                {employer?.address ? employer?.address : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                کدپستی :
+                &nbsp;
+                {employer?.postal_code ? employer?.postal_code : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                شماره تماس :
+                &nbsp;
+                {employer?.telephone ? employer?.telephone : "نا معلوم"}
             </Typography>
 
             <Typography
@@ -122,7 +188,7 @@ const EmployerCard = ({value , createProjectContractForm}) => {
                 data-tooltip-id="my-tooltip"
                 data-tooltip-content="حذف کارفرما"
                 className='ms-auto'
-                onClick={() => createProjectContractForm.setFieldValue("articles[0].employers" , createProjectContractForm.values.articles[0].employers.filter(employer => employer !== value))}
+                onClick={() => createProjectContractForm.setFieldValue("articles[0].employers", createProjectContractForm.values.articles[0].employers.filter(item => JSON.stringify(item) !== JSON.stringify(employer)))}
             >
                 <LuTrash
                     size={20}
@@ -133,7 +199,7 @@ const EmployerCard = ({value , createProjectContractForm}) => {
     )
 }
 
-const CreateEmployerFormData = ({article , section, createProjectContractForm}) => {
+const CreateEmployerFormData = ({article, section, createProjectContractForm}) => {
     return (
         <Section
             article={article}
@@ -154,12 +220,26 @@ const CreateEmployerFormData = ({article , section, createProjectContractForm}) 
                     <BlankEmployerCard createProjectContractForm={createProjectContractForm}/>
 
                     {
-                        createProjectContractForm.values.articles.find(item => item.number === article.number)?.employers?.map((subItem , i) =>
-                            <EmployerCard
-                                key={i}
-                                value={10}
-                                createProjectContractForm={createProjectContractForm}
-                            />
+                        createProjectContractForm.values.articles.find(item => item.number === article.number)?.employers?.map(employer =>
+                            <Fragment key={employer.user_type === "1" ? `employer-real-${employer.id}` : `employer-legal-${employer.id}`}>
+                                {
+                                    employer.user_type === "1" && (
+                                        <EmployerRealCard
+                                            employer={employer}
+                                            createProjectContractForm={createProjectContractForm}
+                                        />
+                                    )
+                                }
+
+                                {
+                                    employer.user_type === "2" && (
+                                        <EmployerLegalCard
+                                            employer={employer}
+                                            createProjectContractForm={createProjectContractForm}
+                                        />
+                                    )
+                                }
+                            </Fragment>
                         )
                     }
                 </ul>

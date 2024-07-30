@@ -1,4 +1,5 @@
 // libraries
+import {Fragment} from "react";
 import Loadable from "@loadable/component";
 import {LuTrash} from "react-icons/lu";
 
@@ -50,7 +51,7 @@ const BlankContractorCard = ({createProjectContractForm}) => {
     )
 }
 
-const ContractorCard = ({value , createProjectContractForm}) => {
+const ContractorRealCard = ({contractor , createProjectContractForm}) => {
     return (
         <li className='d-flex flex-wrap justify-content-start align-items-center gap-5 border border-dashed border-secondary rounded-2 p-5'>
             <Typography
@@ -59,7 +60,7 @@ const ContractorCard = ({value , createProjectContractForm}) => {
             >
                 مجری :
                 &nbsp;
-                علیرضا نقدی
+                {(contractor?.first_name && contractor?.last_name) ? contractor?.first_name + " " + contractor?.last_name : "نا معلوم"}
             </Typography>
 
             <Typography
@@ -68,7 +69,7 @@ const ContractorCard = ({value , createProjectContractForm}) => {
             >
                 به شماره ملی :
                 &nbsp;
-                1234567890
+                {contractor?.national_code ? contractor?.national_code : "نا معلوم"}
             </Typography>
 
             <Typography
@@ -77,7 +78,7 @@ const ContractorCard = ({value , createProjectContractForm}) => {
             >
                 نشانی :
                 &nbsp;
-                ایران ، تهران
+                {contractor?.address ? contractor?.address : "نا معلوم"}
             </Typography>
 
             <Typography
@@ -86,7 +87,7 @@ const ContractorCard = ({value , createProjectContractForm}) => {
             >
                 کدپستی :
                 &nbsp;
-                1234567890
+                {contractor?.postal_code ? contractor?.postal_code : "نا معلوم"}
             </Typography>
 
             <Typography
@@ -95,7 +96,7 @@ const ContractorCard = ({value , createProjectContractForm}) => {
             >
                 شماره تماس :
                 &nbsp;
-                1234567890
+                {contractor?.mobile ? contractor?.mobile : "نا معلوم"}
             </Typography>
 
             <IconButton
@@ -104,7 +105,90 @@ const ContractorCard = ({value , createProjectContractForm}) => {
                 data-tooltip-id="my-tooltip"
                 data-tooltip-content="حذف مجری"
                 className='ms-auto'
-                onClick={() => createProjectContractForm.setFieldValue("articles[0].contractors" , createProjectContractForm.values.articles[0].contractors.filter(contractor => contractor !== value))}
+                onClick={() => createProjectContractForm.setFieldValue("articles[0].contractors" , createProjectContractForm.values.articles[0].contractors.filter(item => JSON.stringify(item) !== JSON.stringify(contractor)))}
+            >
+                <LuTrash
+                    size={20}
+                    color="currentColor"
+                />
+            </IconButton>
+        </li>
+    )
+}
+
+const ContractorLegalCard = ({contractor , createProjectContractForm}) => {
+    return (
+        <li className='d-flex flex-wrap justify-content-start align-items-center gap-5 border border-dashed border-secondary rounded-2 p-5'>
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                کارفرما :
+                &nbsp;
+                {contractor?.company_name ? contractor?.company_name : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                به شماره ثبت :
+                &nbsp;
+                {contractor?.register_code ? contractor?.register_code : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                شناسه ملی :
+                &nbsp;
+                {contractor?.economic_code ? contractor?.economic_code : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                نشانی :
+                &nbsp;
+                {contractor?.address ? contractor?.address : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                کدپستی :
+                &nbsp;
+                {contractor?.postal_code ? contractor?.postal_code : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                شماره تماس :
+                &nbsp;
+                {contractor?.telephone ? contractor?.telephone : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                به نمایندگی :
+                &nbsp;
+                سهیل نادری
+            </Typography>
+
+            <IconButton
+                color="light-danger"
+                size="sm"
+                data-tooltip-id="my-tooltip"
+                data-tooltip-content="حذف مجری"
+                className='ms-auto'
+                onClick={() => createProjectContractForm.setFieldValue("articles[0].contractors" , createProjectContractForm.values.articles[0].contractors.filter(item => JSON.stringify(item) !== JSON.stringify(contractor)))}
             >
                 <LuTrash
                     size={20}
@@ -137,12 +221,26 @@ const CreateContractorFormData = ({article , section, createProjectContractForm}
                         <BlankContractorCard createProjectContractForm={createProjectContractForm}/>
 
                         {
-                            createProjectContractForm.values.articles.find(item => item.number === article.number)?.contractors?.map((subItem , i) =>
-                                <ContractorCard
-                                    key={i}
-                                    value={20}
-                                    createProjectContractForm={createProjectContractForm}
-                                />
+                            createProjectContractForm.values.articles.find(item => item.number === article.number)?.contractors?.map(contractor =>
+                                <Fragment key={contractor.user_type === "1" ? `contractor-real-${contractor.id}` : `contractor-legal-${contractor.id}`}>
+                                    {
+                                        contractor.user_type === "1" && (
+                                            <ContractorRealCard
+                                                contractor={contractor}
+                                                createProjectContractForm={createProjectContractForm}
+                                            />
+                                        )
+                                    }
+
+                                    {
+                                        contractor.user_type === "2" && (
+                                            <ContractorLegalCard
+                                                contractor={contractor}
+                                                createProjectContractForm={createProjectContractForm}
+                                            />
+                                        )
+                                    }
+                                </Fragment>
                             )
                         }
                     </ul>

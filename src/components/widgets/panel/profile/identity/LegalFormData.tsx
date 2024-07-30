@@ -1,15 +1,28 @@
 // modules
-import FileInput from "@/modules/FileInput.tsx";
 import Form from "@/modules/Form.tsx";
 import TextInput from "@/modules/TextInput.tsx";
 import Textarea from "@/modules/Textarea.tsx";
 import NumberInput from "@/modules/NumberInput.tsx";
 import ImageInput from "@/modules/ImageInput.tsx";
+import Button from "@/modules/Button.tsx";
 
-const CivilFormData = ({updateProfileLegalForm}) => {
+const LegalFormData = ({readMyProfileAction , changeCurrentPart, updateProfileLegalForm}) => {
     return (
         <div className="card w-100">
             <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
+                <div className="row gy-5 w-100">
+                    <div className="col-12">
+                        <Button
+                            color="light-info"
+                            size="sm"
+                            onClick={() => changeCurrentPart("real")}
+                            className="ms-auto"
+                        >
+                            تغییر به شخصیت حقیقی
+                        </Button>
+                    </div>
+                </div>
+
                 <div className="row gy-5 w-100">
                     <div className="col-lg-4">
                         <Form.Label
@@ -23,17 +36,17 @@ const CivilFormData = ({updateProfileLegalForm}) => {
                     <div className="col-lg-8">
                         <Form.Group>
                             <ImageInput
-                                id="logo"
-                                name="logo"
+                                id="profile_img"
+                                name="profile_img"
                                 isCircle
-                                // preview={readMyProfileAction.data?.data?.user_info.logo}
-                                value={updateProfileLegalForm.values.logo}
-                                onChange={(value) => updateProfileLegalForm.setFieldValue("logo", value)}
+                                preview={null}
+                                value={updateProfileLegalForm.values.profile_img}
+                                onChange={(value) => updateProfileLegalForm.setFieldValue("profile_img", value)}
                             />
 
                             <Form.Error
-                                error={updateProfileLegalForm.errors.logo}
-                                touched={updateProfileLegalForm.touched.logo}
+                                error={updateProfileLegalForm.errors.profile_img}
+                                touched={updateProfileLegalForm.touched.profile_img}
                             />
                         </Form.Group>
                     </div>
@@ -42,7 +55,7 @@ const CivilFormData = ({updateProfileLegalForm}) => {
                 <div className="row gy-5 w-100">
                     <div className="col-lg-4">
                         <Form.Label
-                            label="عکس یا pdf روزنامه رسمی"
+                            label="عکس روزنامه رسمی"
                             size="sm"
                             color="dark"
                             required
@@ -51,17 +64,17 @@ const CivilFormData = ({updateProfileLegalForm}) => {
 
                     <div className="col-lg-8">
                         <Form.Group>
-                            <FileInput
-                                id="file"
-                                name="file"
-                                // file={}
-                                value={updateProfileLegalForm.values.file}
-                                onChange={(value) => updateProfileLegalForm.setFieldValue("file", value)}
+                            <ImageInput
+                                id="newspaper_file"
+                                name="newspaper_file"
+                                preview={null}
+                                value={updateProfileLegalForm.values.newspaper_file}
+                                onChange={(value) => updateProfileLegalForm.setFieldValue("newspaper_file", value)}
                             />
 
                             <Form.Error
-                                error={updateProfileLegalForm.errors.file}
-                                touched={updateProfileLegalForm.touched.file}
+                                error={updateProfileLegalForm.errors.newspaper_file}
+                                touched={updateProfileLegalForm.touched.newspaper_file}
                             />
                         </Form.Group>
                     </div>
@@ -106,19 +119,19 @@ const CivilFormData = ({updateProfileLegalForm}) => {
                     <div className="col-lg-8">
                         <Form.Group>
                             <NumberInput
-                                id="registration_number"
-                                name="registration_number"
+                                id="register_code"
+                                name="register_code"
                                 options={{
                                     numericOnly: true,
                                     delimiter: '',
                                 }}
-                                value={updateProfileLegalForm.values.registration_number}
-                                onChange={(value) => updateProfileLegalForm.setFieldValue("registration_number", value)}
+                                value={updateProfileLegalForm.values.register_code}
+                                onChange={(value) => updateProfileLegalForm.setFieldValue("register_code", value)}
                             />
 
                             <Form.Error
-                                error={updateProfileLegalForm.errors.registration_number}
-                                touched={updateProfileLegalForm.touched.registration_number}
+                                error={updateProfileLegalForm.errors.register_code}
+                                touched={updateProfileLegalForm.touched.register_code}
                             />
                         </Form.Group>
                     </div>
@@ -127,7 +140,7 @@ const CivilFormData = ({updateProfileLegalForm}) => {
                 <div className="row gy-5 w-100">
                     <div className="col-lg-4">
                         <Form.Label
-                            label="کد اقتصادی یا شناسه ملی"
+                            label="کد اقتصادی"
                             size="sm"
                             color="dark"
                             required
@@ -226,19 +239,46 @@ const CivilFormData = ({updateProfileLegalForm}) => {
                     <div className="col-lg-8">
                         <Form.Group>
                             <NumberInput
-                                id="tel"
-                                name="tel"
+                                id="telephone"
+                                name="telephone"
                                 options={{
                                     numericOnly: true,
                                     delimiter: '',
                                 }}
-                                value={updateProfileLegalForm.values.tel}
-                                onChange={(value) => updateProfileLegalForm.setFieldValue("tel", value)}
+                                value={updateProfileLegalForm.values.telephone}
+                                onChange={(value) => updateProfileLegalForm.setFieldValue("telephone", value)}
                             />
 
                             <Form.Error
-                                error={updateProfileLegalForm.errors.tel}
-                                touched={updateProfileLegalForm.touched.tel}
+                                error={updateProfileLegalForm.errors.telephone}
+                                touched={updateProfileLegalForm.touched.telephone}
+                            />
+                        </Form.Group>
+                    </div>
+                </div>
+
+                <div className="row gy-5 w-100">
+                    <div className="col-lg-4">
+                        <Form.Label
+                            label="ایمیل"
+                            size="sm"
+                            color="dark"
+                            required
+                        />
+                    </div>
+
+                    <div className="col-lg-8">
+                        <Form.Group>
+                            <TextInput
+                                id="email"
+                                name="email"
+                                value={updateProfileLegalForm.values.email}
+                                onChange={(value) => updateProfileLegalForm.setFieldValue("email", value)}
+                            />
+
+                            <Form.Error
+                                error={updateProfileLegalForm.errors.email}
+                                touched={updateProfileLegalForm.touched.email}
                             />
                         </Form.Group>
                     </div>
@@ -248,4 +288,4 @@ const CivilFormData = ({updateProfileLegalForm}) => {
     )
 }
 
-export default CivilFormData;
+export default LegalFormData;

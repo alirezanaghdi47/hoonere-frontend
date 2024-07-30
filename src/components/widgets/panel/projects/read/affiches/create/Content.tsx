@@ -36,6 +36,7 @@ import {
     createProjectAfficheP2Schema,
     createProjectAfficheP3Schema
 } from "@/utils/validations.ts";
+import {convertJalaliToGregorian} from "@/utils/functions.ts";
 
 const Content = () => {
     const params = useParams();
@@ -86,7 +87,7 @@ const Content = () => {
             location_side_id: "",
             type: "",
             is_off: 0,
-            affiche_date: new Date(),
+            affiche_date: convertJalaliToGregorian(new Date()),
             start_date: "",
             coming_time: "",
             start_time: "",

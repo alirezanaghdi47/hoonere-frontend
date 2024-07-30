@@ -31,19 +31,7 @@ export interface IUpdateProfileIdentity {
     birthdate: string | null,
     email: string | null,
     address: string | null,
-}
-
-export interface IUpdateProfileLegal {
-    profile_img: File | object,
-    national_card: File | object,
-    username: string | null,
-    first_name: string | null,
-    last_name: string | null,
-    national_code: string | null,
-    id_code: string | null,
-    birthdate: string | null,
-    email: string | null,
-    address: string | null,
+    user_type: number,
 }
 
 export interface IUpdateOccupation {
