@@ -12,42 +12,17 @@ export const updateProfileIdentityService = async (data) => {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        const {profile_img, national_card, ...rawData} = data;
+        const {profile_img, national_card , profile_image , newspaper_file, ...rawData} = data;
 
         if (Object.keys(profile_img).length > 0) formData.append("profile_img", profile_img);
         if (Object.keys(national_card).length > 0) formData.append("national_card", national_card);
+        if (Object.keys(profile_image).length > 0) formData.append("profile_image", profile_image);
+        if (Object.keys(newspaper_file).length > 0) formData.append("newspaper_file", newspaper_file);
         formData.append("data", encodeData(JSON.stringify(rawData)));
+
+        console.log(data)
 
         const response = await axios.post(process.env.API_URL + "/panel/profile/updateIdentity", formData, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        });
-
-        return {
-            ...response.data,
-            data: JSON.parse(decodeData(response.data.data))
-        }
-    } catch (err) {
-        const {logout} = useAuthStore.getState();
-
-        if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
-    }
-}
-
-export const updateProfileLegalService = async (data) => {
-    try {
-        const formData = new FormData();
-        const {token} = useAuthStore.getState().auth;
-
-        const {profile_img, national_card, ...rawData} = data;
-
-        if (Object.keys(profile_img).length > 0) formData.append("profile_img", profile_img);
-        if (Object.keys(national_card).length > 0) formData.append("national_card", national_card);
-        formData.append("data", encodeData(JSON.stringify(rawData)));
-
-        const response = await axios.post(process.env.API_URL + "/panel/profile/updateLegal", formData, {
             headers: {
                 "Authorization": "Bearer " + token
             }

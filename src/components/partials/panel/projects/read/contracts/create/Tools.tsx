@@ -137,7 +137,7 @@ export const Article = ({children, article, createProjectContractForm}) => {
         if (article && Object.keys(article).length > 0) {
             changePart({
                 articleNumber: article.number,
-                sectionsLength: createProjectContractForm.values.sections.filter(item => item.article_number === article.number).length + addonSectionsLength,
+                sectionsLength: createProjectContractForm.values.sections.filter(item => item.article_number === article.number && !item.isOff).length + addonSectionsLength,
             });
         }
     }, [createProjectContractForm.values.sections]);
@@ -183,13 +183,13 @@ export const Section = ({children, article, section, createProjectContractForm})
             {children}
 
             {
-                currentPart === "read" && (
+                !section.isOff && currentPart === "read" && (
                     <BlankNote changeCurrentPart={changeCurrentPart}/>
                 )
             }
 
             {
-                currentPart === "create" && (
+                !section.isOff && currentPart === "create" && (
                     <CreateNote
                         part={part}
                         resetPart={resetPart}
@@ -201,7 +201,7 @@ export const Section = ({children, article, section, createProjectContractForm})
     )
 }
 
-export const Note = ({children, article, section, note, createProjectContractForm}) => {
+export const Note = ({children}) => {
     return (
         <div className="d-flex flex-column justify-content-start items-center gap-5 w-95 ms-auto">
             {children}

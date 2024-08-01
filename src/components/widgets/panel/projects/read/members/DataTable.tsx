@@ -1,5 +1,6 @@
 // libraries
 import {useMemo} from "react";
+import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {LuPen, LuTrash2} from "react-icons/lu";
@@ -37,6 +38,7 @@ const DataTable = ({
                        showFilter,
                        hideFilter,
                    }) => {
+    const params = useParams();
     const {auth} = useAuthStore();
 
     const deleteProjectMemberAction = useMutation({
@@ -45,7 +47,10 @@ const DataTable = ({
             if (!data.error) {
                 toast("success", data.message);
 
-                readAllProjectMemberAction.mutate(filter);
+                readAllProjectMemberAction.mutate({
+                    ...filter,
+                    project_id: params?.id
+                });
             } else {
                 toast("error", data.message);
             }
@@ -216,7 +221,7 @@ const DataTable = ({
                 {
                     readAllProjectMemberAction.data?.data?.members.length === 0 && (
                         <Empty
-                            title="عضوی یافت نشد"
+                            title="اعضا یافت نشد"
                             width="100%"
                             height={300}
                         />

@@ -5,14 +5,14 @@ import axios from "axios";
 import useAuthStore from "@/stores/authStore.ts";
 
 // utils
-import {cleaningObject, decodeData, encodeData} from "@/utils/functions.ts";
+import {cleanObject, decodeData, encodeData} from "@/utils/functions.ts";
 
 export const readAllProjectService = async (data) => {
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(cleaningObject(data))));
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/index", formData, {
             headers: {
@@ -143,7 +143,7 @@ export const readAllProjectMemberByFoaService = async (data) => {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(cleaningObject(data))));
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/getProjectMembersByFOA", formData, {
             headers: {

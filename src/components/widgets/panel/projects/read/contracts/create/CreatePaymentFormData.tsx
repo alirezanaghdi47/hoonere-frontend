@@ -6,7 +6,7 @@ import {LuTrash} from "react-icons/lu";
 // components
 const CreatePaymentModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/create/CreatePaymentModal.tsx"));
 
-import {Section, Note} from "@/components/partials/panel/projects/read/contracts/Tools.tsx";
+import {Section, Note} from "@/components/partials/panel/projects/read/contracts/create/Tools.tsx";
 import Forbidden from "@/components/partials/panel/Forbidden.tsx";
 
 // hooks
@@ -17,6 +17,9 @@ import RadioBox from "@/modules/RadioBox.tsx";
 import Typography from "@/modules/Typography.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import Button from "@/modules/Button.tsx";
+
+// utils
+import {cloneObject, removeNote} from "@/utils/functions.ts";
 
 const PaymentActionBar = ({article, section, createProjectContractForm}) => {
     return (
@@ -127,7 +130,7 @@ const PaymentWithPhasesCard = ({article, payment, createProjectContractForm}) =>
                 data-tooltip-id="my-tooltip"
                 data-tooltip-content="حذف فاز"
                 className='ms-auto'
-                onClick={() => createProjectContractForm.setFieldValue("articles[0].employers", createProjectContractForm.values.articles[0].employers.filter(employer => employer !== value))}
+                onClick={() => createProjectContractForm.setFieldValue(`articles[${createProjectContractForm.values.articles.findIndex(item => item.number === article.number)}].payments`, createProjectContractForm.values.articles[createProjectContractForm.values.articles.findIndex(item => item.number === article.number)].payments.filter(item => JSON.stringify(item) !== JSON.stringify(payment)))}
             >
                 <LuTrash
                     size={20}
@@ -212,7 +215,7 @@ const PaymentWithPhases = ({article, section, createProjectContractForm}) => {
                                         data-tooltip-id="my-tooltip"
                                         data-tooltip-content="حذف تبصره"
                                         className='ms-auto'
-                                        onClick={() => createProjectContractForm.setFieldValue("notes", createProjectContractForm.values.notes.filter(item => item.number !== note.number || item.section_number !== note.section_number || item.article_number !== note.article_number))}
+                                        onClick={() => createProjectContractForm.setFieldValue("notes", removeNote(cloneObject(createProjectContractForm.values.notes) , note.number))}
                                     >
                                         <LuTrash
                                             size={20}
@@ -291,7 +294,7 @@ const PaymentWithBill = ({article, section, createProjectContractForm}) => {
                                         data-tooltip-id="my-tooltip"
                                         data-tooltip-content="حذف تبصره"
                                         className='ms-auto'
-                                        onClick={() => createProjectContractForm.setFieldValue("notes", createProjectContractForm.values.notes.filter(item => item.number !== note.number || item.section_number !== note.section_number || item.article_number !== note.article_number))}
+                                        onClick={() => createProjectContractForm.setFieldValue("notes", removeNote(cloneObject(createProjectContractForm.values.notes) , note.number))}
                                     >
                                         <LuTrash
                                             size={20}

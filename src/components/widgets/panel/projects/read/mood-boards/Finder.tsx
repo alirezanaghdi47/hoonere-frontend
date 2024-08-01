@@ -9,10 +9,10 @@ const options = [
     {value: 96, label: '96'}
 ];
 
-const Finder = ({readAllProjectMemberAction, filter, changeFilter}) => {
+const Finder = ({readAllProjectMoodBoardAction, filter, changeFilter}) => {
     return (
         <div
-            className={`d-flex flex-wrap ${readAllProjectMemberAction.data?.data?.pagination?.total > filter.per_page ? "justify-content-center justify-content-sm-between" : "justify-content-start"} align-items-center w-100 gap-5`}>
+            className={`d-flex flex-wrap ${readAllProjectMoodBoardAction.data?.data?.pagination?.total > filter.per_page ? "justify-content-center justify-content-sm-between" : "justify-content-start"} align-items-center w-100 gap-5`}>
             <div className="w-125px">
                 <SelectBox
                     id='pageSize'
@@ -21,20 +21,20 @@ const Finder = ({readAllProjectMemberAction, filter, changeFilter}) => {
                     options={options}
                     onChange={(value) => {
                         changeFilter({per_page: value});
-                        readAllProjectMemberAction.mutate({per_page: value});
+                        readAllProjectMoodBoardAction.mutate({per_page: value});
                     }}
                 />
             </div>
 
             {
-                readAllProjectMemberAction.data?.data?.pagination?.total > filter.per_page && (
+                readAllProjectMoodBoardAction.data?.data?.pagination?.total > filter.per_page && (
                     <Pagination
                         current={filter.page}
                         pageSize={filter.per_page}
-                        total={readAllProjectMemberAction.data?.data?.pagination?.total}
+                        total={readAllProjectMoodBoardAction.data?.data?.pagination?.total}
                         onChange={(value) => {
                             changeFilter({page: value});
-                            readAllProjectMemberAction.mutate({page: value});
+                            readAllProjectMoodBoardAction.mutate({page: value});
                         }}
                     />
                 )

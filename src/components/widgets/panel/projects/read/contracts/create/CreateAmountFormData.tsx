@@ -3,12 +3,15 @@ import Num2persian from 'num2persian';
 import {LuTrash} from "react-icons/lu";
 
 // components
-import {Section , Note} from "@/components/partials/panel/projects/read/contracts/Tools.tsx";
+import {Section , Note} from "@/components/partials/panel/projects/read/contracts/create/Tools.tsx";
 
 // modules
 import Typography from "@/modules/Typography.tsx";
 import NumberInput from "@/modules/NumberInput.tsx";
 import IconButton from "@/modules/IconButton.tsx";
+
+// utils
+import {cloneObject, removeNote} from "@/utils/functions.ts";
 
 const CreateAmountFormData = ({article, section, createProjectContractForm}) => {
     return (
@@ -104,7 +107,7 @@ const CreateAmountFormData = ({article, section, createProjectContractForm}) => 
                                         data-tooltip-id="my-tooltip"
                                         data-tooltip-content="حذف تبصره"
                                         className='ms-auto'
-                                        onClick={() => createProjectContractForm.setFieldValue("notes", createProjectContractForm.values.notes.filter(item => item.number !== note.number || item.section_number !== note.section_number || item.article_number !== note.article_number))}
+                                        onClick={() => createProjectContractForm.setFieldValue("notes", removeNote(cloneObject(createProjectContractForm.values.notes) , note.number))}
                                     >
                                         <LuTrash
                                             size={20}

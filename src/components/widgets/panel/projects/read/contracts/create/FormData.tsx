@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import {LuTrash} from "react-icons/lu";
 
 // components
-import {Contract, Article} from "@/components/partials/panel/projects/read/contracts/Tools.tsx";
+import {Contract, Article} from "@/components/partials/panel/projects/read/contracts/create/Tools.tsx";
 import CreateEmployerFormData from "@/components/widgets/panel/projects/read/contracts/create/CreateEmployerFormData.tsx";
 import CreateContractorFormData from "@/components/widgets/panel/projects/read/contracts/create/CreateContractorFormData.tsx";
 import CreateExecutionTimeFormData from "@/components/widgets/panel/projects/read/contracts/create/CreateExecutionTimeFormData.tsx";
@@ -18,6 +18,9 @@ import IconButton from "@/modules/IconButton.tsx";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
+
+// utils
+import {cloneObject, removeArticle} from "@/utils/functions.ts";
 
 const FormData = ({createProjectContractForm, createProjectContractAction}) => {
     const params = useParams();
@@ -49,9 +52,11 @@ const FormData = ({createProjectContractForm, createProjectContractAction}) => {
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
 
-                                                                createProjectContractForm.setFieldValue("articles" , createProjectContractForm.values.articles.filter(item => item.number !== article.number));
-                                                                createProjectContractForm.setFieldValue("sections", createProjectContractForm.values.sections.filter(item => item.article_number !== article.number));
-                                                                createProjectContractForm.setFieldValue("notes" , createProjectContractForm.values.notes.filter(item => item.article_number !== article.number));
+                                                                const result = removeArticle(cloneObject(createProjectContractForm.values.articles) , cloneObject(createProjectContractForm.values.sections) , cloneObject(createProjectContractForm.values.notes) , article.number);
+
+                                                                createProjectContractForm.setFieldValue("notes" , result.notes);
+                                                                createProjectContractForm.setFieldValue("sections", result.sections);
+                                                                createProjectContractForm.setFieldValue("articles" , result.articles);
                                                             }}
                                                         >
                                                             <LuTrash

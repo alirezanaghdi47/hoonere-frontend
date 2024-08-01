@@ -207,7 +207,7 @@ const DataTable = ({
                 {
                     readAllProjectAction.data?.data?.projects.length === 0 && (
                         <Empty
-                            title="پروژه ای یافت نشد"
+                            title="پروژه یافت نشد"
                             width="100%"
                             height={300}
                         />

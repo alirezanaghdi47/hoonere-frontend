@@ -56,7 +56,7 @@ const Identify = ({readMyProfileAction}) => {
         onSubmit: async (result) => {
             updateProfileIdentityAction.mutate({
                 ...result,
-                user_type: 1
+                user_type: "1"
             });
         }
     });
@@ -78,7 +78,7 @@ const Identify = ({readMyProfileAction}) => {
         onSubmit: async (result) => {
             updateProfileIdentityAction.mutate({
                 ...result,
-                user_type: 2
+                user_type: "2"
             });
         }
     });

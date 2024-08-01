@@ -2,11 +2,11 @@
   "name": "hoonere-frontend",
   "homepage": "https://panel.hoonere.com",
   "private": true,
-  "version": "0.8.9",
+  "version": "0.8.95",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

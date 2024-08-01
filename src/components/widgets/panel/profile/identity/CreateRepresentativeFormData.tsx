@@ -20,7 +20,12 @@ const CreateRepresentativeFormData = ({updateProfileLegalForm, resetPart}) => {
         },
         validationSchema: createRepresentativeSchema,
         onSubmit: async (result, {resetForm}) => {
+            const newArray = [...updateProfileLegalForm.values.representatives , result];
+
+            updateProfileLegalForm.setFieldValue("representatives" , newArray);
+
             resetPart();
+
             resetForm();
         },
         onReset: async () => {

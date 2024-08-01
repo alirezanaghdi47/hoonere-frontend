@@ -31,7 +31,7 @@ export interface IUpdateProfileIdentity {
     birthdate: string | null,
     email: string | null,
     address: string | null,
-    user_type: number,
+    user_type: string,
 }
 
 export interface IUpdateOccupation {

@@ -28965,12 +28965,12 @@
       if (getDocumentBaseUrl(editor) !== editor.documentBaseUrl) {
         iframeHTML += '<base href="' + editor.documentBaseURI.getURI() + '" />';
       }
-      iframeHTML += '<meta http-equiv="DataModal-Type" content="text/html; charset=UTF-8" />';
+      iframeHTML += '<meta http-equiv="Print-Type" content="text/html; charset=UTF-8" />';
       const bodyId = getBodyId(editor);
       const bodyClass = getBodyClass(editor);
       const translatedAriaText = editor.translate(getIframeAriaText(editor));
       if (getContentSecurityPolicy(editor)) {
-        iframeHTML += '<meta http-equiv="DataModal-Security-Policy" content="' + getContentSecurityPolicy(editor) + '" />';
+        iframeHTML += '<meta http-equiv="Print-Security-Policy" content="' + getContentSecurityPolicy(editor) + '" />';
       }
       iframeHTML += '</head>' + `<body id="${ bodyId }" class="mce-content-body ${ bodyClass }" data-id="${ editor.id }" aria-label="${ translatedAriaText }">` + '<br>' + '</body></html>';
       return iframeHTML;

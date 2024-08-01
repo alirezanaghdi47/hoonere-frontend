@@ -1,5 +1,5 @@
 // libraries
-import {useEffect} from "react";
+import {useEffect, useLayoutEffect} from "react";
 import {useMutation} from "@tanstack/react-query";
 import Loadable from "@loadable/component";
 import {useFormik} from "formik";
@@ -18,6 +18,7 @@ import usePart from "@/hooks/usePart.tsx";
 
 // services
 import {updateOccupationService} from "@/services/profileService.ts";
+import {readAllJobService} from "@/services/publicService.ts";
 
 // types
 import {IUpdateOccupation} from "@/types/serviceType.ts";
@@ -27,6 +28,10 @@ import {occupationSchema} from "@/utils/validations.ts";
 
 const Occupation = ({readMyProfileAction, readAllMyJobAction}) => {
     const {currentPart, resetPart, changeCurrentPart} = usePart(null , "read");
+
+    const readAllJobAction = useMutation({
+        mutationFn: () => readAllJobService(),
+    });
 
     const updateOccupationAction = useMutation({
         mutationFn: (data: IUpdateOccupation) => updateOccupationService(data),
@@ -57,13 +62,18 @@ const Occupation = ({readMyProfileAction, readAllMyJobAction}) => {
         if (updateOccupationForm.errors.fields_of_activity) toast("error", updateOccupationForm.errors.fields_of_activity);
     }, [updateOccupationForm.errors.fields_of_activity, updateOccupationForm.touched.fields_of_activity]);
 
+    useLayoutEffect(() => {
+        readAllJobAction.mutate();
+    }, []);
+
     return (
         <>
             {
                 currentPart === "read" && (
                     <Jobs
-                        updateOccupationForm={updateOccupationForm}
                         changeCurrentPart={changeCurrentPart}
+                        readAllJobAction={readAllJobAction}
+                        updateOccupationForm={updateOccupationForm}
                     />
                 )
             }
@@ -71,8 +81,8 @@ const Occupation = ({readMyProfileAction, readAllMyJobAction}) => {
             {
                 currentPart === "create" && (
                     <CreateJobFormData
-                        updateOccupationForm={updateOccupationForm}
                         resetPart={resetPart}
+                        updateOccupationForm={updateOccupationForm}
                     />
                 )
             }

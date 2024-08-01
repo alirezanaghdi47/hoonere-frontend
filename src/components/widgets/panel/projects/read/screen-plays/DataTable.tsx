@@ -1,10 +1,12 @@
 // libraries
-import {useMemo} from "react";
+import {useMemo, useRef} from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
-import {LuInfo, LuPen, LuTrash2} from "react-icons/lu";
+import ReactToPrint from 'react-to-print';
+import {LuDownload, LuPen, LuTrash2} from "react-icons/lu";
 
 // components
+import Print from "@/components/widgets/panel/projects/read/screen-plays/Print.tsx";
 import Finder from "@/components/widgets/panel/projects/read/screen-plays/Finder.tsx";
 import Filter from "@/components/widgets/panel/projects/read/screen-plays/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
@@ -40,6 +42,7 @@ const DataTable = ({
     const params = useParams();
     const location = useLocation();
     const navigate = useNavigate();
+    const printRef = useRef();
     const {auth} = useAuthStore();
 
     const deleteProjectScreenPlayAction = useMutation({
@@ -122,18 +125,41 @@ const DataTable = ({
                 header: () => 'ابزار',
                 cell: ({row}) => (
                     <div className="d-flex justify-content-start align-items-center gap-2 w-max">
-                        <IconButton
-                            color="light-info"
-                            size="sm"
-                            onClick={() => navigate(auth.panel_url + "projects/" + params.id + "/screen-plays/" + row.original.id, {state: {background: location}})}
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="جزییات"
-                        >
-                            <LuInfo
-                                size={20}
-                                color="currentColor"
-                            />
-                        </IconButton>
+                        {/*<IconButton*/}
+                        {/*    color="light-info"*/}
+                        {/*    size="sm"*/}
+                        {/*    onClick={() => navigate(auth.panel_url + "projects/" + params.id + "/screen-plays/" + row.original.id, {state: {background: location}})}*/}
+                        {/*    data-tooltip-id="my-tooltip"*/}
+                        {/*    data-tooltip-content="جزییات"*/}
+                        {/*>*/}
+                        {/*    <LuInfo*/}
+                        {/*        size={20}*/}
+                        {/*        color="currentColor"*/}
+                        {/*    />*/}
+                        {/*</IconButton>*/}
+
+                        <ReactToPrint
+                            documentTitle={`screenplay-${row.original.created_at}`}
+                            trigger={() => (
+                                <IconButton
+                                    color="light-info"
+                                    size="sm"
+                                    data-tooltip-id="my-tooltip"
+                                    data-tooltip-content="دانلود فیلم نامه"
+                                >
+                                    <LuDownload
+                                        size={20}
+                                        color="currentColor"
+                                    />
+                                </IconButton>
+                            )}
+                            content={() => printRef.current}
+                        />
+
+                        <Print
+                            ref={printRef}
+                            screenPlay={row.original}
+                        />
 
                         <IconButton
                             href={auth.panel_url + "projects/" + row.original.project_id + "/screen-plays/" + row.original.id + "/update"}
@@ -210,7 +236,7 @@ const DataTable = ({
                 {
                     readAllProjectScreenPlayAction.data?.data?.screenplays.length === 0 && (
                         <Empty
-                            title="پروژه ای یافت نشد"
+                            title="فیلم نامه یافت نشد"
                             width="100%"
                             height={300}
                         />

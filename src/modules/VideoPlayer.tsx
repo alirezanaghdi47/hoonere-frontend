@@ -23,7 +23,7 @@ const VideoPlayer = ({src , ...props}: TVideoPlayer) => {
                 source={{
                     type: "video",
                     sources: [{src: src, provider: "html5"}],
-                    poster: '/assets/images/placeholder.png'
+                    // poster: '/assets/images/placeholder.png'
                 }}
             />
         </div>

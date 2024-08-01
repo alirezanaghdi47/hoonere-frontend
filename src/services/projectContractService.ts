@@ -5,14 +5,14 @@ import axios from "axios";
 import useAuthStore from "@/stores/authStore.ts";
 
 // utils
-import {cleaningObject, decodeData, encodeData} from "@/utils/functions.ts";
+import {cleanObject, decodeData, encodeData} from "@/utils/functions.ts";
 
 export const readAllProjectContractService = async (data) => {
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(cleaningObject(data))));
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/index", formData, {
             headers: {
@@ -63,6 +63,8 @@ export const createProjectContractService = async (data) => {
         const {token} = useAuthStore.getState().auth;
 
         formData.append("data", encodeData(JSON.stringify(data)));
+
+        console.log(data);
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/create", formData, {
             headers: {
@@ -115,6 +117,31 @@ export const deleteProjectContractService = async (data) => {
         formData.append("data", encodeData(JSON.stringify(data)));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/destroy", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const changeProjectContractStatusService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/finalizeContract", formData, {
             headers: {
                 "Authorization": "Bearer " + token
             }

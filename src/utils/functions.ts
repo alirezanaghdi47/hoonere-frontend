@@ -113,8 +113,10 @@ export const decodeData = (data: unknown): unknown => {
     return secondDecodedString;
 }
 
-export const cleaningObject = (sourceObject: object): unknown => {
-    const clonedObject = JSON.parse(JSON.stringify(sourceObject));
+export const cloneObject = (object: object): object => JSON.parse(JSON.stringify(object));
+
+export const cleanObject = (sourceObject: object): unknown => {
+    const clonedObject = cloneObject(sourceObject);
 
     for (const propName in clonedObject) {
         if (clonedObject[propName] === null || clonedObject[propName] === undefined || clonedObject[propName] === "" || clonedObject[propName]?.length === 0) {
@@ -125,11 +127,7 @@ export const cleaningObject = (sourceObject: object): unknown => {
     return clonedObject;
 }
 
-export const getNodeIndex = (node: Element): number => node ? [...node.parentNode!.children].indexOf(node) : -1;
-
-export const getNodeLength = (node: NodeListOf<Element>): number => node.length > 0 ? node.length : 0;
-
-export const getValueByKey = (array: unknown, key: string , subKey: string) => {
+export const getValueByKey = (array, key, subKey) => {
     for (const item of array) {
         if (item.hasOwnProperty(key)) {
             if (subKey && Array.isArray(item[key])) {
@@ -143,4 +141,161 @@ export const getValueByKey = (array: unknown, key: string , subKey: string) => {
     }
 
     return null;
+}
+
+export const removeArticle = (articles, sections, notes, articleNumberToRemove) => {
+    // Remove the article and renumber the remaining articles
+    const updatedArticles = articles.filter(article => article.number !== articleNumberToRemove);
+    updatedArticles.forEach((article, index) => {
+        article.number = index + 1;
+    });
+
+    // Remove sections associated with the removed article
+    const removedSections = sections.filter(section => section.article_number === articleNumberToRemove);
+    let updatedSections = sections.filter(section => section.article_number !== articleNumberToRemove);
+
+    // Adjust article_number for remaining sections
+    updatedSections = updatedSections.map(section => ({
+        ...section,
+        article_number: section.article_number > articleNumberToRemove
+            ? section.article_number - 1
+            : section.article_number
+    }));
+
+    // Adjust section numbers within each article
+    const sectionCounters = {};
+    updatedSections.forEach(section => {
+        if (!sectionCounters[section.article_number]) {
+            sectionCounters[section.article_number] = 1;
+        } else {
+            sectionCounters[section.article_number] += 1;
+        }
+        section.number = sectionCounters[section.article_number];
+    });
+
+    // Remove notes associated with the removed article
+    let updatedNotes = notes.filter(note => note.article_number !== articleNumberToRemove);
+
+    // Adjust article_number and section_number in notes
+    updatedNotes = updatedNotes.map(note => {
+        // Adjust article_number
+        let newArticleNumber = note.article_number;
+        if (note.article_number > articleNumberToRemove) {
+            newArticleNumber = note.article_number - 1;
+        }
+
+        // Adjust section_number
+        let newSectionNumber = note.section_number;
+        const relatedSections = updatedSections.filter(section => section.article_number === newArticleNumber);
+        if (relatedSections.length > 0) {
+            const sectionMap = new Map(relatedSections.map(section => [section.number, section.number]));
+            newSectionNumber = sectionMap.get(note.section_number) || note.section_number;
+        }
+
+        return {
+            ...note,
+            article_number: newArticleNumber,
+            section_number: newSectionNumber
+        };
+    });
+
+    // Renumber notes sequentially
+    updatedNotes = updatedNotes.map((note, index) => ({
+        ...note,
+        number: index + 1
+    }));
+
+    return {articles: updatedArticles, sections: updatedSections, notes: updatedNotes};
+}
+
+export const removeSection = (sections, notes, sectionNumberToRemove) => {
+    // Remove the section
+    const updatedSections = sections.filter(section => section.number !== sectionNumberToRemove);
+
+    // Remove notes associated with the removed section and update the section numbers
+    let updatedNotes = notes
+        .filter(note => note.section_number !== sectionNumberToRemove)  // Remove notes of the removed section
+        .map(note => ({
+            ...note,
+            section_number: note.section_number > sectionNumberToRemove
+                ? note.section_number - 1
+                : note.section_number
+        }));
+
+    // Renumber sections based on their article_number
+    const sectionCounters = {};
+    updatedSections.forEach(section => {
+        if (!sectionCounters[section.article_number]) {
+            sectionCounters[section.article_number] = 1;
+        } else {
+            sectionCounters[section.article_number] += 1;
+        }
+        section.number = sectionCounters[section.article_number];
+    });
+
+    // Renumber notes sequentially
+    updatedNotes = updatedNotes.map((note, index) => ({
+        ...note,
+        number: index + 1
+    }));
+
+    return {sections: updatedSections, notes: updatedNotes};
+}
+
+export const toggleSection = (sections, notes, articleNumber, sectionNumberToToggle) => {
+    let updatedSections = sections.map(section => ({...section}));
+    let updatedNotes = notes.map(note => ({...note}));
+
+    const targetSection = updatedSections.find(section => section.article_number === articleNumber && section.number === sectionNumberToToggle);
+    if (targetSection) {
+        targetSection.isOff = !targetSection.isOff;
+    }
+
+    const articleSections = updatedSections.filter(section => section.article_number === articleNumber);
+    let count = 0;
+    articleSections.forEach(section => {
+        if (section.isOff) {
+            section.number = 0;
+        } else {
+            count++;
+            section.number = count;
+        }
+    });
+
+    // when turn on -> turn off
+    if (targetSection.isOff) {
+        updatedNotes = updatedNotes.filter(note => !(note.article_number === articleNumber && note.section_number === sectionNumberToToggle));
+
+        updatedNotes.forEach(note => {
+            if (note.article_number === articleNumber && note.section_number > sectionNumberToToggle) {
+                note.section_number -= 1;
+            }
+        });
+    } else {
+        updatedNotes.forEach(note => {
+            if (note.article_number === articleNumber && note.section_number > sectionNumberToToggle) {
+                note.section_number += 1;
+            }
+        });
+    }
+
+    updatedNotes.forEach((note, index) => {
+        note.number = index + 1;
+    });
+
+    return {
+        sections: updatedSections,
+        notes: updatedNotes
+    };
+}
+
+export const removeNote = (notes, noteNumberToRemove) => {
+    let updatedNotes = notes.filter(item => item.number !== noteNumberToRemove);
+
+    updatedNotes = updatedNotes.map((item, index) => ({
+        ...item,
+        number: index + 1
+    }));
+
+    return updatedNotes;
 }

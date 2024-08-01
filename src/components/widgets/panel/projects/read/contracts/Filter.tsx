@@ -1,6 +1,4 @@
 // libraries
-import {useLayoutEffect} from "react";
-import {useMutation} from "@tanstack/react-query";
 import {LuSearch, LuX} from "react-icons/lu";
 
 // modules
@@ -8,10 +6,7 @@ import TextInput from "@/modules/TextInput.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import Button from "@/modules/Button.tsx";
 import Form from "@/modules/Form.tsx";
-import NumberInput from "@/modules/NumberInput.tsx";
-
-// services
-import {readAllProjectTypeService} from "@/services/publicService.ts";
+import DatePicker from "@/modules/DatePicker.tsx";
 
 const AdvanceFilter = ({
                            filter,
@@ -19,31 +14,23 @@ const AdvanceFilter = ({
                            changeFilter,
                            hideFilter,
                            resetFilter,
-                           readAllProjectScreenPlayAction
+                           readAllProjectContractAction
                        }) => {
-    const readAllProjectTypeAction = useMutation({
-        mutationFn: () => readAllProjectTypeService(),
-    });
-
-    useLayoutEffect(() => {
-        readAllProjectTypeAction.mutate();
-    }, []);
-
     return (
         <div className='row gy-5 w-100'>
             <div className="col-12 col-sm-6 col-md-4">
                 <Form.Group>
                     <Form.Label
-                        label="جستجو"
+                        label="شماره قرارداد"
                         color="dark"
                         size="sm"
                     />
 
                     <TextInput
-                        id="text"
-                        name="text"
-                        value={filter.text}
-                        onChange={(value) => changeFilter({text: value})}
+                        id="contract_number"
+                        name="contract_number"
+                        value={filter.contract_number}
+                        onChange={(value) => changeFilter({contract_number: value})}
                     />
                 </Form.Group>
             </div>
@@ -51,16 +38,16 @@ const AdvanceFilter = ({
             <div className="col-12 col-sm-6 col-md-4">
                 <Form.Group>
                     <Form.Label
-                        label="قسمت"
+                        label="تاریخ شروع"
                         color="dark"
                         size="sm"
                     />
 
-                    <NumberInput
-                        id="part"
-                        name="part"
-                        value={filter.part}
-                        onChange={(value) => changeFilter({part: value})}
+                    <DatePicker
+                        id="start_date"
+                        name="start_date"
+                        value={filter.start_date}
+                        onChange={(value) => changeFilter({start_date: value})}
                     />
                 </Form.Group>
             </div>
@@ -68,16 +55,16 @@ const AdvanceFilter = ({
             <div className="col-12 col-sm-6 col-md-4">
                 <Form.Group>
                     <Form.Label
-                        label="سکانس"
+                        label="تاریخ پایان"
                         color="dark"
                         size="sm"
                     />
 
-                    <NumberInput
-                        id="sequence"
-                        name="sequence"
-                        value={filter.sequence}
-                        onChange={(value) => changeFilter({sequence: value})}
+                    <DatePicker
+                        id="end_date"
+                        name="end_date"
+                        value={filter.end_date}
+                        onChange={(value) => changeFilter({end_date: value})}
                     />
                 </Form.Group>
             </div>
@@ -88,7 +75,7 @@ const AdvanceFilter = ({
                     onClick={() => {
                         resetFilter();
                         hideFilter();
-                        readAllProjectScreenPlayAction.mutate(initialFilter);
+                        readAllProjectContractAction.mutate(initialFilter);
                     }}
                 >
                     انصراف
@@ -96,7 +83,7 @@ const AdvanceFilter = ({
 
                 <Button
                     color='light-info'
-                    onClick={() => readAllProjectScreenPlayAction.mutate(filter)}
+                    onClick={() => readAllProjectContractAction.mutate(filter)}
                 >
                     فیلتر
                 </Button>
@@ -105,20 +92,20 @@ const AdvanceFilter = ({
     )
 }
 
-const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectScreenPlayAction}) => {
+const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectContractAction}) => {
     return (
         <div className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-5">
             <div className="w-200px">
                 <TextInput
-                    id="text"
-                    name="text"
-                    value={filter.text}
-                    placeholder="جستجو"
+                    id="contract_number"
+                    name="contract_number"
+                    value={filter.contract_number}
+                    placeholder="شماره قرارداد"
                     startAdornment={
                         <IconButton
                             size="sm"
                             color="light"
-                            onClick={() => readAllProjectScreenPlayAction.mutate(filter)}
+                            onClick={() => readAllProjectContractAction.mutate(filter)}
                         >
                             <LuSearch
                                 size={20}
@@ -127,13 +114,13 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectScreenPla
                         </IconButton>
                     }
                     endAdornment={
-                        filter.text.length > 0 ? (
+                        filter.contract_number.length > 0 ? (
                             <IconButton
                                 size="sm"
                                 textColor="danger"
                                 onClick={() => {
-                                    changeFilter({text: ""});
-                                    readAllProjectScreenPlayAction.mutate({...filter, text: ""});
+                                    changeFilter({contract_number: ""});
+                                    readAllProjectContractAction.mutate({...filter, contract_number: ""});
                                 }}
                             >
                                 <LuX
@@ -143,7 +130,7 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectScreenPla
                             </IconButton>
                         ) : null
                     }
-                    onChange={(value) => changeFilter({text: value})}
+                    onChange={(value) => changeFilter({contract_number: value})}
                 />
             </div>
 
@@ -158,7 +145,7 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectScreenPla
 }
 
 const Filter = ({
-                    readAllProjectScreenPlayAction,
+                    readAllProjectContractAction,
                     filter,
                     initialFilter,
                     changeFilter,
@@ -177,14 +164,14 @@ const Filter = ({
                         changeFilter={changeFilter}
                         hideFilter={hideFilter}
                         resetFilter={resetFilter}
-                        readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
+                        readAllProjectContractAction={readAllProjectContractAction}
                     />
                 ) : (
                     <SimpleFilter
                         filter={filter}
                         changeFilter={changeFilter}
                         showFilter={showFilter}
-                        readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
+                        readAllProjectContractAction={readAllProjectContractAction}
                     />
                 )
             }

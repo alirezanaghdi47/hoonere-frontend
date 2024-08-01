@@ -9,10 +9,10 @@ const options = [
     {value: 96, label: '96'}
 ];
 
-const Finder = ({readAllProjectScreenPlayAction, filter, changeFilter}) => {
+const Finder = ({readAllProjectContractAction, filter, changeFilter}) => {
     return (
         <div
-            className={`d-flex flex-wrap ${readAllProjectScreenPlayAction.data?.data?.pagination?.total > filter.per_page ? "justify-content-center justify-content-sm-between" : "justify-content-start"} align-items-center w-100 gap-5`}>
+            className={`d-flex flex-wrap ${readAllProjectContractAction.data?.data?.pagination?.total > filter.per_page ? "justify-content-center justify-content-sm-between" : "justify-content-start"} align-items-center w-100 gap-5`}>
             <div className="w-125px">
                 <SelectBox
                     id='pageSize'
@@ -21,20 +21,20 @@ const Finder = ({readAllProjectScreenPlayAction, filter, changeFilter}) => {
                     options={options}
                     onChange={(value) => {
                         changeFilter({per_page: value});
-                        readAllProjectScreenPlayAction.mutate({per_page: value});
+                        readAllProjectContractAction.mutate({per_page: value});
                     }}
                 />
             </div>
 
             {
-                readAllProjectScreenPlayAction.data?.data?.pagination?.total > filter.per_page && (
+                readAllProjectContractAction.data?.data?.pagination?.total > filter.per_page && (
                     <Pagination
                         current={filter.page}
                         pageSize={filter.per_page}
-                        total={readAllProjectScreenPlayAction.data?.data?.pagination?.total}
+                        total={readAllProjectContractAction.data?.data?.pagination?.total}
                         onChange={(value) => {
                             changeFilter({page: value});
-                            readAllProjectScreenPlayAction.mutate({page: value});
+                            readAllProjectContractAction.mutate({page: value});
                         }}
                     />
                 )

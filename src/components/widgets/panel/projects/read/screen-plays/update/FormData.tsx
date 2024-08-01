@@ -8,6 +8,7 @@ import Loadable from "@loadable/component";
 const CreateFieldFormData = Loadable(() => import("@/components/widgets/panel/projects/read/screen-plays/update/CreateFieldFormData.tsx"));
 
 import Fields from "@/components/widgets/panel/projects/read/screen-plays/update/Fields.tsx";
+import MoodBoardEditor from "@/components/widgets/panel/projects/read/screen-plays/update/MoodBoardEditor.tsx";
 
 // hooks
 import usePart from "@/hooks/usePart.tsx";
@@ -61,7 +62,12 @@ const FormData = ({updateProjectScreenPlayForm, updateProjectScreenPlayAction}) 
                                         required
                                     />
 
-                                    {/* ????? copy moodboard editor from create screen plays ????? */}
+                                    <MoodBoardEditor
+                                        id="description"
+                                        name="description"
+                                        value={updateProjectScreenPlayForm.values.description}
+                                        onChange={(value) => updateProjectScreenPlayForm.setFieldValue("description", value)}
+                                    />
 
                                     <Form.Error
                                         error={updateProjectScreenPlayForm.errors.description}

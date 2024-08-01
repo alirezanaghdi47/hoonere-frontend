@@ -2,12 +2,15 @@
 import {LuTrash} from "react-icons/lu";
 
 // components
-import {Note, Section} from "@/components/partials/panel/projects/read/contracts/Tools.tsx";
+import {Note, Section} from "@/components/partials/panel/projects/read/contracts/create/Tools.tsx";
 
 // modules
 import Typography from "@/modules/Typography.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import Checkbox from "@/modules/Checkbox.tsx";
+
+// utils
+import {cloneObject, removeNote, removeSection, toggleSection} from "@/utils/functions.ts";
 
 const CreateRegularFormData = ({article, section, createProjectContractForm}) => {
     return (
@@ -24,19 +27,28 @@ const CreateRegularFormData = ({article, section, createProjectContractForm}) =>
                             name={`${article.number}-${section.number}`}
                             value={true}
                             checked={!createProjectContractForm.values.sections.find(item => item.number === section.number && item.article_number === section.article_number)?.isOff}
-                            onChange={(value) => createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number)}].isOff`, createProjectContractForm.values.sections.find(item => item.number === section.number && item.article_number === section.article_number)?.isOff ? false : true)}
+                            onChange={(value) => {
+                                const result = toggleSection(cloneObject(createProjectContractForm.values.sections) , cloneObject(createProjectContractForm.values.notes) , article.number , section.number);
+
+                                createProjectContractForm.setFieldValue("notes" , result.notes);
+                                createProjectContractForm.setFieldValue("sections" , result.sections);
+                            }}
                         />
                     )
                 }
 
-                <Typography
-                    size="sm"
-                    color="muted"
-                    isBold
-                    className="w-30px"
-                >
-                    {section.number}-{article.number}
-                </Typography>
+                {
+                    !section.isOff && (
+                        <Typography
+                            size="sm"
+                            color="muted"
+                            isBold
+                            className="w-30px"
+                        >
+                            {section.number}-{article.number}
+                        </Typography>
+                    )
+                }
 
                 <Typography
                     size="sm"
@@ -55,8 +67,10 @@ const CreateRegularFormData = ({article, section, createProjectContractForm}) =>
                             data-tooltip-content="حذف بند"
                             className='ms-auto'
                             onClick={() => {
-                                createProjectContractForm.setFieldValue("sections", createProjectContractForm.values.sections.filter(item => item.number !== section.number || item.article_number !== section.article_number));
-                                createProjectContractForm.setFieldValue("notes" , createProjectContractForm.values.notes.filter(item => item.section_number !== section.number || item.article_number !== section.article_number));
+                                const result = removeSection(cloneObject(createProjectContractForm.values.sections), cloneObject(createProjectContractForm.values.notes), section.number);
+
+                                createProjectContractForm.setFieldValue("notes", result.notes);
+                                createProjectContractForm.setFieldValue("sections", result.sections);
                             }}
                         >
                             <LuTrash
@@ -105,7 +119,7 @@ const CreateRegularFormData = ({article, section, createProjectContractForm}) =>
                                         data-tooltip-id="my-tooltip"
                                         data-tooltip-content="حذف تبصره"
                                         className='ms-auto'
-                                        onClick={() => createProjectContractForm.setFieldValue("notes", createProjectContractForm.values.notes.filter(item => item.number !== note.number || item.section_number !== note.section_number || item.article_number !== note.article_number))}
+                                        onClick={() => createProjectContractForm.setFieldValue("notes", removeNote(cloneObject(createProjectContractForm.values.notes) , note.number))}
                                     >
                                         <LuTrash
                                             size={20}

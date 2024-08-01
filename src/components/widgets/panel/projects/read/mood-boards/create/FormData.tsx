@@ -1,5 +1,8 @@
 // libraries
+import {useLayoutEffect} from "react";
 import {useParams} from "react-router-dom";
+import {useMutation} from "@tanstack/react-query";
+import {LuInfo} from "react-icons/lu";
 
 // modules
 import SelectBox from "@/modules/SelectBox.jsx";
@@ -9,18 +12,23 @@ import Button from "@/modules/Button.jsx";
 import Textarea from "@/modules/Textarea.tsx";
 import FileInput from "@/modules/FileInput.tsx";
 
+// services
+import {readAllProjectMoodBoardTypeService} from "@/services/publicService.ts";
+
 // stores
 import useAuthStore from "@/stores/authStore.js";
 
-const typeOptions = [
-    {id: 1 , label: "متن" , value: "text"},
-    {id: 2 , label: "عکس" , value: "image"},
-    {id: 3 , label: "صدا" , value: "audio"},
-    {id: 4 , label: "فیلم" , value: "video"},
-];
-const FormData = ({createProjectMoodBoardForm , createProjectMoodBoardAction}) => {
+const FormData = ({createProjectMoodBoardForm, createProjectMoodBoardAction}) => {
     const params = useParams();
     const {auth} = useAuthStore();
+
+    const readAllProjectMoodBoardTypeAction = useMutation({
+        mutationFn: (data) => readAllProjectMoodBoardTypeService(data),
+    });
+
+    useLayoutEffect(() => {
+        readAllProjectMoodBoardTypeAction.mutate();
+    }, []);
 
     return (
         <>
@@ -63,8 +71,12 @@ const FormData = ({createProjectMoodBoardForm , createProjectMoodBoardAction}) =
                                     id="type"
                                     name="type"
                                     value={createProjectMoodBoardForm.values.type}
-                                    options={typeOptions}
+                                    options={readAllProjectMoodBoardTypeAction.data?.data?.moodboards?.map(moodboard => ({
+                                        label: moodboard.title,
+                                        value: moodboard.id.toString(),
+                                    }))}
                                     onChange={(value) => createProjectMoodBoardForm.setFieldValue("type", value)}
+                                    isLoading={readAllProjectMoodBoardTypeAction.isPending}
                                 />
 
                                 <Form.Error
@@ -75,15 +87,28 @@ const FormData = ({createProjectMoodBoardForm , createProjectMoodBoardAction}) =
                         </div>
 
                         {
-                            createProjectMoodBoardForm.values.type === "image" && (
+                            createProjectMoodBoardForm.values.type === "1" && (
                                 <div className="col-12">
                                     <Form.Group>
-                                        <Form.Label
-                                            label="محتوا"
-                                            color="dark"
-                                            size="sm"
-                                            required
-                                        />
+                                        <div className='d-flex justify-content-between align-items-center w-100 gap-5'>
+                                            <Form.Label
+                                                label="تصویر"
+                                                color="dark"
+                                                size="sm"
+                                                required
+                                            />
+
+                                            <span
+                                                data-tooltip-id="my-tooltip"
+                                                data-tooltip-content="حداکثر حجم تصویر ارسالی 1 مگابایت و فرمت های (png , jpg , jpeg) قابل قبول است"
+                                            >
+                                                <LuInfo
+                                                    size={20}
+                                                    color="currentColor"
+                                                    className="text-info"
+                                                />
+                                            </span>
+                                        </div>
 
                                         <FileInput
                                             id="image"
@@ -102,38 +127,11 @@ const FormData = ({createProjectMoodBoardForm , createProjectMoodBoardAction}) =
                         }
 
                         {
-                            createProjectMoodBoardForm.values.type === "audio" && (
+                            createProjectMoodBoardForm.values.type === "2" && (
                                 <div className="col-12">
                                     <Form.Group>
                                         <Form.Label
-                                            label="محتوا"
-                                            color="dark"
-                                            size="sm"
-                                            required
-                                        />
-
-                                        <FileInput
-                                            id="audio"
-                                            name="audio"
-                                            value={createProjectMoodBoardForm.values.audio}
-                                            onChange={(value) => createProjectMoodBoardForm.setFieldValue("audio", value)}
-                                        />
-
-                                        <Form.Error
-                                            error={createProjectMoodBoardForm.errors.audio}
-                                            touched={createProjectMoodBoardForm.touched.audio}
-                                        />
-                                    </Form.Group>
-                                </div>
-                            )
-                        }
-
-                        {
-                            createProjectMoodBoardForm.values.type === "video" && (
-                                <div className="col-12">
-                                    <Form.Group>
-                                        <Form.Label
-                                            label="محتوا"
+                                            label="لینک فیلم"
                                             color="dark"
                                             size="sm"
                                             required
@@ -156,11 +154,51 @@ const FormData = ({createProjectMoodBoardForm , createProjectMoodBoardAction}) =
                         }
 
                         {
-                            createProjectMoodBoardForm.values.type === "text" && (
+                            createProjectMoodBoardForm.values.type === "3" && (
+                                <div className="col-12">
+                                    <Form.Group>
+                                        <div className='d-flex justify-content-between align-items-center w-100 gap-5'>
+                                            <Form.Label
+                                                label="فایل صوتی"
+                                                color="dark"
+                                                size="sm"
+                                                required
+                                            />
+
+                                            <span
+                                                data-tooltip-id="my-tooltip"
+                                                data-tooltip-content="حداکثر حجم فایل صوتی ارسالی 5 مگابایت و فرمت های (mp3 , wav , ogg) قابل قبول است"
+                                            >
+                                                <LuInfo
+                                                    size={20}
+                                                    color="currentColor"
+                                                    className="text-info"
+                                                />
+                                            </span>
+                                        </div>
+
+                                        <FileInput
+                                            id="audio"
+                                            name="audio"
+                                            value={createProjectMoodBoardForm.values.audio}
+                                            onChange={(value) => createProjectMoodBoardForm.setFieldValue("audio", value)}
+                                        />
+
+                                        <Form.Error
+                                            error={createProjectMoodBoardForm.errors.audio}
+                                            touched={createProjectMoodBoardForm.touched.audio}
+                                        />
+                                    </Form.Group>
+                                </div>
+                            )
+                        }
+
+                        {
+                            createProjectMoodBoardForm.values.type === "4" && (
                                 <div className="col-12">
                                     <Form.Group>
                                         <Form.Label
-                                            label="محتوا"
+                                            label="متن"
                                             color="dark"
                                             size="sm"
                                             required

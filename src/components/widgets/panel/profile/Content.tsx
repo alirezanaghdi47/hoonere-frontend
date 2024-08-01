@@ -9,7 +9,6 @@ import Review from "@/components/widgets/panel/profile/review/Review.tsx";
 import Identify from "@/components/widgets/panel/profile/identity/Identify.tsx";
 import Occupation from "@/components/widgets/panel/profile/occupation/Occupation.tsx";
 import Financial from "@/components/widgets/panel/profile/financial/Financial.tsx";
-import Legal from "@/components/widgets/panel/profile/identity/Legal.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // services
@@ -127,32 +126,6 @@ const Content = () => {
                         readMyProfileAction={readMyProfileAction}
                         readMyAllBankCardAction={readMyAllBankCardAction}
                     />
-                )
-            }
-
-            {
-                readMyProfileAction.isPending && location.hash === "#real" && (
-                    <Loading
-                        withCard
-                        width="100%"
-                        height={900}
-                    />
-                )
-            }
-
-            {
-                readMyProfileAction.isPending && location.hash === "#legal" && (
-                    <Loading
-                        withCard
-                        width="100%"
-                        height={900}
-                    />
-                )
-            }
-
-            {
-                !readMyProfileAction.isPending && location.hash === "#legal" && (
-                    <Legal readMyProfileAction={readMyProfileAction}/>
                 )
             }
         </div>

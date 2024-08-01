@@ -146,7 +146,7 @@ const DataTable = ({
             {/*    !readAllProjectAfficheMemberAction.isPending &&*/}
             {/*    !readAllProjectAfficheReceptionAction.isPending &&*/}
             {/*    !readAllProjectAfficheScreenPlayAction.isPending && (*/}
-            {/*        <DataModal*/}
+            {/*        <Print*/}
             {/*            modal={modal}*/}
             {/*            _handleHideModal={_handleHideModal}*/}
             {/*        />*/}

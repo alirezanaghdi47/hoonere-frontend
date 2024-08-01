@@ -83,8 +83,7 @@ const Content = () => {
                 if (
                     (section.number === 1 && section.article_number === 3) ||
                     (section.number === 1 && section.article_number === 4) ||
-                    (section.number === 1 && section.article_number === 5) ||
-                    (section.number === 1 && section.article_number === 11)
+                    (section.number === 1 && section.article_number === 5)
                 ) {
                     return ({
                         ...section,
@@ -105,11 +104,17 @@ const Content = () => {
         },
         validationSchema: createProjectContractSchema,
         onSubmit: async (result) => {
+            const totalPercent = getValueByKey(createProjectContractForm.values.articles, "payments").reduce((acc , value) => {
+                return acc += value.percent;
+            } , 0);
+
+            if (getValueByKey(createProjectContractForm.values.articles, "payment_state") === "1" && totalPercent < 100) return toast("error" , "مجموع درصد فازبندی قرار داد کمتر از 100 است.");
+
             createProjectContractAction.mutate({
                 ...result,
                 project_id: params.id,
-                employers: [],
-                contractors: [],
+                employers: getValueByKey(createProjectContractForm.values.articles, "employers")?.map(item => item.id.toString()),
+                contractors: getValueByKey(createProjectContractForm.values.articles, "contractors")?.map(item => item.id.toString()),
                 start_date: getValueByKey(createProjectContractForm.values.articles, "start_date"),
                 end_date: getValueByKey(createProjectContractForm.values.articles, "end_date"),
                 total_price: getValueByKey(createProjectContractForm.values.articles, "total_price"),
@@ -127,7 +132,7 @@ const Content = () => {
         readAllProjectContractSectionAction.mutate();
     }, []);
 
-    console.log(getValueByKey(createProjectContractForm.values.articles, "employers", "id"))
+    console.log(createProjectContractForm.values.notes)
 
     return (
         <div

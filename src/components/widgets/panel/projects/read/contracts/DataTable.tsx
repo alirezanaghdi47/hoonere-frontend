@@ -1,12 +1,15 @@
 // libraries
-import {useMemo} from "react";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {useMemo, useRef} from "react";
+import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
-import {LuInfo, LuPen, LuTrash2} from "react-icons/lu";
+import {useReactToPrint} from 'react-to-print';
+import {format} from "date-fns-jalali";
+import {LuDownload, LuPen, LuTrash2} from "react-icons/lu";
 
 // components
-import Finder from "@/components/widgets/panel/projects/read/screen-plays/Finder.tsx";
-import Filter from "@/components/widgets/panel/projects/read/screen-plays/Filter.tsx";
+import Print from "@/components/widgets/panel/projects/read/contracts/Print.tsx";
+import Finder from "@/components/widgets/panel/projects/read/contracts/Finder.tsx";
+import Filter from "@/components/widgets/panel/projects/read/contracts/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
 // helpers
@@ -17,18 +20,16 @@ import toast from "@/helpers/toast.tsx";
 import Table from "@/modules/Table.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import Typography from "@/modules/Typography.tsx";
+import Chip from "@/modules/Chip.tsx";
 
 // services
-import {deleteProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
+import {deleteProjectContractService, readProjectContractService} from "@/services/projectContractService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-// types
-import {IDeleteProjectScreenPlay} from "@/types/serviceType.ts";
-
 const DataTable = ({
-                       readAllProjectScreenPlayAction,
+                       readAllProjectContractAction,
                        filter,
                        initialFilter,
                        isOpenFilter,
@@ -38,17 +39,29 @@ const DataTable = ({
                        hideFilter
                    }) => {
     const params = useParams();
-    const location = useLocation();
-    const navigate = useNavigate();
+    const printRef = useRef();
     const {auth} = useAuthStore();
 
-    const deleteProjectScreenPlayAction = useMutation({
-        mutationFn: (data: IDeleteProjectScreenPlay) => deleteProjectScreenPlayService(data),
+    const _handlePrint = useReactToPrint({
+        content: () => printRef.current,
+    });
+
+    const readProjectContractSectionAction = useMutation({
+        mutationFn: (data) => readProjectContractService(data),
+        onSuccess: async (data) => {
+            if (!data.error) {
+                _handlePrint();
+            }
+        }
+    });
+
+    const deleteProjectContractAction = useMutation({
+        mutationFn: (data) => deleteProjectContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
 
-                readAllProjectScreenPlayAction.mutate({
+                readAllProjectContractAction.mutate({
                     ...filter,
                     project_id: params.id
                 });
@@ -66,77 +79,139 @@ const DataTable = ({
                 sortingFn: (rowA, rowB, columnId) => rowA.index - rowB.index
             },
             {
-                accessorKey: 'part',
-                header: () => 'قسمت',
-                cell: ({row}) => (
-                    <div className="w-50px">
-                        <Typography
-                            size="xs"
-                            color="dark"
-                            truncate={1}
-                        >
-                            {row.original.part}
-                        </Typography>
-                    </div>
-                ),
-                sortingFn: (rowA, rowB, columnId) => rowA.original.part - rowB.original.part
-            },
-            {
-                accessorKey: 'sequence',
-                header: () => 'سکانس',
-                cell: ({row}) => (
-                    <div className="w-50px">
-                        <Typography
-                            size="xs"
-                            color="dark"
-                            truncate={1}
-                        >
-                            {row.original.sequence}
-                        </Typography>
-                    </div>
-                ),
-                sortingFn: (rowA, rowB, columnId) => rowA.original.sequence - rowB.original.sequence
-            },
-            {
-                accessorKey: 'address',
-                header: () => 'آدرس',
+                accessorKey: 'contract_number',
+                header: () => 'شماره قرارداد',
                 cell: ({row}) => (
                     <div
-                        className="w-250px"
+                        className="w-50px"
                         data-tooltip-id="my-tooltip"
-                        data-tooltip-content={row.original.address}
+                        data-tooltip-content={row.original.contract_number}
                     >
                         <Typography
                             size="xs"
                             color="dark"
                             truncate={1}
                         >
-                            {row.original.address}
+                            {row.original.contract_number}
                         </Typography>
                     </div>
                 ),
-                sortingFn: "text"
+                sortingFn: (rowA, rowB, columnId) => rowA.original.contract_number - rowB.original.contract_number
+            },
+            {
+                accessorKey: 'start_date',
+                header: () => 'تاریخ شروع',
+                cell: ({row}) => (
+                    <div className="w-100px">
+                        <Typography
+                            size="xs"
+                            color="dark"
+                            truncate={1}
+                        >
+                            {format(row.original.start_date, "yyyy-MM-dd")}
+                        </Typography>
+                    </div>
+                ),
+                sortingFn: (rowA, rowB, columnId) => {
+                    return new Date(rowA.original.start_date).getTime() - new Date(rowB.original.start_date).getTime();
+                }
+            },
+            {
+                accessorKey: 'end_date',
+                header: () => 'تاریخ پایان',
+                cell: ({row}) => (
+                    <div className="w-100px">
+                        <Typography
+                            size="xs"
+                            color="dark"
+                            truncate={1}
+                        >
+                            {format(row.original.end_date, "yyyy-MM-dd")}
+                        </Typography>
+                    </div>
+                ),
+                sortingFn: (rowA, rowB, columnId) => {
+                    return new Date(rowA.original.end_date).getTime() - new Date(rowB.original.end_date).getTime();
+                }
+            },
+            {
+                accessorKey: 'parties',
+                header: () => 'طرفین قرارداد',
+                cell: ({row}) => (
+                    <div className="w-150px">
+                        <ul className="hstack flex-wrap list-unstyled justify-content-start align-items-start gap-2 p-0 m-0">
+                            {
+                                row.original.members.map(member =>
+                                    <li
+                                        key={member.id}
+                                        className=""
+                                        data-tooltip-id="my-tooltip"
+                                        data-tooltip-content={member.side_info.title}
+                                    >
+                                        <Chip
+                                            label="علیرضا نقدی"
+                                            color={member.side_info.class_name}
+                                        />
+                                    </li>
+                                )
+                            }
+                        </ul>
+                    </div>
+                ),
+                enableSorting: false
+            },
+            {
+                accessorKey: 'total_price',
+                header: () => 'مبلغ کل ( ریال )',
+                cell: ({row}) => (
+                    <div
+                        className="w-100px"
+                        data-tooltip-id="my-tooltip"
+                        data-tooltip-content={Number(row.original.total_price).toLocaleString()}
+                    >
+                        <Typography
+                            size="xs"
+                            color="dark"
+                            truncate={1}
+                        >
+                            {Number(row.original.total_price).toLocaleString()}
+                        </Typography>
+                    </div>
+                ),
+                sortingFn: (rowA, rowB, columnId) => rowA.original.total_price - rowB.original.total_price
+            },
+            {
+                accessorKey: 'status_info',
+                header: () => 'وضعیت',
+                cell: ({row}) => (
+                    <div className="w-100px">
+                        <Chip
+                            label={row.original.status_info.title}
+                            color={row.original.status_info.class_name}
+                        />
+                    </div>
+                ),
+                sortingFn: (rowA, rowB, columnId) => rowA.original?.status_info.title.localeCompare(rowB.original?.status_info.title)
             },
             {
                 accessorKey: 'actions',
                 header: () => 'ابزار',
                 cell: ({row}) => (
                     <div className="d-flex justify-content-start align-items-center gap-2 w-max">
-                        <IconButton
-                            color="light-info"
-                            size="sm"
-                            onClick={() => navigate(auth.panel_url + "projects/" + params.id + "/screen-plays/" + row.original.id, {state: {background: location}})}
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="جزییات"
-                        >
-                            <LuInfo
-                                size={20}
-                                color="currentColor"
-                            />
-                        </IconButton>
+                        {/*<IconButton*/}
+                        {/*    color="light-info"*/}
+                        {/*    size="sm"*/}
+                        {/*    data-tooltip-id="my-tooltip"*/}
+                        {/*    data-tooltip-content="دانلود قرارداد"*/}
+                        {/*>*/}
+                        {/*    <LuDownload*/}
+                        {/*        size={20}*/}
+                        {/*        color="currentColor"*/}
+                        {/*    />*/}
+                        {/*</IconButton>*/}
 
                         <IconButton
-                            href={auth.panel_url + "projects/" + row.original.project_id + "/screen-plays/" + row.original.id + "/update"}
+                            href={auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/update"}
                             color="light-warning"
                             size="sm"
                             data-tooltip-id="my-tooltip"
@@ -153,8 +228,8 @@ const DataTable = ({
                             size="sm"
                             onClick={() => {
                                 dialog(
-                                    "حذف بخش فیلم نامه",
-                                    "آیا میخواهید این بخش فیلم نامه را حذف کنید ؟",
+                                    "حذف قرارداد",
+                                    "آیا میخواهید این قرارداد را حذف کنید ؟",
                                     "info",
                                     {
                                         show: true,
@@ -166,7 +241,10 @@ const DataTable = ({
                                         text: "انصراف",
                                         color: "light-dark",
                                     },
-                                    async () => deleteProjectScreenPlayAction.mutate({screenplay_id: row.original.id.toString()})
+                                    async () => deleteProjectContractAction.mutate({
+                                        contract_id: row.original.id.toString(),
+                                        project_id: row.original.project_id
+                                    })
                                 )
                             }}
                             data-tooltip-id="my-tooltip"
@@ -188,7 +266,7 @@ const DataTable = ({
         <div className="card w-100">
             <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
                 <Filter
-                    readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
+                    readAllProjectContractAction={readAllProjectContractAction}
                     filter={filter}
                     initialFilter={initialFilter}
                     changeFilter={changeFilter}
@@ -199,18 +277,18 @@ const DataTable = ({
                 />
 
                 {
-                    readAllProjectScreenPlayAction.data?.data?.screenplays.length > 0 && (
+                    readAllProjectContractAction.data?.data?.contracts.length > 0 && (
                         <Table
-                            data={readAllProjectScreenPlayAction?.data?.data?.screenplays}
+                            data={readAllProjectContractAction?.data?.data?.contracts}
                             columns={tableColumns}
                         />
                     )
                 }
 
                 {
-                    readAllProjectScreenPlayAction.data?.data?.screenplays.length === 0 && (
+                    readAllProjectContractAction.data?.data?.contracts.length === 0 && (
                         <Empty
-                            title="پروژه ای یافت نشد"
+                            title="قرارداد یافت نشد"
                             width="100%"
                             height={300}
                         />
@@ -218,7 +296,7 @@ const DataTable = ({
                 }
 
                 <Finder
-                    readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
+                    readAllProjectContractAction={readAllProjectContractAction}
                     filter={filter}
                     changeFilter={changeFilter}
                 />

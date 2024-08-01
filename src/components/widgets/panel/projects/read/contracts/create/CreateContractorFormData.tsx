@@ -6,7 +6,7 @@ import {LuTrash} from "react-icons/lu";
 // components
 const CreatePartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/create/CreatePartiesModal.tsx"));
 
-import {Section , Note} from "@/components/partials/panel/projects/read/contracts/Tools.tsx";
+import {Section , Note} from "@/components/partials/panel/projects/read/contracts/create/Tools.tsx";
 
 // hooks
 import useModal from "@/hooks/useModal.tsx";
@@ -15,6 +15,9 @@ import useModal from "@/hooks/useModal.tsx";
 import Typography from "@/modules/Typography.tsx";
 import Button from "@/modules/Button.tsx";
 import IconButton from "@/modules/IconButton.tsx";
+
+// utils
+import {cloneObject, removeNote} from "@/utils/functions.ts";
 
 const BlankContractorCard = ({createProjectContractForm}) => {
     const {modal, _handleShowModal, _handleHideModal} = useModal();
@@ -179,7 +182,34 @@ const ContractorLegalCard = ({contractor , createProjectContractForm}) => {
             >
                 به نمایندگی :
                 &nbsp;
-                سهیل نادری
+                {
+                    contractor?.representatives.length !== 0 && (
+                        <Typography
+                            size="sm"
+                            color="dark"
+                        >
+                            به نمایندگی :
+                            &nbsp;
+                            <ul className="hstack justify-content-start gap-5 p-0 m-0">
+                                {
+                                    contractor?.representatives.map(representative =>
+                                        <li
+                                            key={representative.id}
+                                            className="d-flex justify-content-start align-items-center gap-5"
+                                        >
+                                            <Typography
+                                                size="sm"
+                                                color="dark"
+                                            >
+                                                {representative.full_name}
+                                            </Typography>
+                                        </li>
+                                    )
+                                }
+                            </ul>
+                        </Typography>
+                    )
+                }
             </Typography>
 
             <IconButton
@@ -283,7 +313,7 @@ const CreateContractorFormData = ({article , section, createProjectContractForm}
                                             data-tooltip-id="my-tooltip"
                                             data-tooltip-content="حذف تبصره"
                                             className='ms-auto'
-                                            onClick={() => createProjectContractForm.setFieldValue("notes", createProjectContractForm.values.notes.filter(item => item.number !== note.number || item.section_number !== note.section_number || item.article_number !== note.article_number))}
+                                            onClick={() => createProjectContractForm.setFieldValue("notes", removeNote(cloneObject(createProjectContractForm.values.notes) , note.number))}
                                         >
                                             <LuTrash
                                                 size={20}

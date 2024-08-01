@@ -1,45 +1,43 @@
 // libraries
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
-import {LuInfo, LuPen, LuTrash2, LuVideo, LuImage, LuMusic, LuFileText} from "react-icons/lu";
+import {LuImage, LuInfo, LuMusic, LuTrash2, LuType, LuVideo} from "react-icons/lu";
 
 // components
 import Filter from "@/components/widgets/panel/projects/read/mood-boards/Filter.tsx";
 import Finder from "@/components/widgets/panel/projects/read/mood-boards/Finder.tsx";
+import Empty from "@/components/partials/panel/Empty.tsx";
 
 // helpers
 import dialog from "@/helpers/dialog.tsx";
 import toast from "@/helpers/toast.tsx";
-
-// hooks
-import useModal from "@/hooks/useModal.tsx";
 
 // modules
 import Typography from "@/modules/Typography.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 
 // services
-import {deleteProjectMemberService} from "@/services/projectMemberService.ts";
+import {deleteProjectMoodBoardsService} from "@/services/projectMoodboardsService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-// types
-import {IDeleteProjectMember} from "@/types/serviceType.ts";
-
-const MoodBoardCard = ({readAllProjectMemberAction, moodBoard}) => {
+const MoodBoardCard = ({moodBoard, readAllProjectMoodBoardAction , filter}) => {
     const params = useParams();
     const location = useLocation();
     const navigate = useNavigate();
     const {auth} = useAuthStore();
 
-    const deleteProjectMemberAction = useMutation({
-        mutationFn: (data: IDeleteProjectMember) => deleteProjectMemberService(data),
+    const deleteProjectMoodBoardAction = useMutation({
+        mutationFn: (data) => deleteProjectMoodBoardsService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
 
-                readAllProjectMemberAction.mutate({project_id: params?.id});
+                readAllProjectMoodBoardAction.mutate({
+                    ...filter,
+                    project_id: params?.id
+                });
             } else {
                 toast("error", data.message);
             }
@@ -50,26 +48,60 @@ const MoodBoardCard = ({readAllProjectMemberAction, moodBoard}) => {
         <div className="col-12 col-sm-6 col-lg-4">
             <div
                 className="d-flex flex-column justify-content-center align-items-center w-100 min-h-200px border border-dashed border-secondary rounded-2 p-5">
-                <LuVideo
-                    size={25}
-                    color='currentColor'
-                    className="text-muted mb-5"
-                />
+                {
+                    moodBoard?.type === "1" && (
+                        <LuImage
+                            size={25}
+                            color='currentColor'
+                            className="text-muted mb-5"
+                        />
+                    )
+                }
+
+                {
+                    moodBoard?.type === "2" && (
+                        <LuVideo
+                            size={25}
+                            color='currentColor'
+                            className="text-muted mb-5"
+                        />
+                    )
+                }
+
+                {
+                    moodBoard?.type === "3" && (
+                        <LuMusic
+                            size={25}
+                            color='currentColor'
+                            className="text-muted mb-5"
+                        />
+                    )
+                }
+
+                {
+                    moodBoard?.type === "4" && (
+                        <LuType
+                            size={25}
+                            color='currentColor'
+                            className="text-muted mb-5"
+                        />
+                    )
+                }
 
                 <Typography
                     size="sm"
                     color="muted"
                     className="mb-2"
                 >
-                    عنوان
+                    {moodBoard?.title}
                 </Typography>
 
                 <Typography
-                    size="sm"
+                    size="xs"
                     color="muted"
                     className="mb-5"
                 >
-                    ( 2 مورد )
+                    {moodBoard?.type === "1" ? "تصویر" : moodBoard?.type === "2" ? "فیلم" : moodBoard?.type === "3" ? "فایل صوتی" : "متن"}
                 </Typography>
 
                 <div className="d-flex justify-content-center align-items-center gap-5 w-100">
@@ -81,19 +113,6 @@ const MoodBoardCard = ({readAllProjectMemberAction, moodBoard}) => {
                         data-tooltip-content="جزییات"
                     >
                         <LuInfo
-                            size={20}
-                            color="currentColor"
-                        />
-                    </IconButton>
-
-                    <IconButton
-                        href={auth.panel_url + "projects/" + params.id + "/mood-boards/" + moodBoard?.id + "/update"}
-                        size="sm"
-                        color="light-warning"
-                        data-tooltip-id="my-tooltip"
-                        data-tooltip-content="ویرایش"
-                    >
-                        <LuPen
                             size={20}
                             color="currentColor"
                         />
@@ -117,9 +136,9 @@ const MoodBoardCard = ({readAllProjectMemberAction, moodBoard}) => {
                                     text: "انصراف",
                                     color: "light-dark",
                                 },
-                                async () => deleteProjectMemberAction.mutate({
-                                    moodboard_id: moodBoard?.id.toString(),
+                                async () => deleteProjectMoodBoardAction.mutate({
                                     project_id: moodBoard?.project_id,
+                                    moodboard_id: moodBoard?.id.toString(),
                                 })
                             )
                         }
@@ -138,7 +157,7 @@ const MoodBoardCard = ({readAllProjectMemberAction, moodBoard}) => {
 }
 
 const DataList = ({
-                      readAllProjectMemberAction,
+                      readAllProjectMoodBoardAction,
                       filter,
                       initialFilter,
                       isOpenFilter,
@@ -151,7 +170,7 @@ const DataList = ({
         <div className="card w-100">
             <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
                 <Filter
-                    readAllProjectMemberAction={readAllProjectMemberAction}
+                    readAllProjectMoodBoardAction={readAllProjectMoodBoardAction}
                     filter={filter}
                     initialFilter={initialFilter}
                     changeFilter={changeFilter}
@@ -163,18 +182,29 @@ const DataList = ({
 
                 <div className="row gy-5 w-100">
                     {
-                        readAllProjectMemberAction.data?.data?.members?.map((moodBoard) =>
+                        readAllProjectMoodBoardAction.data?.data?.moodboards?.map((moodBoard) =>
                             <MoodBoardCard
                                 key={moodBoard?.id}
-                                readAllProjectMemberAction={readAllProjectMemberAction}
                                 moodBoard={moodBoard}
+                                readAllProjectMoodBoardAction={readAllProjectMoodBoardAction}
+                                filter={filter}
                             />
                         )
                     }
                 </div>
 
+                {
+                    readAllProjectMoodBoardAction.data?.data?.moodboards.length === 0 && (
+                        <Empty
+                            title="مود بورد یافت نشد"
+                            width="100%"
+                            height={300}
+                        />
+                    )
+                }
+
                 <Finder
-                    readAllProjectMemberAction={readAllProjectMemberAction}
+                    readAllProjectMoodBoardAction={readAllProjectMoodBoardAction}
                     filter={filter}
                     changeFilter={changeFilter}
                 />

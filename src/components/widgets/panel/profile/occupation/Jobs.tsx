@@ -32,26 +32,26 @@ export const BlankCard = ({changeCurrentPart}) => {
     )
 }
 
-export const JobCard = ({group, title, onDelete}) => {
+export const JobCard = ({job, readAllJobAction, updateOccupationForm}) => {
     return (
         <div className="col-12 col-sm-6 col-md-4">
             <div
                 className="d-flex flex-column justify-content-between align-items-center gap-5 w-100 h-100px border border-dashed border-secondary rounded-2 p-5">
                 <div className='d-flex justify-content-between align-items-center gap-2 w-100 h-100'>
-                    <div className="d-flex flex-column justify-content-center align-items-start gap-2">
+                    <div className="d-flex flex-column justify-content-center align-items-start gap-5">
                         <Typography
                             size="sm"
                             color="dark"
                             isBold
                         >
-                            {group?.title}
+                            {readAllJobAction.data?.data?.fieldsOfActivity.find(foa => foa.id === job.foa_parent_id)?.title}
                         </Typography>
 
                         <Typography
                             size="sm"
                             color="dark"
                         >
-                            {title?.title}
+                            {readAllJobAction.data?.data?.fieldsOfActivity.find(foa => foa.id === job.foa_child_id)?.title}
                         </Typography>
                     </div>
 
@@ -59,7 +59,7 @@ export const JobCard = ({group, title, onDelete}) => {
                         <IconButton
                             color="light-danger"
                             size="sm"
-                            onClick={onDelete}
+                            onClick={() => updateOccupationForm.setFieldValue("fields_of_activity", updateOccupationForm.fields_of_activity.filter(item => JSON.stringify(item) !== JSON.stringify(job)))}
                         >
                             <LuTrash
                                 size={20}
@@ -73,7 +73,7 @@ export const JobCard = ({group, title, onDelete}) => {
     )
 }
 
-const Jobs = ({updateOccupationForm, changeCurrentPart}) => {
+const Jobs = ({changeCurrentPart , readAllJobAction , updateOccupationForm}) => {
     return (
         <div className="card w-100">
             <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
@@ -88,16 +88,16 @@ const Jobs = ({updateOccupationForm, changeCurrentPart}) => {
                             />
 
                             <div className="row g-5 w-100">
-                                {/*{*/}
-                                {/*    updateOccupationForm.values.fields_of_activity?.map((foa, i) =>*/}
-                                {/*        <JobCard*/}
-                                {/*            key={i}*/}
-                                {/*            group={readAllJobAction.data?.data?.fieldsOfActivity.find(item => Number(item.id) === Number(foa.foa_parent_id))}*/}
-                                {/*            title={readAllJobAction.data?.data?.fieldsOfActivity.find(item => Number(item.id) === Number(foa.foa_child_id))}*/}
-                                {/*            onDelete={() => updateOccupationForm.setFieldValue("fields_of_activity", updateOccupationForm.values.fields_of_activity.filter((item, j) => i !== j))}*/}
-                                {/*        />*/}
-                                {/*    )*/}
-                                {/*}*/}
+                                {
+                                    updateOccupationForm.values.fields_of_activity?.map((job, i) =>
+                                        <JobCard
+                                            key={i}
+                                            job={job}
+                                            readAllJobAction={readAllJobAction}
+                                            updateOccupationForm={updateOccupationForm}
+                                        />
+                                    )
+                                }
 
                                 <BlankCard changeCurrentPart={changeCurrentPart}/>
                             </div>

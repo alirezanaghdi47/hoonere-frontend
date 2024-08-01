@@ -60,8 +60,8 @@ const ReactAccordionHeader = ({title, number, startAdornment, endAdornment}: {
                 {
                     endAdornment && (
                         <span className="d-flex justify-content-center align-items-center w-max h-max">
-                        {endAdornment}
-                    </span>
+                            {endAdornment}
+                        </span>
                     )
                 }
             </div>

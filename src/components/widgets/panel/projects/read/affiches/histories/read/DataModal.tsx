@@ -18,9 +18,7 @@ const DataModal = ({history}) => {
     const printRef = useRef();
 
     const _handlePrint = useReactToPrint({
-        content: () => printRef.current,
         documentTitle: `affiche_${history?.affiche_date}`,
-        bodyClass: "p-5"
     });
 
     return (
@@ -157,7 +155,7 @@ const DataModal = ({history}) => {
                                 >
                                     تاریخ :
                                     &nbsp;
-                                    {format(history?.affiche_date , "dd-MM-yyyy")}
+                                    {format(history?.affiche_date, "dd-MM-yyyy")}
                                 </Typography>
                             </td>
                         </tr>

@@ -6,6 +6,7 @@ import {LuUser} from "react-icons/lu";
 
 // modules
 import Typography from "@/modules/Typography.tsx";
+import Chip from "@/modules/Chip.tsx";
 import Tabs from "@/modules/Tabs.tsx";
 
 // stores
@@ -16,7 +17,7 @@ const Summary = ({readMyProfileAction}) => {
     const navigate = useNavigate();
     const {auth} = useAuthStore();
 
-    const [navbarLinks , setNavbarLinks] = useState([
+    const [navbarLinks, setNavbarLinks] = useState([
         {id: 1, label: "بررسی اجمالی", href: auth.panel_url + "profile#review", value: "#review"},
         {id: 2, label: "هویتی", href: auth.panel_url + "profile#identify", value: "#identify"},
         {id: 3, label: "شغلی", href: auth.panel_url + "profile#occupation", value: "#occupation"},
@@ -48,38 +49,63 @@ const Summary = ({readMyProfileAction}) => {
                         }
                     </div>
 
-                    <div className="d-flex flex-column justify-content-start align-items-start h-100 gap-5">
-                        <Typography
-                            variant="h3"
-                            size="lg"
-                            color="dark"
-                            isBold
-                        >
-                            {
-                                (!readMyProfileAction.data?.data?.user_info?.first_name || !readMyProfileAction.data?.data?.user_info?.last_name) ? (
-                                    readMyProfileAction.data?.data?.user_info?.username
-                                ) : (
-                                    readMyProfileAction.data?.data?.user_info?.first_name + " " + readMyProfileAction.data?.data?.user_info?.last_name
-                                )
-                            }
-                        </Typography>
-                    </div>
-                </div>
+                    {
+                        readMyProfileAction.data?.data?.user_info?.user_type === "1" && (
+                            <div className="d-flex flex-column justify-content-start align-items-start h-100 gap-5">
+                                <Typography
+                                    variant="h3"
+                                    size="lg"
+                                    color="dark"
+                                    isBold
+                                >
+                                    {(!readMyProfileAction.data?.data?.user_info?.first_name || !readMyProfileAction.data?.data?.user_info?.last_name) ? readMyProfileAction.data?.data?.user_info?.username : readMyProfileAction.data?.data?.user_info?.first_name + " " + readMyProfileAction.data?.data?.user_info?.last_name}
+                                </Typography>
 
-                <div className="d-flex justify-content-start align-items-start gap-5 w-100">
-                    <Tabs>
-                        {
-                            navbarLinks?.map(navbarLink =>
-                                <Tabs.Item
-                                    isActive={location.hash === navbarLink.value}
-                                    key={navbarLink.id}
-                                    label={navbarLink.label}
-                                    onClick={() => navigate(navbarLink.href)}
+                                <Chip
+                                    label="حقیقی"
+                                    color='light-info'
+                                    size="lg"
                                 />
-                            )
-                        }
-                    </Tabs>
+                            </div>
+                        )
+                    }
+
+                    {
+                        readMyProfileAction.data?.data?.user_info?.user_type === "2" && (
+                            <div className="d-flex flex-column justify-content-start align-items-start h-100 gap-5">
+                                <Typography
+                                    variant="h3"
+                                    size="lg"
+                                    color="dark"
+                                    isBold
+                                >
+                                    {readMyProfileAction.data?.data?.user_info?.company_name}
+                                </Typography>
+
+                                <Chip
+                                    label="حقوقی"
+                                    color='light-info'
+                                    size="lg"
+                                />
+                            </div>
+                        )
+                    }
                 </div>
+            </div>
+
+            <div className="d-flex justify-content-start align-items-start gap-5 w-100 px-10">
+                <Tabs>
+                    {
+                        navbarLinks?.map(navbarLink =>
+                            <Tabs.Item
+                                isActive={location.hash === navbarLink.value}
+                                key={navbarLink.id}
+                                label={navbarLink.label}
+                                onClick={() => navigate(navbarLink.href)}
+                            />
+                        )
+                    }
+                </Tabs>
             </div>
         </div>
     )

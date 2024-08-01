@@ -120,8 +120,8 @@ export const updateProfileLegalSchema = Yup.object().shape({
         }
     }),
     company_name: Yup.string().trim().required("نام شرکت الزامی است"),
-    register_code: Yup.string().trim().required("نام الزامی است"),
-    economic_code: Yup.string().trim().required("کد اقتصادی الزامی است"),
+    register_code: Yup.string().trim().required("شماره ثبت الزامی است"),
+    economic_code: Yup.string().trim().required("شناسه ملی الزامی است"),
     address: Yup.string().trim().required("آدرس الزامی است"),
     postal_code: Yup.string().trim().required("کد پستی الزامی است"),
     telephone: Yup.string().trim().required("شماره تماس الزامی است"),
@@ -378,11 +378,11 @@ export const createProjectMoodBoardSchema = Yup.object().shape({
         is: (value) => value === "image",
         then: (schema) => schema.test("fileExist", "محتوای مود بورد الزامی است", (value: File) => {
             return Object.keys(value).length !== 0;
-        }).test("fileSize", "حجم عکس ارسالی حداکثر 2 مگابایت باشد", (value: File) => {
+        }).test("fileSize", "حجم عکس ارسالی حداکثر 1 مگابایت باشد", (value: File) => {
             if (Object.keys(value).length === 0) {
                 return true;
             } else {
-                return value.size <= 2 * 1_024_000;
+                return value.size <= 1 * 1_024_000;
             }
         }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
             if (Object.keys(value).length === 0) {
@@ -400,13 +400,13 @@ export const createProjectMoodBoardSchema = Yup.object().shape({
             if (Object.keys(value).length === 0) {
                 return true;
             } else {
-                return value.size <= 2 * 1_024_000;
+                return value.size <= 5 * 1_024_000;
             }
-        }).test("fileType", "فرمت صدای ارسالی باید از نوع (mpeg , wav , ogg) باشد", (value: File) => {
+        }).test("fileType", "فرمت صدای ارسالی باید از نوع (mp3 , wav , ogg) باشد", (value: File) => {
             if (Object.keys(value).length === 0) {
                 return true;
             } else {
-                return ['audio/mpeg', 'audio/wav', 'audio/ogg'].includes(value.type);
+                return ['audio/mp3', 'audio/wav', 'audio/ogg'].includes(value.type);
             }
         }),
     }),
@@ -497,4 +497,11 @@ export const createProjectContractSchema = Yup.object().shape({
     sections: Yup.array(),
     notes: Yup.array(),
 });
+
+export const updateProjectContractSchema = Yup.object().shape({
+    articles: Yup.array(),
+    sections: Yup.array(),
+    notes: Yup.array(),
+});
+
 

@@ -11,31 +11,16 @@ import Form from "@/modules/Form.tsx";
 import SelectBox from "@/modules/SelectBox.tsx";
 
 // services
-import {readAllJobService, readAllProjectTypeService, readAllUserStatusService} from "@/services/publicService.ts";
+import {readAllProjectMoodBoardTypeService} from "@/services/publicService.ts";
 
-const AdvanceFilter = ({readAllProjectMemberAction, filter, initialFilter, changeFilter, hideFilter, resetFilter}) => {
-    const readAllProjectTypeAction = useMutation({
-        mutationFn: () => readAllProjectTypeService(),
-    });
+const AdvanceFilter = ({readAllProjectMoodBoardAction, filter, initialFilter, changeFilter, hideFilter, resetFilter}) => {
 
-    const readAllJobAction = useMutation({
-        mutationFn: () => readAllJobService(),
-    });
-
-    const readAllUserStatusAction = useMutation({
-        mutationFn: () => readAllUserStatusService(),
+    const readAllProjectMoodBoardTypeAction = useMutation({
+        mutationFn: () => readAllProjectMoodBoardTypeService(),
     });
 
     useLayoutEffect(() => {
-        readAllJobAction.mutate();
-    }, []);
-
-    useLayoutEffect(() => {
-        readAllUserStatusAction.mutate();
-    }, []);
-
-    useLayoutEffect(() => {
-        readAllProjectTypeAction.mutate();
+        readAllProjectMoodBoardTypeAction.mutate();
     }, []);
 
     return (
@@ -43,39 +28,16 @@ const AdvanceFilter = ({readAllProjectMemberAction, filter, initialFilter, chang
             <div className="col-12 col-sm-6 col-md-4">
                 <Form.Group>
                     <Form.Label
-                        label="جستجو"
+                        label="عنوان"
                         color="dark"
                         size="sm"
                     />
 
                     <TextInput
-                        id="text"
-                        name="text"
-                        value={filter.text}
-                        onChange={(value) => changeFilter({text: value})}
-                    />
-                </Form.Group>
-            </div>
-
-            <div className="col-12 col-sm-6 col-md-4">
-                <Form.Group>
-                    <Form.Label
-                        label="گروه شغلی"
-                        color="dark"
-                        size="sm"
-                    />
-
-                    <SelectBox
-                        id="foa_parent_id"
-                        name="foa_parent_id"
-                        value={filter.foa_parent_id}
-                        options={(!readAllJobAction.isPending && readAllJobAction.data) ? readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id === null)?.map(item => ({
-                            label: item.title,
-                            value: item.id.toString()
-                        })) : []}
-                        isSearchable
-                        onChange={(value) => changeFilter({foa_parent_id: value})}
-                        isLoading={readAllJobAction.isPending}
+                        id="title"
+                        name="title"
+                        value={filter.title}
+                        onChange={(value) => changeFilter({title: value})}
                     />
                 </Form.Group>
             </div>
@@ -89,17 +51,15 @@ const AdvanceFilter = ({readAllProjectMemberAction, filter, initialFilter, chang
                     />
 
                     <SelectBox
-                        id="foa_child_id"
-                        name="foa_child_id"
-                        value={filter.foa_child_id}
-                        disabled={!filter.foa_parent_id}
-                        options={(!readAllJobAction.isPending && readAllJobAction.data) ? readAllJobAction.data?.data?.fieldsOfActivity?.filter(foa => foa.parent_id !== null && foa.parent_id.toString() === filter.foa_parent_id)?.map(item => ({
-                            label: item.title,
-                            value: item.id.toString()
-                        })) : []}
-                        isSearchable
-                        onChange={(value) => changeFilter({foa_child_id: value})}
-                        isLoading={readAllJobAction.isPending}
+                        id="type"
+                        name="type"
+                        value={filter.type}
+                        options={readAllProjectMoodBoardTypeAction.data?.data?.moodboards?.map(moodboard => ({
+                            label: moodboard.title,
+                            value: moodboard.id.toString(),
+                        }))}
+                        onChange={(value) => changeFilter({type: value})}
+                        isLoading={readAllProjectMoodBoardTypeAction.isPending}
                     />
                 </Form.Group>
             </div>
@@ -110,7 +70,7 @@ const AdvanceFilter = ({readAllProjectMemberAction, filter, initialFilter, chang
                     onClick={() => {
                         resetFilter();
                         hideFilter();
-                        readAllProjectMemberAction.mutate(initialFilter);
+                        readAllProjectMoodBoardAction.mutate(initialFilter);
                     }}
                 >
                     انصراف
@@ -118,7 +78,7 @@ const AdvanceFilter = ({readAllProjectMemberAction, filter, initialFilter, chang
 
                 <Button
                     color='light-info'
-                    onClick={() => readAllProjectMemberAction.mutate(filter)}
+                    onClick={() => readAllProjectMoodBoardAction.mutate(filter)}
                 >
                     فیلتر
                 </Button>
@@ -127,20 +87,20 @@ const AdvanceFilter = ({readAllProjectMemberAction, filter, initialFilter, chang
     )
 }
 
-const SimpleFilter = ({readAllProjectMemberAction, filter, changeFilter, showFilter}) => {
+const SimpleFilter = ({readAllProjectMoodBoardAction, filter, changeFilter, showFilter}) => {
     return (
         <div className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-5">
             <div className="w-200px">
                 <TextInput
-                    id="text"
-                    name="text"
-                    value={filter.text}
-                    placeholder="جستجو"
+                    id="title"
+                    name="title"
+                    value={filter.title}
+                    placeholder="عنوان"
                     startAdornment={
                         <IconButton
                             size="sm"
                             color="light"
-                            onClick={() => readAllProjectMemberAction.mutate(filter)}
+                            onClick={() => readAllProjectMoodBoardAction.mutate(filter)}
                         >
                             <LuSearch
                                 size={20}
@@ -149,13 +109,13 @@ const SimpleFilter = ({readAllProjectMemberAction, filter, changeFilter, showFil
                         </IconButton>
                     }
                     endAdornment={
-                        filter.text.length > 0 ? (
+                        filter.title.length > 0 ? (
                             <IconButton
                                 size="sm"
                                 textColor="danger"
                                 onClick={() => {
-                                    changeFilter({text: ""});
-                                    readAllProjectMemberAction.mutate({text: ""});
+                                    changeFilter({title: ""});
+                                    readAllProjectMoodBoardAction.mutate({title: ""});
                                 }}
                             >
                                 <LuX
@@ -165,7 +125,7 @@ const SimpleFilter = ({readAllProjectMemberAction, filter, changeFilter, showFil
                             </IconButton>
                         ) : null
                     }
-                    onChange={(value) => changeFilter({text: value})}
+                    onChange={(value) => changeFilter({title: value})}
                 />
             </div>
 
@@ -180,7 +140,7 @@ const SimpleFilter = ({readAllProjectMemberAction, filter, changeFilter, showFil
 }
 
 const Filter = ({
-                    readAllProjectMemberAction,
+                    readAllProjectMoodBoardAction,
                     filter,
                     initialFilter,
                     changeFilter,
@@ -195,7 +155,7 @@ const Filter = ({
                 {
                     isOpenFilter ? (
                         <AdvanceFilter
-                            readAllProjectMemberAction={readAllProjectMemberAction}
+                            readAllProjectMoodBoardAction={readAllProjectMoodBoardAction}
                             filter={filter}
                             initialFilter={initialFilter}
                             changeFilter={changeFilter}
@@ -204,7 +164,7 @@ const Filter = ({
                         />
                     ) : (
                         <SimpleFilter
-                            readAllProjectMemberAction={readAllProjectMemberAction}
+                            readAllProjectMoodBoardAction={readAllProjectMoodBoardAction}
                             filter={filter}
                             changeFilter={changeFilter}
                             showFilter={showFilter}

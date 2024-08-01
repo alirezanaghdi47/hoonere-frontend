@@ -8,7 +8,7 @@ import Form from "@/modules/Form.tsx";
 import Alert from "@/modules/Alert.tsx";
 import Chip from "@/modules/Chip.tsx";
 
-const Review = ({readMyProfileAction}) => {
+const Real = ({readMyProfileAction}) => {
     return (
         <div className="card w-100">
             <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
@@ -137,7 +137,7 @@ const Review = ({readMyProfileAction}) => {
                                         color="danger"
                                         label="ثبت نشده"
                                     />
-                                ) : format(readMyProfileAction.data?.data?.user_info?.birthdate , "yyyy-MM-dd")
+                                ) : format(readMyProfileAction.data?.data?.user_info?.birthdate, "yyyy-MM-dd")
                             }
                         </Typography>
                     </div>
@@ -166,6 +166,35 @@ const Review = ({readMyProfileAction}) => {
                                     />
                                 ) : (
                                     readMyProfileAction.data?.data?.user_info?.mobile
+                                )
+                            }
+                        </Typography>
+                    </div>
+                </div>
+
+                <div className="row gy-5 w-100">
+                    <div className="col-lg-4">
+                        <Form.Label
+                            label="ایمیل"
+                            size="sm"
+                            color="muted"
+                        />
+                    </div>
+
+                    <div className="col-lg-8">
+                        <Typography
+                            variant="p"
+                            size="sm"
+                            color="dark"
+                        >
+                            {
+                                !readMyProfileAction.data?.data?.user_info?.email ? (
+                                    <Chip
+                                        color="danger"
+                                        label="ثبت نشده"
+                                    />
+                                ) : (
+                                    readMyProfileAction.data?.data?.user_info?.email
                                 )
                             }
                         </Typography>
@@ -204,7 +233,7 @@ const Review = ({readMyProfileAction}) => {
                 <div className="row gy-5 w-100">
                     <div className="col-lg-4">
                         <Form.Label
-                            label="ایمیل"
+                            label="کد پستی"
                             size="sm"
                             color="muted"
                         />
@@ -217,13 +246,13 @@ const Review = ({readMyProfileAction}) => {
                             color="dark"
                         >
                             {
-                                !readMyProfileAction.data?.data?.user_info?.email ? (
+                                !readMyProfileAction.data?.data?.user_info?.postal_code ? (
                                     <Chip
                                         color="danger"
                                         label="ثبت نشده"
                                     />
                                 ) : (
-                                    readMyProfileAction.data?.data?.user_info?.email
+                                    readMyProfileAction.data?.data?.user_info?.postal_code
                                 )
                             }
                         </Typography>
@@ -254,4 +283,4 @@ const Review = ({readMyProfileAction}) => {
     )
 }
 
-export default Review;
+export default Real;

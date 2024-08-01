@@ -13,6 +13,8 @@ import MusicPlayer from "@/modules/MusicPlayer.tsx";
 const DataModal = ({moodBoard}) => {
     const navigate = useNavigate();
 
+    console.log(moodBoard)
+
     return (
         <Modal
             isOpen={true}
@@ -43,16 +45,42 @@ const DataModal = ({moodBoard}) => {
 
             <Modal.Body>
                 <div className='w-100 h-100'>
-                    {/*<VideoPlayer src="https://caspian11.asset.aparat.com/aparat-video/988c1891d41df216e2ebe2bde6e7b4dd59863235-720p.mp4?wmsAuthSign=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjhiZDNkNDE0ODJkYzc5ZDlkNTdjNzVlNjkwMTExMGM1IiwiZXhwIjoxNzIxMzEwMDgwLCJpc3MiOiJTYWJhIElkZWEgR1NJRyJ9.Jakb7gJQnAo1kp9QsPdYUoCW0_Mhi6b4neb_JZmbYts"/>*/}
-                    {/*<MusicPlayer src="https://irsv.upmusics.com/AliBZ/Farhad%20Shakhs%20-%20Babe%20delami%20(320).mp3"/>*/}
-                    <LazyLoadImage
-                        src="https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/wzmobile/meta-data/wzm_meta.jpg"
-                        visibleByDefault
-                        width="100%"
-                        height="100%"
-                        effect='blur'
-                        style={{borderRadius: 10}}
-                    />
+                    {
+                        moodBoard?.type === "1" && (
+                            <LazyLoadImage
+                                src={moodBoard?.content}
+                                visibleByDefault
+                                width="100%"
+                                height="100%"
+                                effect='blur'
+                                style={{borderRadius: 10}}
+                            />
+                        )
+                    }
+
+                    {
+                        moodBoard?.type === "2" && (
+                            <VideoPlayer src={moodBoard?.content}/>
+                        )
+                    }
+
+                    {
+                        moodBoard?.type === "3" && (
+                            <MusicPlayer src={moodBoard?.content}/>
+                        )
+                    }
+
+                    {
+                        moodBoard?.type === "4" && (
+                            <Typography
+                                size="sm"
+                                color="dark"
+                                lineHeight="lg"
+                            >
+                                {moodBoard?.content}
+                            </Typography>
+                        )
+                    }
                 </div>
             </Modal.Body>
         </Modal>

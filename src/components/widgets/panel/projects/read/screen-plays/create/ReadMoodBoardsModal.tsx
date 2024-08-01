@@ -1,7 +1,9 @@
 // libraries
+import {useLayoutEffect} from "react";
 import {useParams} from "react-router-dom";
-import {LuPlus, LuRotateCcw, LuX} from "react-icons/lu";
+import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import {LuPlus, LuRotateCcw, LuX} from "react-icons/lu";
 
 // components
 import MoodBoardDataList from "@/components/widgets/panel/projects/read/screen-plays/create/MoodBoardDataList.tsx";
@@ -17,6 +19,9 @@ import Typography from "@/modules/Typography.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import Button from "@/modules/Button.tsx";
 
+// services
+import {readAllProjectMoodBoardService} from "@/services/projectMoodboardsService.ts";
+
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
@@ -24,17 +29,25 @@ const ReadMoodBoardsModal = ({modal, _handleHideModal}) => {
     const params = useParams();
     const {auth} = useAuthStore();
 
+    const {filter, initialFilter, isOpenFilter, showFilter, hideFilter, resetFilter, changeFilter} = useFilter({
+        title: "",
+        type: "",
+        page: 1,
+        per_page: 12,
+    });
+
+    const readAllProjectMoodBoardAction = useMutation({
+        mutationFn: (data) => readAllProjectMoodBoardService(data),
+    });
+
     const attachProjectMoodBoardForm = useFormik({
         initialValues: {
-            title: "",
-            type: "",
-            content: {},
+            id: ""
         },
-        // validationSchema: createProjectMoodBoardWithFileSchema,
         onSubmit: async (result, {resetForm}) => {
             const data = modal?.data?.editorRef.current.selection.getContent();
 
-            modal?.data?.editorRef.current.selection.setContent(`<span data-mood-board="true" data-mood-board-id="1" style="color: #50cd89">${data}</span>`);
+            modal?.data?.editorRef.current.selection.setContent(`<span data-mood-board="true" data-mood-board-id=${result.id} style="color: #50cd89">${data}</span>`);
 
             resetForm();
 
@@ -44,6 +57,13 @@ const ReadMoodBoardsModal = ({modal, _handleHideModal}) => {
             _handleHideModal();
         }
     });
+
+    useLayoutEffect(() => {
+        readAllProjectMoodBoardAction.mutate({
+            ...filter,
+            project_id: params?.id
+        });
+    }, []);
 
     return (
         <Modal
@@ -78,6 +98,10 @@ const ReadMoodBoardsModal = ({modal, _handleHideModal}) => {
                         color="light-info"
                         data-tooltip-id="my-tooltip"
                         data-tooltip-content="بروزرسانی لیست"
+                        onClick={() => readAllProjectMoodBoardAction.mutate({
+                            ...filter,
+                            project_id: params?.id
+                        })}
                     >
                         <LuRotateCcw size={20}/>
                     </IconButton>
@@ -96,41 +120,41 @@ const ReadMoodBoardsModal = ({modal, _handleHideModal}) => {
 
             <Modal.Body>
                 <div className='w-100 h-100'>
-                    {/*{*/}
-                    {/*    readAllProjectMemberAction.isPending && (*/}
-                    {/*        <Loading*/}
-                    {/*            withCard*/}
-                    {/*            width="100%"*/}
-                    {/*            height={500}*/}
-                    {/*        />*/}
-                    {/*    )*/}
-                    {/*}*/}
+                    {
+                        readAllProjectMoodBoardAction.isPending && (
+                            <Loading
+                                withCard
+                                width="100%"
+                                height={500}
+                            />
+                        )
+                    }
 
-                    {/*{*/}
-                    {/*    readAllProjectScreenPlayAction.data?.data.screenplays.length > 0 && (*/}
-                    <MoodBoardDataList
-                        // readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
-                        // createProjectAfficheP3Form={createProjectAfficheP3Form}
-                        // filter={filter}
-                        // initialFilter={initialFilter}
-                        // changeFilter={changeFilter}
-                        // isOpenFilter={isOpenFilter}
-                        // showFilter={showFilter}
-                        // hideFilter={hideFilter}
-                        // resetFilter={resetFilter}
-                    />
-                    {/*    )*/}
-                    {/*}*/}
+                    {
+                        readAllProjectMoodBoardAction.data?.data.moodboards.length > 0 && (
+                            <MoodBoardDataList
+                                readAllProjectMoodBoardAction={readAllProjectMoodBoardAction}
+                                attachProjectMoodBoardForm={attachProjectMoodBoardForm}
+                                filter={filter}
+                                initialFilter={initialFilter}
+                                changeFilter={changeFilter}
+                                isOpenFilter={isOpenFilter}
+                                showFilter={showFilter}
+                                hideFilter={hideFilter}
+                                resetFilter={resetFilter}
+                            />
+                        )
+                    }
 
-                    {/*{*/}
-                    {/*    readAllProjectScreenPlayAction.data?.data.screenplays.length === 0 && (*/}
-                    {/*        <Empty*/}
-                    {/*            title="مود بوردی یافت نشد"*/}
-                    {/*            width="100%"*/}
-                    {/*            height={300}*/}
-                    {/*        />*/}
-                    {/*    )*/}
-                    {/*}*/}
+                    {
+                        readAllProjectMoodBoardAction.data?.data.moodboards.length === 0 && (
+                            <Empty
+                                title="مود بورد یافت نشد"
+                                width="100%"
+                                height={300}
+                            />
+                        )
+                    }
                 </div>
             </Modal.Body>
 

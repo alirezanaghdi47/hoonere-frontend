@@ -5,14 +5,14 @@ import axios from "axios";
 import useAuthStore from "@/stores/authStore.ts";
 
 // utils
-import {cleaningObject, decodeData, encodeData} from "@/utils/functions.ts";
+import {cleanObject, decodeData, encodeData} from "@/utils/functions.ts";
 
 export const readAllProjectMoodBoardService = async (data) => {
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(cleaningObject(data))));
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/moodboards/index", formData, {
             headers: {
@@ -62,7 +62,14 @@ export const createProjectMoodBoardService = async (data) => {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(cleaningObject(data))));
+        const {content, ...rawData} = data;
+
+        if (["1", "3"].includes(data.type)) {
+            formData.append("content", content);
+            formData.append("data", encodeData(JSON.stringify(cleanObject(rawData))));
+        } else {
+            formData.append("data", encodeData(JSON.stringify(cleanObject({...rawData, content}))));
+        }
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/moodboards/create", formData, {
             headers: {
@@ -87,7 +94,7 @@ export const updateProjectMoodBoardService = async (data) => {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(cleaningObject(data))));
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/moodboards/update", formData, {
             headers: {

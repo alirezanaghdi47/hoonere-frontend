@@ -2,39 +2,33 @@
 import {useLayoutEffect} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
-import Loadable from "@loadable/component";
 
 // components
-const DataList = Loadable(() => import("@/components/widgets/panel/projects/read/mood-boards/DataList.tsx"));
-
+import DataList from "@/components/widgets/panel/projects/read/mood-boards/DataList.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // hooks
 import useFilter from "@/hooks/useFilter.tsx";
 
 // services
-import {readAllProjectMemberService} from "@/services/projectMemberService.ts";
-
-// types
-import {IReadAllProjectMember} from "@/types/serviceType.ts";
+import {readAllProjectMoodBoardService} from "@/services/projectMoodboardsService.ts";
 
 const Content = () => {
     const params = useParams();
 
-    const {filter, initialFilter, isOpenFilter, showFilter, hideFilter, resetFilter, changeFilter} = useFilter<IReadAllProjectMember>({
-        text: "",
-        foa_child_id: "",
-        foa_parent_id: "",
+    const {filter, initialFilter, isOpenFilter, showFilter, hideFilter, resetFilter, changeFilter} = useFilter({
+        title: "",
+        type: "",
         page: 1,
         per_page: 12,
     });
 
-    const readAllProjectMemberAction = useMutation({
-        mutationFn: (data:IReadAllProjectMember ) => readAllProjectMemberService(data),
+    const readAllProjectMoodBoardAction = useMutation({
+        mutationFn: (data) => readAllProjectMoodBoardService(data),
     });
 
     useLayoutEffect(() => {
-        readAllProjectMemberAction.mutate({
+        readAllProjectMoodBoardAction.mutate({
             ...filter,
             project_id: params?.id
         });
@@ -45,7 +39,7 @@ const Content = () => {
             className="d-flex flex-column flex-lg-row justify-content-start align-items-start gap-5 w-100 mw-950px p-5">
             <div className="d-flex flex-wrap justify-content-center gap-5 w-100 mt-lg-n20">
                 {
-                    readAllProjectMemberAction.isPending && (
+                    readAllProjectMoodBoardAction.isPending && (
                         <Loading
                             withCard
                             width="100%"
@@ -55,9 +49,9 @@ const Content = () => {
                 }
 
                 {
-                    !readAllProjectMemberAction.isPending && (
+                    !readAllProjectMoodBoardAction.isPending && (
                         <DataList
-                            readAllProjectMemberAction={readAllProjectMemberAction}
+                            readAllProjectMoodBoardAction={readAllProjectMoodBoardAction}
                             filter={filter}
                             initialFilter={initialFilter}
                             isOpenFilter={isOpenFilter}

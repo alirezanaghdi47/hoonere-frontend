@@ -50,8 +50,10 @@ const Content = () => {
         validationSchema: createProjectMoodBoardSchema,
         onSubmit: async (result) => {
             createProjectMoodBoardAction.mutate({
-                ...result,
-                content: result.image || result.audio || result.video || result.text
+                project_id: params.id,
+                title: result.title,
+                type: result.type,
+                content: result.type === "1" ? result.image : result.type === "2" ? result.video : result.type === "3" ? result.audio : result.text
             });
         }
     });

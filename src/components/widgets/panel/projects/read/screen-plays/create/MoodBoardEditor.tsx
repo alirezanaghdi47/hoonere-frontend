@@ -36,7 +36,7 @@ const MoodBoardEditor = ({id, name, value, onChange}) => {
                     editor.ui.registry.addMenuItem('readMoodBoard', {
                         text: 'نمایش مود بورد',
                         onAction: (api) => {
-                            navigate(auth.panel_url + "projects/" + params.id + "/mood-boards/" + 1, {state: {background: location}});
+                            navigate(auth.panel_url + "projects/" + params.id + "/mood-boards/" + editorRef.current.selection.getNode().getAttribute("data-mood-board-id"), {state: {background: location}});
                         }
                     });
 

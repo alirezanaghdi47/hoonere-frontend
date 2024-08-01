@@ -6,7 +6,7 @@ import {LuTrash} from "react-icons/lu";
 // components
 const CreatePartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/create/CreatePartiesModal.tsx"));
 
-import {Section , Note} from "@/components/partials/panel/projects/read/contracts/Tools.tsx";
+import {Section, Note} from "@/components/partials/panel/projects/read/contracts/create/Tools.tsx";
 
 // hooks
 import useModal from "@/hooks/useModal.tsx";
@@ -15,6 +15,10 @@ import useModal from "@/hooks/useModal.tsx";
 import Typography from "@/modules/Typography.tsx";
 import Button from "@/modules/Button.tsx";
 import IconButton from "@/modules/IconButton.tsx";
+
+// utils
+import {cloneObject, removeNote} from "@/utils/functions.ts";
+import representatives from "@/components/widgets/panel/profile/identity/Representatives.tsx";
 
 const BlankEmployerCard = ({createProjectContractForm}) => {
     const {modal, _handleShowModal, _handleHideModal} = useModal();
@@ -51,7 +55,7 @@ const BlankEmployerCard = ({createProjectContractForm}) => {
     )
 }
 
-const EmployerRealCard = ({employer , createProjectContractForm}) => {
+const EmployerRealCard = ({employer, createProjectContractForm}) => {
     return (
         <li className='d-flex flex-wrap justify-content-start align-items-center gap-5 border border-dashed border-secondary rounded-2 p-5'>
             <Typography
@@ -105,7 +109,7 @@ const EmployerRealCard = ({employer , createProjectContractForm}) => {
                 data-tooltip-id="my-tooltip"
                 data-tooltip-content="حذف کارفرما"
                 className='ms-auto'
-                onClick={() => createProjectContractForm.setFieldValue("articles[0].employers" , createProjectContractForm.values.articles[0].employers.filter(item => JSON.stringify(item) !== JSON.stringify(employer)))}
+                onClick={() => createProjectContractForm.setFieldValue("articles[0].employers", createProjectContractForm.values.articles[0].employers.filter(item => JSON.stringify(item) !== JSON.stringify(employer)))}
             >
                 <LuTrash
                     size={20}
@@ -116,7 +120,7 @@ const EmployerRealCard = ({employer , createProjectContractForm}) => {
     )
 }
 
-const EmployerLegalCard = ({employer , createProjectContractForm}) => {
+const EmployerLegalCard = ({employer, createProjectContractForm}) => {
     return (
         <li className='d-flex flex-wrap justify-content-start align-items-center gap-5 border border-dashed border-secondary rounded-2 p-5'>
             <Typography
@@ -173,14 +177,34 @@ const EmployerLegalCard = ({employer , createProjectContractForm}) => {
                 {employer?.telephone ? employer?.telephone : "نا معلوم"}
             </Typography>
 
-            <Typography
-                size="sm"
-                color="dark"
-            >
-                به نمایندگی :
-                &nbsp;
-                سهیل نادری
-            </Typography>
+            {
+                employer?.representatives.length !== 0 && (
+                    <Typography
+                        size="sm"
+                        color="dark"
+                    >
+                        به نمایندگی :
+                        &nbsp;
+                        <ul className="hstack justify-content-start gap-5 p-0 m-0">
+                            {
+                                employer?.representatives.map(representative =>
+                                    <li
+                                        key={representative.id}
+                                        className="d-flex justify-content-start align-items-center gap-5"
+                                    >
+                                        <Typography
+                                            size="sm"
+                                            color="dark"
+                                        >
+                                            {representative.full_name}
+                                        </Typography>
+                                    </li>
+                                )
+                            }
+                        </ul>
+                    </Typography>
+                )
+            }
 
             <IconButton
                 color="light-danger"
@@ -221,7 +245,8 @@ const CreateEmployerFormData = ({article, section, createProjectContractForm}) =
 
                     {
                         createProjectContractForm.values.articles.find(item => item.number === article.number)?.employers?.map(employer =>
-                            <Fragment key={employer.user_type === "1" ? `employer-real-${employer.id}` : `employer-legal-${employer.id}`}>
+                            <Fragment
+                                key={employer.user_type === "1" ? `employer-real-${employer.id}` : `employer-legal-${employer.id}`}>
                                 {
                                     employer.user_type === "1" && (
                                         <EmployerRealCard
@@ -282,7 +307,7 @@ const CreateEmployerFormData = ({article, section, createProjectContractForm}) =
                                         data-tooltip-id="my-tooltip"
                                         data-tooltip-content="حذف تبصره"
                                         className='ms-auto'
-                                        onClick={() => createProjectContractForm.setFieldValue("notes", createProjectContractForm.values.notes.filter(item => item.number !== note.number || item.section_number !== note.section_number || item.article_number !== note.article_number))}
+                                        onClick={() => createProjectContractForm.setFieldValue("notes", removeNote(cloneObject(createProjectContractForm.values.notes), note.number))}
                                     >
                                         <LuTrash
                                             size={20}

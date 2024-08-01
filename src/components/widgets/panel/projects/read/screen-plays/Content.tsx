@@ -36,14 +36,14 @@ const Content = () => {
     });
 
     const readAllProjectScreenPlayAction = useMutation({
-        mutationFn: (data: IReadAllProjectScreenPlay) => readAllProjectScreenPlayService({
-            ...data,
-            project_id: params.id
-        }),
+        mutationFn: (data: IReadAllProjectScreenPlay) => readAllProjectScreenPlayService(data),
     });
 
     useLayoutEffect(() => {
-        readAllProjectScreenPlayAction.mutate(filter);
+        readAllProjectScreenPlayAction.mutate({
+            ...filter,
+            project_id: params.id
+        });
     }, []);
 
     return (

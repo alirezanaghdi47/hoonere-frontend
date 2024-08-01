@@ -33,33 +33,33 @@ export const BlankCard = ({changeCurrentPart}) => {
     )
 }
 
-export const RepresentativeCard = ({group, title, onDelete}) => {
+export const RepresentativeCard = ({representative , updateProfileLegalForm}) => {
     return (
         <div className="col-12 col-md-6">
             <div
                 className="d-flex flex-column justify-content-between align-items-center gap-5 w-100 h-150px border border-dashed border-secondary rounded-2 p-5">
                 <div className='d-flex justify-content-between align-items-center gap-2 w-100 h-100'>
-                    <div className="d-flex flex-column justify-content-center align-items-start gap-2">
+                    <div className="d-flex flex-column justify-content-center align-items-start gap-5">
                         <Typography
                             size="sm"
                             color="dark"
                             isBold
                         >
-                            {group?.title}
+                            {representative?.full_name}
                         </Typography>
 
                         <Typography
                             size="sm"
                             color="dark"
                         >
-                            {title?.title}
+                            {representative?.national_code}
                         </Typography>
 
                         <Typography
                             size="sm"
                             color="dark"
                         >
-                            {title?.title}
+                            {representative?.post}
                         </Typography>
                     </div>
 
@@ -67,7 +67,7 @@ export const RepresentativeCard = ({group, title, onDelete}) => {
                         <IconButton
                             color="light-danger"
                             size="sm"
-                            onClick={onDelete}
+                            onClick={() => updateProfileLegalForm.setFieldValue("representatives" , updateProfileLegalForm.values.representatives.filter(item => JSON.stringify(item) !== JSON.stringify(representative)))}
                         >
                             <LuTrash
                                 size={20}
@@ -96,16 +96,15 @@ const Representatives = ({updateProfileLegalForm , updateProfileIdentityAction, 
                                 />
 
                                 <div className="row g-5 w-100">
-                                    {/*{*/}
-                                    {/*    updateProfileLegalForm.values.representatives?.map((foa, i) =>*/}
-                                    {/*        <RepresentativeCard*/}
-                                    {/*            key={i}*/}
-                                    {/*            group={readAllJobAction.data?.data?.fieldsOfActivity.find(item => Number(item.id) === Number(foa.foa_parent_id))}*/}
-                                    {/*            title={readAllJobAction.data?.data?.fieldsOfActivity.find(item => Number(item.id) === Number(foa.foa_child_id))}*/}
-                                    {/*            onDelete={() => updateOccupationForm.setFieldValue("fields_of_activity", updateOccupationForm.values.fields_of_activity.filter((item, j) => i !== j))}*/}
-                                    {/*        />*/}
-                                    {/*    )*/}
-                                    {/*}*/}
+                                    {
+                                        updateProfileLegalForm.values.representatives?.map((representative , i) =>
+                                            <RepresentativeCard
+                                                key={i}
+                                                representative={representative}
+                                                updateProfileLegalForm={updateProfileLegalForm}
+                                            />
+                                        )
+                                    }
 
                                     <BlankCard changeCurrentPart={changeCurrentPart}/>
                                 </div>
