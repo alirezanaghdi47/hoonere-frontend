@@ -64,8 +64,6 @@ export const createProjectContractService = async (data) => {
 
         formData.append("data", encodeData(JSON.stringify(data)));
 
-        console.log(data);
-
         const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/create", formData, {
             headers: {
                 "Authorization": "Bearer " + token

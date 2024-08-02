@@ -155,7 +155,7 @@ export const addArticle = (articles, sections, content) => {
     updatedArticles.push({
         number: lastArticle.number,
         content: content,
-        isAdded: true
+        is_added: "1"
     });
 
     lastArticleSections.forEach(section => {

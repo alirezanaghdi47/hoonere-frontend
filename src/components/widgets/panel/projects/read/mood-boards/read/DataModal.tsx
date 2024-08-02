@@ -13,8 +13,6 @@ import MusicPlayer from "@/modules/MusicPlayer.tsx";
 const DataModal = ({moodBoard}) => {
     const navigate = useNavigate();
 
-    console.log(moodBoard)
-
     return (
         <Modal
             isOpen={true}

@@ -137,9 +137,6 @@ const DataTable = ({
                     <div className="w-150px">
                         <ul className="hstack flex-wrap list-unstyled justify-content-start align-items-start gap-2 p-0 m-0">
                             {
-                                console.log(row.original.members)
-                            }
-                            {
                                 row.original.members.map(member =>
                                     <li
                                         key={member.id}
@@ -148,7 +145,7 @@ const DataTable = ({
                                         data-tooltip-content={member.side_info.title}
                                     >
                                         <Chip
-                                            label="علیرضا نقدی"
+                                            label={member?.user_info?.first_name + " " + member?.user_info?.last_name}
                                             color={member.side_info.class_name}
                                         />
                                     </li>

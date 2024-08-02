@@ -38,8 +38,6 @@ const AdvanceFilter = ({readAllProjectMemberAction, filter, initialFilter, chang
         readAllProjectTypeAction.mutate();
     }, []);
 
-    console.log(readAllJobAction.data)
-
     return (
         <div className='row gy-5 w-100'>
             <div className="col-12 col-sm-6 col-md-4">

@@ -52,11 +52,6 @@ const ReactAccordionHeader = ({title, number, startAdornment, endAdornment}: {
             </div>
 
             <div className='d-flex justify-content-end align-items-center gap-5'>
-                <LuChevronDown
-                    size={20}
-                    className="text-gray-600"
-                />
-
                 {
                     endAdornment && (
                         <span className="d-flex justify-content-center align-items-center w-max h-max">
@@ -64,6 +59,11 @@ const ReactAccordionHeader = ({title, number, startAdornment, endAdornment}: {
                         </span>
                     )
                 }
+
+                <LuChevronDown
+                    size={20}
+                    className="text-gray-600"
+                />
             </div>
         </div>
     )

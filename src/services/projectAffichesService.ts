@@ -212,8 +212,6 @@ export const createProjectAfficheService = async (data) => {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        console.log(data)
-
         formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/affiches/create", formData, {

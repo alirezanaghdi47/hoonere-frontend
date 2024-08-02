@@ -45,7 +45,7 @@ const FormData = ({createProjectContractForm, createProjectContractAction}) => {
                                                 number={article.number}
                                                 initialEntered={article.number === 1}
                                                 endAdornment={
-                                                    article.isAdded ? (
+                                                    article.is_added === "1" ? (
                                                         <div className='ms-auto'>
                                                             <IconButton
                                                                 color="light-danger"

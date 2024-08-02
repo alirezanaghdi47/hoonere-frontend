@@ -123,7 +123,7 @@ const Content = () => {
         });
     }, []);
 
-    console.log(readProjectContractSectionAction.data?.data?.contract_info)
+    console.log(updateProjectContractForm.values.articles)
 
     return (
         <div

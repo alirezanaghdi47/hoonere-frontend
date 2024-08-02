@@ -55,18 +55,16 @@ const FormData = ({updateProjectContractForm, updateProjectContractAction}) => {
                                                 number={article.number}
                                                 initialEntered={article.number === 1}
                                                 endAdornment={
-                                                    !article.isAdded ? (
+                                                    article.is_added === "1" ? (
                                                         <div
-                                                            className="d-flex justify-content-end align-items-center gap-5">
-                                                            <div className='ms-auto'>
+                                                            className="d-flex justify-content-end align-items-center gap-5 ms-auto">
+                                                            <div>
                                                                 <IconButton
                                                                     color="light-warning"
                                                                     size="sm"
                                                                     data-tooltip-id="my-tooltip"
                                                                     data-tooltip-content="ویرایش ماده"
                                                                     onClick={(e) => {
-                                                                        e.stopPropagation();
-
                                                                         articleChangePart({
                                                                             number: article.number
                                                                         });

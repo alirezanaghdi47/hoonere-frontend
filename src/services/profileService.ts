@@ -20,8 +20,6 @@ export const updateProfileIdentityService = async (data) => {
         if (Object.keys(newspaper_file).length > 0) formData.append("newspaper_file", newspaper_file);
         formData.append("data", encodeData(JSON.stringify(rawData)));
 
-        console.log(data)
-
         const response = await axios.post(process.env.API_URL + "/panel/profile/updateIdentity", formData, {
             headers: {
                 "Authorization": "Bearer " + token

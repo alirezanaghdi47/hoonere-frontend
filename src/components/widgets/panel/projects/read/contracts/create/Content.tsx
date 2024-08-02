@@ -55,28 +55,35 @@ const Content = () => {
                 if (article.number === 1) {
                     return ({
                         ...article,
+                        is_added: "0",
                         contractors: [],
                         employers: []
                     });
                 } else if (article.number === 3) {
                     return ({
                         ...article,
+                        is_added: "0",
                         start_date: "",
                         end_date: ""
                     });
                 } else if (article.number === 4) {
                     return ({
                         ...article,
+                        is_added: "0",
                         total_price: 0,
                     });
                 } else if (article.number === 5) {
                     return ({
                         ...article,
+                        is_added: "0",
                         payment_state: "",
                         payments: [],
                     });
                 } else {
-                    return article;
+                    return ({
+                        ...article,
+                        is_added: "0"
+                    });
                 }
             }) : [],
             sections: readAllProjectContractSectionAction.data?.data?.contract_ready_sections ? readAllProjectContractSectionAction.data?.data.contract_ready_sections.map(section => {
@@ -131,8 +138,6 @@ const Content = () => {
     useLayoutEffect(() => {
         readAllProjectContractSectionAction.mutate();
     }, []);
-
-    console.log(createProjectContractForm.values)
 
     return (
         <div
