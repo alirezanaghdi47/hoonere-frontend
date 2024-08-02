@@ -1,12 +1,29 @@
 // libraries
-import {forwardRef} from "react";
+import {forwardRef, useImperativeHandle, useRef} from "react";
+import {useReactToPrint} from "react-to-print";
 import parse from "html-react-parser";
 
-const Print = forwardRef(({screenPlay}, ref) => {
-    console.log(screenPlay)
+const Print = forwardRef((props, ref) => {
+    const printRef = useRef();
+
+    const _handlePrint = useReactToPrint({
+        documentTitle: `screenplay-${ref?.current?.screenplay_info?.created}`,
+        content: () => printRef.current,
+    });
+
+    useImperativeHandle(ref, () => {
+        return {
+            print() {
+                setTimeout(() => {
+                    _handlePrint();
+                } , 100);
+            }
+        }
+    }, []);
+
     return (
         <div
-            ref={ref}
+            ref={printRef}
             className='d-none d-print-block'
         >
             <table>
@@ -14,7 +31,7 @@ const Print = forwardRef(({screenPlay}, ref) => {
                 <tr>
                     <td>
                         <div className="page">
-                            {parse(`${screenPlay?.description}`)}
+                            {parse(`${ref?.current?.screenplay_info?.description}`)}
                         </div>
                     </td>
                 </tr>

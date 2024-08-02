@@ -19,7 +19,7 @@ import IconButton from "@/modules/IconButton.tsx";
 import Button from "@/modules/Button.tsx";
 
 // utils
-import {cloneObject, removeNote} from "@/utils/functions.ts";
+import {removeNote} from "@/utils/functions.ts";
 
 const PaymentActionBar = ({article, section, createProjectContractForm}) => {
     return (
@@ -215,7 +215,10 @@ const PaymentWithPhases = ({article, section, createProjectContractForm}) => {
                                         data-tooltip-id="my-tooltip"
                                         data-tooltip-content="حذف تبصره"
                                         className='ms-auto'
-                                        onClick={() => createProjectContractForm.setFieldValue("notes", removeNote(cloneObject(createProjectContractForm.values.notes) , note.number))}
+                                        onClick={() => {
+                                            const notes = removeNote(createProjectContractForm.values.notes , note.number);
+                                            createProjectContractForm.setFieldValue("notes", notes);
+                                        }}
                                     >
                                         <LuTrash
                                             size={20}
@@ -294,7 +297,10 @@ const PaymentWithBill = ({article, section, createProjectContractForm}) => {
                                         data-tooltip-id="my-tooltip"
                                         data-tooltip-content="حذف تبصره"
                                         className='ms-auto'
-                                        onClick={() => createProjectContractForm.setFieldValue("notes", removeNote(cloneObject(createProjectContractForm.values.notes) , note.number))}
+                                        onClick={() => {
+                                            const notes = removeNote(createProjectContractForm.values.notes , note.number);
+                                            createProjectContractForm.setFieldValue("notes", notes);
+                                        }}
                                     >
                                         <LuTrash
                                             size={20}

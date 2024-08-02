@@ -2,7 +2,6 @@
 import {useMemo, useRef} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
-import {useReactToPrint} from 'react-to-print';
 import {format} from "date-fns-jalali";
 import {LuDownload, LuPen, LuTrash2} from "react-icons/lu";
 
@@ -39,18 +38,15 @@ const DataTable = ({
                        hideFilter
                    }) => {
     const params = useParams();
-    const printRef = useRef();
+    const parentRef = useRef();
     const {auth} = useAuthStore();
 
-    const _handlePrint = useReactToPrint({
-        content: () => printRef.current,
-    });
-
-    const readProjectContractSectionAction = useMutation({
+    const readProjectContractAction = useMutation({
         mutationFn: (data) => readProjectContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                _handlePrint();
+                parentRef.current.contract_info = data?.data?.contract_info;
+                parentRef.current.print();
             }
         }
     });
@@ -198,17 +194,27 @@ const DataTable = ({
                 header: () => 'ابزار',
                 cell: ({row}) => (
                     <div className="d-flex justify-content-start align-items-center gap-2 w-max">
-                        {/*<IconButton*/}
-                        {/*    color="light-info"*/}
-                        {/*    size="sm"*/}
-                        {/*    data-tooltip-id="my-tooltip"*/}
-                        {/*    data-tooltip-content="دانلود قرارداد"*/}
-                        {/*>*/}
-                        {/*    <LuDownload*/}
-                        {/*        size={20}*/}
-                        {/*        color="currentColor"*/}
-                        {/*    />*/}
-                        {/*</IconButton>*/}
+                        <IconButton
+                            color="light-info"
+                            size="sm"
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content="دانلود قرارداد"
+                            onClick={() => readProjectContractAction.mutate({
+                                project_id: row.original.project_id,
+                                contract_id: row.original.id.toString()
+                            })}
+                        >
+                            <LuDownload
+                                size={20}
+                                color="currentColor"
+                            />
+                        </IconButton>
+
+                        {
+                            !readProjectContractAction.isPending && (
+                                <Print ref={parentRef}/>
+                            )
+                        }
 
                         <IconButton
                             href={auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/update"}

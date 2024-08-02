@@ -52,7 +52,7 @@ const FormData = ({createProjectContractForm, createProjectContractAction}) => {
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
 
-                                                                const result = removeArticle(cloneObject(createProjectContractForm.values.articles) , cloneObject(createProjectContractForm.values.sections) , cloneObject(createProjectContractForm.values.notes) , article.number);
+                                                                const result = removeArticle(createProjectContractForm.values.articles , createProjectContractForm.values.sections , createProjectContractForm.values.notes , article.number);
 
                                                                 createProjectContractForm.setFieldValue("notes" , result.notes);
                                                                 createProjectContractForm.setFieldValue("sections", result.sections);

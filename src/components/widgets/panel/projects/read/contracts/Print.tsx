@@ -1,16 +1,33 @@
 // libraries
-import {forwardRef} from "react";
+import {forwardRef, useImperativeHandle, useRef} from "react";
+import {useReactToPrint} from "react-to-print";
 
-const Print = forwardRef(({contract}, ref) => {
-    console.log(contract)
+const Print = forwardRef((props, ref) => {
+    const printRef = useRef();
+
+    const _handlePrint = useReactToPrint({
+        documentTitle: `contract-${ref?.current?.contract_info?.contract_number}`,
+        content: () => printRef.current,
+    });
+
+    useImperativeHandle(ref, () => {
+        return {
+            print() {
+                setTimeout(() => {
+                    _handlePrint();
+                } , 100);
+            }
+        }
+    }, []);
+
     return (
         <div
-            ref={ref}
+            ref={printRef}
             className='d-none d-print-block'
         >
 
             <div className="page__header">
-
+                {ref?.current?.contract_info?.contract_number}
             </div>
 
             <div className="page__footer">
@@ -265,6 +282,6 @@ const Print = forwardRef(({contract}, ref) => {
             </table>
         </div>
     )
-})
+});
 
 export default Print;

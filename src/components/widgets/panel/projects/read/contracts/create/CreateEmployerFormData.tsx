@@ -17,8 +17,7 @@ import Button from "@/modules/Button.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 
 // utils
-import {cloneObject, removeNote} from "@/utils/functions.ts";
-import representatives from "@/components/widgets/panel/profile/identity/Representatives.tsx";
+import {removeNote} from "@/utils/functions.ts";
 
 const BlankEmployerCard = ({createProjectContractForm}) => {
     const {modal, _handleShowModal, _handleHideModal} = useModal();
@@ -307,7 +306,10 @@ const CreateEmployerFormData = ({article, section, createProjectContractForm}) =
                                         data-tooltip-id="my-tooltip"
                                         data-tooltip-content="حذف تبصره"
                                         className='ms-auto'
-                                        onClick={() => createProjectContractForm.setFieldValue("notes", removeNote(cloneObject(createProjectContractForm.values.notes), note.number))}
+                                        onClick={() => {
+                                            const notes = removeNote(createProjectContractForm.values.notes , note.number);
+                                            createProjectContractForm.setFieldValue("notes", notes);
+                                        }}
                                     >
                                         <LuTrash
                                             size={20}

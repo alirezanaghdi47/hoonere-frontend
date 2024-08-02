@@ -10,7 +10,7 @@ import IconButton from "@/modules/IconButton.tsx";
 import Checkbox from "@/modules/Checkbox.tsx";
 
 // utils
-import {cloneObject, removeNote, removeSection, toggleSection} from "@/utils/functions.ts";
+import {removeNote, removeSection, toggleSection} from "@/utils/functions.ts";
 
 const CreateRegularFormData = ({article, section, updateProjectContractForm}) => {
     return (
@@ -28,10 +28,10 @@ const CreateRegularFormData = ({article, section, updateProjectContractForm}) =>
                             value={true}
                             checked={!updateProjectContractForm.values.sections.find(item => item.number === section.number && item.article_number === section.article_number)?.isOff}
                             onChange={(value) => {
-                                // const result = toggleSection(cloneObject(updateProjectContractForm.values.sections) , cloneObject(updateProjectContractForm.values.notes) , section.number);
-                                //
-                                // updateProjectContractForm.setFieldValue("notes" , result.notes);
-                                // updateProjectContractForm.setFieldValue("sections" , result.sections);
+                                const result = toggleSection(updateProjectContractForm.values.sections, updateProjectContractForm.values.notes, article.number, section.number);
+
+                                updateProjectContractForm.setFieldValue("notes", result.notes);
+                                updateProjectContractForm.setFieldValue("sections", result.sections);
                             }}
                         />
                     )
@@ -63,7 +63,7 @@ const CreateRegularFormData = ({article, section, updateProjectContractForm}) =>
                             data-tooltip-content="حذف بند"
                             className='ms-auto'
                             onClick={() => {
-                                const result = removeSection(cloneObject(updateProjectContractForm.values.sections), cloneObject(updateProjectContractForm.values.notes), section.number);
+                                const result = removeSection(updateProjectContractForm.values.sections, updateProjectContractForm.values.notes , article.number, section.number);
 
                                 updateProjectContractForm.setFieldValue("notes", result.notes);
                                 updateProjectContractForm.setFieldValue("sections", result.sections);
@@ -115,7 +115,10 @@ const CreateRegularFormData = ({article, section, updateProjectContractForm}) =>
                                         data-tooltip-id="my-tooltip"
                                         data-tooltip-content="حذف تبصره"
                                         className='ms-auto'
-                                        onClick={() => updateProjectContractForm.setFieldValue("notes", removeNote(cloneObject(updateProjectContractForm.values.notes) , note.number))}
+                                        onClick={() => {
+                                            const notes = removeNote(updateProjectContractForm.values.notes , note.number);
+                                            updateProjectContractForm.setFieldValue("notes", notes);
+                                        }}
                                     >
                                         <LuTrash
                                             size={20}

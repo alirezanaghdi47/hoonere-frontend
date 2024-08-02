@@ -15,6 +15,7 @@ import TextInput from "@/modules/TextInput.tsx";
 
 //utils
 import {createArticleSchema, createSectionSchema, createNoteSchema} from "@/utils/validations.ts";
+import {addArticle, addNote, addSection} from "@/utils/functions.ts";
 
 export const BlankArticle = ({changeCurrentPart}) => {
     const article = document.querySelector("div.szh-accordion__item-content");
@@ -98,11 +99,12 @@ export const BlankNote = ({changeCurrentPart}) => {
 }
 
 export const Contract = ({children, createProjectContractForm}) => {
-    const {part , currentPart , changePart, resetPart, changeCurrentPart} = usePart(null, "read");
+    const {part, currentPart, changePart, resetPart, changeCurrentPart} = usePart(null, "read");
 
     useEffect(() => {
         changePart({
             articlesLength: createProjectContractForm.values.articles.length,
+            sections: createProjectContractForm.values.sections
         });
     }, [createProjectContractForm.values.articles]);
 
@@ -179,7 +181,8 @@ export const Section = ({children, article, section, createProjectContractForm})
     }, [createProjectContractForm.values.notes]);
 
     return (
-        <div className={`d-flex flex-column justify-content-start items-center gap-5 w-100 ${section.isOff ? " opacity-25" : ""}`}>
+        <div
+            className={`d-flex flex-column justify-content-start items-center gap-5 w-100 ${section.isOff ? " opacity-25" : ""}`}>
             {children}
 
             {
@@ -216,15 +219,10 @@ export const CreateArticle = ({part, resetPart, createProjectContractForm}) => {
         },
         validationSchema: createArticleSchema,
         onSubmit: async (result, {resetForm}) => {
-            const newArray = createProjectContractForm.values.articles.toSpliced(part?.articlesLength - 1, 0, {
-                number: part?.articlesLength,
-                content: result.article,
-                isAdded: true
-            });
+            const data = addArticle(createProjectContractForm.values.articles, part?.sections, result.article);
 
-            newArray[newArray.length - 1].number = newArray.length;
-
-            createProjectContractForm.setFieldValue("articles", newArray);
+            createProjectContractForm.setFieldValue("articles", data.articles);
+            createProjectContractForm.setFieldValue("sections", data.sections);
 
             resetForm();
         },
@@ -284,16 +282,9 @@ export const CreateSection = ({part, resetPart, createProjectContractForm}) => {
         },
         validationSchema: createSectionSchema,
         onSubmit: async (result, {resetForm}) => {
-            const newArray = [...createProjectContractForm.values.sections, {
-                article_number: part?.articleNumber,
-                number: part?.sectionsLength + 1,
-                content: result.section,
-                isAdded: true,
-                isOff: false,
-                isStatic: false
-            }];
+            const sections = addSection(createProjectContractForm.values.sections, result.section, part?.articleNumber);
 
-            createProjectContractForm.setFieldValue("sections", newArray);
+            createProjectContractForm.setFieldValue("sections", sections);
 
             resetForm();
         },
@@ -353,15 +344,9 @@ export const CreateNote = ({part, resetPart, createProjectContractForm}) => {
         },
         validationSchema: createNoteSchema,
         onSubmit: async (result, {resetForm}) => {
-            const newArray = [...createProjectContractForm.values.notes, {
-                article_number: part?.articleNumber,
-                section_number: part?.sectionNumber,
-                number: part?.notesLength + 1,
-                content: result.note,
-                isAdded: true
-            }];
+            const notes = addNote(createProjectContractForm.values.notes, result.note, part?.articleNumber, part?.sectionNumber);
 
-            createProjectContractForm.setFieldValue("notes", newArray);
+            createProjectContractForm.setFieldValue("notes", notes);
 
             resetForm();
         },

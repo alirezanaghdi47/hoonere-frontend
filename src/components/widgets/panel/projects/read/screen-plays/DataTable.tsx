@@ -1,8 +1,7 @@
 // libraries
 import {useMemo, useRef} from "react";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
-import ReactToPrint from 'react-to-print';
 import {LuDownload, LuPen, LuTrash2} from "react-icons/lu";
 
 // components
@@ -21,7 +20,7 @@ import IconButton from "@/modules/IconButton.tsx";
 import Typography from "@/modules/Typography.tsx";
 
 // services
-import {deleteProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
+import {deleteProjectScreenPlayService, readProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
@@ -40,10 +39,18 @@ const DataTable = ({
                        hideFilter
                    }) => {
     const params = useParams();
-    const location = useLocation();
-    const navigate = useNavigate();
-    const printRef = useRef();
+    const parentRef = useRef();
     const {auth} = useAuthStore();
+
+    const readProjectScreenPlayAction = useMutation({
+        mutationFn: (data) => readProjectScreenPlayService(data),
+        onSuccess: async (data) => {
+            if (!data.error) {
+                parentRef.current.screenplay_info = data?.data?.screenplay_info;
+                parentRef.current.print();
+            }
+        }
+    });
 
     const deleteProjectScreenPlayAction = useMutation({
         mutationFn: (data: IDeleteProjectScreenPlay) => deleteProjectScreenPlayService(data),
@@ -125,41 +132,27 @@ const DataTable = ({
                 header: () => 'ابزار',
                 cell: ({row}) => (
                     <div className="d-flex justify-content-start align-items-center gap-2 w-max">
-                        {/*<IconButton*/}
-                        {/*    color="light-info"*/}
-                        {/*    size="sm"*/}
-                        {/*    onClick={() => navigate(auth.panel_url + "projects/" + params.id + "/screen-plays/" + row.original.id, {state: {background: location}})}*/}
-                        {/*    data-tooltip-id="my-tooltip"*/}
-                        {/*    data-tooltip-content="جزییات"*/}
-                        {/*>*/}
-                        {/*    <LuInfo*/}
-                        {/*        size={20}*/}
-                        {/*        color="currentColor"*/}
-                        {/*    />*/}
-                        {/*</IconButton>*/}
+                        <IconButton
+                            color="light-info"
+                            size="sm"
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content="دانلود فیلم نامه"
+                            onClick={() => readProjectScreenPlayAction.mutate({
+                                project_id: row.original.project_id,
+                                screenplay_id: row.original.id.toString()
+                            })}
+                        >
+                            <LuDownload
+                                size={20}
+                                color="currentColor"
+                            />
+                        </IconButton>
 
-                        <ReactToPrint
-                            documentTitle={`screenplay-${row.original.created_at}`}
-                            trigger={() => (
-                                <IconButton
-                                    color="light-info"
-                                    size="sm"
-                                    data-tooltip-id="my-tooltip"
-                                    data-tooltip-content="دانلود فیلم نامه"
-                                >
-                                    <LuDownload
-                                        size={20}
-                                        color="currentColor"
-                                    />
-                                </IconButton>
-                            )}
-                            content={() => printRef.current}
-                        />
-
-                        <Print
-                            ref={printRef}
-                            screenPlay={row.original}
-                        />
+                        {
+                            !readProjectScreenPlayAction.isPending && (
+                                <Print ref={parentRef}/>
+                            )
+                        }
 
                         <IconButton
                             href={auth.panel_url + "projects/" + row.original.project_id + "/screen-plays/" + row.original.id + "/update"}
