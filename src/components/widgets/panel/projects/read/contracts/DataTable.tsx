@@ -137,6 +137,9 @@ const DataTable = ({
                     <div className="w-150px">
                         <ul className="hstack flex-wrap list-unstyled justify-content-start align-items-start gap-2 p-0 m-0">
                             {
+                                console.log(row.original.members)
+                            }
+                            {
                                 row.original.members.map(member =>
                                     <li
                                         key={member.id}

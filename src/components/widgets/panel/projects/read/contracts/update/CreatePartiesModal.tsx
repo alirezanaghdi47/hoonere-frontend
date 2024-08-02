@@ -20,7 +20,7 @@ import {readAllJobService} from "@/services/publicService.ts";
 // utils
 import {createPartiesSchema} from "@/utils/validations";
 
-const CreatePartiesModal = ({modal, _handleHideModal, createProjectContractForm}) => {
+const CreatePartiesModal = ({modal, _handleHideModal, updateProjectContractForm}) => {
     const params = useParams();
 
     const readAllJobAction = useMutation({
@@ -40,13 +40,17 @@ const CreatePartiesModal = ({modal, _handleHideModal, createProjectContractForm}
         validationSchema: createPartiesSchema,
         onSubmit: async (result, {resetForm}) => {
             if (modal?.data?.from === "employer") {
-                const newArray = [...createProjectContractForm.values.articles[0].employers, result.user_info];
+                const newArray = [...updateProjectContractForm.values.articles[0].employers, result.user_info];
 
-                createProjectContractForm.setFieldValue("articles[0].employers", newArray);
+                updateProjectContractForm.setFieldValue("articles[0].employers", newArray);
+
+                updateProjectContractForm.setFieldValue(`sections[${updateProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${updateProjectContractForm.values.articles.length} ماده و ${updateProjectContractForm.values.articles[0].employers.length + updateProjectContractForm.values.articles[0].contractors.length + 1} نسخه تنظیم گردیده و هر کدام از ${updateProjectContractForm.values.articles[0].employers.length + updateProjectContractForm.values.articles[0].contractors.length + 1} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
             } else if (modal?.data?.from === "contractor") {
-                const newArray = [...createProjectContractForm.values.articles[0].contractors, result.user_info];
+                const newArray = [...updateProjectContractForm.values.articles[0].contractors, result.user_info];
 
-                createProjectContractForm.setFieldValue("articles[0].contractors", newArray);
+                updateProjectContractForm.setFieldValue("articles[0].contractors", newArray);
+
+                updateProjectContractForm.setFieldValue(`sections[${updateProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${updateProjectContractForm.values.articles.length} ماده و ${updateProjectContractForm.values.articles[0].employers.length + updateProjectContractForm.values.articles[0].contractors.length + 1} نسخه تنظیم گردیده و هر کدام از ${updateProjectContractForm.values.articles[0].employers.length + updateProjectContractForm.values.articles[0].contractors.length + 1} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
             }
 
             _handleHideModal();

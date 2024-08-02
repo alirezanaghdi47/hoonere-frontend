@@ -4,9 +4,12 @@ import {LuTrash} from "react-icons/lu";
 
 // components
 import {Contract, Article} from "@/components/partials/panel/projects/read/contracts/create/Tools.tsx";
-import CreateEmployerFormData from "@/components/widgets/panel/projects/read/contracts/create/CreateEmployerFormData.tsx";
-import CreateContractorFormData from "@/components/widgets/panel/projects/read/contracts/create/CreateContractorFormData.tsx";
-import CreateExecutionTimeFormData from "@/components/widgets/panel/projects/read/contracts/create/CreateExecutionTimeFormData.tsx";
+import CreateEmployerFormData
+    from "@/components/widgets/panel/projects/read/contracts/create/CreateEmployerFormData.tsx";
+import CreateContractorFormData
+    from "@/components/widgets/panel/projects/read/contracts/create/CreateContractorFormData.tsx";
+import CreateExecutionTimeFormData
+    from "@/components/widgets/panel/projects/read/contracts/create/CreateExecutionTimeFormData.tsx";
 import CreateAmountFormData from "@/components/widgets/panel/projects/read/contracts/create/CreateAmountFormData.tsx";
 import CreatePaymentFormData from "@/components/widgets/panel/projects/read/contracts/create/CreatePaymentFormData.tsx";
 import CreateRegularFormData from "@/components/widgets/panel/projects/read/contracts/create/CreateRegularFormData.tsx";
@@ -20,7 +23,7 @@ import IconButton from "@/modules/IconButton.tsx";
 import useAuthStore from "@/stores/authStore.ts";
 
 // utils
-import {cloneObject, removeArticle} from "@/utils/functions.ts";
+import {removeArticle} from "@/utils/functions.ts";
 
 const FormData = ({createProjectContractForm, createProjectContractAction}) => {
     const params = useParams();
@@ -43,27 +46,30 @@ const FormData = ({createProjectContractForm, createProjectContractAction}) => {
                                                 initialEntered={article.number === 1}
                                                 endAdornment={
                                                     article.isAdded ? (
-                                                        <IconButton
-                                                            color="light-danger"
-                                                            size="sm"
-                                                            data-tooltip-id="my-tooltip"
-                                                            data-tooltip-content="حذف ماده"
-                                                            className='ms-auto'
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
+                                                        <div className='ms-auto'>
+                                                            <IconButton
+                                                                color="light-danger"
+                                                                size="sm"
+                                                                data-tooltip-id="my-tooltip"
+                                                                data-tooltip-content="حذف ماده"
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
 
-                                                                const result = removeArticle(createProjectContractForm.values.articles , createProjectContractForm.values.sections , createProjectContractForm.values.notes , article.number);
+                                                                    const result = removeArticle(createProjectContractForm.values.articles, createProjectContractForm.values.sections, createProjectContractForm.values.notes, article.number);
 
-                                                                createProjectContractForm.setFieldValue("notes" , result.notes);
-                                                                createProjectContractForm.setFieldValue("sections", result.sections);
-                                                                createProjectContractForm.setFieldValue("articles" , result.articles);
-                                                            }}
-                                                        >
-                                                            <LuTrash
-                                                                size={20}
-                                                                color="currentColor"
-                                                            />
-                                                        </IconButton>
+                                                                    createProjectContractForm.setFieldValue("notes", result.notes);
+                                                                    createProjectContractForm.setFieldValue("sections", result.sections);
+                                                                    createProjectContractForm.setFieldValue("articles", result.articles);
+
+                                                                    createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${createProjectContractForm.values.articles.length - 1} ماده و ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length} نسخه تنظیم گردیده و هر کدام از ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
+                                                                }}
+                                                            >
+                                                                <LuTrash
+                                                                    size={20}
+                                                                    color="currentColor"
+                                                                />
+                                                            </IconButton>
+                                                        </div>
                                                     ) : null
                                                 }
                                             >
@@ -76,7 +82,7 @@ const FormData = ({createProjectContractForm, createProjectContractAction}) => {
                                                             <CreateEmployerFormData
                                                                 key={`${article.number}-1`}
                                                                 article={article}
-                                                                section={{number: 1 , article_number: 1 , content: ""}}
+                                                                section={{number: 1, article_number: 1, content: ""}}
                                                                 createProjectContractForm={createProjectContractForm}
                                                             />
                                                         )
@@ -87,7 +93,7 @@ const FormData = ({createProjectContractForm, createProjectContractAction}) => {
                                                             <CreateContractorFormData
                                                                 key={`${article.number}-2`}
                                                                 article={article}
-                                                                section={{number: 2 , article_number: 1 , content: ""}}
+                                                                section={{number: 2, article_number: 1, content: ""}}
                                                                 createProjectContractForm={createProjectContractForm}
                                                             />
                                                         )
@@ -98,7 +104,7 @@ const FormData = ({createProjectContractForm, createProjectContractAction}) => {
                                                             <CreateExecutionTimeFormData
                                                                 key={`${article.number}-1`}
                                                                 article={article}
-                                                                section={{number: 1 , article_number: 3 , content: ""}}
+                                                                section={{number: 1, article_number: 3, content: ""}}
                                                                 createProjectContractForm={createProjectContractForm}
                                                             />
                                                         )
@@ -109,7 +115,7 @@ const FormData = ({createProjectContractForm, createProjectContractAction}) => {
                                                             <CreateAmountFormData
                                                                 key={`${article.number}-1`}
                                                                 article={article}
-                                                                section={{number: 1 , article_number: 4 , content: ""}}
+                                                                section={{number: 1, article_number: 4, content: ""}}
                                                                 createProjectContractForm={createProjectContractForm}
                                                             />
                                                         )
@@ -120,7 +126,7 @@ const FormData = ({createProjectContractForm, createProjectContractAction}) => {
                                                             <CreatePaymentFormData
                                                                 key={`${article.number}-1`}
                                                                 article={article}
-                                                                section={{number: 1 , article_number: 5 , content: ""}}
+                                                                section={{number: 1, article_number: 5, content: ""}}
                                                                 createProjectContractForm={createProjectContractForm}
                                                             />
                                                         )

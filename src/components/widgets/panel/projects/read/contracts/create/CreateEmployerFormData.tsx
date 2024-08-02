@@ -102,19 +102,24 @@ const EmployerRealCard = ({employer, createProjectContractForm}) => {
                 {employer?.mobile ? employer?.mobile : "نا معلوم"}
             </Typography>
 
-            <IconButton
-                color="light-danger"
-                size="sm"
-                data-tooltip-id="my-tooltip"
-                data-tooltip-content="حذف کارفرما"
-                className='ms-auto'
-                onClick={() => createProjectContractForm.setFieldValue("articles[0].employers", createProjectContractForm.values.articles[0].employers.filter(item => JSON.stringify(item) !== JSON.stringify(employer)))}
-            >
-                <LuTrash
-                    size={20}
-                    color="currentColor"
-                />
-            </IconButton>
+            <div className='ms-auto'>
+                <IconButton
+                    color="light-danger"
+                    size="sm"
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content="حذف کارفرما"
+                    onClick={() => {
+                        createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${createProjectContractForm.values.articles.length + 1} ماده و ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length - 1} نسخه تنظیم گردیده و هر کدام از ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length - 1} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
+
+                        createProjectContractForm.setFieldValue("articles[0].employers", createProjectContractForm.values.articles[0].employers.filter(item => JSON.stringify(item) !== JSON.stringify(employer)));
+                    }}
+                >
+                    <LuTrash
+                        size={20}
+                        color="currentColor"
+                    />
+                </IconButton>
+            </div>
         </li>
     )
 }
@@ -205,19 +210,20 @@ const EmployerLegalCard = ({employer, createProjectContractForm}) => {
                 )
             }
 
-            <IconButton
-                color="light-danger"
-                size="sm"
-                data-tooltip-id="my-tooltip"
-                data-tooltip-content="حذف کارفرما"
-                className='ms-auto'
-                onClick={() => createProjectContractForm.setFieldValue("articles[0].employers", createProjectContractForm.values.articles[0].employers.filter(item => JSON.stringify(item) !== JSON.stringify(employer)))}
-            >
-                <LuTrash
-                    size={20}
-                    color="currentColor"
-                />
-            </IconButton>
+            <div className='ms-auto'>
+                <IconButton
+                    color="light-danger"
+                    size="sm"
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content="حذف کارفرما"
+                    onClick={() => createProjectContractForm.setFieldValue("articles[0].employers", createProjectContractForm.values.articles[0].employers.filter(item => JSON.stringify(item) !== JSON.stringify(employer)))}
+                >
+                    <LuTrash
+                        size={20}
+                        color="currentColor"
+                    />
+                </IconButton>
+            </div>
         </li>
     )
 }
@@ -300,22 +306,23 @@ const CreateEmployerFormData = ({article, section, createProjectContractForm}) =
 
                             {
                                 note.isAdded && (
-                                    <IconButton
-                                        color="light-danger"
-                                        size="sm"
-                                        data-tooltip-id="my-tooltip"
-                                        data-tooltip-content="حذف تبصره"
-                                        className='ms-auto'
-                                        onClick={() => {
-                                            const notes = removeNote(createProjectContractForm.values.notes , note.number);
-                                            createProjectContractForm.setFieldValue("notes", notes);
-                                        }}
-                                    >
-                                        <LuTrash
-                                            size={20}
-                                            color="currentColor"
-                                        />
-                                    </IconButton>
+                                    <div className='ms-auto'>
+                                        <IconButton
+                                            color="light-danger"
+                                            size="sm"
+                                            data-tooltip-id="my-tooltip"
+                                            data-tooltip-content="حذف تبصره"
+                                            onClick={() => {
+                                                const notes = removeNote(createProjectContractForm.values.notes , note.number);
+                                                createProjectContractForm.setFieldValue("notes", notes);
+                                            }}
+                                        >
+                                            <LuTrash
+                                                size={20}
+                                                color="currentColor"
+                                            />
+                                        </IconButton>
+                                    </div>
                                 )
                             }
                         </div>

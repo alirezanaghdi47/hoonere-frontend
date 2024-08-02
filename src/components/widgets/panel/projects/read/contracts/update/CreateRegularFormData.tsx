@@ -1,42 +1,47 @@
 // libraries
-import {LuTrash} from "react-icons/lu";
+import {LuPen, LuTrash} from "react-icons/lu";
 
 // components
 import {Note, Section} from "@/components/partials/panel/projects/read/contracts/update/Tools.tsx";
 
+// hooks
+import usePart from "@/hooks/usePart.tsx";
+
 // modules
 import Typography from "@/modules/Typography.tsx";
 import IconButton from "@/modules/IconButton.tsx";
-import Checkbox from "@/modules/Checkbox.tsx";
 
 // utils
-import {removeNote, removeSection, toggleSection} from "@/utils/functions.ts";
+import {removeNote, removeSection} from "@/utils/functions.ts";
 
 const CreateRegularFormData = ({article, section, updateProjectContractForm}) => {
+    const {
+        part: notePart,
+        currentPart: noteCurrentPart,
+        changePart: noteChangePart,
+        resetPart: noteResetPart,
+        changeCurrentPart: noteChangeCurrentPart
+    } = usePart(null, "read");
+
+    const {
+        part: sectionPart,
+        currentPart: sectionCurrentPart,
+        changePart: sectionChangePart,
+        resetPart: sectionResetPart,
+        changeCurrentPart: sectionChangeCurrentPart
+    } = usePart(null, "read");
+
     return (
         <Section
             article={article}
             section={section}
             updateProjectContractForm={updateProjectContractForm}
+            part={sectionPart}
+            currentPart={sectionCurrentPart}
+            resetPart={sectionResetPart}
+            changeCurrentPart={sectionChangeCurrentPart}
         >
             <div className='d-flex justify-content-start align-items-center gap-5 w-100'>
-                {
-                    !section.isAdded && (
-                        <Checkbox
-                            id={`${article.number}-${section.number}`}
-                            name={`${article.number}-${section.number}`}
-                            value={true}
-                            checked={!updateProjectContractForm.values.sections.find(item => item.number === section.number && item.article_number === section.article_number)?.isOff}
-                            onChange={(value) => {
-                                const result = toggleSection(updateProjectContractForm.values.sections, updateProjectContractForm.values.notes, article.number, section.number);
-
-                                updateProjectContractForm.setFieldValue("notes", result.notes);
-                                updateProjectContractForm.setFieldValue("sections", result.sections);
-                            }}
-                        />
-                    )
-                }
-
                 <Typography
                     size="sm"
                     color="muted"
@@ -54,28 +59,46 @@ const CreateRegularFormData = ({article, section, updateProjectContractForm}) =>
                     {section.content}
                 </Typography>
 
-                {
-                    section.isAdded && (
-                        <IconButton
-                            color="light-danger"
-                            size="sm"
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="حذف بند"
-                            className='ms-auto'
-                            onClick={() => {
-                                const result = removeSection(updateProjectContractForm.values.sections, updateProjectContractForm.values.notes , article.number, section.number);
+                <div className='ms-auto'>
+                    <IconButton
+                        color="light-warning"
+                        size="sm"
+                        data-tooltip-id="my-tooltip"
+                        data-tooltip-content="ویرایش بند"
+                        onClick={() => {
+                            sectionChangePart({
+                                article_number: section.article_number,
+                                number: section.number
+                            });
+                            sectionChangeCurrentPart("update");
+                        }}
+                    >
+                        <LuPen
+                            size={20}
+                            color="currentColor"
+                        />
+                    </IconButton>
+                </div>
 
-                                updateProjectContractForm.setFieldValue("notes", result.notes);
-                                updateProjectContractForm.setFieldValue("sections", result.sections);
-                            }}
-                        >
-                            <LuTrash
-                                size={20}
-                                color="currentColor"
-                            />
-                        </IconButton>
-                    )
-                }
+                <div>
+                    <IconButton
+                        color="light-danger"
+                        size="sm"
+                        data-tooltip-id="my-tooltip"
+                        data-tooltip-content="حذف بند"
+                        onClick={() => {
+                            const result = removeSection(updateProjectContractForm.values.sections, updateProjectContractForm.values.notes, article.number, section.number);
+
+                            updateProjectContractForm.setFieldValue("notes", result.notes);
+                            updateProjectContractForm.setFieldValue("sections", result.sections);
+                        }}
+                    >
+                        <LuTrash
+                            size={20}
+                            color="currentColor"
+                        />
+                    </IconButton>
+                </div>
             </div>
 
             {
@@ -86,6 +109,9 @@ const CreateRegularFormData = ({article, section, updateProjectContractForm}) =>
                         section={section}
                         note={note}
                         updateProjectContractForm={updateProjectContractForm}
+                        part={notePart}
+                        currentPart={noteCurrentPart}
+                        resetPart={noteResetPart}
                     >
                         <div className='d-flex justify-content-start align-items-center gap-5 w-100'>
                             <Typography
@@ -107,26 +133,45 @@ const CreateRegularFormData = ({article, section, updateProjectContractForm}) =>
                                 {note.content}
                             </Typography>
 
-                            {
-                                note.isAdded && (
-                                    <IconButton
-                                        color="light-danger"
-                                        size="sm"
-                                        data-tooltip-id="my-tooltip"
-                                        data-tooltip-content="حذف تبصره"
-                                        className='ms-auto'
-                                        onClick={() => {
-                                            const notes = removeNote(updateProjectContractForm.values.notes , note.number);
-                                            updateProjectContractForm.setFieldValue("notes", notes);
-                                        }}
-                                    >
-                                        <LuTrash
-                                            size={20}
-                                            color="currentColor"
-                                        />
-                                    </IconButton>
-                                )
-                            }
+                            <div className='ms-auto'>
+                                <IconButton
+                                    color="light-warning"
+                                    size="sm"
+                                    data-tooltip-id="my-tooltip"
+                                    data-tooltip-content="ویرایش تبصره"
+                                    onClick={() => {
+                                        noteChangePart({
+                                            article_number: note.article_number,
+                                            section_number: note.section_number,
+                                            number: note.number
+                                        });
+                                        noteChangeCurrentPart("update");
+                                    }}
+                                >
+                                    <LuPen
+                                        size={20}
+                                        color="currentColor"
+                                    />
+                                </IconButton>
+                            </div>
+
+                            <div>
+                                <IconButton
+                                    color="light-danger"
+                                    size="sm"
+                                    data-tooltip-id="my-tooltip"
+                                    data-tooltip-content="حذف تبصره"
+                                    onClick={() => {
+                                        const notes = removeNote(updateProjectContractForm.values.notes, note.number);
+                                        updateProjectContractForm.setFieldValue("notes", notes);
+                                    }}
+                                >
+                                    <LuTrash
+                                        size={20}
+                                        color="currentColor"
+                                    />
+                                </IconButton>
+                            </div>
                         </div>
                     </Note>
                 )

@@ -224,6 +224,8 @@ export const CreateArticle = ({part, resetPart, createProjectContractForm}) => {
             createProjectContractForm.setFieldValue("articles", data.articles);
             createProjectContractForm.setFieldValue("sections", data.sections);
 
+            createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${createProjectContractForm.values.articles.length + 1} ماده و ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length} نسخه تنظیم گردیده و هر کدام از ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
+
             resetForm();
         },
         onReset: async () => {

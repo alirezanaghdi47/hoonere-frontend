@@ -132,7 +132,7 @@ const Content = () => {
         readAllProjectContractSectionAction.mutate();
     }, []);
 
-    console.log("notes" , createProjectContractForm.values.notes)
+    console.log(createProjectContractForm.values)
 
     return (
         <div

@@ -43,10 +43,14 @@ const CreatePartiesModal = ({modal, _handleHideModal, createProjectContractForm}
                 const newArray = [...createProjectContractForm.values.articles[0].employers, result.user_info];
 
                 createProjectContractForm.setFieldValue("articles[0].employers", newArray);
+
+                createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${createProjectContractForm.values.articles.length} ماده و ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length + 1} نسخه تنظیم گردیده و هر کدام از ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length + 1} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
             } else if (modal?.data?.from === "contractor") {
                 const newArray = [...createProjectContractForm.values.articles[0].contractors, result.user_info];
 
                 createProjectContractForm.setFieldValue("articles[0].contractors", newArray);
+
+                createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${createProjectContractForm.values.articles.length} ماده و ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length + 1} نسخه تنظیم گردیده و هر کدام از ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length + 1} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
             }
 
             _handleHideModal();

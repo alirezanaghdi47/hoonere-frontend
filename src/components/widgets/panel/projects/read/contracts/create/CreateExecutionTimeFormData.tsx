@@ -126,22 +126,23 @@ const CreateExecutionTimeFormData = ({article, section, createProjectContractFor
 
                             {
                                 note.isAdded && (
-                                    <IconButton
-                                        color="light-danger"
-                                        size="sm"
-                                        data-tooltip-id="my-tooltip"
-                                        data-tooltip-content="حذف تبصره"
-                                        className='ms-auto'
-                                        onClick={() => {
-                                            const notes = removeNote(createProjectContractForm.values.notes , note.number);
-                                            createProjectContractForm.setFieldValue("notes", notes);
-                                        }}
-                                    >
-                                        <LuTrash
-                                            size={20}
-                                            color="currentColor"
-                                        />
-                                    </IconButton>
+                                    <div className='ms-auto'>
+                                        <IconButton
+                                            color="light-danger"
+                                            size="sm"
+                                            data-tooltip-id="my-tooltip"
+                                            data-tooltip-content="حذف تبصره"
+                                            onClick={() => {
+                                                const notes = removeNote(createProjectContractForm.values.notes , note.number);
+                                                createProjectContractForm.setFieldValue("notes", notes);
+                                            }}
+                                        >
+                                            <LuTrash
+                                                size={20}
+                                                color="currentColor"
+                                            />
+                                        </IconButton>
+                                    </div>
                                 )
                             }
                         </div>

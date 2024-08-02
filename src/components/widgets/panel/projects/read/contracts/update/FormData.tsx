@@ -1,15 +1,21 @@
 // libraries
 import {useParams} from "react-router-dom";
-import {LuTrash} from "react-icons/lu";
+import {LuPen, LuTrash} from "react-icons/lu";
 
 // components
 import {Contract, Article} from "@/components/partials/panel/projects/read/contracts/update/Tools.tsx";
-import CreateEmployerFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateEmployerFormData.tsx";
-import CreateContractorFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateContractorFormData.tsx";
-import CreateExecutionTimeFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateExecutionTimeFormData.tsx";
+import CreateEmployerFormData
+    from "@/components/widgets/panel/projects/read/contracts/update/CreateEmployerFormData.tsx";
+import CreateContractorFormData
+    from "@/components/widgets/panel/projects/read/contracts/update/CreateContractorFormData.tsx";
+import CreateExecutionTimeFormData
+    from "@/components/widgets/panel/projects/read/contracts/update/CreateExecutionTimeFormData.tsx";
 import CreateAmountFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateAmountFormData.tsx";
 import CreatePaymentFormData from "@/components/widgets/panel/projects/read/contracts/update/CreatePaymentFormData.tsx";
 import CreateRegularFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateRegularFormData.tsx";
+
+// hooks
+import usePart from "@/hooks/usePart.tsx";
 
 // modules
 import Accordion from "@/modules/Accordion.tsx";
@@ -20,11 +26,18 @@ import IconButton from "@/modules/IconButton.tsx";
 import useAuthStore from "@/stores/authStore.ts";
 
 // utils
-import {cloneObject, removeArticle} from "@/utils/functions.ts";
+import {removeArticle} from "@/utils/functions.ts";
 
 const FormData = ({updateProjectContractForm, updateProjectContractAction}) => {
     const params = useParams();
     const {auth} = useAuthStore();
+    const {
+        part: articlePart,
+        currentPart: articleCurrentPart,
+        changePart: articleChangePart,
+        resetPart: articleResetPart,
+        changeCurrentPart: articleChangeCurrentPart
+    } = usePart(null, "read");
 
     return (
         <>
@@ -42,41 +55,73 @@ const FormData = ({updateProjectContractForm, updateProjectContractAction}) => {
                                                 number={article.number}
                                                 initialEntered={article.number === 1}
                                                 endAdornment={
-                                                    article.isAdded ? (
-                                                        <IconButton
-                                                            color="light-danger"
-                                                            size="sm"
-                                                            data-tooltip-id="my-tooltip"
-                                                            data-tooltip-content="حذف ماده"
-                                                            className='ms-auto'
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
+                                                    !article.isAdded ? (
+                                                        <div
+                                                            className="d-flex justify-content-end align-items-center gap-5">
+                                                            <div className='ms-auto'>
+                                                                <IconButton
+                                                                    color="light-warning"
+                                                                    size="sm"
+                                                                    data-tooltip-id="my-tooltip"
+                                                                    data-tooltip-content="ویرایش ماده"
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
 
-                                                                const result = removeArticle(updateProjectContractForm.values.articles , updateProjectContractForm.values.sections , updateProjectContractForm.values.notes , article.number);
+                                                                        articleChangePart({
+                                                                            number: article.number
+                                                                        });
+                                                                        articleChangeCurrentPart("update");
+                                                                    }}
+                                                                >
+                                                                    <LuPen
+                                                                        size={20}
+                                                                        color="currentColor"
+                                                                    />
+                                                                </IconButton>
+                                                            </div>
 
-                                                                updateProjectContractForm.setFieldValue("notes" , result.notes);
-                                                                updateProjectContractForm.setFieldValue("sections", result.sections);
-                                                                updateProjectContractForm.setFieldValue("articles" , result.articles);
-                                                            }}
-                                                        >
-                                                            <LuTrash
-                                                                size={20}
-                                                                color="currentColor"
-                                                            />
-                                                        </IconButton>
+                                                            <div>
+                                                                <IconButton
+                                                                    color="light-danger"
+                                                                    size="sm"
+                                                                    data-tooltip-id="my-tooltip"
+                                                                    data-tooltip-content="حذف ماده"
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+
+                                                                        const result = removeArticle(updateProjectContractForm.values.articles, updateProjectContractForm.values.sections, updateProjectContractForm.values.notes, article.number);
+
+                                                                        updateProjectContractForm.setFieldValue("notes", result.notes);
+                                                                        updateProjectContractForm.setFieldValue("sections", result.sections);
+                                                                        updateProjectContractForm.setFieldValue("articles", result.articles);
+
+                                                                        updateProjectContractForm.setFieldValue(`sections[${updateProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${updateProjectContractForm.values.articles.length - 1} ماده و ${updateProjectContractForm.values.articles[0].employers.length + updateProjectContractForm.values.articles[0].contractors.length} نسخه تنظیم گردیده و هر کدام از ${updateProjectContractForm.values.articles[0].employers.length + updateProjectContractForm.values.articles[0].contractors.length} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
+                                                                    }}
+                                                                >
+                                                                    <LuTrash
+                                                                        size={20}
+                                                                        color="currentColor"
+                                                                    />
+                                                                </IconButton>
+                                                            </div>
+                                                        </div>
                                                     ) : null
                                                 }
                                             >
                                                 <Article
                                                     article={article}
                                                     updateProjectContractForm={updateProjectContractForm}
+                                                    part={articlePart}
+                                                    currentPart={articleCurrentPart}
+                                                    resetPart={articleResetPart}
+                                                    changeCurrentPart={articleChangeCurrentPart}
                                                 >
                                                     {
                                                         article.number === 1 && (
                                                             <CreateEmployerFormData
                                                                 key={`${article.number}-1`}
                                                                 article={article}
-                                                                section={{number: 1 , article_number: 1 , content: ""}}
+                                                                section={{number: 1, article_number: 1, content: ""}}
                                                                 updateProjectContractForm={updateProjectContractForm}
                                                             />
                                                         )
@@ -87,7 +132,7 @@ const FormData = ({updateProjectContractForm, updateProjectContractAction}) => {
                                                             <CreateContractorFormData
                                                                 key={`${article.number}-2`}
                                                                 article={article}
-                                                                section={{number: 2 , article_number: 1 , content: ""}}
+                                                                section={{number: 2, article_number: 1, content: ""}}
                                                                 updateProjectContractForm={updateProjectContractForm}
                                                             />
                                                         )
@@ -98,7 +143,7 @@ const FormData = ({updateProjectContractForm, updateProjectContractAction}) => {
                                                             <CreateExecutionTimeFormData
                                                                 key={`${article.number}-1`}
                                                                 article={article}
-                                                                section={{number: 1 , article_number: 3 , content: ""}}
+                                                                section={{number: 1, article_number: 3, content: ""}}
                                                                 updateProjectContractForm={updateProjectContractForm}
                                                             />
                                                         )
@@ -109,7 +154,7 @@ const FormData = ({updateProjectContractForm, updateProjectContractAction}) => {
                                                             <CreateAmountFormData
                                                                 key={`${article.number}-1`}
                                                                 article={article}
-                                                                section={{number: 1 , article_number: 4 , content: ""}}
+                                                                section={{number: 1, article_number: 4, content: ""}}
                                                                 updateProjectContractForm={updateProjectContractForm}
                                                             />
                                                         )
@@ -120,7 +165,7 @@ const FormData = ({updateProjectContractForm, updateProjectContractAction}) => {
                                                             <CreatePaymentFormData
                                                                 key={`${article.number}-1`}
                                                                 article={article}
-                                                                section={{number: 1 , article_number: 5 , content: ""}}
+                                                                section={{number: 1, article_number: 5, content: ""}}
                                                                 updateProjectContractForm={updateProjectContractForm}
                                                             />
                                                         )
@@ -156,11 +201,11 @@ const FormData = ({updateProjectContractForm, updateProjectContractAction}) => {
                 </Button>
 
                 <Button
-                    color="success"
+                    color="warning"
                     onClick={updateProjectContractForm.handleSubmit}
                     isLoading={updateProjectContractAction.isPending}
                 >
-                    افزودن قرارداد
+                    ویرایش قرارداد
                 </Button>
             </div>
         </>

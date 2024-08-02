@@ -1,7 +1,7 @@
 // libraries
 import Loadable from "@loadable/component";
 import {format} from "date-fns-jalali";
-import {LuTrash} from "react-icons/lu";
+import {LuPen, LuTrash} from "react-icons/lu";
 
 // components
 const CreatePaymentModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/create/CreatePaymentModal.tsx"));
@@ -11,6 +11,7 @@ import Forbidden from "@/components/partials/panel/Forbidden.tsx";
 
 // hooks
 import useModal from "@/hooks/useModal.tsx";
+import usePart from "@/hooks/usePart.tsx";
 
 // modules
 import RadioBox from "@/modules/RadioBox.tsx";
@@ -124,29 +125,47 @@ const PaymentWithPhasesCard = ({article, payment, updateProjectContractForm}) =>
                 پرداخت گردد.
             </Typography>
 
-            <IconButton
-                color="light-danger"
-                size="sm"
-                data-tooltip-id="my-tooltip"
-                data-tooltip-content="حذف فاز"
-                className='ms-auto'
-                onClick={() => updateProjectContractForm.setFieldValue(`articles[${updateProjectContractForm.values.articles.findIndex(item => item.number === article.number)}].payments`, updateProjectContractForm.values.articles[updateProjectContractForm.values.articles.findIndex(item => item.number === article.number)].payments.filter(item => JSON.stringify(item) !== JSON.stringify(payment)))}
-            >
-                <LuTrash
-                    size={20}
-                    color="currentColor"
-                />
-            </IconButton>
+            <div className='ms-auto'>
+                <IconButton
+                    color="light-danger"
+                    size="sm"
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content="حذف فاز"
+                    onClick={() => updateProjectContractForm.setFieldValue(`articles[${updateProjectContractForm.values.articles.findIndex(item => item.number === article.number)}].payments`, updateProjectContractForm.values.articles[updateProjectContractForm.values.articles.findIndex(item => item.number === article.number)].payments.filter(item => JSON.stringify(item) !== JSON.stringify(payment)))}
+                >
+                    <LuTrash
+                        size={20}
+                        color="currentColor"
+                    />
+                </IconButton>
+            </div>
         </li>
     )
 }
 
-const PaymentWithPhases = ({article, section, updateProjectContractForm}) => {
+const PaymentWithPhases = ({
+                               article,
+                               section,
+                               updateProjectContractForm,
+                               sectionPart,
+                               sectionCurrentPart,
+                               sectionResetPart,
+                               sectionChangeCurrentPart,
+                               notePart,
+                               noteCurrentPart,
+                               noteResetPart,
+                               noteChangePart,
+                               noteChangeCurrentPart
+                           }) => {
     return (
         <Section
             article={article}
             section={section}
             updateProjectContractForm={updateProjectContractForm}
+            part={sectionPart}
+            currentPart={sectionCurrentPart}
+            resetPart={sectionResetPart}
+            changeCurrentPart={sectionChangeCurrentPart}
         >
             <div className='d-flex justify-content-start align-items-center gap-5 w-100'>
                 <Typography
@@ -186,6 +205,9 @@ const PaymentWithPhases = ({article, section, updateProjectContractForm}) => {
                         section={section}
                         note={note}
                         updateProjectContractForm={updateProjectContractForm}
+                        part={notePart}
+                        currentPart={noteCurrentPart}
+                        resetPart={noteResetPart}
                     >
                         <div className='d-flex justify-content-start align-items-center gap-5 w-100'>
                             <Typography
@@ -207,26 +229,45 @@ const PaymentWithPhases = ({article, section, updateProjectContractForm}) => {
                                 {note.content}
                             </Typography>
 
-                            {
-                                note.isAdded && (
-                                    <IconButton
-                                        color="light-danger"
-                                        size="sm"
-                                        data-tooltip-id="my-tooltip"
-                                        data-tooltip-content="حذف تبصره"
-                                        className='ms-auto'
-                                        onClick={() => {
-                                            const notes = removeNote(updateProjectContractForm.values.notes , note.number);
-                                            updateProjectContractForm.setFieldValue("notes", notes);
-                                        }}
-                                    >
-                                        <LuTrash
-                                            size={20}
-                                            color="currentColor"
-                                        />
-                                    </IconButton>
-                                )
-                            }
+                            <div className='ms-auto'>
+                                <IconButton
+                                    color="light-warning"
+                                    size="sm"
+                                    data-tooltip-id="my-tooltip"
+                                    data-tooltip-content="ویرایش تبصره"
+                                    onClick={() => {
+                                        noteChangePart({
+                                            article_number: note.article_number,
+                                            section_number: note.section_number,
+                                            number: note.number
+                                        });
+                                        noteChangeCurrentPart("update");
+                                    }}
+                                >
+                                    <LuPen
+                                        size={20}
+                                        color="currentColor"
+                                    />
+                                </IconButton>
+                            </div>
+
+                            <div>
+                                <IconButton
+                                    color="light-danger"
+                                    size="sm"
+                                    data-tooltip-id="my-tooltip"
+                                    data-tooltip-content="حذف تبصره"
+                                    onClick={() => {
+                                        const notes = removeNote(updateProjectContractForm.values.notes, note.number);
+                                        updateProjectContractForm.setFieldValue("notes", notes);
+                                    }}
+                                >
+                                    <LuTrash
+                                        size={20}
+                                        color="currentColor"
+                                    />
+                                </IconButton>
+                            </div>
                         </div>
                     </Note>
                 )
@@ -235,12 +276,29 @@ const PaymentWithPhases = ({article, section, updateProjectContractForm}) => {
     )
 }
 
-const PaymentWithBill = ({article, section, updateProjectContractForm}) => {
+const PaymentWithBill = ({
+                             article,
+                             section,
+                             updateProjectContractForm,
+                             sectionPart,
+                             sectionCurrentPart,
+                             sectionResetPart,
+                             sectionChangeCurrentPart,
+                             notePart,
+                             noteCurrentPart,
+                             noteResetPart,
+                             noteChangePart,
+                             noteChangeCurrentPart
+                         }) => {
     return (
         <Section
             article={article}
             section={section}
             updateProjectContractForm={updateProjectContractForm}
+            part={sectionPart}
+            currentPart={sectionCurrentPart}
+            resetPart={sectionResetPart}
+            changeCurrentPart={sectionChangeCurrentPart}
         >
             <div className='d-flex justify-content-start align-items-center gap-5 w-100'>
                 <Typography
@@ -268,6 +326,9 @@ const PaymentWithBill = ({article, section, updateProjectContractForm}) => {
                         section={section}
                         note={note}
                         updateProjectContractForm={updateProjectContractForm}
+                        part={notePart}
+                        currentPart={noteCurrentPart}
+                        resetPart={noteResetPart}
                     >
                         <div className='d-flex justify-content-start align-items-center gap-5 w-100'>
                             <Typography
@@ -289,26 +350,45 @@ const PaymentWithBill = ({article, section, updateProjectContractForm}) => {
                                 {note.content}
                             </Typography>
 
-                            {
-                                note.isAdded && (
-                                    <IconButton
-                                        color="light-danger"
-                                        size="sm"
-                                        data-tooltip-id="my-tooltip"
-                                        data-tooltip-content="حذف تبصره"
-                                        className='ms-auto'
-                                        onClick={() => {
-                                            const notes = removeNote(updateProjectContractForm.values.notes , note.number);
-                                            updateProjectContractForm.setFieldValue("notes", notes);
-                                        }}
-                                    >
-                                        <LuTrash
-                                            size={20}
-                                            color="currentColor"
-                                        />
-                                    </IconButton>
-                                )
-                            }
+                            <div className='ms-auto'>
+                                <IconButton
+                                    color="light-warning"
+                                    size="sm"
+                                    data-tooltip-id="my-tooltip"
+                                    data-tooltip-content="ویرایش تبصره"
+                                    onClick={() => {
+                                        noteChangePart({
+                                            article_number: note.article_number,
+                                            section_number: note.section_number,
+                                            number: note.number
+                                        });
+                                        noteChangeCurrentPart("update");
+                                    }}
+                                >
+                                    <LuPen
+                                        size={20}
+                                        color="currentColor"
+                                    />
+                                </IconButton>
+                            </div>
+
+                            <div>
+                                <IconButton
+                                    color="light-danger"
+                                    size="sm"
+                                    data-tooltip-id="my-tooltip"
+                                    data-tooltip-content="حذف تبصره"
+                                    onClick={() => {
+                                        const notes = removeNote(updateProjectContractForm.values.notes, note.number);
+                                        updateProjectContractForm.setFieldValue("notes", notes);
+                                    }}
+                                >
+                                    <LuTrash
+                                        size={20}
+                                        color="currentColor"
+                                    />
+                                </IconButton>
+                            </div>
                         </div>
                     </Note>
                 )
@@ -318,6 +398,22 @@ const PaymentWithBill = ({article, section, updateProjectContractForm}) => {
 }
 
 const CreatePaymentFormData = ({article, section, updateProjectContractForm}) => {
+    const {
+        part: notePart,
+        currentPart: noteCurrentPart,
+        changePart: noteChangePart,
+        resetPart: noteResetPart,
+        changeCurrentPart: noteChangeCurrentPart
+    } = usePart(null, "read");
+
+    const {
+        part: sectionPart,
+        currentPart: sectionCurrentPart,
+        changePart: sectionChangePart,
+        resetPart: sectionResetPart,
+        changeCurrentPart: sectionChangeCurrentPart
+    } = usePart(null, "read");
+
     return (
         updateProjectContractForm.values.articles.find(item => item.number === article.number - 2)?.start_date &&
         updateProjectContractForm.values.articles.find(item => item.number === article.number - 2)?.end_date &&
@@ -336,6 +432,15 @@ const CreatePaymentFormData = ({article, section, updateProjectContractForm}) =>
                         article={article}
                         section={section}
                         updateProjectContractForm={updateProjectContractForm}
+                        sectionPart={sectionPart}
+                        sectionCurrentPart={sectionCurrentPart}
+                        sectionResetPart={sectionResetPart}
+                        sectionChangeCurrentPart={sectionChangeCurrentPart}
+                        notePart={notePart}
+                        noteCurrentPart={noteCurrentPart}
+                        noteResetPart={noteResetPart}
+                        noteChangePart={noteChangePart}
+                        noteChangeCurrentPart={noteChangeCurrentPart}
                     />
                 )
             }
@@ -346,6 +451,15 @@ const CreatePaymentFormData = ({article, section, updateProjectContractForm}) =>
                         article={article}
                         section={section}
                         updateProjectContractForm={updateProjectContractForm}
+                        sectionPart={sectionPart}
+                        sectionCurrentPart={sectionCurrentPart}
+                        sectionResetPart={sectionResetPart}
+                        sectionChangeCurrentPart={sectionChangeCurrentPart}
+                        notePart={notePart}
+                        noteCurrentPart={noteCurrentPart}
+                        noteResetPart={noteResetPart}
+                        noteChangePart={noteChangePart}
+                        noteChangeCurrentPart={noteChangeCurrentPart}
                     />
                 )
             }

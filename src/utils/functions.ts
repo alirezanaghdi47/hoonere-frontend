@@ -220,7 +220,8 @@ export const addSection = (sections, content, articleNumber) => {
         content: content,
         isAdded: true,
         isOff: false,
-        isStatic: false
+        isStatic: false,
+        last_article: "0"
     })
 
     return updatedSections;
