@@ -105,6 +105,7 @@ const Content = () => {
             updateProjectContractAction.mutate({
                 ...result,
                 project_id: params.id,
+                contract_id: params.subId,
                 employers: getValueByKey(updateProjectContractForm.values.articles, "employers")?.map(item => item.id.toString()),
                 contractors: getValueByKey(updateProjectContractForm.values.articles, "contractors")?.map(item => item.id.toString()),
                 start_date: getValueByKey(updateProjectContractForm.values.articles, "start_date"),
@@ -119,11 +120,10 @@ const Content = () => {
     useLayoutEffect(() => {
         readProjectContractSectionAction.mutate({
             project_id: params.id,
-            contract_id: params.subId
+            contract_id: params.subId,
+            get_last: 1
         });
     }, []);
-
-    console.log(updateProjectContractForm.values.articles)
 
     return (
         <div

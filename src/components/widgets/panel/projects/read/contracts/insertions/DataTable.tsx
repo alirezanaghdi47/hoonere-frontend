@@ -3,7 +3,7 @@ import {useMemo, useRef} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {format} from "date-fns-jalali";
-import {LuCheck, LuClipboardSignature, LuDownload, LuPen, LuThumbsUp, LuTrash2} from "react-icons/lu";
+import {LuCheck, LuDownload, LuPen, LuTrash2} from "react-icons/lu";
 
 // components
 import Print from "@/components/widgets/panel/projects/read/contracts/Print.tsx";
@@ -154,7 +154,7 @@ const DataTable = ({
                 accessorKey: 'parties',
                 header: () => 'طرفین قرارداد',
                 cell: ({row}) => (
-                    <div className="w-100px">
+                    <div className="w-150px">
                         <ul className="hstack flex-wrap list-unstyled justify-content-start align-items-start gap-2 p-0 m-0">
                             {
                                 row.original.members.map(member =>
@@ -215,20 +215,7 @@ const DataTable = ({
                 cell: ({row}) => (
                     <div className="d-flex justify-content-start align-items-center gap-2 w-max">
                         <IconButton
-                            href={auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/insertions"}
-                            color="light-info"
-                            size="sm"
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="الحاقیه ها"
-                        >
-                            <LuClipboardSignature
-                                size={20}
-                                color="currentColor"
-                            />
-                        </IconButton>
-
-                        <IconButton
-                            color="light-success"
+                            color="light-dark"
                             size="sm"
                             data-tooltip-id="my-tooltip"
                             data-tooltip-content="ثبت نهایی"
@@ -237,7 +224,7 @@ const DataTable = ({
                                 contract_id: row.original.id.toString(),
                             })}
                         >
-                            <LuThumbsUp
+                            <LuCheck
                                 size={20}
                                 color="currentColor"
                             />
@@ -251,7 +238,7 @@ const DataTable = ({
                             onClick={() => readProjectContractAction.mutate({
                                 project_id: row.original.project_id,
                                 contract_id: row.original.id.toString(),
-                                get_last: 1
+                                get_last: 0
                             })}
                         >
                             <LuDownload

@@ -133,7 +133,7 @@ const DataTable = ({
                 cell: ({row}) => (
                     <div className="d-flex justify-content-start align-items-center gap-2 w-max">
                         <IconButton
-                            color="light-info"
+                            color="light-dark"
                             size="sm"
                             data-tooltip-id="my-tooltip"
                             data-tooltip-content="دانلود فیلم نامه"

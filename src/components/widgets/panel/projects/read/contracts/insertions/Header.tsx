@@ -24,6 +24,7 @@ const Header = () => {
         {id: 1, label: "داشبورد", href: auth.panel_url + "dashboard"},
         {id: 2, label: "پروژه ها", href: auth.panel_url + "projects"},
         {id: 3, label: ` پروژه ${params.id} `, href: auth.panel_url + `projects/${params.id}`},
+        {id: 4, label: "قرارداد ها", href: auth.panel_url + `projects/${params.id}/contracts`},
     ]);
 
     return (
@@ -37,7 +38,7 @@ const Header = () => {
                         size="xxl"
                         isBold
                     >
-                         قرارداد ها
+                        الحاقیه ها
                     </Typography>
                 </div>
 
@@ -86,10 +87,10 @@ const Header = () => {
                     </IconButton>
 
                     <Button
-                        href={auth.panel_url + `projects/${params.id}/contracts/create`}
+                        href={auth.panel_url + `projects/${params.id}/contracts/${params.subId}/insertions/create`}
                         color="info"
                     >
-                        افزودن قرارداد
+                        افزودن الحاقیه
                     </Button>
                 </div>
 

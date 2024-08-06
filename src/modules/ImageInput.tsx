@@ -11,7 +11,7 @@ import Typography from "@/modules/Typography.tsx";
 
 // types
 import {TImageInput} from "@/types/moduleType.ts";
-import {ExtendedFile} from "@/types/global.ts";
+import {ExtendedFile} from "@/types/constantsType.ts";
 
 const ImageInput = ({
                         id,

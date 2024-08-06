@@ -3,7 +3,7 @@ import {CSSProperties, HTMLProps, ReactNode} from "react";
 import {DateObject} from "react-multi-date-picker";
 
 // types
-import * as t from "@/types/global.ts";
+import * as t from "@/types/constantsType.ts";
 
 export type TAccordion = {
     children: ReactNode,

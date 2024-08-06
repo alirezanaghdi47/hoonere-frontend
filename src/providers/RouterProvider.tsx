@@ -35,6 +35,9 @@ const CreateProjectMoodBoard = Loadable(() => import('@/pages/panel/projects/rea
 const ProjectContracts = Loadable(() => import('@/pages/panel/projects/read/contracts'));
 const CreateProjectContract = Loadable(() => import('@/pages/panel/projects/read/contracts/create'));
 const UpdateProjectContract = Loadable(() => import('@/pages/panel/projects/read/contracts/update'));
+const ProjectContractInsertions = Loadable(() => import('@/pages/panel/projects/read/contracts/insertions'));
+const CreateProjectContractInsertion = Loadable(() => import('../pages/panel/projects/read/contracts/insertions/create'));
+const UpdateProjectContractInsertion = Loadable(() => import('../pages/panel/projects/read/contracts/insertions/update'));
 const Profile = Loadable(() => import('@/pages/panel/profile'));
 
 // stores
@@ -182,6 +185,21 @@ const pageRoutes = [
             },
             {
                 id: 21,
+                path: "projects/:id/contracts/:subId/insertions",
+                component: ProjectContractInsertions,
+            },
+            {
+                id: 22,
+                path: "projects/:id/contracts/:subId/insertions/create",
+                component: CreateProjectContractInsertion,
+            },
+            {
+                id: 23,
+                path: "projects/:id/contracts/:subId/insertions/:subSubId/update",
+                component: UpdateProjectContractInsertion,
+            },
+            {
+                id: 24,
                 path: "profile",
                 component: Profile,
             },

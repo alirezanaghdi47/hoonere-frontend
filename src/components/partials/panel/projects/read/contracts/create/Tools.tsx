@@ -101,13 +101,6 @@ export const BlankNote = ({changeCurrentPart}) => {
 export const Contract = ({children, createProjectContractForm}) => {
     const {part, currentPart, changePart, resetPart, changeCurrentPart} = usePart(null, "read");
 
-    useEffect(() => {
-        changePart({
-            articlesLength: createProjectContractForm.values.articles.length,
-            sections: createProjectContractForm.values.sections
-        });
-    }, [createProjectContractForm.values.articles]);
-
     return (
         <div className="d-flex flex-column justify-content-start items-center gap-5 w-100">
             {children}
@@ -121,7 +114,8 @@ export const Contract = ({children, createProjectContractForm}) => {
             {
                 currentPart === "create" && (
                     <CreateArticle
-                        part={part}
+                        articles={createProjectContractForm.values.articles}
+                        sections={createProjectContractForm.values.sections}
                         resetPart={resetPart}
                         createProjectContractForm={createProjectContractForm}
                     />
@@ -133,16 +127,6 @@ export const Contract = ({children, createProjectContractForm}) => {
 
 export const Article = ({children, article, createProjectContractForm}) => {
     const {part, currentPart, changePart, resetPart, changeCurrentPart} = usePart(null, "read");
-    const addonSectionsLength = article.number === 1 ? 2 : 0;
-
-    useEffect(() => {
-        if (article && Object.keys(article).length > 0) {
-            changePart({
-                articleNumber: article.number,
-                sectionsLength: createProjectContractForm.values.sections.filter(item => item.article_number === article.number && !item.isOff).length + addonSectionsLength,
-            });
-        }
-    }, [createProjectContractForm.values.sections]);
 
     return (
         <div className="d-flex flex-column justify-content-start items-center gap-5 w-100">
@@ -157,7 +141,8 @@ export const Article = ({children, article, createProjectContractForm}) => {
             {
                 currentPart === "create" && (
                     <CreateSection
-                        part={part}
+                        article={article}
+                        sections={createProjectContractForm.values.sections}
                         resetPart={resetPart}
                         createProjectContractForm={createProjectContractForm}
                     />
@@ -169,16 +154,6 @@ export const Article = ({children, article, createProjectContractForm}) => {
 
 export const Section = ({children, article, section, createProjectContractForm}) => {
     const {part, currentPart, changePart, resetPart, changeCurrentPart} = usePart(null, "read");
-
-    useEffect(() => {
-        if (article && Object.keys(article).length > 0 && section && Object.keys(section).length > 0) {
-            changePart({
-                articleNumber: article.number,
-                sectionNumber: section.number,
-                notesLength: createProjectContractForm.values.notes.length
-            });
-        }
-    }, [createProjectContractForm.values.notes]);
 
     return (
         <div
@@ -194,7 +169,9 @@ export const Section = ({children, article, section, createProjectContractForm})
             {
                 !section.isOff && currentPart === "create" && (
                     <CreateNote
-                        part={part}
+                        article={article}
+                        section={section}
+                        notes={createProjectContractForm.values.notes}
                         resetPart={resetPart}
                         createProjectContractForm={createProjectContractForm}
                     />
@@ -204,7 +181,7 @@ export const Section = ({children, article, section, createProjectContractForm})
     )
 }
 
-export const Note = ({children}) => {
+export const Note = ({children , article , section , note , createProjectContractForm}) => {
     return (
         <div className="d-flex flex-column justify-content-start items-center gap-5 w-95 ms-auto">
             {children}
@@ -212,14 +189,14 @@ export const Note = ({children}) => {
     )
 }
 
-export const CreateArticle = ({part, resetPart, createProjectContractForm}) => {
+export const CreateArticle = ({articles , sections, resetPart, createProjectContractForm}) => {
     const createArticleForm = useFormik({
         initialValues: {
             article: "",
         },
         validationSchema: createArticleSchema,
         onSubmit: async (result, {resetForm}) => {
-            const data = addArticle(createProjectContractForm.values.articles, part?.sections, result.article);
+            const data = addArticle(articles, sections, result.article);
 
             createProjectContractForm.setFieldValue("articles", data.articles);
             createProjectContractForm.setFieldValue("sections", data.sections);
@@ -277,16 +254,16 @@ export const CreateArticle = ({part, resetPart, createProjectContractForm}) => {
     )
 }
 
-export const CreateSection = ({part, resetPart, createProjectContractForm}) => {
+export const CreateSection = ({article , sections, resetPart, createProjectContractForm}) => {
     const createSectionForm = useFormik({
         initialValues: {
             section: "",
         },
         validationSchema: createSectionSchema,
         onSubmit: async (result, {resetForm}) => {
-            const sections = addSection(createProjectContractForm.values.sections, result.section, part?.articleNumber);
+            const data = addSection(sections, result.section, article.number);
 
-            createProjectContractForm.setFieldValue("sections", sections);
+            createProjectContractForm.setFieldValue("sections", data);
 
             resetForm();
         },
@@ -339,16 +316,16 @@ export const CreateSection = ({part, resetPart, createProjectContractForm}) => {
     )
 }
 
-export const CreateNote = ({part, resetPart, createProjectContractForm}) => {
+export const CreateNote = ({article , section , notes, resetPart, createProjectContractForm}) => {
     const createNoteForm = useFormik({
         initialValues: {
             note: "",
         },
         validationSchema: createNoteSchema,
         onSubmit: async (result, {resetForm}) => {
-            const notes = addNote(createProjectContractForm.values.notes, result.note, part?.articleNumber, part?.sectionNumber);
+            const data = addNote(notes, result.note, article.number, section.number);
 
-            createProjectContractForm.setFieldValue("notes", notes);
+            createProjectContractForm.setFieldValue("notes", data);
 
             resetForm();
         },

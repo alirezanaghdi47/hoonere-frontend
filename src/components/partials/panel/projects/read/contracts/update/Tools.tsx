@@ -98,14 +98,8 @@ export const BlankNote = ({changeCurrentPart}) => {
     )
 }
 
-export const Contract = ({children, updateProjectContractForm}) => {
-    const {
-        part: part2,
-        currentPart: currentPart2,
-        changePart,
-        resetPart: resetPart2,
-        changeCurrentPart: changeCurrentPart2
-    } = usePart(null, "read");
+export const Contract = ({children , updateProjectContractForm}) => {
+    const {part, currentPart, changePart, resetPart , changeCurrentPart} = usePart(null, "read");
 
     useEffect(() => {
         changePart({
@@ -119,16 +113,17 @@ export const Contract = ({children, updateProjectContractForm}) => {
             {children}
 
             {
-                currentPart2 === "read" && (
-                    <BlankArticle changeCurrentPart={changeCurrentPart2}/>
+                currentPart === "read" && (
+                    <BlankArticle changeCurrentPart={changeCurrentPart}/>
                 )
             }
 
             {
-                currentPart2 === "create" && (
+                currentPart === "create" && (
                     <CreateArticle
-                        part={part2}
-                        resetPart={resetPart2}
+                        articles={updateProjectContractForm.values.articles}
+                        sections={updateProjectContractForm.values.sections}
+                        resetPart={resetPart}
                         updateProjectContractForm={updateProjectContractForm}
                     />
                 )
@@ -166,6 +161,7 @@ export const Article = ({children, article, part, currentPart, resetPart , chang
                 currentPart === "create" && (
                     <CreateSection
                         article={article}
+                        sections={updateProjectContractForm.values.sections}
                         resetPart={resetPart}
                         updateProjectContractForm={updateProjectContractForm}
                     />
@@ -206,6 +202,7 @@ export const Section = ({children, article, section, part, currentPart, resetPar
                     <CreateNote
                         article={article}
                         section={section}
+                        notes={updateProjectContractForm.values.notes}
                         resetPart={resetPart}
                         updateProjectContractForm={updateProjectContractForm}
                     />
@@ -237,14 +234,14 @@ export const Note = ({children, article, section, note, part, currentPart, reset
     )
 }
 
-export const CreateArticle = ({part, resetPart, updateProjectContractForm}) => {
+export const CreateArticle = ({articles , sections, resetPart, updateProjectContractForm}) => {
     const createArticleForm = useFormik({
         initialValues: {
             article: "",
         },
         validationSchema: createArticleSchema,
         onSubmit: async (result, {resetForm}) => {
-            const data = addArticle(updateProjectContractForm.values.articles, part?.sections, result.article);
+            const data = addArticle(articles, sections, result.article);
 
             updateProjectContractForm.setFieldValue("articles", data.articles);
             updateProjectContractForm.setFieldValue("sections", data.sections);
@@ -362,16 +359,16 @@ export const UpdateArticle = ({article, resetPart, updateProjectContractForm}) =
     )
 }
 
-export const CreateSection = ({article, resetPart, updateProjectContractForm}) => {
+export const CreateSection = ({article,  sections, resetPart, updateProjectContractForm}) => {
     const createSectionForm = useFormik({
         initialValues: {
             section: "",
         },
         validationSchema: createSectionSchema,
         onSubmit: async (result, {resetForm}) => {
-            const sections = addSection(updateProjectContractForm.values.sections, result.section, article?.number);
+            const data = addSection(sections, result.section, article.number);
 
-            updateProjectContractForm.setFieldValue("sections", sections);
+            updateProjectContractForm.setFieldValue("sections", data);
 
             resetForm();
         },
@@ -485,16 +482,16 @@ export const UpdateSection = ({section, resetPart, updateProjectContractForm}) =
     )
 }
 
-export const CreateNote = ({article , section, resetPart, updateProjectContractForm}) => {
+export const CreateNote = ({article , section , notes, resetPart, updateProjectContractForm}) => {
     const createNoteForm = useFormik({
         initialValues: {
             note: "",
         },
         validationSchema: createNoteSchema,
         onSubmit: async (result, {resetForm}) => {
-            const notes = addNote(updateProjectContractForm.values.notes, result.note, article?.number, section?.number);
+            const data = addNote(notes, result.note, article.number, section.number);
 
-            updateProjectContractForm.setFieldValue("notes", notes);
+            updateProjectContractForm.setFieldValue("notes", data);
 
             resetForm();
         },

@@ -8,7 +8,6 @@ import Typography from "@/modules/Typography.tsx";
 import IconButton from "@/modules/IconButton.tsx";
 import Badge from "@/modules/Badge.tsx";
 import Breadcrumbs from "@/modules/Breadcrumbs.tsx";
-import Button from "@/modules/Button.tsx";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
@@ -24,6 +23,8 @@ const Header = () => {
         {id: 1, label: "داشبورد", href: auth.panel_url + "dashboard"},
         {id: 2, label: "پروژه ها", href: auth.panel_url + "projects"},
         {id: 3, label: ` پروژه ${params.id} `, href: auth.panel_url + `projects/${params.id}`},
+        {id: 4, label: "قرارداد ها", href: auth.panel_url + `projects/${params.id}/contracts`},
+        {id: 5, label: "الحاقیه ها", href: auth.panel_url + `projects/${params.id}/contracts/${params.subId}/insertions`},
     ]);
 
     return (
@@ -37,7 +38,7 @@ const Header = () => {
                         size="xxl"
                         isBold
                     >
-                         قرارداد ها
+                        افزودن الحاقیه
                     </Typography>
                 </div>
 
@@ -84,13 +85,6 @@ const Header = () => {
                             color="currentColor"
                         />
                     </IconButton>
-
-                    <Button
-                        href={auth.panel_url + `projects/${params.id}/contracts/create`}
-                        color="info"
-                    >
-                        افزودن قرارداد
-                    </Button>
                 </div>
 
                 <div className="order-3 col-12 d-flex flex-column justify-content-center align-items-start gap-5">

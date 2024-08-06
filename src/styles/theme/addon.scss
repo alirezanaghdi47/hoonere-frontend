@@ -15,30 +15,24 @@
 }
 
 .page {
-  page-break-after: always;
+  page-break-after: avoid;
 
   &__header {
-    position: fixed;
+    position: sticky;
     top: 0;
     width: 100%;
     height: 100px;
     background: var(--bs-success);
-
-    &__space {
-      height: 100px;
-    }
+    margin-bottom: 20px;
   }
 
   &__footer {
-    position: fixed;
+    position: sticky;
     bottom: 0;
     width: 100%;
     height: 50px;
     background: var(--bs-success);
-
-    &__space {
-      height: 50px;
-    }
+    margin-top: 20px;
   }
 }
 

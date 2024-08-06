@@ -10,7 +10,7 @@ import IconButton from "@/modules/IconButton.tsx";
 
 // types
 import {TFileInput} from "@/types/moduleType.ts";
-import {ExtendedFile} from "@/types/global.ts";
+import {ExtendedFile} from "@/types/constantsType.ts";
 
 // utils
 import {formattedSize} from "@/utils/functions.ts";
