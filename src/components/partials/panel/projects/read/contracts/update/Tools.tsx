@@ -4,14 +4,14 @@ import {useFormik} from "formik";
 import {LuPlus} from "react-icons/lu";
 
 // hooks
-import usePart from "@/hooks/usePart.tsx";
+import usePart from "@/hooks/usePart";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import Form from "@/modules/Form.tsx";
-import Textarea from "@/modules/Textarea.tsx";
-import Button from "@/modules/Button.tsx";
-import TextInput from "@/modules/TextInput.tsx";
+import Typography from "@/modules/Typography";
+import Form from "@/modules/Form";
+import Textarea from "@/modules/Textarea";
+import Button from "@/modules/Button";
+import TextInput from "@/modules/TextInput";
 
 //utils
 import {createArticleSchema, createSectionSchema, createNoteSchema} from "@/utils/validations.ts";
@@ -429,9 +429,9 @@ export const UpdateSection = ({section, resetPart, updateProjectContractForm}) =
         },
         validationSchema: createSectionSchema,
         onSubmit: async (result, {resetForm}) => {
-            updateProjectContractForm.setFieldValue(`sections[${updateProjectContractForm.values.sections.findIndex(item => item.article_number === section.article_number && item.section_number === section.number)}].content`, result.section);
+            updateProjectContractForm.setFieldValue(`sections[${updateProjectContractForm.values.sections.findIndex(item => item.article_number === section.article_number && item.number === section.number)}].content`, result.section);
 
-            resetForm();
+            // resetForm();
         },
         onReset: async () => {
             resetPart();

@@ -4,17 +4,17 @@ import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 
 // modules
-import Form from "@/modules/Form.tsx";
-import SelectBox from "@/modules/SelectBox.tsx";
-import TextInput from "@/modules/TextInput.tsx";
-import Button from "@/modules/Button.tsx";
-import Alert from "@/modules/Alert.tsx";
+import Form from "@/modules/Form";
+import SelectBox from "@/modules/SelectBox";
+import TextInput from "@/modules/TextInput";
+import Button from "@/modules/Button";
+import Alert from "@/modules/Alert";
 
 // services
-import {readAllJobService} from "@/services/publicService.ts";
+import {readAllJobService} from "@/services/publicService";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 const FormDataWithUserName = ({readAllJobAction, readProjectMemberAction, updateProjectMemberFormWithUserName}) => {
     return (

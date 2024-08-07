@@ -2,10 +2,10 @@
 import {useFormik} from "formik";
 
 // modules
-import Form from "@/modules/Form.tsx";
-import Textarea from "@/modules/Textarea.tsx";
-import LocationPicker from "@/modules/LocationPicker.tsx";
-import Button from "@/modules/Button.tsx";
+import Form from "@/modules/Form";
+import Textarea from "@/modules/Textarea";
+import LocationPicker from "@/modules/LocationPicker";
+import Button from "@/modules/Button";
 
 // utils
 import {createAddressSchema} from "@/utils/validations.ts";

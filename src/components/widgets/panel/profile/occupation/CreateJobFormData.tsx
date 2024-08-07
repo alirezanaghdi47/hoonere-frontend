@@ -4,12 +4,12 @@ import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
 // modules
-import Form from "@/modules/Form.tsx";
-import SelectBox from "@/modules/SelectBox.tsx";
-import Button from "@/modules/Button.tsx";
+import Form from "@/modules/Form";
+import SelectBox from "@/modules/SelectBox";
+import Button from "@/modules/Button";
 
 // services
-import {readAllJobService} from "@/services/publicService.ts";
+import {readAllJobService} from "@/services/publicService";
 
 // utils
 import {createJobSchema} from "@/utils/validations.ts";

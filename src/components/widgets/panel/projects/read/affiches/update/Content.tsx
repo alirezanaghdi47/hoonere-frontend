@@ -14,11 +14,11 @@ import FormDataP1 from "@/components/widgets/panel/projects/read/affiches/update
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // helpers
-import toast from "@/helpers/toast.tsx";
+import toast from "@/helpers/toast"
 
 // hooks
-import useStep from "@/hooks/useStep.tsx";
-import useFilter from "@/hooks/useFilter.tsx";
+import useStep from "@/hooks/useStep";
+import useFilter from "@/hooks/useFilter";
 
 // services
 import {
@@ -28,10 +28,10 @@ import {
     readAllProjectAfficheScreenPlayService,
     readProjectAfficheService,
     updateProjectAfficheService
-} from "@/services/projectAffichesService.ts";
+} from "@/services/projectAfficheService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 // types
 import {

@@ -1,12 +1,11 @@
 // libraries
 import {LuAlertTriangle} from "react-icons/lu";
-import {format} from "date-fns-jalali";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import Form from "@/modules/Form.tsx";
-import Alert from "@/modules/Alert.tsx";
-import Chip from "@/modules/Chip.tsx";
+import Typography from "@/modules/Typography";
+import Form from "@/modules/Form";
+import Alert from "@/modules/Alert";
+import Chip from "@/modules/Chip";
 
 const Legal = ({readMyProfileAction}) => {
     return (
@@ -88,7 +87,7 @@ const Legal = ({readMyProfileAction}) => {
                 <div className="row gy-5 w-100">
                     <div className="col-lg-4">
                         <Form.Label
-                            label="شناسه ملی"
+                            label="کد اقتصادی"
                             size="sm"
                             color="muted"
                         />
@@ -233,7 +232,7 @@ const Legal = ({readMyProfileAction}) => {
                 <div className="row gy-5 w-100">
                     <div className="col-lg-4">
                         <Form.Label
-                            label="کد پستی"
+                            label="نمایندگان"
                             size="sm"
                             color="muted"
                         />

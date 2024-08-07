@@ -1,20 +1,22 @@
 // libraries
 import {useState} from "react";
-import {useLocation, useParams} from "react-router-dom";
-import {LuBell, LuMoon, LuSun, LuUser} from "react-icons/lu";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {LuBell, LuMoon, LuMoreVertical, LuSun, LuUser} from "react-icons/lu";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import Badge from "@/modules/Badge.tsx";
-import Breadcrumbs from "@/modules/Breadcrumbs.tsx";
-import Button from "@/modules/Button.tsx";
+import Typography from "@/modules/Typography";
+import IconButton from "@/modules/IconButton";
+import Badge from "@/modules/Badge";
+import Breadcrumbs from "@/modules/Breadcrumbs";
+import Button from "@/modules/Button";
+import Dropdown from "@/modules/Dropdown";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
-import useAppStore from "@/stores/appStore.ts";
+import useAuthStore from "@/stores/authStore";
+import useAppStore from "@/stores/appStore";
 
 const Header = () => {
+    const navigate = useNavigate();
     const params = useParams();
     const location = useLocation();
     const {auth} = useAuthStore();
@@ -85,12 +87,32 @@ const Header = () => {
                         />
                     </IconButton>
 
-                    <Button
-                        href={auth.panel_url + `projects/${params.id}/contracts/create`}
-                        color="info"
-                    >
-                        افزودن قرارداد
-                    </Button>
+                    <Dropdown
+                        button={
+                            <Button color="info">
+                                افزودن قرارداد
+                            </Button>
+                        }
+                        options={[
+                            {
+                                id: 1,
+                                label: "قرارداد رسمی",
+                                onClick: () => {
+                                    navigate(auth.panel_url + `projects/${params.id}/contracts/create#official`);
+                                }
+                            },
+                            {
+                                id: 2,
+                                label: "قرارداد غیر رسمی",
+                                onClick: () => {
+                                    navigate(auth.panel_url + `projects/${params.id}/contracts/create#un-official`);
+                                }
+                            },
+                        ]}
+                        direction="bottom"
+                        alignment="start"
+                        gap={0}
+                    />
                 </div>
 
                 <div className="order-3 col-12 d-flex flex-column justify-content-center align-items-start gap-5">

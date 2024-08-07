@@ -9,13 +9,13 @@ import FormData from "@/components/widgets/panel/projects/read/screen-plays/upda
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // helpers
-import toast from "@/helpers/toast.tsx";
+import toast from "@/helpers/toast"
 
 // services
-import {readProjectScreenPlayService, updateProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
+import {readProjectScreenPlayService, updateProjectScreenPlayService} from "@/services/projectScreenPlayService";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 // types
 import {IReadProjectScreenPlay, IUpdateProjectScreenPlay} from "@/types/serviceType.ts";

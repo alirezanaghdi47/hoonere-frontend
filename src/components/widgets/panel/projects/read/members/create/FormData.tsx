@@ -6,19 +6,19 @@ import {useFormik} from "formik";
 import {LuInfo} from "react-icons/lu";
 
 // modules
-import Form from "@/modules/Form.tsx";
-import SelectBox from "@/modules/SelectBox.tsx";
-import TextInput from "@/modules/TextInput.tsx";
-import Button from "@/modules/Button.tsx";
-import Alert from "@/modules/Alert.tsx";
-import SwitchBox from "@/modules/SwitchBox.tsx";
-import Typography from "@/modules/Typography.tsx";
+import Form from "@/modules/Form";
+import SelectBox from "@/modules/SelectBox";
+import TextInput from "@/modules/TextInput";
+import Button from "@/modules/Button";
+import Alert from "@/modules/Alert";
+import SwitchBox from "@/modules/SwitchBox";
+import Typography from "@/modules/Typography";
 
 // services
-import {readAllJobService, readUserInquiryService} from "@/services/publicService.ts";
+import {readAllJobService, readUserInquiryService} from "@/services/publicService";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 // types
 import {IReadUserInquiry} from "@/types/serviceType.ts";

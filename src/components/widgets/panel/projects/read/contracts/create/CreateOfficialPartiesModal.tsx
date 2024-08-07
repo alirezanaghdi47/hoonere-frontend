@@ -6,21 +6,21 @@ import {useFormik} from "formik";
 import {LuX} from "react-icons/lu";
 
 // modules
-import Modal from "@/modules/Modal.tsx";
-import Typography from "@/modules/Typography.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import SelectBox from "@/modules/SelectBox.tsx";
-import Form from "@/modules/Form.tsx";
-import Button from "@/modules/Button.tsx";
+import Modal from "@/modules/Modal";
+import Typography from "@/modules/Typography";
+import IconButton from "@/modules/IconButton";
+import SelectBox from "@/modules/SelectBox";
+import Form from "@/modules/Form";
+import Button from "@/modules/Button";
 
 // services
-import {readAllProjectContractMemberService} from "@/services/projectContractService.ts";
-import {readAllJobService} from "@/services/publicService.ts";
+import {readAllProjectContractMemberService} from "@/services/projectContractService";
+import {readAllJobService} from "@/services/publicService";
 
 // utils
-import {createPartiesSchema} from "@/utils/validations";
+import {createPartiesSchema} from "@/utils/validations.ts";
 
-const CreatePartiesModal = ({modal, _handleHideModal, createProjectContractForm}) => {
+const CreateOfficialPartiesModal = ({modal, _handleHideModal, createProjectContractForm}) => {
     const params = useParams();
 
     const readAllJobAction = useMutation({
@@ -52,6 +52,8 @@ const CreatePartiesModal = ({modal, _handleHideModal, createProjectContractForm}
 
                 createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${createProjectContractForm.values.articles.length} ماده و ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length + 1} نسخه تنظیم گردیده و هر کدام از ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length + 1} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
             }
+
+            resetForm();
 
             _handleHideModal();
         },
@@ -218,4 +220,4 @@ const CreatePartiesModal = ({modal, _handleHideModal, createProjectContractForm}
     )
 }
 
-export default CreatePartiesModal;
+export default CreateOfficialPartiesModal;

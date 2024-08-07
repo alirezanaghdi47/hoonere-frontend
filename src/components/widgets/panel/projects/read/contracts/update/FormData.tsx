@@ -4,31 +4,28 @@ import {LuPen, LuTrash} from "react-icons/lu";
 
 // components
 import {Contract, Article} from "@/components/partials/panel/projects/read/contracts/update/Tools.tsx";
-import CreateEmployerFormData
-    from "@/components/widgets/panel/projects/read/contracts/update/CreateEmployerFormData.tsx";
-import CreateContractorFormData
-    from "@/components/widgets/panel/projects/read/contracts/update/CreateContractorFormData.tsx";
-import CreateExecutionTimeFormData
-    from "@/components/widgets/panel/projects/read/contracts/update/CreateExecutionTimeFormData.tsx";
+import CreateEmployerFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateEmployerFormData.tsx";
+import CreateContractorFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateContractorFormData.tsx";
+import CreateExecutionTimeFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateExecutionTimeFormData.tsx";
 import CreateAmountFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateAmountFormData.tsx";
 import CreatePaymentFormData from "@/components/widgets/panel/projects/read/contracts/update/CreatePaymentFormData.tsx";
 import CreateRegularFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateRegularFormData.tsx";
 
 // hooks
-import usePart from "@/hooks/usePart.tsx";
+import usePart from "@/hooks/usePart";
 
 // modules
-import Accordion from "@/modules/Accordion.tsx";
-import Button from "@/modules/Button.tsx";
-import IconButton from "@/modules/IconButton.tsx";
+import Accordion from "@/modules/Accordion";
+import Button from "@/modules/Button";
+import IconButton from "@/modules/IconButton";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 // utils
 import {removeArticle} from "@/utils/functions.ts";
 
-const FormData = ({updateProjectContractForm, updateProjectContractAction}) => {
+const FormData = ({readProjectContractSectionAction , updateProjectContractForm, updateProjectContractAction}) => {
     const params = useParams();
     const {auth} = useAuthStore();
     const {
@@ -120,6 +117,7 @@ const FormData = ({updateProjectContractForm, updateProjectContractAction}) => {
                                                                 key={`${article.number}-1`}
                                                                 article={article}
                                                                 section={{number: 1, article_number: 1, content: ""}}
+                                                                readProjectContractSectionAction={readProjectContractSectionAction}
                                                                 updateProjectContractForm={updateProjectContractForm}
                                                             />
                                                         )
@@ -131,6 +129,7 @@ const FormData = ({updateProjectContractForm, updateProjectContractAction}) => {
                                                                 key={`${article.number}-2`}
                                                                 article={article}
                                                                 section={{number: 2, article_number: 1, content: ""}}
+                                                                readProjectContractSectionAction={readProjectContractSectionAction}
                                                                 updateProjectContractForm={updateProjectContractForm}
                                                             />
                                                         )

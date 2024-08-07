@@ -9,13 +9,13 @@ import FormData from "@/components/widgets/panel/projects/read/contracts/update/
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // helpers
-import toast from "@/helpers/toast.tsx";
+import toast from "@/helpers/toast"
 
 // services
-import {readProjectContractService, updateProjectContractService} from "@/services/projectContractService.ts";
+import {readProjectContractService, updateProjectContractService} from "@/services/projectContractService";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 // utils
 import {updateProjectContractSchema} from "@/utils/validations.ts";
@@ -142,6 +142,7 @@ const Content = () => {
                 {
                     !readProjectContractSectionAction.isPending && (
                         <FormData
+                            readProjectContractSectionAction={readProjectContractSectionAction}
                             updateProjectContractForm={updateProjectContractForm}
                             updateProjectContractAction={updateProjectContractAction}
                         />

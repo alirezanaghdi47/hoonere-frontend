@@ -10,19 +10,19 @@ import Filter from "@/components/widgets/panel/projects/read/affiches/Filter.tsx
 import Empty from "@/components/partials/panel/Empty.tsx";
 
 // helpers
-import dialog from "@/helpers/dialog.tsx";
-import toast from "@/helpers/toast.tsx";
+import dialog from "@/helpers/dialog";
+import toast from "@/helpers/toast";
 
 // modules
-import Table from "@/modules/Table.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import Typography from "@/modules/Typography.tsx";
+import Table from "@/modules/Table";
+import IconButton from "@/modules/IconButton";
+import Typography from "@/modules/Typography";
 
 // services
-import {deleteProjectAfficheService} from "@/services/projectAffichesService.ts";
+import {deleteProjectAfficheService} from "@/services/projectAfficheService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 // types
 import {IDeleteProjectAffiche} from "@/types/serviceType.ts";

@@ -7,12 +7,12 @@ import MoodBoardFilter from "@/components/widgets/panel/projects/read/screen-pla
 import MoodBoardFinder from "@/components/widgets/panel/projects/read/screen-plays/create/MoodBoardFinder.tsx";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import RadioBox from "@/modules/RadioBox.tsx";
+import Typography from "@/modules/Typography";
+import IconButton from "@/modules/IconButton";
+import RadioBox from "@/modules/RadioBox";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 const MoodBoardCard = ({moodBoard, attachProjectMoodBoardForm}) => {
     const params = useParams();

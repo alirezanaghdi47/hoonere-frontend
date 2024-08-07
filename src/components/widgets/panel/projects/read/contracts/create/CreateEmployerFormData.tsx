@@ -1,25 +1,28 @@
 // libraries
 import {Fragment} from "react";
+import {useLocation} from "react-router-dom";
 import Loadable from "@loadable/component";
 import {LuTrash} from "react-icons/lu";
 
 // components
-const CreatePartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/create/CreatePartiesModal.tsx"));
+const CreateOfficialPartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/create/CreateOfficialPartiesModal.tsx"));
+const CreateUnOfficialPartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/create/CreateUnOfficialPartiesModal.tsx"));
 
 import {Section, Note} from "@/components/partials/panel/projects/read/contracts/create/Tools.tsx";
 
 // hooks
-import useModal from "@/hooks/useModal.tsx";
+import useModal from "@/hooks/useModal";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import Button from "@/modules/Button.tsx";
-import IconButton from "@/modules/IconButton.tsx";
+import Typography from "@/modules/Typography";
+import Button from "@/modules/Button";
+import IconButton from "@/modules/IconButton";
 
 // utils
 import {removeNote} from "@/utils/functions.ts";
 
 const BlankEmployerCard = ({createProjectContractForm}) => {
+    const location = useLocation();
     const {modal, _handleShowModal, _handleHideModal} = useModal();
 
     return (
@@ -42,8 +45,18 @@ const BlankEmployerCard = ({createProjectContractForm}) => {
             </li>
 
             {
-                modal.isOpen && (
-                    <CreatePartiesModal
+                location.hash === "#official" && modal.isOpen && (
+                    <CreateOfficialPartiesModal
+                        modal={modal}
+                        _handleHideModal={_handleHideModal}
+                        createProjectContractForm={createProjectContractForm}
+                    />
+                )
+            }
+
+            {
+                location.hash === "#un-official" && modal.isOpen && (
+                    <CreateUnOfficialPartiesModal
                         modal={modal}
                         _handleHideModal={_handleHideModal}
                         createProjectContractForm={createProjectContractForm}
@@ -250,8 +263,7 @@ const CreateEmployerFormData = ({article, section, createProjectContractForm}) =
 
                     {
                         createProjectContractForm.values.articles.find(item => item.number === article.number)?.employers?.map(employer =>
-                            <Fragment
-                                key={employer.user_type === "1" ? `employer-real-${employer.id}` : `employer-legal-${employer.id}`}>
+                            <Fragment key={employer.user_type === "1" ? `employer-real-${employer.id}` : `employer-legal-${employer.id}`}>
                                 {
                                     employer.user_type === "1" && (
                                         <EmployerRealCard

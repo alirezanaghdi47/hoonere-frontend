@@ -8,13 +8,13 @@ import {useFormik} from "formik";
 import FormData from "@/components/widgets/panel/projects/read/mood-boards/create/FormData.tsx";
 
 // helpers
-import toast from "@/helpers/toast.jsx";
+import toast from "@/helpers/toast"
 
 // services
-import {createProjectMoodBoardService} from "@/services/projectMoodboardsService.ts";
+import {createProjectMoodBoardService} from "@/services/projectMoodBoardService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 // utils
 import {createProjectMoodBoardSchema} from "@/utils/validations.ts";

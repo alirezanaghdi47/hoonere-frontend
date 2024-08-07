@@ -2,14 +2,15 @@
 import Loadable from "@loadable/component";
 
 // components
-const CreateBankFormData = Loadable(() => import("@/components/widgets/panel/profile/financial/CreateBankFormData.tsx"));
-const UpdateBankFormData = Loadable(() => import("@/components/widgets/panel/profile/financial/UpdateBankFormData.tsx"));
+// const CreateBankFormData = Loadable(() => import("@/components/widgets/panel/profile/financial/CreateBankFormData.tsx"));
+// const UpdateBankFormData = Loadable(() => import("@/components/widgets/panel/profile/financial/UpdateBankFormData.tsx"));
 
+import CreateBankFormData from "@/components/widgets/panel/profile/financial/CreateBankFormData.tsx";
+import UpdateBankFormData from "@/components/widgets/panel/profile/financial/UpdateBankFormData.tsx";
 import Banks from "@/components/widgets/panel/profile/financial/Banks.tsx";
 
 // hooks
-import usePart from "@/hooks/usePart.tsx";
-
+import usePart from "@/hooks/usePart";
 const Financial = ({readMyProfileAction , readMyAllBankCardAction}) => {
     const {part, currentPart, resetPart, changePart, changeCurrentPart} = usePart(null , "read");
 

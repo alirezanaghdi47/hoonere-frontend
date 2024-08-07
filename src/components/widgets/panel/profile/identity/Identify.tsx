@@ -7,13 +7,12 @@ import Real from "@/components/widgets/panel/profile/identity/Real.tsx";
 import Legal from "@/components/widgets/panel/profile/identity/Legal.tsx";
 
 // helpers
-import toast from "@/helpers/toast.tsx";
+import toast from "@/helpers/toast";
 
 // hooks
-import usePart from "@/hooks/usePart.tsx";
-
+import usePart from "@/hooks/usePart";
 // services
-import {updateProfileIdentityService} from "@/services/profileService.ts";
+import {updateProfileIdentityService} from "@/services/profileService";
 
 // types
 import {IUpdateProfileIdentity} from "@/types/serviceType.ts";
@@ -22,7 +21,11 @@ import {IUpdateProfileIdentity} from "@/types/serviceType.ts";
 import {updateProfileRealSchema, updateProfileLegalSchema} from "@/utils/validations.ts";
 
 const Identify = ({readMyProfileAction}) => {
-    const {currentPart, resetPart, changeCurrentPart} = usePart(null, "real");
+    const {
+        currentPart,
+        resetPart,
+        changeCurrentPart
+    } = usePart(null, readMyProfileAction.data?.data?.user_info?.user_type === "1" ? "real" : "legal");
 
     const updateProfileIdentityAction = useMutation({
         mutationFn: (data: IUpdateProfileIdentity) => updateProfileIdentityService(data),
@@ -63,16 +66,17 @@ const Identify = ({readMyProfileAction}) => {
 
     const updateProfileLegalForm = useFormik({
         initialValues: {
-            profile_image: {},
+            profile_img: {},
             newspaper_file: {},
-            company_name: "",
-            register_code: "",
-            economic_code: "",
-            address: "",
-            postal_code: "",
-            telephone: "",
-            email: "",
-            representatives: []
+            username: readMyProfileAction.data?.data?.user_info?.username ? readMyProfileAction.data?.data?.user_info.username : "",
+            company_name: readMyProfileAction.data?.data?.user_info?.company_name ? readMyProfileAction.data?.data?.user_info.company_name : "",
+            register_code: readMyProfileAction.data?.data?.user_info?.register_code ? readMyProfileAction.data?.data?.user_info.register_code : "",
+            economic_code: readMyProfileAction.data?.data?.user_info?.economic_code ? readMyProfileAction.data?.data?.user_info.economic_code : "",
+            address: readMyProfileAction.data?.data?.user_info?.address ? readMyProfileAction.data?.data?.user_info.address : "",
+            postal_code: readMyProfileAction.data?.data?.user_info?.postal_code ? readMyProfileAction.data?.data?.user_info.postal_code : "",
+            telephone: readMyProfileAction.data?.data?.user_info?.telephone ? readMyProfileAction.data?.data?.user_info.telephone : "",
+            email: readMyProfileAction.data?.data?.user_info?.email ? readMyProfileAction.data?.data?.user_info.email : "",
+            representatives: readMyProfileAction.data?.data?.user_info?.representatives ? readMyProfileAction.data?.data?.user_info.representatives : []
         },
         validationSchema: updateProfileLegalSchema,
         onSubmit: async (result) => {

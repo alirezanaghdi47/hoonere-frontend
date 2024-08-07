@@ -4,19 +4,19 @@ import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
 // helpers
-import toast from "@/helpers/toast.tsx";
+import toast from "@/helpers/toast";
 
 // modules
-import Button from "@/modules/Button.tsx";
-import Typography from "@/modules/Typography.tsx";
-import CodeInput from "@/modules/CodeInput.tsx";
-import Form from "@/modules/Form.tsx";
+import Button from "@/modules/Button";
+import Typography from "@/modules/Typography";
+import CodeInput from "@/modules/CodeInput";
+import Form from "@/modules/Form";
 
 // services
-import {verifyService, authService} from "@/services/authService.ts";
+import {verifyService, authService} from "@/services/authService";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 // types
 import {IAuth, IVerify} from "@/types/serviceType.ts";

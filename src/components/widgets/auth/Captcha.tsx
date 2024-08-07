@@ -3,8 +3,8 @@ import {LazyLoadImage} from 'react-lazy-load-image-component';
 import {LuRefreshCw} from "react-icons/lu";
 
 // modules
-import IconButton from "@/modules/IconButton.tsx";
-import TextInput from "@/modules/TextInput.tsx";
+import IconButton from "@/modules/IconButton";
+import TextInput from "@/modules/TextInput";
 
 const Skeleton = () => {
     return (

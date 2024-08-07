@@ -4,14 +4,14 @@ import {useMutation} from "@tanstack/react-query";
 import {LuSearch, LuX} from "react-icons/lu";
 
 // modules
-import TextInput from "@/modules/TextInput.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import Button from "@/modules/Button.tsx";
-import Form from "@/modules/Form.tsx";
-import SelectBox from "@/modules/SelectBox.tsx";
+import TextInput from "@/modules/TextInput";
+import IconButton from "@/modules/IconButton";
+import Button from "@/modules/Button";
+import Form from "@/modules/Form";
+import SelectBox from "@/modules/SelectBox";
 
 // services
-import {readAllProjectMoodBoardTypeService,} from "@/services/publicService.ts";
+import {readAllProjectMoodBoardTypeService,} from "@/services/publicService";
 
 const AdvanceFilter = ({readAllProjectMoodBoardAction, filter, initialFilter, changeFilter, hideFilter, resetFilter}) => {
     const readAllProjectMoodBoardTypeAction = useMutation({

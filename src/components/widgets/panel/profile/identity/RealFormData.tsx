@@ -1,34 +1,39 @@
 // modules
-import Form from "@/modules/Form.tsx";
-import TextInput from "@/modules/TextInput.tsx";
-import Textarea from "@/modules/Textarea.tsx";
-import NumberInput from "@/modules/NumberInput.tsx";
-import ImageInput from "@/modules/ImageInput.tsx";
-import Button from "@/modules/Button.tsx";
-import DatePicker from "@/modules/DatePicker.tsx";
+import Form from "@/modules/Form";
+import TextInput from "@/modules/TextInput";
+import Textarea from "@/modules/Textarea";
+import NumberInput from "@/modules/NumberInput";
+import ImageInput from "@/modules/ImageInput";
+import Button from "@/modules/Button";
+import DatePicker from "@/modules/DatePicker";
 
 const RealFormData = ({
-                             changeCurrentPart,
-                             readMyProfileAction,
-                             updateProfileRealForm,
-                             updateProfileIdentityAction
-                         }) => {
+                          changeCurrentPart,
+                          readMyProfileAction,
+                          updateProfileRealForm,
+                          updateProfileIdentityAction
+                      }) => {
+
     return (
         <>
             <div className="card w-100">
                 <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
-                    <div className="row gy-5 w-100">
-                        <div className="col-12">
-                            <Button
-                                color="light-info"
-                                size="sm"
-                                onClick={() => changeCurrentPart("legal")}
-                                className="ms-auto"
-                            >
-                                تغییر به شخصیت حقوقی
-                            </Button>
-                        </div>
-                    </div>
+                    {
+                        readMyProfileAction.data?.data?.user_info?.status.id === 1 && (
+                            <div className="row gy-5 w-100">
+                                <div className="col-12">
+                                    <Button
+                                        color="light-info"
+                                        size="sm"
+                                        onClick={() => changeCurrentPart("legal")}
+                                        className="ms-auto"
+                                    >
+                                        تغییر به شخصیت حقوقی
+                                    </Button>
+                                </div>
+                            </div>
+                        )
+                    }
 
                     <div className="row gy-5 w-100">
                         <div className="col-lg-4">

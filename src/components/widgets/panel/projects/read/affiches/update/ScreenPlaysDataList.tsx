@@ -8,13 +8,13 @@ import ScreenPlaysFilter from "@/components/widgets/panel/projects/read/affiches
 import ScreenPlaysFinder from "@/components/widgets/panel/projects/read/affiches/update/ScreenPlaysFinder.tsx";
 
 // modules
-import Chip from "@/modules/Chip.tsx";
-import Form from "@/modules/Form.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import Checkbox from "@/modules/Checkbox.tsx";
+import Chip from "@/modules/Chip";
+import Form from "@/modules/Form";
+import IconButton from "@/modules/IconButton";
+import CheckBox from "@/modules/CheckBox.tsx";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 export const ScreenPlayCard = ({screenPlay, updateProjectAfficheP3Form}) => {
     const params = useParams();
@@ -27,7 +27,7 @@ export const ScreenPlayCard = ({screenPlay, updateProjectAfficheP3Form}) => {
             <div
                 className="d-flex flex-column justify-content-between align-items-center gap-5 w-100 h-200px border border-dashed border-secondary rounded-2 p-5">
                 <div className='d-flex justify-content-between align-items-center gap-5 w-100'>
-                    <Checkbox
+                    <CheckBox
                         id={`screenplay-${screenPlay.id}`}
                         name={`screenplay-${screenPlay.id}`}
                         value={screenPlay.id}

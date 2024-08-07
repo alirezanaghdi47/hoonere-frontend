@@ -4,11 +4,11 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {LuX} from "react-icons/lu";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import Modal from "@/modules/Modal.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import VideoPlayer from "@/modules/VideoPlayer.tsx";
-import MusicPlayer from "@/modules/MusicPlayer.tsx";
+import Typography from "@/modules/Typography";
+import Modal from "@/modules/Modal";
+import IconButton from "@/modules/IconButton";
+import VideoPlayer from "@/modules/VideoPlayer";
+import MusicPlayer from "@/modules/MusicPlayer";
 
 const DataModal = ({moodBoard}) => {
     const navigate = useNavigate();

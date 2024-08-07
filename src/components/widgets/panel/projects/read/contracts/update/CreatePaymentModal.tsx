@@ -3,21 +3,21 @@ import {LuX} from "react-icons/lu";
 import {useFormik} from "formik";
 
 // helpers
-import toast from "@/helpers/toast.tsx";
+import toast from "@/helpers/toast"
 
 // modules
-import Modal from "@/modules/Modal.tsx";
-import Typography from "@/modules/Typography.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import DatePicker from "@/modules/DatePicker.tsx";
-import NumberInput from "@/modules/NumberInput.tsx";
-import Form from "@/modules/Form.tsx";
-import Button from "@/modules/Button.tsx";
+import Modal from "@/modules/Modal";
+import Typography from "@/modules/Typography";
+import IconButton from "@/modules/IconButton";
+import DatePicker from "@/modules/DatePicker";
+import NumberInput from "@/modules/NumberInput";
+import Form from "@/modules/Form";
+import Button from "@/modules/Button";
 
 // utils
-import {createPaymentSchema} from "@/utils/validations";
+import {createPaymentSchema} from "@/utils/validations.ts";
 
-const CreatePaymentModal = ({modal, _handleHideModal, createProjectContractForm}) => {
+const CreatePaymentModal = ({modal, _handleHideModal, updateProjectContractForm}) => {
     const createPaymentModal = useFormik({
         initialValues: {
             percent: 0,
@@ -25,18 +25,18 @@ const CreatePaymentModal = ({modal, _handleHideModal, createProjectContractForm}
         },
         validationSchema: createPaymentSchema,
         onSubmit: async (result, {resetForm}) => {
-            const totalPercent = createProjectContractForm.values.articles.find(item => item.number === modal?.data?.article.number)?.payments.reduce((acc, item) => {
+            const totalPercent = updateProjectContractForm.values.articles.find(item => item.number === modal?.data?.article.number)?.payments.reduce((acc, item) => {
                 return acc += item.percent
             }, Number(result.percent));
 
             if (totalPercent > 100) return toast("error" , "مجموع درصد فازبندی قرار داد حداکثر 100 است.")
 
-            const newArray = [...createProjectContractForm.values.articles.find(item => item.number === modal?.data?.article.number)?.payments, {
+            const newArray = [...updateProjectContractForm.values.articles.find(item => item.number === modal?.data?.article.number)?.payments, {
                 percent: Number(result.percent),
                 date: result.date
             }];
 
-            createProjectContractForm.setFieldValue(`articles[${createProjectContractForm.values.articles.findIndex(item => item.number === modal?.data?.article.number)}].payments`, newArray);
+            updateProjectContractForm.setFieldValue(`articles[${updateProjectContractForm.values.articles.findIndex(item => item.number === modal?.data?.article.number)}].payments`, newArray);
 
             resetForm();
 
@@ -115,8 +115,8 @@ const CreatePaymentModal = ({modal, _handleHideModal, createProjectContractForm}
                         <DatePicker
                             id="date"
                             name="date"
-                            minDate={createProjectContractForm.values.articles.find(item => item.number === modal?.data?.article.number - 2)?.start_date}
-                            maxDate={createProjectContractForm.values.articles.find(item => item.number === modal?.data?.article.number - 2)?.end_date}
+                            minDate={updateProjectContractForm.values.articles.find(item => item.number === modal?.data?.article.number - 2)?.start_date}
+                            maxDate={updateProjectContractForm.values.articles.find(item => item.number === modal?.data?.article.number - 2)?.end_date}
                             value={createPaymentModal.values.date}
                             onChange={(value) => createPaymentModal.setFieldValue("date", value)}
                         />

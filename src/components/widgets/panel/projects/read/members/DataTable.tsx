@@ -11,19 +11,19 @@ import Filter from "@/components/widgets/panel/projects/read/members/Filter.tsx"
 import Empty from "@/components/partials/panel/Empty.tsx";
 
 // helpers
-import dialog from "@/helpers/dialog.tsx";
-import toast from "@/helpers/toast.tsx";
+import dialog from "@/helpers/dialog";
+import toast from "@/helpers/toast";
 
 // modules
-import Table from "@/modules/Table.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import Typography from "@/modules/Typography.tsx";
+import Table from "@/modules/Table";
+import IconButton from "@/modules/IconButton";
+import Typography from "@/modules/Typography";
 
 // services
-import {deleteProjectMemberService} from "@/services/projectMemberService.ts";
+import {deleteProjectMemberService} from "@/services/projectMemberService";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 // types
 import {IDeleteProjectMember} from "@/types/serviceType.ts";

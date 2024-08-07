@@ -15,12 +15,12 @@ import CreatePaymentFormData from "@/components/widgets/panel/projects/read/cont
 import CreateRegularFormData from "@/components/widgets/panel/projects/read/contracts/create/CreateRegularFormData.tsx";
 
 // modules
-import Accordion from "@/modules/Accordion.tsx";
-import Button from "@/modules/Button.tsx";
-import IconButton from "@/modules/IconButton.tsx";
+import Accordion from "@/modules/Accordion";
+import Button from "@/modules/Button";
+import IconButton from "@/modules/IconButton";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 // utils
 import {removeArticle} from "@/utils/functions.ts";

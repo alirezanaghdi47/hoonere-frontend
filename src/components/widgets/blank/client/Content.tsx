@@ -2,11 +2,11 @@
 import {LazyLoadImage} from "react-lazy-load-image-component";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import Button from "@/modules/Button.tsx";
+import Typography from "@/modules/Typography";
+import Button from "@/modules/Button";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 const Content = () => {
     const {auth} = useAuthStore();

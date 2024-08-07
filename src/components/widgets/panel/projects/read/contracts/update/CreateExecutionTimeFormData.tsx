@@ -7,12 +7,12 @@ import {LuPen, LuTrash} from "react-icons/lu";
 import {Section, Note} from "@/components/partials/panel/projects/read/contracts/update/Tools.tsx";
 
 // hooks
-import usePart from "@/hooks/usePart.tsx";
+import usePart from "@/hooks/usePart";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import DatePicker from "@/modules/DatePicker.tsx";
-import IconButton from "@/modules/IconButton.tsx";
+import Typography from "@/modules/Typography";
+import DatePicker from "@/modules/DatePicker";
+import IconButton from "@/modules/IconButton";
 
 // utils
 import {removeNote} from "@/utils/functions.ts";

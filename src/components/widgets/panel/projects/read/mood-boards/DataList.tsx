@@ -9,18 +9,18 @@ import Finder from "@/components/widgets/panel/projects/read/mood-boards/Finder.
 import Empty from "@/components/partials/panel/Empty.tsx";
 
 // helpers
-import dialog from "@/helpers/dialog.tsx";
-import toast from "@/helpers/toast.tsx";
+import dialog from "@/helpers/dialog";
+import toast from "@/helpers/toast";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import IconButton from "@/modules/IconButton.tsx";
+import Typography from "@/modules/Typography";
+import IconButton from "@/modules/IconButton";
 
 // services
-import {deleteProjectMoodBoardsService} from "@/services/projectMoodboardsService.ts";
+import {deleteProjectMoodBoardsService} from "@/services/projectMoodBoardService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 const MoodBoardCard = ({moodBoard, readAllProjectMoodBoardAction , filter}) => {
     const params = useParams();

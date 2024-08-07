@@ -7,7 +7,7 @@ import {useMutation} from "@tanstack/react-query";
 import DataModal from "@/components/widgets/panel/projects/read/screen-plays/read/DataModal.tsx";
 
 // services
-import {readProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
+import {readProjectScreenPlayService} from "@/services/projectScreenPlayService";
 
 // types
 import {IReadProjectScreenPlay} from "@/types/serviceType.ts";

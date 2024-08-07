@@ -5,11 +5,11 @@ import {LuPen, LuTrash} from "react-icons/lu";
 import {Note, Section} from "@/components/partials/panel/projects/read/contracts/update/Tools.tsx";
 
 // hooks
-import usePart from "@/hooks/usePart.tsx";
+import usePart from "@/hooks/usePart";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import IconButton from "@/modules/IconButton.tsx";
+import Typography from "@/modules/Typography";
+import IconButton from "@/modules/IconButton";
 
 // utils
 import {removeNote, removeSection} from "@/utils/functions.ts";

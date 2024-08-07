@@ -12,13 +12,22 @@ export const updateProfileIdentityService = async (data) => {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        const {profile_img, national_card , profile_image , newspaper_file, ...rawData} = data;
+        if (data.user_type === "1") {
+            const {profile_img, national_card, ...rawData} = data;
 
-        if (Object.keys(profile_img).length > 0) formData.append("profile_img", profile_img);
-        if (Object.keys(national_card).length > 0) formData.append("national_card", national_card);
-        if (Object.keys(profile_image).length > 0) formData.append("profile_image", profile_image);
-        if (Object.keys(newspaper_file).length > 0) formData.append("newspaper_file", newspaper_file);
-        formData.append("data", encodeData(JSON.stringify(rawData)));
+            if (Object.keys(profile_img).length > 0) formData.append("profile_img", profile_img);
+            if (Object.keys(national_card).length > 0) formData.append("national_card", national_card);
+
+            formData.append("data", encodeData(JSON.stringify(rawData)));
+
+        } else if (data.user_type === "2") {
+            const {profile_img, newspaper_file, ...rawData} = data;
+
+            if (Object.keys(profile_img).length > 0) formData.append("profile_img", profile_img);
+            if (Object.keys(newspaper_file).length > 0) formData.append("newspaper_file", newspaper_file);
+
+            formData.append("data", encodeData(JSON.stringify(rawData)));
+        }
 
         const response = await axios.post(process.env.API_URL + "/panel/profile/updateIdentity", formData, {
             headers: {
@@ -212,6 +221,7 @@ export const updateOccupationService = async (data) => {
         const {resume_file, ...rawData} = data;
 
         if (Object.keys(resume_file).length > 0) formData.append("resume_file", resume_file);
+
         formData.append("data", encodeData(JSON.stringify(rawData)));
 
         const response = await axios.post(process.env.API_URL + "/panel/profile/job/update", formData, {

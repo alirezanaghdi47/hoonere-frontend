@@ -8,10 +8,10 @@ import DataList from "@/components/widgets/panel/projects/read/mood-boards/DataL
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // hooks
-import useFilter from "@/hooks/useFilter.tsx";
+import useFilter from "@/hooks/useFilter";
 
 // services
-import {readAllProjectMoodBoardService} from "@/services/projectMoodboardsService.ts";
+import {readAllProjectMoodBoardService} from "@/services/projectMoodBoardService.ts";
 
 const Content = () => {
     const params = useParams();

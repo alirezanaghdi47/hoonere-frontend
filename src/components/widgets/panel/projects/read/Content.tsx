@@ -12,10 +12,10 @@ import {
 } from "react-icons/lu";
 
 // modules
-import Button from "@/modules/Button.tsx";
+import Button from "@/modules/Button";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 const Content = () => {
     const params = useParams();

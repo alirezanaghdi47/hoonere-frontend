@@ -44,7 +44,9 @@ export const verifyService = async (data) => {
 export const loginService = async (data) => {
     try {
         const formData = new FormData();
+
         formData.append("data", encodeData(JSON.stringify(data)));
+
         const response = await axios.post(process.env.API_URL + "/auth/doLoginWithStaticPassword", formData);
 
         return {

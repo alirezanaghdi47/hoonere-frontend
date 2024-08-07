@@ -3,19 +3,19 @@ import {LuX} from "react-icons/lu";
 import {useFormik} from "formik";
 
 // helpers
-import toast from "@/helpers/toast.tsx";
+import toast from "@/helpers/toast"
 
 // modules
-import Modal from "@/modules/Modal.tsx";
-import Typography from "@/modules/Typography.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import DatePicker from "@/modules/DatePicker.tsx";
-import NumberInput from "@/modules/NumberInput.tsx";
-import Form from "@/modules/Form.tsx";
-import Button from "@/modules/Button.tsx";
+import Modal from "@/modules/Modal";
+import Typography from "@/modules/Typography";
+import IconButton from "@/modules/IconButton";
+import DatePicker from "@/modules/DatePicker";
+import NumberInput from "@/modules/NumberInput";
+import Form from "@/modules/Form";
+import Button from "@/modules/Button";
 
 // utils
-import {createPaymentSchema} from "@/utils/validations";
+import {createPaymentSchema} from "@/utils/validations.ts";
 
 const CreatePaymentModal = ({modal, _handleHideModal, createProjectContractForm}) => {
     const createPaymentModal = useFormik({

@@ -5,9 +5,9 @@ import {LuTrash} from "react-icons/lu";
 import {Note, Section} from "@/components/partials/panel/projects/read/contracts/create/Tools.tsx";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import Checkbox from "@/modules/Checkbox.tsx";
+import Typography from "@/modules/Typography";
+import IconButton from "@/modules/IconButton";
+import CheckBox from "@/modules/CheckBox.tsx";
 
 // utils
 import {removeNote, removeSection, toggleSection} from "@/utils/functions.ts";
@@ -22,7 +22,7 @@ const CreateRegularFormData = ({article, section, createProjectContractForm}) =>
             <div className='d-flex justify-content-start align-items-center gap-5 w-100'>
                 {
                     !section.isAdded && (
-                        <Checkbox
+                        <CheckBox
                             id={`${article.number}-${section.number}`}
                             name={`${article.number}-${section.number}`}
                             value={true}

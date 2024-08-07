@@ -11,19 +11,19 @@ import Loading from "@/components/partials/panel/Loading.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
 // hooks
-import useFilter from "@/hooks/useFilter.tsx";
+import useFilter from "@/hooks/useFilter";
 
 // modules
-import Modal from "@/modules/Modal.tsx";
-import Typography from "@/modules/Typography.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import Button from "@/modules/Button.tsx";
+import Modal from "@/modules/Modal";
+import Typography from "@/modules/Typography";
+import IconButton from "@/modules/IconButton";
+import Button from "@/modules/Button";
 
 // services
-import {readAllProjectMoodBoardService} from "@/services/projectMoodboardsService.ts";
+import {readAllProjectMoodBoardService} from "@/services/projectMoodBoardService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 const ReadMoodBoardsModal = ({modal, _handleHideModal}) => {
     const params = useParams();

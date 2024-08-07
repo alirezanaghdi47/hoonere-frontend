@@ -12,24 +12,24 @@ import Filter from "@/components/widgets/panel/projects/read/contracts/Filter.ts
 import Empty from "@/components/partials/panel/Empty.tsx";
 
 // helpers
-import dialog from "@/helpers/dialog.tsx";
-import toast from "@/helpers/toast.tsx";
+import dialog from "@/helpers/dialog";
+import toast from "@/helpers/toast"
 
 // modules
-import Table from "@/modules/Table.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import Typography from "@/modules/Typography.tsx";
-import Chip from "@/modules/Chip.tsx";
+import Table from "@/modules/Table";
+import IconButton from "@/modules/IconButton";
+import Typography from "@/modules/Typography";
+import Chip from "@/modules/Chip";
 
 // services
 import {
     changeProjectContractStatusService,
     deleteProjectContractService,
     readProjectContractService
-} from "@/services/projectContractService.ts";
+} from "@/services/projectContractService";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 const DataTable = ({
                        readAllProjectContractAction,

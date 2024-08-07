@@ -4,11 +4,11 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {LuMenu} from "react-icons/lu";
 
 // modules
-import IconButton from "@/modules/IconButton.tsx";
+import IconButton from "@/modules/IconButton";
 
 // stores
-import useAppStore from "@/stores/appStore.ts";
-import useAuthStore from "@/stores/authStore.ts";
+import useAppStore from "@/stores/appStore";
+import useAuthStore from "@/stores/authStore";
 
 const Navbar = () => {
     const {auth} = useAuthStore();

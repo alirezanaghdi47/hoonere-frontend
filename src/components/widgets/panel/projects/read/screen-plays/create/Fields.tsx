@@ -2,8 +2,8 @@
 import {LuPlus, LuTrash} from "react-icons/lu";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import IconButton from "@/modules/IconButton.tsx";
+import Typography from "@/modules/Typography";
+import IconButton from "@/modules/IconButton";
 
 export const BlankCard = ({changeCurrentPart}) => {
     return (

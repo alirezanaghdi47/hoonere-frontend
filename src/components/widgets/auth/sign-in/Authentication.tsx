@@ -3,16 +3,16 @@ import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
 // helpers
-import toast from "@/helpers/toast.tsx";
+import toast from "@/helpers/toast";
 
 // modules
-import Button from "@/modules/Button.tsx";
-import Typography from "@/modules/Typography.tsx";
-import NumberInput from "@/modules/NumberInput.tsx";
-import Form from "@/modules/Form.tsx";
+import Button from "@/modules/Button";
+import Typography from "@/modules/Typography";
+import NumberInput from "@/modules/NumberInput";
+import Form from "@/modules/Form";
 
 // services
-import {authService} from "@/services/authService.ts";
+import {authService} from "@/services/authService";
 
 // types
 import {IAuth} from "@/types/serviceType.ts";

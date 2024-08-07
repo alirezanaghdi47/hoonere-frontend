@@ -3,7 +3,7 @@ import {useMemo, useRef} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {format} from "date-fns-jalali";
-import {LuCheck, LuClipboardSignature, LuDownload, LuPen, LuThumbsUp, LuTrash2} from "react-icons/lu";
+import {LuCheck, LuClipboardSignature, LuDownload, LuFileSignature, LuPen, LuThumbsUp, LuTrash2} from "react-icons/lu";
 
 // components
 import Print from "@/components/widgets/panel/projects/read/contracts/Print.tsx";
@@ -12,24 +12,24 @@ import Filter from "@/components/widgets/panel/projects/read/contracts/Filter.ts
 import Empty from "@/components/partials/panel/Empty.tsx";
 
 // helpers
-import dialog from "@/helpers/dialog.tsx";
-import toast from "@/helpers/toast.tsx";
+import dialog from "@/helpers/dialog";
+import toast from "@/helpers/toast";
 
 // modules
-import Table from "@/modules/Table.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import Typography from "@/modules/Typography.tsx";
-import Chip from "@/modules/Chip.tsx";
+import Table from "@/modules/Table";
+import IconButton from "@/modules/IconButton";
+import Typography from "@/modules/Typography";
+import Chip from "@/modules/Chip";
 
 // services
 import {
     changeProjectContractStatusService,
     deleteProjectContractService,
     readProjectContractService
-} from "@/services/projectContractService.ts";
+} from "@/services/projectContractService";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 const DataTable = ({
                        readAllProjectContractAction,
@@ -118,7 +118,7 @@ const DataTable = ({
                 accessorKey: 'start_date',
                 header: () => 'تاریخ شروع',
                 cell: ({row}) => (
-                    <div className="w-100px">
+                    <div className="w-75px">
                         <Typography
                             size="xs"
                             color="dark"
@@ -136,7 +136,7 @@ const DataTable = ({
                 accessorKey: 'end_date',
                 header: () => 'تاریخ پایان',
                 cell: ({row}) => (
-                    <div className="w-100px">
+                    <div className="w-75px">
                         <Typography
                             size="xs"
                             color="dark"
@@ -215,11 +215,11 @@ const DataTable = ({
                 cell: ({row}) => (
                     <div className="d-flex justify-content-start align-items-center gap-2 w-max">
                         <IconButton
-                            href={auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/insertions"}
+                            href={auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/supplements"}
                             color="light-info"
                             size="sm"
                             data-tooltip-id="my-tooltip"
-                            data-tooltip-content="الحاقیه ها"
+                            data-tooltip-content="متمم ها"
                         >
                             <LuClipboardSignature
                                 size={20}
@@ -228,20 +228,37 @@ const DataTable = ({
                         </IconButton>
 
                         <IconButton
-                            color="light-success"
+                            href={auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/insertions"}
+                            color="light-info"
                             size="sm"
                             data-tooltip-id="my-tooltip"
-                            data-tooltip-content="ثبت نهایی"
-                            onClick={() => readProjectContractAction.mutate({
-                                project_id: row.original.project_id,
-                                contract_id: row.original.id.toString(),
-                            })}
+                            data-tooltip-content="الحاقیه ها"
                         >
-                            <LuThumbsUp
+                            <LuFileSignature
                                 size={20}
                                 color="currentColor"
                             />
                         </IconButton>
+
+                        {
+                            row.original.status_id === "1" && (
+                                <IconButton
+                                    color="light-success"
+                                    size="sm"
+                                    data-tooltip-id="my-tooltip"
+                                    data-tooltip-content="ثبت نهایی"
+                                    onClick={() => readProjectContractAction.mutate({
+                                        project_id: row.original.project_id,
+                                        contract_id: row.original.id.toString(),
+                                    })}
+                                >
+                                    <LuThumbsUp
+                                        size={20}
+                                        color="currentColor"
+                                    />
+                                </IconButton>
+                            )
+                        }
 
                         <IconButton
                             color="light-dark"

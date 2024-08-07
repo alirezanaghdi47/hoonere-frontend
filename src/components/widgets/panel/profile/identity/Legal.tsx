@@ -1,14 +1,10 @@
-// libraries
-import Loadable from "@loadable/component";
-
 //components
-const CreateRepresentativeFormData = Loadable(() => import("@/components/widgets/panel/profile/identity/CreateRepresentativeFormData.tsx"));
-
+import CreateRepresentativeFormData from "@/components/widgets/panel/profile/identity/CreateRepresentativeFormData.tsx";
 import LegalFormData from "@/components/widgets/panel/profile/identity/LegalFormData.tsx";
 import Representatives from "@/components/widgets/panel/profile/identity/Representatives.tsx";
 
 // hooks
-import usePart from "@/hooks/usePart.tsx";
+import usePart from "@/hooks/usePart";
 
 const Legal = ({changeCurrentPart, readMyProfileAction, updateProfileLegalForm, updateProfileIdentityAction}) => {
     const {currentPart, resetPart, changeCurrentPart: changeCurrentPart2} = usePart(null, "read");

@@ -5,14 +5,14 @@ import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
 // modules
-import Form from "@/modules/Form.tsx";
-import SelectBox from "@/modules/SelectBox.tsx";
-import Button from "@/modules/Button.tsx";
-import TimePicker from "@/modules/TimePicker.tsx";
-import TextInput from "@/modules/TextInput.tsx";
+import Form from "@/modules/Form";
+import SelectBox from "@/modules/SelectBox";
+import Button from "@/modules/Button";
+import TimePicker from "@/modules/TimePicker";
+import TextInput from "@/modules/TextInput";
 
 // services
-import {readAllProjectMemberByFoaService} from "@/services/projectService.ts";
+import {readAllProjectMemberByFoaService} from "@/services/projectService";
 
 // types
 import {IReadAllProjectMembersByFoa} from "@/types/serviceType.ts";

@@ -4,18 +4,18 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {LuMoreVertical, LuPlus} from "react-icons/lu";
 
 // helpers
-import toast from "@/helpers/toast.tsx";
-import dialog from "@/helpers/dialog.tsx";
+import toast from "@/helpers/toast";
+import dialog from "@/helpers/dialog";
 
 // modules
-import Form from "@/modules/Form.tsx";
-import Dropdown from "@/modules/Dropdown.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import Chip from "@/modules/Chip.tsx";
-import Typography from "@/modules/Typography.tsx";
+import Form from "@/modules/Form";
+import Dropdown from "@/modules/Dropdown";
+import IconButton from "@/modules/IconButton";
+import Chip from "@/modules/Chip";
+import Typography from "@/modules/Typography";
 
 // services
-import {deleteBankCardService, changeStatusOfBankCardService} from "@/services/profileService.ts";
+import {deleteBankCardService, changeStatusOfBankCardService} from "@/services/profileService";
 
 // types
 import {IChangeStatusOfBankCard, IDeleteBankCard} from "@/types/serviceType.ts";

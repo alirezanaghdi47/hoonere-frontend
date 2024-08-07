@@ -10,20 +10,20 @@ import Filter from "@/components/widgets/panel/projects/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
 // helpers
-import dialog from "@/helpers/dialog.tsx";
-import toast from "@/helpers/toast.tsx";
+import dialog from "@/helpers/dialog";
+import toast from "@/helpers/toast";
 
 // modules
-import Table from "@/modules/Table.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import Button from "@/modules/Button.tsx";
-import Typography from "@/modules/Typography.tsx";
+import Table from "@/modules/Table";
+import IconButton from "@/modules/IconButton";
+import Button from "@/modules/Button";
+import Typography from "@/modules/Typography";
 
 // services
-import {deleteProjectService} from "@/services/projectService.ts";
+import {deleteProjectService} from "@/services/projectService";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 // types
 import {IDeleteProject} from "@/types/serviceType.ts";

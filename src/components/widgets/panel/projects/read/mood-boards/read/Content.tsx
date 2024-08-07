@@ -7,7 +7,7 @@ import {useMutation} from "@tanstack/react-query";
 import DataModal from "@/components/widgets/panel/projects/read/mood-boards/read/DataModal.tsx";
 
 // services
-import {readProjectMoodBoardService} from "@/services/projectMoodboardsService.ts";
+import {readProjectMoodBoardService} from "@/services/projectMoodBoardService.ts";
 
 const Content = () => {
     const params = useParams();

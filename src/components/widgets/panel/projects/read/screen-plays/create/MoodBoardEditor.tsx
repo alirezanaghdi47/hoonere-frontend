@@ -7,13 +7,13 @@ import Loadable from "@loadable/component";
 const MoodBoardsModal = Loadable(() => import("@/components/widgets/panel/projects/read/screen-plays/create/ReadMoodBoardsModal.tsx"));
 
 // hooks
-import useModal from "@/hooks/useModal.tsx";
+import useModal from "@/hooks/useModal";
 
 // modules
-import TextEditor from "@/modules/TextEditor.tsx";
+import TextEditor from "@/modules/TextEditor";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 const MoodBoardEditor = ({id, name, value, onChange}) => {
     const params = useParams();

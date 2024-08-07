@@ -1,17 +1,16 @@
 // libraries
-import {useEffect} from "react";
 import {useFormik} from "formik";
 import {LuPlus} from "react-icons/lu";
 
 // hooks
-import usePart from "@/hooks/usePart.tsx";
+import usePart from "@/hooks/usePart";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import Form from "@/modules/Form.tsx";
-import Textarea from "@/modules/Textarea.tsx";
-import Button from "@/modules/Button.tsx";
-import TextInput from "@/modules/TextInput.tsx";
+import Typography from "@/modules/Typography";
+import Form from "@/modules/Form";
+import Textarea from "@/modules/Textarea";
+import Button from "@/modules/Button";
+import TextInput from "@/modules/TextInput";
 
 //utils
 import {createArticleSchema, createSectionSchema, createNoteSchema} from "@/utils/validations.ts";

@@ -4,23 +4,24 @@ import Loadable from "@loadable/component";
 import {LuPen, LuTrash} from "react-icons/lu";
 
 // components
-const CreatePartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/update/CreatePartiesModal.tsx"));
+const CreateOfficialPartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/update/CreateOfficialPartiesModal.tsx"));
+const CreateUnOfficialPartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/update/CreateUnOfficialPartiesModal.tsx"));
 
 import {Section , Note} from "@/components/partials/panel/projects/read/contracts/update/Tools.tsx";
 
 // hooks
-import useModal from "@/hooks/useModal.tsx";
-import usePart from "@/hooks/usePart.tsx";
+import useModal from "@/hooks/useModal";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import Button from "@/modules/Button.tsx";
-import IconButton from "@/modules/IconButton.tsx";
+import Typography from "@/modules/Typography";
+import Button from "@/modules/Button";
+import IconButton from "@/modules/IconButton";
 
 // utils
 import {removeNote} from "@/utils/functions.ts";
+import usePart from "@/hooks/usePart.tsx";
 
-const BlankContractorCard = ({updateProjectContractForm}) => {
+const BlankContractorCard = ({readProjectContractSectionAction , updateProjectContractForm}) => {
     const {modal, _handleShowModal, _handleHideModal} = useModal();
 
     return (
@@ -43,8 +44,18 @@ const BlankContractorCard = ({updateProjectContractForm}) => {
             </li>
 
             {
-                modal.isOpen && (
-                    <CreatePartiesModal
+                readProjectContractSectionAction.data?.data?.contract_info?.type_id === "1" && modal.isOpen && (
+                    <CreateOfficialPartiesModal
+                        modal={modal}
+                        _handleHideModal={_handleHideModal}
+                        updateProjectContractForm={updateProjectContractForm}
+                    />
+                )
+            }
+
+            {
+                readProjectContractSectionAction.data?.data?.contract_info?.type_id === "2" && modal.isOpen && (
+                    <CreateUnOfficialPartiesModal
                         modal={modal}
                         _handleHideModal={_handleHideModal}
                         updateProjectContractForm={updateProjectContractForm}
@@ -236,7 +247,7 @@ const ContractorLegalCard = ({contractor , updateProjectContractForm}) => {
     )
 }
 
-const CreateContractorFormData = ({article , section, updateProjectContractForm}) => {
+const CreateContractorFormData = ({article , section, readProjectContractSectionAction , updateProjectContractForm}) => {
     const {
         part: notePart,
         currentPart: noteCurrentPart,
@@ -275,7 +286,10 @@ const CreateContractorFormData = ({article , section, updateProjectContractForm}
                     </Typography>
 
                     <ul className="vstack justify-content-center gap-5 p-0 m-0">
-                        <BlankContractorCard updateProjectContractForm={updateProjectContractForm}/>
+                        <BlankContractorCard
+                            readProjectContractSectionAction={readProjectContractSectionAction}
+                            updateProjectContractForm={updateProjectContractForm}
+                        />
 
                         {
                             updateProjectContractForm.values.articles.find(item => item.number === article.number)?.contractors?.map(contractor =>
@@ -363,10 +377,7 @@ const CreateContractorFormData = ({article , section, updateProjectContractForm}
                                         size="sm"
                                         data-tooltip-id="my-tooltip"
                                         data-tooltip-content="حذف تبصره"
-                                        onClick={() => {
-                                            const notes = removeNote(updateProjectContractForm.values.notes, note.number);
-                                            updateProjectContractForm.setFieldValue("notes", notes);
-                                        }}
+                                        onClick={() => updateProjectContractForm.setFieldValue("notes", removeNote(updateProjectContractForm.values.notes, note.number))}
                                     >
                                         <LuTrash
                                             size={20}

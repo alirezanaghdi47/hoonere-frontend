@@ -6,9 +6,9 @@ import {format} from "date-fns-jalali";
 import {LuPrinter, LuX} from "react-icons/lu";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import Modal from "@/modules/Modal.tsx";
-import IconButton from "@/modules/IconButton.tsx";
+import Typography from "@/modules/Typography";
+import Modal from "@/modules/Modal";
+import IconButton from "@/modules/IconButton";
 
 // utils
 import {generateTimeWithoutSecond} from "@/utils/functions.ts";

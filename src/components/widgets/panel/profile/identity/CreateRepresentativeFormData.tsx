@@ -2,10 +2,10 @@
 import {useFormik} from "formik";
 
 // modules
-import Form from "@/modules/Form.tsx";
-import TextInput from "@/modules/TextInput.tsx";
-import NumberInput from "@/modules/NumberInput.tsx";
-import Button from "@/modules/Button.tsx";
+import Form from "@/modules/Form";
+import TextInput from "@/modules/TextInput";
+import NumberInput from "@/modules/NumberInput";
+import Button from "@/modules/Button";
 
 // utils
 import {createRepresentativeSchema} from "@/utils/validations.ts";

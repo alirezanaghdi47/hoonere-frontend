@@ -12,7 +12,7 @@ import Financial from "@/components/widgets/panel/profile/financial/Financial.ts
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // services
-import {readAllMyJobService, readMyAllBankCardService, readMyProfileService} from "@/services/profileService.ts";
+import {readMyAllBankCardService, readMyProfileService} from "@/services/profileService";
 
 const Content = () => {
     const location = useLocation();
@@ -21,20 +21,12 @@ const Content = () => {
         mutationFn: () => readMyProfileService(),
     });
 
-    const readAllMyJobAction = useMutation({
-        mutationFn: () => readAllMyJobService(),
-    });
-
     const readMyAllBankCardAction = useMutation({
         mutationFn: () => readMyAllBankCardService(),
     });
 
     useLayoutEffect(() => {
         readMyProfileAction.mutate();
-    }, []);
-
-    useLayoutEffect(() => {
-        readAllMyJobAction.mutate();
     }, []);
 
     useLayoutEffect(() => {
@@ -92,7 +84,7 @@ const Content = () => {
             }
 
             {
-                (readMyProfileAction.isPending || readAllMyJobAction.isPending) && location.hash === "#occupation" && (
+                (readMyProfileAction.isPending) && location.hash === "#occupation" && (
                     <Loading
                         withCard
                         width="100%"
@@ -102,11 +94,8 @@ const Content = () => {
             }
 
             {
-                !readMyProfileAction.isPending && !readAllMyJobAction.isPending && location.hash === "#occupation" && (
-                    <Occupation
-                        readMyProfileAction={readMyProfileAction}
-                        readAllMyJobAction={readAllMyJobAction}
-                    />
+                !readMyProfileAction.isPending && location.hash === "#occupation" && (
+                    <Occupation readMyProfileAction={readMyProfileAction}/>
                 )
             }
 

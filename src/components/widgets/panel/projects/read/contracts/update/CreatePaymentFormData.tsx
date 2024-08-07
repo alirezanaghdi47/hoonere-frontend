@@ -4,20 +4,20 @@ import {format} from "date-fns-jalali";
 import {LuPen, LuTrash} from "react-icons/lu";
 
 // components
-const CreatePaymentModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/create/CreatePaymentModal.tsx"));
+const CreatePaymentModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/update/CreatePaymentModal.tsx"));
 
 import {Section, Note} from "@/components/partials/panel/projects/read/contracts/update/Tools.tsx";
 import Forbidden from "@/components/partials/panel/Forbidden.tsx";
 
 // hooks
-import useModal from "@/hooks/useModal.tsx";
-import usePart from "@/hooks/usePart.tsx";
+import useModal from "@/hooks/useModal";
+import usePart from "@/hooks/usePart";
 
 // modules
-import RadioBox from "@/modules/RadioBox.tsx";
-import Typography from "@/modules/Typography.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import Button from "@/modules/Button.tsx";
+import RadioBox from "@/modules/RadioBox";
+import Typography from "@/modules/Typography";
+import IconButton from "@/modules/IconButton";
+import Button from "@/modules/Button";
 
 // utils
 import {removeNote} from "@/utils/functions.ts";

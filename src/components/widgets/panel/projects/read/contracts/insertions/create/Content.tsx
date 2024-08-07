@@ -9,14 +9,14 @@ import FormData from "@/components/widgets/panel/projects/read/contracts/create/
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // helpers
-import toast from "@/helpers/toast.tsx";
+import toast from "@/helpers/toast";
 
 // services
-import {createProjectContractService} from "@/services/projectContractService.ts";
-import {readAllProjectContractArticleService, readAllProjectContractSectionService} from "@/services/publicService.ts";
+import {createProjectContractService} from "@/services/projectContractService";
+import {readAllProjectContractArticleService, readAllProjectContractSectionService} from "@/services/publicService";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 // utils
 import {createProjectContractSchema} from "@/utils/validations.ts";

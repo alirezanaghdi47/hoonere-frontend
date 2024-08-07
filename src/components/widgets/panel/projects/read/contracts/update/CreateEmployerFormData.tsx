@@ -4,23 +4,24 @@ import Loadable from "@loadable/component";
 import {LuPen, LuTrash} from "react-icons/lu";
 
 // components
-const CreatePartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/update/CreatePartiesModal.tsx"));
+const CreateOfficialPartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/update/CreateOfficialPartiesModal.tsx"));
+const CreateUnOfficialPartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/update/CreateUnOfficialPartiesModal.tsx"));
 
 import {Section, Note} from "@/components/partials/panel/projects/read/contracts/update/Tools.tsx";
 
 // hooks
-import useModal from "@/hooks/useModal.tsx";
+import useModal from "@/hooks/useModal";
 import usePart from "@/hooks/usePart.tsx";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import Button from "@/modules/Button.tsx";
-import IconButton from "@/modules/IconButton.tsx";
+import Typography from "@/modules/Typography";
+import Button from "@/modules/Button";
+import IconButton from "@/modules/IconButton";
 
 // utils
 import {removeNote} from "@/utils/functions.ts";
 
-const BlankEmployerCard = ({updateProjectContractForm}) => {
+const BlankEmployerCard = ({readProjectContractSectionAction , updateProjectContractForm}) => {
     const {modal, _handleShowModal, _handleHideModal} = useModal();
 
     return (
@@ -43,8 +44,18 @@ const BlankEmployerCard = ({updateProjectContractForm}) => {
             </li>
 
             {
-                modal.isOpen && (
-                    <CreatePartiesModal
+                readProjectContractSectionAction.data?.data?.contract_info?.type_id === "1" && modal.isOpen && (
+                    <CreateOfficialPartiesModal
+                        modal={modal}
+                        _handleHideModal={_handleHideModal}
+                        updateProjectContractForm={updateProjectContractForm}
+                    />
+                )
+            }
+
+            {
+                readProjectContractSectionAction.data?.data?.contract_info?.type_id === "2" && modal.isOpen && (
+                    <CreateUnOfficialPartiesModal
                         modal={modal}
                         _handleHideModal={_handleHideModal}
                         updateProjectContractForm={updateProjectContractForm}
@@ -211,25 +222,25 @@ const EmployerLegalCard = ({employer, updateProjectContractForm}) => {
                 )
             }
 
-           <div className='ms-auto'>
-               <IconButton
-                   color="light-danger"
-                   size="sm"
-                   data-tooltip-id="my-tooltip"
-                   data-tooltip-content="حذف کارفرما"
-                   onClick={() => updateProjectContractForm.setFieldValue("articles[0].employers", updateProjectContractForm.values.articles[0].employers.filter(item => JSON.stringify(item) !== JSON.stringify(employer)))}
-               >
-                   <LuTrash
-                       size={20}
-                       color="currentColor"
-                   />
-               </IconButton>
-           </div>
+            <div className='ms-auto'>
+                <IconButton
+                    color="light-danger"
+                    size="sm"
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content="حذف کارفرما"
+                    onClick={() => updateProjectContractForm.setFieldValue("articles[0].employers", updateProjectContractForm.values.articles[0].employers.filter(item => JSON.stringify(item) !== JSON.stringify(employer)))}
+                >
+                    <LuTrash
+                        size={20}
+                        color="currentColor"
+                    />
+                </IconButton>
+            </div>
         </li>
     )
 }
 
-const CreateEmployerFormData = ({article, section, updateProjectContractForm}) => {
+const CreateEmployerFormData = ({article, section, readProjectContractSectionAction ,updateProjectContractForm}) => {
     const {
         part: notePart,
         currentPart: noteCurrentPart,
@@ -267,12 +278,14 @@ const CreateEmployerFormData = ({article, section, updateProjectContractForm}) =
                 </Typography>
 
                 <ul className="vstack justify-content-center gap-5 p-0 m-0">
-                    <BlankEmployerCard updateProjectContractForm={updateProjectContractForm}/>
+                    <BlankEmployerCard
+                        readProjectContractSectionAction={readProjectContractSectionAction}
+                        updateProjectContractForm={updateProjectContractForm}
+                    />
 
                     {
                         updateProjectContractForm.values.articles.find(item => item.number === article.number)?.employers?.map(employer =>
-                            <Fragment
-                                key={employer.user_type === "1" ? `employer-real-${employer.id}` : `employer-legal-${employer.id}`}>
+                            <Fragment key={employer.user_type === "1" ? `employer-real-${employer.id}` : `employer-legal-${employer.id}`}>
                                 {
                                     employer.user_type === "1" && (
                                         <EmployerRealCard
@@ -356,10 +369,7 @@ const CreateEmployerFormData = ({article, section, updateProjectContractForm}) =
                                     size="sm"
                                     data-tooltip-id="my-tooltip"
                                     data-tooltip-content="حذف تبصره"
-                                    onClick={() => {
-                                        const notes = removeNote(updateProjectContractForm.values.notes, note.number);
-                                        updateProjectContractForm.setFieldValue("notes", notes);
-                                    }}
+                                    onClick={() => updateProjectContractForm.setFieldValue("notes", removeNote(updateProjectContractForm.values.notes, note.number))}
                                 >
                                     <LuTrash
                                         size={20}

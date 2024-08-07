@@ -14,7 +14,7 @@ import {
     readAllProjectAfficheReceptionService,
     readAllProjectAfficheScreenPlayService,
     readProjectAfficheService
-} from "@/services/projectAffichesService.ts";
+} from "@/services/projectAfficheService.ts";
 
 // types
 import {

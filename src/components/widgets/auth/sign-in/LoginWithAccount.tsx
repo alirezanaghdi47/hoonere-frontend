@@ -2,8 +2,8 @@
 import LoginForm from "@/components/widgets/auth/sign-in/LoginForm.tsx";
 
 // modules
-import Button from "@/modules/Button.tsx";
-import Typography from "@/modules/Typography.tsx";
+import Button from "@/modules/Button";
+import Typography from "@/modules/Typography";
 
 const LoginWithAccount = ({setOtpWay}) => {
     return (

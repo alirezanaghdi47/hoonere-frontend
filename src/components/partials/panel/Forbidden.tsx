@@ -2,7 +2,7 @@
 import {LazyLoadImage} from "react-lazy-load-image-component";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
+import Typography from "@/modules/Typography";
 
 const Forbidden = ({title, width, height , withCard = false}) => {
     return (

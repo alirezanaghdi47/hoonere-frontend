@@ -4,17 +4,17 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {useFormik} from "formik";
 
 // helpers
-import toast from "@/helpers/toast.tsx";
+import toast from "@/helpers/toast";
 
 // modules
-import NumberInput from "@/modules/NumberInput.tsx";
-import Form from "@/modules/Form.tsx";
-import Button from "@/modules/Button.tsx";
-import TextInput from "@/modules/TextInput.tsx";
-import Typography from "@/modules/Typography.tsx";
+import NumberInput from "@/modules/NumberInput";
+import Form from "@/modules/Form";
+import Button from "@/modules/Button";
+import TextInput from "@/modules/TextInput";
+import Typography from "@/modules/Typography";
 
 // services
-import {updateBankCardService} from "@/services/profileService.ts";
+import {updateBankCardService} from "@/services/profileService";
 
 // types
 import {IUpdateBankCard} from "@/types/serviceType.ts";

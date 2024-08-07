@@ -4,14 +4,14 @@ import {useLocation} from "react-router-dom";
 import {LuBell, LuMoon, LuSun, LuUser} from "react-icons/lu";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import Badge from "@/modules/Badge.tsx";
-import Breadcrumbs from "@/modules/Breadcrumbs.tsx";
+import Typography from "@/modules/Typography";
+import IconButton from "@/modules/IconButton";
+import Badge from "@/modules/Badge";
+import Breadcrumbs from "@/modules/Breadcrumbs";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
-import useAppStore from "@/stores/appStore.ts";
+import useAuthStore from "@/stores/authStore";
+import useAppStore from "@/stores/appStore";
 
 const Header = () => {
     const location = useLocation();

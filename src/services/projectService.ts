@@ -40,6 +40,7 @@ export const createProjectService = async (data) => {
         const {logo, ...rawData} = data;
 
         if (Object.keys(logo).length > 0) formData.append("logo", logo);
+
         formData.append("data", encodeData(JSON.stringify(rawData)));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/create", formData, {
@@ -68,6 +69,7 @@ export const updateProjectService = async (data) => {
         const {logo, ...rawData} = data;
 
         if (Object.keys(logo).length > 0) formData.append("logo", logo);
+
         formData.append("data", encodeData(JSON.stringify(rawData)));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/update", formData, {

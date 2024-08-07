@@ -11,10 +11,9 @@ import Members from "@/components/widgets/panel/projects/read/affiches/create/Me
 import Receptions from "@/components/widgets/panel/projects/read/affiches/create/Receptions.tsx";
 
 // hooks
-import usePart from "@/hooks/usePart.tsx";
-
+import usePart from "@/hooks/usePart";
 // modules
-import Button from "@/modules/Button.tsx";
+import Button from "@/modules/Button";
 
 const FormDataP2 = ({createProjectAfficheP2Form, prevStep}) => {
     const {

@@ -1,27 +1,32 @@
 // modules
-import Form from "@/modules/Form.tsx";
-import TextInput from "@/modules/TextInput.tsx";
-import Textarea from "@/modules/Textarea.tsx";
-import NumberInput from "@/modules/NumberInput.tsx";
-import ImageInput from "@/modules/ImageInput.tsx";
-import Button from "@/modules/Button.tsx";
+import Form from "@/modules/Form";
+import TextInput from "@/modules/TextInput";
+import Textarea from "@/modules/Textarea";
+import NumberInput from "@/modules/NumberInput";
+import ImageInput from "@/modules/ImageInput";
+import Button from "@/modules/Button";
+import FileInput from "@/modules/FileInput.tsx";
 
 const LegalFormData = ({readMyProfileAction , changeCurrentPart, updateProfileLegalForm}) => {
     return (
         <div className="card w-100">
             <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
-                <div className="row gy-5 w-100">
-                    <div className="col-12">
-                        <Button
-                            color="light-info"
-                            size="sm"
-                            onClick={() => changeCurrentPart("real")}
-                            className="ms-auto"
-                        >
-                            تغییر به شخصیت حقیقی
-                        </Button>
-                    </div>
-                </div>
+                {
+                    readMyProfileAction.data?.data?.user_info?.status.id === 1 && (
+                        <div className="row gy-5 w-100">
+                            <div className="col-12">
+                                <Button
+                                    color="light-info"
+                                    size="sm"
+                                    onClick={() => changeCurrentPart("real")}
+                                    className="ms-auto"
+                                >
+                                    تغییر به شخصیت حقیقی
+                                </Button>
+                            </div>
+                        </div>
+                    )
+                }
 
                 <div className="row gy-5 w-100">
                     <div className="col-lg-4">
@@ -35,18 +40,18 @@ const LegalFormData = ({readMyProfileAction , changeCurrentPart, updateProfileLe
 
                     <div className="col-lg-8">
                         <Form.Group>
-                            <ImageInput
+                        <ImageInput
                                 id="profile_img"
                                 name="profile_img"
                                 isCircle
-                                preview={null}
+                                preview={readMyProfileAction.data?.data?.user_info?.profile_img}
                                 value={updateProfileLegalForm.values.profile_img}
                                 onChange={(value) => updateProfileLegalForm.setFieldValue("profile_img", value)}
                             />
 
                             <Form.Error
-                                error={updateProfileLegalForm.errors.profile_img}
-                                touched={updateProfileLegalForm.touched.profile_img}
+                                error={updateProfileLegalForm.errors.profile_image}
+                                touched={updateProfileLegalForm.touched.profile_image}
                             />
                         </Form.Group>
                     </div>
@@ -55,7 +60,7 @@ const LegalFormData = ({readMyProfileAction , changeCurrentPart, updateProfileLe
                 <div className="row gy-5 w-100">
                     <div className="col-lg-4">
                         <Form.Label
-                            label="عکس روزنامه رسمی"
+                            label="عکس یا فایل روزنامه رسمی"
                             size="sm"
                             color="dark"
                             required
@@ -64,10 +69,9 @@ const LegalFormData = ({readMyProfileAction , changeCurrentPart, updateProfileLe
 
                     <div className="col-lg-8">
                         <Form.Group>
-                            <ImageInput
+                            <FileInput
                                 id="newspaper_file"
                                 name="newspaper_file"
-                                preview={null}
                                 value={updateProfileLegalForm.values.newspaper_file}
                                 onChange={(value) => updateProfileLegalForm.setFieldValue("newspaper_file", value)}
                             />
@@ -79,6 +83,34 @@ const LegalFormData = ({readMyProfileAction , changeCurrentPart, updateProfileLe
                         </Form.Group>
                     </div>
                 </div>
+
+                <div className="row gy-5 w-100">
+                    <div className="col-lg-4">
+                        <Form.Label
+                            label="نام کاربری"
+                            size="sm"
+                            color="dark"
+                            required
+                        />
+                    </div>
+
+                    <div className="col-lg-8">
+                        <Form.Group>
+                            <TextInput
+                                id="username"
+                                name="username"
+                                value={updateProfileLegalForm.values.username}
+                                onChange={(value) => updateProfileLegalForm.setFieldValue("username", value)}
+                            />
+
+                            <Form.Error
+                                error={updateProfileLegalForm.errors.username}
+                                touched={updateProfileLegalForm.touched.username}
+                            />
+                        </Form.Group>
+                    </div>
+                </div>
+
                 <div className="row gy-5 w-100">
                     <div className="col-lg-4">
                         <Form.Label

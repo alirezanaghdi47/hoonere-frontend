@@ -3,10 +3,10 @@ import {LuAlertTriangle} from "react-icons/lu";
 import {format} from "date-fns-jalali";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import Form from "@/modules/Form.tsx";
-import Alert from "@/modules/Alert.tsx";
-import Chip from "@/modules/Chip.tsx";
+import Typography from "@/modules/Typography";
+import Form from "@/modules/Form";
+import Alert from "@/modules/Alert";
+import Chip from "@/modules/Chip";
 
 const Real = ({readMyProfileAction}) => {
     return (

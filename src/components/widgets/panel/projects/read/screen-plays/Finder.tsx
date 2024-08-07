@@ -1,6 +1,6 @@
 // modules
-import SelectBox from "@/modules/SelectBox.tsx";
-import Pagination from "@/modules/Pagination.tsx";
+import SelectBox from "@/modules/SelectBox";
+import Pagination from "@/modules/Pagination";
 
 const options = [
     {value: 12, label: '12'},

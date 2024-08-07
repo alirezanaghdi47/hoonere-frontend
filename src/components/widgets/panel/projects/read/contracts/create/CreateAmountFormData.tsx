@@ -6,9 +6,9 @@ import {LuTrash} from "react-icons/lu";
 import {Section , Note} from "@/components/partials/panel/projects/read/contracts/create/Tools.tsx";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import NumberInput from "@/modules/NumberInput.tsx";
-import IconButton from "@/modules/IconButton.tsx";
+import Typography from "@/modules/Typography";
+import NumberInput from "@/modules/NumberInput";
+import IconButton from "@/modules/IconButton";
 
 // utils
 import {removeNote} from "@/utils/functions.ts";

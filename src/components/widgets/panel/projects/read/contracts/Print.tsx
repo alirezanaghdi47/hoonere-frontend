@@ -5,7 +5,7 @@ import {useReactToPrint} from "react-to-print";
 import {format} from "date-fns-jalali";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
+import Typography from "@/modules/Typography";
 
 const Contract = ({children}) => {
     return (
@@ -501,8 +501,6 @@ const Print = forwardRef((props, ref) => {
             }
         }
     }, []);
-
-    console.log(ref?.current?.contract_info)
 
     return (
         <div

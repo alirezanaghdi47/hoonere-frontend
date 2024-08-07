@@ -4,20 +4,20 @@ import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
 // modules
-import Form from "@/modules/Form.tsx";
-import SelectBox from "@/modules/SelectBox.tsx";
-import TextInput from "@/modules/TextInput.tsx";
-import Textarea from "@/modules/Textarea.tsx";
-import NumberInput from "@/modules/NumberInput.tsx";
-import Button from "@/modules/Button.tsx";
-import ImageInput from "@/modules/ImageInput.tsx";
-import Alert from "@/modules/Alert.tsx";
+import Form from "@/modules/Form";
+import SelectBox from "@/modules/SelectBox";
+import TextInput from "@/modules/TextInput";
+import Textarea from "@/modules/Textarea";
+import NumberInput from "@/modules/NumberInput";
+import Button from "@/modules/Button";
+import ImageInput from "@/modules/ImageInput";
+import Alert from "@/modules/Alert";
 
 // services
-import {readAllProjectTypeService, readUserInquiryService} from "@/services/publicService.ts";
+import {readAllProjectTypeService, readUserInquiryService} from "@/services/publicService";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 // types
 import {IReadUserInquiry} from "@/types/serviceType.ts";

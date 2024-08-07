@@ -36,8 +36,8 @@ const ProjectContracts = Loadable(() => import('@/pages/panel/projects/read/cont
 const CreateProjectContract = Loadable(() => import('@/pages/panel/projects/read/contracts/create'));
 const UpdateProjectContract = Loadable(() => import('@/pages/panel/projects/read/contracts/update'));
 const ProjectContractInsertions = Loadable(() => import('@/pages/panel/projects/read/contracts/insertions'));
-const CreateProjectContractInsertion = Loadable(() => import('../pages/panel/projects/read/contracts/insertions/create'));
-const UpdateProjectContractInsertion = Loadable(() => import('../pages/panel/projects/read/contracts/insertions/update'));
+const CreateProjectContractInsertion = Loadable(() => import('@/pages/panel/projects/read/contracts/insertions/create'));
+const UpdateProjectContractInsertion = Loadable(() => import('@/pages/panel/projects/read/contracts/insertions/update'));
 const Profile = Loadable(() => import('@/pages/panel/profile'));
 
 // stores

@@ -7,17 +7,17 @@ import {useMediaQuery} from "usehooks-ts";
 import {LuLayers, LuLogOut, LuPieChart} from "react-icons/lu";
 
 // helpers
-import toast from "@/helpers/toast.tsx";
+import toast from "@/helpers/toast"
 
 // modules
-import IconButton from "@/modules/IconButton.tsx";
+import IconButton from "@/modules/IconButton";
 
 // services
-import {logoutService} from "@/services/authService.ts";
+import {logoutService} from "@/services/authService";
 
 // stores
-import useAppStore from "@/stores/appStore.ts";
-import useAuthStore from "@/stores/authStore.ts";
+import useAppStore from "@/stores/appStore";
+import useAuthStore from "@/stores/authStore";
 
 const Sidebar = () => {
     const navigate = useNavigate();

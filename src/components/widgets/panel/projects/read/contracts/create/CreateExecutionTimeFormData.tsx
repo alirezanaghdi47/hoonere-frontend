@@ -7,9 +7,9 @@ import {LuTrash} from "react-icons/lu";
 import {Section, Note} from "@/components/partials/panel/projects/read/contracts/create/Tools.tsx";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import DatePicker from "@/modules/DatePicker.tsx";
-import IconButton from "@/modules/IconButton.tsx";
+import Typography from "@/modules/Typography";
+import DatePicker from "@/modules/DatePicker";
+import IconButton from "@/modules/IconButton";
 
 // utils
 import {removeNote} from "@/utils/functions.ts";

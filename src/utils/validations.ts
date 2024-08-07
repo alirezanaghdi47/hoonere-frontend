@@ -93,7 +93,7 @@ export const financialSchema = Yup.object().shape({
 });
 
 export const updateProfileLegalSchema = Yup.object().shape({
-    profile_image: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 1 مگابایت باشد", (value: File) => {
+    profile_img: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 1 مگابایت باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
@@ -106,19 +106,20 @@ export const updateProfileLegalSchema = Yup.object().shape({
             return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
         }
     }),
-    newspaper_file: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 2 مگابایت باشد", (value: File) => {
+    newspaper_file: Yup.mixed().nullable().test("fileSize", "حجم عکس یا فایل حداکثر 2 مگابایت باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
             return value.size <= 2 * 1_024_000;
         }
-    }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
+    }).test("fileType", "فرمت عکس یا فایل ارسالی باید از نوع (png , jpg , jpeg) و یا pdf باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
-            return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
+            return ['image/png', 'image/jpg', 'image/jpeg' , 'application/pdf'].includes(value.type);
         }
     }),
+    username: Yup.string().trim().required("نام کاربری الزامی است"),
     company_name: Yup.string().trim().required("نام شرکت الزامی است"),
     register_code: Yup.string().trim().required("شماره ثبت الزامی است"),
     economic_code: Yup.string().trim().required("شناسه ملی الزامی است"),
@@ -502,6 +503,29 @@ export const updateProjectContractSchema = Yup.object().shape({
     articles: Yup.array(),
     sections: Yup.array(),
     notes: Yup.array(),
+});
+
+export const createUnOfficialRealPartiesSchema = Yup.object().shape({
+    first_name: Yup.string().trim().required("نام الزامی است"),
+    last_name: Yup.string().trim().required("نام خانوادگی الزامی است"),
+    national_code: Yup.string().trim().required("کد ملی الزامی است"),
+    mobile: Yup.string().trim().matches(/^([0|+[0-9]{1,5})?([7-9][0-9]{9})$/, "فرمت شماره موبایل نادرست است").required("شماره موبایل الزامی است"),
+    postal_code: Yup.string().trim().required("کد پستی الزامی است"),
+    address: Yup.string().trim().required("آدرس الزامی است"),
+});
+
+export const createUnOfficialLegalPartiesSchema = Yup.object().shape({
+    company_name: Yup.string().trim().required("نام شرکت الزامی است"),
+    register_code: Yup.string().trim().required("شماره ثبت الزامی است"),
+    economic_code: Yup.string().trim().required("شناسه ملی الزامی است"),
+    address: Yup.string().trim().required("آدرس الزامی است"),
+    postal_code: Yup.string().trim().required("کد پستی الزامی است"),
+    telephone: Yup.string().trim().required("شماره تماس الزامی است"),
+    representatives: Yup.array().of(Yup.object().shape({
+        full_name: Yup.string().trim().required("نام و نام خانوادگی الزامی است"),
+        national_code: Yup.string().trim().required("کد ملی الزامی است"),
+        post: Yup.string().trim().required("سمت کاری الزامی است"),
+    }))
 });
 
 

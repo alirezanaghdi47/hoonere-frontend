@@ -4,7 +4,7 @@ import classNames from "classnames";
 // types
 import {TCheckBox} from "@/types/moduleType.ts";
 
-const Checkbox = ({
+const CheckBox = ({
                       name,
                       id,
                       checked,
@@ -34,4 +34,4 @@ const Checkbox = ({
     )
 }
 
-export default Checkbox;
+export default CheckBox;

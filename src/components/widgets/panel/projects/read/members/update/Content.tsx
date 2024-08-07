@@ -9,13 +9,13 @@ import FormData from "@/components/widgets/panel/projects/read/members/update/Fo
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // helpers
-import toast from "@/helpers/toast.tsx";
+import toast from "@/helpers/toast"
 
 // services
-import {updateProjectMemberService, readProjectMemberService} from "@/services/projectMemberService.ts";
+import {updateProjectMemberService, readProjectMemberService} from "@/services/projectMemberService";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 // types
 import {IUpdateProjectMember, IReadProjectMember} from "@/types/serviceType.ts";

@@ -1,24 +1,22 @@
 // libraries
 import {useEffect, useLayoutEffect} from "react";
 import {useMutation} from "@tanstack/react-query";
-import Loadable from "@loadable/component";
 import {useFormik} from "formik";
 
 // components
-const CreateJobFormData = Loadable(() => import("@/components/widgets/panel/profile/occupation/CreateJobFormData.tsx"));
-
+import CreateJobFormData from "@/components/widgets/panel/profile/occupation/CreateJobFormData.tsx";
 import FormData from "@/components/widgets/panel/profile/occupation/ResumeFormData.tsx";
 import Jobs from "@/components/widgets/panel/profile/occupation/Jobs.tsx";
+import Loading from "@/components/partials/panel/Loading.tsx";
 
 // helpers
-import toast from "@/helpers/toast.tsx";
+import toast from "@/helpers/toast";
 
 // hooks
-import usePart from "@/hooks/usePart.tsx";
-
+import usePart from "@/hooks/usePart";
 // services
-import {updateOccupationService} from "@/services/profileService.ts";
-import {readAllJobService} from "@/services/publicService.ts";
+import {readAllMyJobService, updateOccupationService} from "@/services/profileService";
+import {readAllJobService} from "@/services/publicService";
 
 // types
 import {IUpdateOccupation} from "@/types/serviceType.ts";
@@ -26,8 +24,12 @@ import {IUpdateOccupation} from "@/types/serviceType.ts";
 // utils
 import {occupationSchema} from "@/utils/validations.ts";
 
-const Occupation = ({readMyProfileAction, readAllMyJobAction}) => {
+const Occupation = ({readMyProfileAction}) => {
     const {currentPart, resetPart, changeCurrentPart} = usePart(null , "read");
+
+    const readAllMyJobAction = useMutation({
+        mutationFn: () => readAllMyJobService(),
+    });
 
     const readAllJobAction = useMutation({
         mutationFn: () => readAllJobService(),
@@ -66,10 +68,24 @@ const Occupation = ({readMyProfileAction, readAllMyJobAction}) => {
         readAllJobAction.mutate();
     }, []);
 
+    useLayoutEffect(() => {
+        readAllMyJobAction.mutate();
+    }, []);
+
     return (
         <>
             {
-                currentPart === "read" && (
+                readAllMyJobAction.isPending && (
+                    <Loading
+                        withCard
+                        width="100%"
+                        height={200}
+                    />
+                )
+            }
+
+            {
+                !readAllMyJobAction.isPending && currentPart === "read" && (
                     <Jobs
                         changeCurrentPart={changeCurrentPart}
                         readAllJobAction={readAllJobAction}

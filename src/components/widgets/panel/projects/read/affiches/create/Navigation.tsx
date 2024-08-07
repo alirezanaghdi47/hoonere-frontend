@@ -1,5 +1,5 @@
 // modules
-import Stepper from "@/modules/Stepper.tsx";
+import Stepper from "@/modules/Stepper";
 
 const steps = [
     {id: 1, label: "اطلاعات اولیه"},

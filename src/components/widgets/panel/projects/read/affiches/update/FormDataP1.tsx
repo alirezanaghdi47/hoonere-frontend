@@ -10,27 +10,26 @@ const CreateAddressFormData = Loadable(() => import("@/components/widgets/panel/
 import Addresses from "@/components/widgets/panel/projects/read/affiches/update/Addresses.tsx";
 
 // hooks
-import usePart from "@/hooks/usePart.tsx";
-
+import usePart from "@/hooks/usePart";
 // modules
-import Form from "@/modules/Form.tsx";
-import TextInput from "@/modules/TextInput.tsx";
-import Textarea from "@/modules/Textarea.tsx";
-import DatePicker from "@/modules/DatePicker.tsx";
-import TimePicker from "@/modules/TimePicker.tsx";
-import SwitchBox from "@/modules/SwitchBox.tsx";
-import SelectBox from "@/modules/SelectBox.tsx";
-import Button from "@/modules/Button.tsx";
+import Form from "@/modules/Form";
+import TextInput from "@/modules/TextInput";
+import Textarea from "@/modules/Textarea";
+import DatePicker from "@/modules/DatePicker";
+import TimePicker from "@/modules/TimePicker";
+import SwitchBox from "@/modules/SwitchBox";
+import SelectBox from "@/modules/SelectBox";
+import Button from "@/modules/Button";
 
 // services
 import {
     readAllAfficheTypeService,
     readAllScreenPlayLocationSideService,
     readAllScreenPlayTimeTypeService
-} from "@/services/publicService.ts";
+} from "@/services/publicService";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 const FormDataP1 = ({updateProjectAfficheP1Form}) => {
     const params = useParams();

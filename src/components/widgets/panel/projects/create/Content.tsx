@@ -7,13 +7,13 @@ import {useFormik} from "formik";
 import FormData from "@/components/widgets/panel/projects/create/FormData.tsx";
 
 // helpers
-import toast from "@/helpers/toast.tsx";
+import toast from "@/helpers/toast";
 
 // services
-import {createProjectService} from "@/services/projectService.ts";
+import {createProjectService} from "@/services/projectService";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 // types
 import {ICreateProject} from "@/types/serviceType.ts";

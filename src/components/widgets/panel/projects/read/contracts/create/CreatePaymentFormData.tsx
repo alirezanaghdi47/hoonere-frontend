@@ -10,13 +10,13 @@ import {Section, Note} from "@/components/partials/panel/projects/read/contracts
 import Forbidden from "@/components/partials/panel/Forbidden.tsx";
 
 // hooks
-import useModal from "@/hooks/useModal.tsx";
+import useModal from "@/hooks/useModal";
 
 // modules
-import RadioBox from "@/modules/RadioBox.tsx";
-import Typography from "@/modules/Typography.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import Button from "@/modules/Button.tsx";
+import RadioBox from "@/modules/RadioBox";
+import Typography from "@/modules/Typography";
+import IconButton from "@/modules/IconButton";
+import Button from "@/modules/Button";
 
 // utils
 import {removeNote} from "@/utils/functions.ts";

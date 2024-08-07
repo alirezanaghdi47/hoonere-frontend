@@ -14,18 +14,18 @@ import FormDataP1 from "@/components/widgets/panel/projects/read/affiches/create
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // helpers
-import toast from "@/helpers/toast.tsx";
+import toast from "@/helpers/toast"
 
 // hooks
-import useStep from "@/hooks/useStep.tsx";
-import useFilter from "@/hooks/useFilter.tsx";
+import useStep from "@/hooks/useStep";
+import useFilter from "@/hooks/useFilter";
 
 // services
-import {createProjectAfficheService} from "@/services/projectAffichesService.ts";
+import {createProjectAfficheService} from "@/services/projectAfficheService.ts";
 import {readAllProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 // types
 import {ICreateProjectAffiche, IReadAllProjectScreenPlay} from "@/types/serviceType.ts";

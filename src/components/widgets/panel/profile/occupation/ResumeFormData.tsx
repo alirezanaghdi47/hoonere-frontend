@@ -1,8 +1,8 @@
 // modules
-import Button from "@/modules/Button.tsx";
-import Form from "@/modules/Form.tsx";
-import Textarea from "@/modules/Textarea.tsx";
-import ImageInput from "@/modules/ImageInput.tsx";
+import Button from "@/modules/Button";
+import Form from "@/modules/Form";
+import Textarea from "@/modules/Textarea";
+import ImageInput from "@/modules/ImageInput";
 
 const ResumeFormData = ({readMyProfileAction ,updateOccupationForm , updateOccupationAction}) => {
     return (

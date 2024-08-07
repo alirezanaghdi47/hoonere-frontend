@@ -2,9 +2,9 @@
 import {LuPlus, LuTrash} from "react-icons/lu";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import Form from "@/modules/Form.tsx";
+import Typography from "@/modules/Typography";
+import IconButton from "@/modules/IconButton";
+import Form from "@/modules/Form";
 import receptions from "@/components/widgets/panel/projects/read/affiches/create/Receptions.tsx";
 
 export const BlankCard = ({changeCurrentPart}) => {

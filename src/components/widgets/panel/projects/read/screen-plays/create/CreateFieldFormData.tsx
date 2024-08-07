@@ -2,9 +2,9 @@
 import {useFormik} from "formik";
 
 // modules
-import Form from "@/modules/Form.tsx";
-import TextInput from "@/modules/TextInput.tsx";
-import Button from "@/modules/Button.tsx";
+import Form from "@/modules/Form";
+import TextInput from "@/modules/TextInput";
+import Button from "@/modules/Button";
 
 // utils
 import {createFieldSchema} from "@/utils/validations.ts";

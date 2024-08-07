@@ -3,7 +3,7 @@ import ScreenPlaysDataList from "@/components/widgets/panel/projects/read/affich
 import Empty from "@/components/partials/panel/Empty.tsx";
 
 // modules
-import Button from "@/modules/Button.tsx";
+import Button from "@/modules/Button";
 
 const FormDataP3 = ({
                         readAllProjectScreenPlayAction,

@@ -2,7 +2,7 @@
 import {useMediaQuery} from "usehooks-ts";
 
 // stores
-import useAppStore from "@/stores/appStore.ts";
+import useAppStore from "@/stores/appStore";
 
 const Overlay = () => {
     const {app: {isOpenDrawer}, hideDrawer} = useAppStore();

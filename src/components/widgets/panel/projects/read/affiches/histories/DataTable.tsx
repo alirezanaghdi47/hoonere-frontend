@@ -10,12 +10,12 @@ import Filter from "@/components/widgets/panel/projects/read/affiches/histories/
 import Empty from "@/components/partials/panel/Empty.tsx";
 
 // modules
-import Table from "@/modules/Table.tsx";
-import IconButton from "@/modules/IconButton.tsx";
-import Typography from "@/modules/Typography.tsx";
+import Table from "@/modules/Table";
+import IconButton from "@/modules/IconButton";
+import Typography from "@/modules/Typography";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 const DataTable = ({
                        readAllProjectAfficheHistoryAction,

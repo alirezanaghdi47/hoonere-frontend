@@ -8,13 +8,13 @@ import {useBoolean} from "usehooks-ts";
 import FormData from "@/components/widgets/panel/projects/read/members/create/FormData.tsx";
 
 // helpers
-import toast from "@/helpers/toast.tsx";
+import toast from "@/helpers/toast"
 
 // services
-import {createProjectMemberService} from "@/services/projectMemberService.ts";
+import {createProjectMemberService} from "@/services/projectMemberService";
 
 // stores
-import useAuthStore from "@/stores/authStore.ts";
+import useAuthStore from "@/stores/authStore";
 
 // types
 import {ICreateProjectMember} from "@/types/serviceType.ts";

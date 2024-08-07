@@ -5,18 +5,18 @@ import {useMutation} from "@tanstack/react-query";
 import {LuInfo} from "react-icons/lu";
 
 // modules
-import SelectBox from "@/modules/SelectBox.jsx";
-import Form from "@/modules/Form.jsx";
-import TextInput from "@/modules/TextInput.jsx";
-import Button from "@/modules/Button.jsx";
-import Textarea from "@/modules/Textarea.tsx";
-import FileInput from "@/modules/FileInput.tsx";
+import SelectBox from "@/modules/SelectBox";
+import Form from "@/modules/Form";
+import TextInput from "@/modules/TextInput";
+import Button from "@/modules/Button";
+import Textarea from "@/modules/Textarea";
+import FileInput from "@/modules/FileInput";
 
 // services
-import {readAllProjectMoodBoardTypeService} from "@/services/publicService.ts";
+import {readAllProjectMoodBoardTypeService} from "@/services/publicService";
 
 // stores
-import useAuthStore from "@/stores/authStore.js";
+import useAuthStore from "@/stores/authStore";
 
 const FormData = ({createProjectMoodBoardForm, createProjectMoodBoardAction}) => {
     const params = useParams();

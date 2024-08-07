@@ -8,10 +8,10 @@ import DataTable from "@/components/widgets/panel/projects/read/contracts/DataTa
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // hooks
-import useFilter from "@/hooks/useFilter.tsx";
+import useFilter from "@/hooks/useFilter";
 
 // services
-import {readAllProjectContractService} from "@/services/projectContractService.ts";
+import {readAllProjectContractService} from "@/services/projectContractService";
 
 const Content = () => {
     const params = useParams();
