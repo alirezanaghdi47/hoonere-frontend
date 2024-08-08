@@ -7,6 +7,7 @@ import Button from "@/modules/Button";
 
 const FormDataP3 = ({
                         readAllProjectScreenPlayAction,
+                        createProjectAfficheAction,
                         createProjectAfficheP3Form,
                         prevStep,
                         filter,
@@ -62,7 +63,7 @@ const FormDataP3 = ({
                         <Button
                             color="success"
                             onClick={createProjectAfficheP3Form.handleSubmit}
-                            isLoading={createProjectAfficheP3Form.isPending}
+                            isLoading={createProjectAfficheAction.isPending}
                         >
                             افزودن آفیش
                         </Button>

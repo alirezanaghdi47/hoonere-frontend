@@ -3,6 +3,7 @@ import {useLayoutEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import Loadable from '@loadable/component';
 import {useMutation} from "@tanstack/react-query";
+import {format} from "date-fns";
 import {useFormik} from "formik";
 
 // components
@@ -36,7 +37,6 @@ import {
     createProjectAfficheP2Schema,
     createProjectAfficheP3Schema
 } from "@/utils/validations.ts";
-import {convertJalaliToGregorian} from "@/utils/functions.ts";
 
 const Content = () => {
     const params = useParams();
@@ -87,7 +87,7 @@ const Content = () => {
             location_side_id: "",
             type: "",
             is_off: 0,
-            affiche_date: convertJalaliToGregorian(new Date()),
+            affiche_date: format(Date.now() , "yyyy-MM-dd"),
             start_date: "",
             coming_time: "",
             start_time: "",
@@ -141,6 +141,8 @@ const Content = () => {
         });
     }, []);
 
+    console.log(createProjectAfficheP2Form.values)
+
     return (
         <div
             className="d-flex flex-column flex-lg-row justify-content-start align-items-start gap-5 w-100 mw-950px p-5">
@@ -178,6 +180,7 @@ const Content = () => {
                     !readAllProjectScreenPlayAction.isPending && currentStep === 3 && (
                         <FormDataP3
                             createProjectAfficheP3Form={createProjectAfficheP3Form}
+                            createProjectAfficheAction={createProjectAfficheAction}
                             readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
                             prevStep={prevStep}
                             filter={filter}

@@ -5,14 +5,14 @@ import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
 // components
-import FormData from "@/components/widgets/panel/projects/read/contracts/create/FormData.tsx";
+import FormData from "@/components/widgets/panel/projects/read/contracts/insertions/create/FormData.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // helpers
 import toast from "@/helpers/toast";
 
 // services
-import {createProjectContractService} from "@/services/projectContractService";
+import {createProjectOfficialContractService} from "@/services/projectContractService";
 import {readAllProjectContractArticleService, readAllProjectContractSectionService} from "@/services/publicService";
 
 // stores
@@ -20,7 +20,6 @@ import useAuthStore from "@/stores/authStore";
 
 // utils
 import {createProjectContractSchema} from "@/utils/validations.ts";
-import {getValueByKey} from "@/utils/functions.ts";
 
 const Content = () => {
     const params = useParams();
@@ -36,7 +35,7 @@ const Content = () => {
     });
 
     const createProjectContractAction = useMutation({
-        mutationFn: (data) => createProjectContractService(data),
+        mutationFn: (data) => createProjectOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -51,65 +50,22 @@ const Content = () => {
     const createProjectContractForm = useFormik({
         enableReinitialize: true,
         initialValues: {
-            articles: readAllProjectContractArticleAction.data?.data?.contract_default_articles ? readAllProjectContractArticleAction.data?.data?.contract_default_articles.map(article => {
-                if (article.number === 1) {
-                    return ({
-                        ...article,
-                        is_added: "0",
-                        contractors: [],
-                        employers: []
-                    });
-                } else if (article.number === 3) {
-                    return ({
-                        ...article,
-                        is_added: "0",
-                        start_date: "",
-                        end_date: ""
-                    });
-                } else if (article.number === 4) {
-                    return ({
-                        ...article,
-                        is_added: "0",
-                        total_price: 0,
-                    });
-                } else if (article.number === 5) {
-                    return ({
-                        ...article,
-                        is_added: "0",
-                        payment_state: "",
-                        payments: [],
-                    });
-                } else {
-                    return ({
-                        ...article,
-                        is_added: "0"
-                    });
-                }
-            }) : [],
+            articles: [],
             sections: readAllProjectContractSectionAction.data?.data?.contract_ready_sections ? readAllProjectContractSectionAction.data?.data.contract_ready_sections.map(section => {
-                if (
-                    (section.number === 1 && section.article_number === 1) ||
-                    (section.number === 2 && section.article_number === 1) ||
-                    (section.number === 1 && section.article_number === 3) ||
-                    (section.number === 1 && section.article_number === 4) ||
-                    (section.number === 1 && section.article_number === 5)
-                ) {
+                if (section.number === 1 && section.article_number === 1) {
                     return ({
                         ...section,
-                        isOff: false,
                         isAdded: false,
                         isStatic: true
                     });
                 } else {
                     return ({
                         ...section,
-                        isOff: false,
                         isAdded: false,
                         isStatic: false
                     });
                 }
             }) : [],
-            notes: []
         },
         validationSchema: createProjectContractSchema,
         onSubmit: async (result) => {
@@ -117,27 +73,13 @@ const Content = () => {
             const sectionArticleNumbers = [...new Set(result.sections.map(section => section.article_number))];
 
             if (!articleNumbers.every(item => sectionArticleNumbers.includes(item))) {
-                return toast("error" , "همه ی ماده های حداقل باید شامل یک بند باشند");
-            }
-
-            const totalPercent = getValueByKey(createProjectContractForm.values.articles, "payments").reduce((acc , value) => {
-                return acc += value.percent;
-            } , 0);
-
-            if (getValueByKey(createProjectContractForm.values.articles, "payment_state") === "1" && totalPercent < 100){
-                return toast("error" , "مجموع درصد فازبندی قرار داد کمتر از 100 است.");
+                return toast("error" , "همه ی ماده ها حداقل باید شامل یک بند باشند");
             }
 
             createProjectContractAction.mutate({
                 ...result,
                 project_id: params.id,
-                employers: getValueByKey(createProjectContractForm.values.articles, "employers")?.map(item => item.id.toString()),
-                contractors: getValueByKey(createProjectContractForm.values.articles, "contractors")?.map(item => item.id.toString()),
-                start_date: getValueByKey(createProjectContractForm.values.articles, "start_date"),
-                end_date: getValueByKey(createProjectContractForm.values.articles, "end_date"),
-                total_price: getValueByKey(createProjectContractForm.values.articles, "total_price"),
-                payment_state: getValueByKey(createProjectContractForm.values.articles, "payment_state"),
-                payments: getValueByKey(createProjectContractForm.values.articles, "payments")
+                contract_id: params.subId
             });
         }
     });

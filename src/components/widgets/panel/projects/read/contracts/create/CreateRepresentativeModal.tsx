@@ -42,7 +42,7 @@ const CreateRepresentativeModal = ({modal, _handleHideModal , createUnOfficialLe
             isOpen={modal.isOpen}
             onClose={_handleHideModal}
             position='center'
-            width="lg"
+            width="md"
         >
             <Modal.Header>
                 <Typography

@@ -22,22 +22,34 @@ const Print = forwardRef((props, ref) => {
     }, []);
 
     return (
-        <div
-            ref={printRef}
-            className='d-none d-print-block'
-        >
-            <table>
-                <tbody>
-                <tr>
-                    <td>
-                        <div className="page">
-                            {parse(`${ref?.current?.screenplay_info?.description}`)}
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+        <>
+            <style>
+                {`
+                    @media print {
+                      @page {
+                        size: A4 portrait;
+                      }
+                    }
+                `}
+            </style>
+
+            <div
+                ref={printRef}
+                className='d-none d-print-block'
+            >
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div className="page">
+                                {parse(`${ref?.current?.screenplay_info?.description}`)}
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </>
     )
 })
 

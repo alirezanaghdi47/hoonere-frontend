@@ -6,7 +6,7 @@ import {LuPen, LuTrash} from "react-icons/lu";
 // components
 const CreatePaymentModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/update/CreatePaymentModal.tsx"));
 
-import {Section, Note} from "@/components/partials/panel/projects/read/contracts/update/Tools.tsx";
+import {Section, Note} from "@/components/widgets/panel/projects/read/contracts/update/Actions.tsx";
 import Forbidden from "@/components/partials/panel/Forbidden.tsx";
 
 // hooks
@@ -20,7 +20,7 @@ import IconButton from "@/modules/IconButton";
 import Button from "@/modules/Button";
 
 // utils
-import {removeNote} from "@/utils/functions.ts";
+import {removeNoteForContract} from "@/utils/functions.ts";
 
 const PaymentActionBar = ({article, section, updateProjectContractForm}) => {
     return (
@@ -258,7 +258,7 @@ const PaymentWithPhases = ({
                                     data-tooltip-id="my-tooltip"
                                     data-tooltip-content="حذف تبصره"
                                     onClick={() => {
-                                        const notes = removeNote(updateProjectContractForm.values.notes, note.number);
+                                        const notes = removeNoteForContract(updateProjectContractForm.values.notes, note.number);
                                         updateProjectContractForm.setFieldValue("notes", notes);
                                     }}
                                 >
@@ -379,7 +379,7 @@ const PaymentWithBill = ({
                                     data-tooltip-id="my-tooltip"
                                     data-tooltip-content="حذف تبصره"
                                     onClick={() => {
-                                        const notes = removeNote(updateProjectContractForm.values.notes, note.number);
+                                        const notes = removeNoteForContract(updateProjectContractForm.values.notes, note.number);
                                         updateProjectContractForm.setFieldValue("notes", notes);
                                     }}
                                 >

@@ -2,7 +2,7 @@
 import {LuPen, LuTrash} from "react-icons/lu";
 
 // components
-import {Note, Section} from "@/components/partials/panel/projects/read/contracts/update/Tools.tsx";
+import {Note, Section} from "@/components/widgets/panel/projects/read/contracts/update/Actions.tsx";
 
 // hooks
 import usePart from "@/hooks/usePart";
@@ -12,7 +12,7 @@ import Typography from "@/modules/Typography";
 import IconButton from "@/modules/IconButton";
 
 // utils
-import {removeNote, removeSection} from "@/utils/functions.ts";
+import {removeNoteForContract, removeSectionForContract} from "@/utils/functions.ts";
 
 const CreateRegularFormData = ({article, section, updateProjectContractForm}) => {
     const {
@@ -87,10 +87,10 @@ const CreateRegularFormData = ({article, section, updateProjectContractForm}) =>
                         data-tooltip-id="my-tooltip"
                         data-tooltip-content="حذف بند"
                         onClick={() => {
-                            const result = removeSection(updateProjectContractForm.values.sections, updateProjectContractForm.values.notes, article.number, section.number);
+                            const data = removeSectionForContract(updateProjectContractForm.values.sections, updateProjectContractForm.values.notes, article.number, section.number);
 
-                            updateProjectContractForm.setFieldValue("notes", result.notes);
-                            updateProjectContractForm.setFieldValue("sections", result.sections);
+                            updateProjectContractForm.setFieldValue("notes", data.notes);
+                            updateProjectContractForm.setFieldValue("sections", data.sections);
                         }}
                     >
                         <LuTrash
@@ -162,7 +162,7 @@ const CreateRegularFormData = ({article, section, updateProjectContractForm}) =>
                                     data-tooltip-id="my-tooltip"
                                     data-tooltip-content="حذف تبصره"
                                     onClick={() => {
-                                        const notes = removeNote(updateProjectContractForm.values.notes, note.number);
+                                        const notes = removeNoteForContract(updateProjectContractForm.values.notes, note.number);
                                         updateProjectContractForm.setFieldValue("notes", notes);
                                     }}
                                 >

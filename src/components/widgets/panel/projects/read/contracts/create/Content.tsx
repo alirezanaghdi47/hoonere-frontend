@@ -1,6 +1,6 @@
 // libraries
 import {useLayoutEffect} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
@@ -12,7 +12,7 @@ import Loading from "@/components/partials/panel/Loading.tsx";
 import toast from "@/helpers/toast"
 
 // services
-import {createProjectContractService} from "@/services/projectContractService";
+import {createProjectOfficialContractService, createProjectUnOfficialContractService} from "@/services/projectContractService";
 import {readAllProjectContractArticleService, readAllProjectContractSectionService} from "@/services/publicService";
 
 // stores
@@ -23,6 +23,7 @@ import {createProjectContractSchema} from "@/utils/validations.ts";
 import {getValueByKey} from "@/utils/functions.ts";
 
 const Content = () => {
+    const localtion = useLocation();
     const params = useParams();
     const navigate = useNavigate();
     const {auth} = useAuthStore();
@@ -35,8 +36,21 @@ const Content = () => {
         mutationFn: () => readAllProjectContractSectionService(),
     });
 
-    const createProjectContractAction = useMutation({
-        mutationFn: (data) => createProjectContractService(data),
+    const createProjectOfficialContractAction = useMutation({
+        mutationFn: (data) => createProjectOfficialContractService(data),
+        onSuccess: async (data) => {
+            if (!data.error) {
+                toast("success", data.message);
+
+                navigate(auth.panel_url + "projects/" + params.id + "/contracts");
+            } else {
+                toast("error", data.message);
+            }
+        }
+    });
+
+    const createProjectUnOfficialContractAction = useMutation({
+        mutationFn: (data) => createProjectUnOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -117,28 +131,42 @@ const Content = () => {
             const sectionArticleNumbers = [...new Set(result.sections.map(section => section.article_number))];
 
             if (!articleNumbers.every(item => sectionArticleNumbers.includes(item))) {
-                return toast("error" , "همه ی ماده های حداقل باید شامل یک بند باشند");
+                return toast("error", "همه ی ماده ها حداقل باید شامل یک بند باشند");
             }
 
-            const totalPercent = getValueByKey(createProjectContractForm.values.articles, "payments").reduce((acc , value) => {
+            const totalPercent = getValueByKey(createProjectContractForm.values.articles, "payments").reduce((acc, value) => {
                 return acc += value.percent;
-            } , 0);
+            }, 0);
 
-            if (getValueByKey(createProjectContractForm.values.articles, "payment_state") === "1" && totalPercent < 100){
-                return toast("error" , "مجموع درصد فازبندی قرار داد کمتر از 100 است.");
+            if (getValueByKey(createProjectContractForm.values.articles, "payment_state") === "1" && totalPercent < 100) {
+                return toast("error", "مجموع درصد فازبندی قرار داد کمتر از 100 است.");
             }
 
-            createProjectContractAction.mutate({
-                ...result,
-                project_id: params.id,
-                employers: getValueByKey(createProjectContractForm.values.articles, "employers")?.map(item => item.id.toString()),
-                contractors: getValueByKey(createProjectContractForm.values.articles, "contractors")?.map(item => item.id.toString()),
-                start_date: getValueByKey(createProjectContractForm.values.articles, "start_date"),
-                end_date: getValueByKey(createProjectContractForm.values.articles, "end_date"),
-                total_price: getValueByKey(createProjectContractForm.values.articles, "total_price"),
-                payment_state: getValueByKey(createProjectContractForm.values.articles, "payment_state"),
-                payments: getValueByKey(createProjectContractForm.values.articles, "payments")
-            });
+            if (localtion.hash === "#official") {
+                createProjectOfficialContractAction.mutate({
+                    ...result,
+                    project_id: params.id,
+                    employers: getValueByKey(createProjectContractForm.values.articles, "employers")?.map(item => item.id.toString()),
+                    contractors: getValueByKey(createProjectContractForm.values.articles, "contractors")?.map(item => item.id.toString()),
+                    start_date: getValueByKey(createProjectContractForm.values.articles, "start_date"),
+                    end_date: getValueByKey(createProjectContractForm.values.articles, "end_date"),
+                    total_price: getValueByKey(createProjectContractForm.values.articles, "total_price"),
+                    payment_state: getValueByKey(createProjectContractForm.values.articles, "payment_state"),
+                    payments: getValueByKey(createProjectContractForm.values.articles, "payments")
+                });
+            } else if (location.hash === "#un-official") {
+                createProjectUnOfficialContractAction.mutate({
+                    ...result,
+                    project_id: params.id,
+                    employers: getValueByKey(createProjectContractForm.values.articles, "employers"),
+                    contractors: getValueByKey(createProjectContractForm.values.articles, "contractors"),
+                    start_date: getValueByKey(createProjectContractForm.values.articles, "start_date"),
+                    end_date: getValueByKey(createProjectContractForm.values.articles, "end_date"),
+                    total_price: getValueByKey(createProjectContractForm.values.articles, "total_price"),
+                    payment_state: getValueByKey(createProjectContractForm.values.articles, "payment_state"),
+                    payments: getValueByKey(createProjectContractForm.values.articles, "payments")
+                });
+            }
         }
     });
 
@@ -155,7 +183,7 @@ const Content = () => {
             className="d-flex flex-column flex-lg-row justify-content-start align-items-start gap-5 w-100 mw-950px p-5">
             <div className="d-flex flex-wrap justify-content-center gap-5 w-100 mt-lg-n20">
                 {
-                    readAllProjectContractArticleAction.isPending && readAllProjectContractSectionAction.isPending && (
+                    (readAllProjectContractArticleAction.isPending && readAllProjectContractSectionAction.isPending) && (
                         <Loading
                             withCard
                             width="100%"
@@ -165,10 +193,10 @@ const Content = () => {
                 }
 
                 {
-                    !readAllProjectContractArticleAction.isPending && !readAllProjectContractSectionAction.isPending && (
+                    (!readAllProjectContractArticleAction.isPending && !readAllProjectContractSectionAction.isPending) && (
                         <FormData
                             createProjectContractForm={createProjectContractForm}
-                            createProjectContractAction={createProjectContractAction}
+                            createProjectContractAction={location.hash === "#official" ? createProjectOfficialContractAction : createProjectUnOfficialContractAction}
                         />
                     )
                 }

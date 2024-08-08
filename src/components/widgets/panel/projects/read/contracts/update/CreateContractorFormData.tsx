@@ -1,5 +1,6 @@
 // libraries
 import {Fragment} from "react";
+import {useLocation} from "react-router-dom";
 import Loadable from "@loadable/component";
 import {LuPen, LuTrash} from "react-icons/lu";
 
@@ -7,10 +8,11 @@ import {LuPen, LuTrash} from "react-icons/lu";
 const CreateOfficialPartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/update/CreateOfficialPartiesModal.tsx"));
 const CreateUnOfficialPartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/update/CreateUnOfficialPartiesModal.tsx"));
 
-import {Section , Note} from "@/components/partials/panel/projects/read/contracts/update/Tools.tsx";
+import {Section , Note} from "@/components/widgets/panel/projects/read/contracts/update/Actions.tsx";
 
 // hooks
 import useModal from "@/hooks/useModal";
+import usePart from "@/hooks/usePart.tsx";
 
 // modules
 import Typography from "@/modules/Typography";
@@ -18,10 +20,10 @@ import Button from "@/modules/Button";
 import IconButton from "@/modules/IconButton";
 
 // utils
-import {removeNote} from "@/utils/functions.ts";
-import usePart from "@/hooks/usePart.tsx";
+import {removeNoteForContract} from "@/utils/functions.ts";
 
-const BlankContractorCard = ({readProjectContractSectionAction , updateProjectContractForm}) => {
+const BlankContractorCard = ({updateProjectContractForm}) => {
+    const location = useLocation();
     const {modal, _handleShowModal, _handleHideModal} = useModal();
 
     return (
@@ -44,7 +46,7 @@ const BlankContractorCard = ({readProjectContractSectionAction , updateProjectCo
             </li>
 
             {
-                readProjectContractSectionAction.data?.data?.contract_info?.type_id === "1" && modal.isOpen && (
+                location.hash === "#official" && modal.isOpen && (
                     <CreateOfficialPartiesModal
                         modal={modal}
                         _handleHideModal={_handleHideModal}
@@ -54,7 +56,7 @@ const BlankContractorCard = ({readProjectContractSectionAction , updateProjectCo
             }
 
             {
-                readProjectContractSectionAction.data?.data?.contract_info?.type_id === "2" && modal.isOpen && (
+                location.hash === "#un-official" && modal.isOpen && (
                     <CreateUnOfficialPartiesModal
                         modal={modal}
                         _handleHideModal={_handleHideModal}
@@ -193,41 +195,58 @@ const ContractorLegalCard = ({contractor , updateProjectContractForm}) => {
                 {contractor?.telephone ? contractor?.telephone : "نا معلوم"}
             </Typography>
 
-            <Typography
-                size="sm"
-                color="dark"
-            >
-                به نمایندگی :
-                &nbsp;
-                {
-                    contractor?.representatives.length !== 0 && (
+            {
+                contractor?.representatives.length !== 0 && (
+                    <div className="d-flex flex-wrap justify-content-start align-items-start gap-2 w-100">
+
                         <Typography
                             size="sm"
                             color="dark"
                         >
                             به نمایندگی :
-                            &nbsp;
-                            <ul className="hstack justify-content-start gap-5 p-0 m-0">
-                                {
-                                    contractor?.representatives.map(representative =>
-                                        <li
-                                            key={representative.id}
-                                            className="d-flex justify-content-start align-items-center gap-5"
-                                        >
-                                            <Typography
-                                                size="sm"
-                                                color="dark"
-                                            >
-                                                {representative.full_name}
-                                            </Typography>
-                                        </li>
-                                    )
-                                }
-                            </ul>
                         </Typography>
-                    )
-                }
-            </Typography>
+
+                        <ul className="vstack justify-content-start gap-5 p-0 m-0">
+                            {
+                                contractor?.representatives.map((representative , index) =>
+                                    <li
+                                        key={representative.id}
+                                        className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-2"
+                                    >
+                                        <Typography
+                                            size="sm"
+                                            color="dark"
+                                        >
+                                            {index + 1} .
+                                        </Typography>
+
+                                        <Typography
+                                            size="sm"
+                                            color="dark"
+                                        >
+                                            {representative.full_name}
+                                        </Typography>
+
+                                        <Typography
+                                            size="sm"
+                                            color="dark"
+                                        >
+                                            {representative.national_code}
+                                        </Typography>
+
+                                        <Typography
+                                            size="sm"
+                                            color="dark"
+                                        >
+                                            {representative.post}
+                                        </Typography>
+                                    </li>
+                                )
+                            }
+                        </ul>
+                    </div>
+                )
+            }
 
             <div className='ms-auto'>
                 <IconButton
@@ -377,7 +396,7 @@ const CreateContractorFormData = ({article , section, readProjectContractSection
                                         size="sm"
                                         data-tooltip-id="my-tooltip"
                                         data-tooltip-content="حذف تبصره"
-                                        onClick={() => updateProjectContractForm.setFieldValue("notes", removeNote(updateProjectContractForm.values.notes, note.number))}
+                                        onClick={() => updateProjectContractForm.setFieldValue("notes", removeNoteForContract(updateProjectContractForm.values.notes, note.number))}
                                     >
                                         <LuTrash
                                             size={20}

@@ -42,6 +42,8 @@ const CreateActorFormData = ({createProjectAfficheP2Form, resetPart}) => {
                 ...createProjectAfficheP2Form.values.actors.filter(actor => JSON.stringify(actor) !== JSON.stringify(result)),
                 {
                     ...result,
+                    foa_parent_id: "159",
+                    foa_id: "",
                     full_name: user?.first_name + " " + user?.last_name,
                     is_fake: user?.is_fake
                 }

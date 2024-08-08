@@ -85,10 +85,6 @@ export const generateTimeWithSecond = (time) => {
 
 export const generateTimeWithoutSecond = (time) => new DateObject(time).setSecond(0).format("HH:mm:ss");
 
-export const getBankInfoFromCardNumber = (cardNumber: string): object | null => cardNumber.length > 6 ? iranianBanks?.find(bank => cardNumber.startsWith(bank.bin)) : null;
-
-export const formattedBankCardNumber = (cardNumber: string): string => cardNumber.match(/.{1,4}/g).join('-');
-
 export const encodeData = (data: unknown): unknown => {
     let encoded = btoa(encodeURIComponent(data).replace(/%([0-9A-F]{2})/g, function toSolidBytes(match, p1) {
         return String.fromCharCode(Number(('0x' + p1)))
@@ -143,7 +139,38 @@ export const getValueByKey = (array, key, subKey) => {
     return null;
 }
 
-export const addArticle = (articles, sections, content) => {
+export const getAllIndexes = (array, value) => {
+    const indexes = [];
+    let i;
+
+    for (i = 0; i < array.length; i++)
+        if (array[i] === value) indexes.push(i);
+
+    return indexes;
+}
+
+export const removeElementsByIndices = (array, arrayToRemove) => {
+    const newArray = [...array];
+
+    arrayToRemove.sort((a, b) => b - a);
+
+    const removedElements = [];
+    arrayToRemove.forEach((index) => {
+        removedElements.push(newArray.splice(index, 1)[0]);
+    });
+
+    return newArray;
+}
+
+
+
+
+export const getBankInfoFromCardNumber = (cardNumber: string): object | null => cardNumber.length > 6 ? iranianBanks?.find(bank => cardNumber.startsWith(bank.bin)) : null;
+
+export const formattedBankCardNumber = (cardNumber: string): string => cardNumber.match(/.{1,4}/g).join('-');
+
+
+export const addArticleForContract = (articles, sections, content) => {
     const updatedArticles = articles.map(article => ({...article}));
     const updatedSections = sections.map(section => ({...section}));
 
@@ -169,7 +196,7 @@ export const addArticle = (articles, sections, content) => {
     return {articles: updatedArticles, sections: updatedSections};
 }
 
-export const removeArticle = (articles, sections, notes, articleNumberToRemove) => {
+export const removeArticleForContract = (articles, sections, notes, articleNumberToRemove) => {
     const updatedArticles = articles.map(article => ({...article}));
     let updatedSections = sections.map(section => ({...section}));
     let updatedNotes = notes.map(note => ({...note}));
@@ -209,7 +236,7 @@ export const removeArticle = (articles, sections, notes, articleNumberToRemove) 
     return {articles: updatedArticles, sections: updatedSections, notes: updatedNotes};
 }
 
-export const addSection = (sections, content, articleNumber) => {
+export const addSectionForContract = (sections, content, articleNumber) => {
     const updatedSections = sections.map(section => ({...section}));
 
     const articleSections = updatedSections.filter(section => section.article_number === articleNumber);
@@ -227,7 +254,7 @@ export const addSection = (sections, content, articleNumber) => {
     return updatedSections;
 }
 
-export const removeSection = (sections, notes, articleNumber, sectionNumberToRemove) => {
+export const removeSectionForContract = (sections, notes, articleNumber, sectionNumberToRemove) => {
     let updatedSections = sections.map(section => ({...section}));
     let updatedNotes = notes.map(note => ({...note}));
 
@@ -284,7 +311,7 @@ export const removeSection = (sections, notes, articleNumber, sectionNumberToRem
     return {sections: updatedSections, notes: updatedNotes};
 }
 
-export const toggleSection = (sections, notes, articleNumber, sectionNumberToToggle) => {
+export const toggleSectionForContract = (sections, notes, articleNumber, sectionNumberToToggle) => {
     const updatedSections = sections.map(section => ({...section}));
     let updatedNotes = notes.map(note => ({...note}));
 
@@ -331,7 +358,7 @@ export const toggleSection = (sections, notes, articleNumber, sectionNumberToTog
     };
 }
 
-export const addNote = (notes, content, articleNumber, sectionNumber) => {
+export const addNoteForContract = (notes, content, articleNumber, sectionNumber) => {
     const updatedNotes = notes.map(note => ({...note}));
 
     updatedNotes.push({
@@ -345,7 +372,7 @@ export const addNote = (notes, content, articleNumber, sectionNumber) => {
     return updatedNotes;
 }
 
-export const removeNote = (notes, noteNumberToRemove) => {
+export const removeNoteForContract = (notes, noteNumberToRemove) => {
     let updatedNotes = notes.filter(item => item.number !== noteNumberToRemove);
 
     updatedNotes = updatedNotes.map((item, index) => ({
@@ -356,25 +383,138 @@ export const removeNote = (notes, noteNumberToRemove) => {
     return updatedNotes;
 }
 
-export const getAllIndexes = (array, value) => {
-    const indexes = [];
-    let i;
 
-    for (i = 0; i < array.length; i++)
-        if (array[i] === value) indexes.push(i);
+export const addArticleForInsertion = (articles, content) => {
+    const updatedArticles = articles.map(article => ({...article}));
 
-    return indexes;
-}
-
-export const removeElementsByIndices = (array, arrayToRemove) => {
-    const newArray = [...array];
-
-    arrayToRemove.sort((a, b) => b - a);
-
-    const removedElements = [];
-    arrayToRemove.forEach((index) => {
-        removedElements.push(newArray.splice(index, 1)[0]);
+    updatedArticles.push({
+        number: updatedArticles.length + 1,
+        content: content,
     });
 
-    return newArray;
+    return updatedArticles;
+}
+
+export const removeArticleForInsertion = (articles, sections, articleNumberToRemove) => {
+    const updatedArticles = articles.map(article => ({...article}));
+    let updatedSections = sections.map(section => ({...section}));
+
+    const selectedArticleIndex = updatedArticles.findIndex(article => article.number === articleNumberToRemove);
+    updatedArticles.splice(selectedArticleIndex, 1);
+
+    updatedArticles.forEach((article) => {
+        if (article.number > articleNumberToRemove) {
+            article.number--;
+        }
+    });
+
+    const sectionIndexesForDelete = getAllIndexes(updatedSections.map(item => item.article_number), articleNumberToRemove);
+
+    updatedSections = removeElementsByIndices(updatedSections, sectionIndexesForDelete);
+
+    updatedSections.forEach((section) => {
+        if (section.article_number > articleNumberToRemove) {
+            section.article_number--;
+        }
+    });
+
+    return {articles: updatedArticles, sections: updatedSections};
+}
+
+export const addSectionForInsertion = (sections, content, articleNumber) => {
+    const updatedSections = sections.map(section => ({...section}));
+
+    const articleSections = updatedSections.filter(section => section.article_number === articleNumber);
+
+    updatedSections.push({
+        number: articleSections.length + 1,
+        article_number: articleNumber,
+        content: content,
+        isAdded: true,
+        isStatic: false,
+    })
+
+    return updatedSections;
+}
+
+export const removeSectionForInsertion = (sections, articleNumber, sectionNumberToRemove) => {
+    let updatedSections = sections.map(section => ({...section}));
+
+    updatedSections = updatedSections.filter(section => !(section.article_number === articleNumber && section.number === sectionNumberToRemove));
+
+    updatedSections.forEach(section => {
+        if (section.article_number === articleNumber && section.number > sectionNumberToRemove) {
+            section.number -= 1;
+        }
+    });
+
+    return updatedSections;
+}
+
+
+export const addArticleForSupplement = (articles, content) => {
+    const updatedArticles = articles.map(article => ({...article}));
+
+    updatedArticles.push({
+        number: updatedArticles.length + 1,
+        content: content,
+    });
+
+    return updatedArticles;
+}
+
+export const removeArticleForSupplement = (articles, sections, articleNumberToRemove) => {
+    const updatedArticles = articles.map(article => ({...article}));
+    let updatedSections = sections.map(section => ({...section}));
+
+    const selectedArticleIndex = updatedArticles.findIndex(article => article.number === articleNumberToRemove);
+    updatedArticles.splice(selectedArticleIndex, 1);
+
+    updatedArticles.forEach((article) => {
+        if (article.number > articleNumberToRemove) {
+            article.number--;
+        }
+    });
+
+    const sectionIndexesForDelete = getAllIndexes(updatedSections.map(item => item.article_number), articleNumberToRemove);
+
+    updatedSections = removeElementsByIndices(updatedSections, sectionIndexesForDelete);
+
+    updatedSections.forEach((section) => {
+        if (section.article_number > articleNumberToRemove) {
+            section.article_number--;
+        }
+    });
+
+    return {articles: updatedArticles, sections: updatedSections};
+}
+
+export const addSectionForSupplement = (sections, content, articleNumber) => {
+    const updatedSections = sections.map(section => ({...section}));
+
+    const articleSections = updatedSections.filter(section => section.article_number === articleNumber);
+
+    updatedSections.push({
+        number: articleSections.length + 1,
+        article_number: articleNumber,
+        content: content,
+        isAdded: true,
+        isStatic: false,
+    })
+
+    return updatedSections;
+}
+
+export const removeSectionForSupplement = (sections, articleNumber, sectionNumberToRemove) => {
+    let updatedSections = sections.map(section => ({...section}));
+
+    updatedSections = updatedSections.filter(section => !(section.article_number === articleNumber && section.number === sectionNumberToRemove));
+
+    updatedSections.forEach(section => {
+        if (section.article_number === articleNumber && section.number > sectionNumberToRemove) {
+            section.number -= 1;
+        }
+    });
+
+    return updatedSections;
 }

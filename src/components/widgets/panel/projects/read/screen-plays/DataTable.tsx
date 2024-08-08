@@ -131,7 +131,7 @@ const DataTable = ({
                 accessorKey: 'actions',
                 header: () => 'ابزار',
                 cell: ({row}) => (
-                    <div className="d-flex justify-content-start align-items-center gap-2 w-max">
+                    <div className="d-flex justify-content-end align-items-center gap-2 w-100">
                         <IconButton
                             color="light-dark"
                             size="sm"

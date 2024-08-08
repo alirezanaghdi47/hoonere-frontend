@@ -40,6 +40,7 @@ const FormDataWithUserName = ({readAllJobAction, readProjectMemberAction, update
                                 }))}
                                 isSearchable
                                 onChange={(value) => updateProjectMemberFormWithUserName.setFieldValue("foa_parent_id", value)}
+                                isLoading={readAllJobAction.isPending}
                             />
 
                             <Form.Error
@@ -69,6 +70,7 @@ const FormDataWithUserName = ({readAllJobAction, readProjectMemberAction, update
                                 isSearchable
                                 disabled={!updateProjectMemberFormWithUserName.values.foa_parent_id}
                                 onChange={(value) => updateProjectMemberFormWithUserName.setFieldValue("foa_child_id", value)}
+                                isLoading={readAllJobAction.isPending}
                             />
 
                             <Form.Error

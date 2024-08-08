@@ -2,6 +2,7 @@
 import {useMemo} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
+import {format} from "date-fns-jalali";
 import {LuHistory, LuPen, LuTrash2} from "react-icons/lu";
 
 // components
@@ -97,7 +98,7 @@ const DataTable = ({
             },
             {
                 accessorKey: 'affiche_date',
-                header: () => 'تاریخ',
+                header: () => 'تاریخ آفیش',
                 cell: ({row}) => (
                     <div className="w-100px">
                         <Typography
@@ -105,7 +106,7 @@ const DataTable = ({
                             color="dark"
                             truncate={1}
                         >
-                            {row.original.affiche_date}
+                            {format(row.original.affiche_date, "yyyy-MM-dd")}
                         </Typography>
                     </div>
                 ),
@@ -117,7 +118,7 @@ const DataTable = ({
                 accessorKey: 'actions',
                 header: () => 'ابزار',
                 cell: ({row}) => (
-                    <div className="d-flex justify-content-start align-items-center gap-2 w-max">
+                    <div className="d-flex justify-content-end align-items-center gap-2 w-100">
                         <IconButton
                             href={auth.panel_url + "projects/" + row.original.project_id + "/affiches/" + row.original.id + "/histories"}
                             color="light-info"

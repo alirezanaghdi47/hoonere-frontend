@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import {LuPen, LuTrash} from "react-icons/lu";
 
 // components
-import {Contract, Article} from "@/components/partials/panel/projects/read/contracts/update/Tools.tsx";
+import {Contract, Article} from "@/components/widgets/panel/projects/read/contracts/update/Actions.tsx";
 import CreateEmployerFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateEmployerFormData.tsx";
 import CreateContractorFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateContractorFormData.tsx";
 import CreateExecutionTimeFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateExecutionTimeFormData.tsx";
@@ -23,7 +23,7 @@ import IconButton from "@/modules/IconButton";
 import useAuthStore from "@/stores/authStore";
 
 // utils
-import {removeArticle} from "@/utils/functions.ts";
+import {removeArticleForContract} from "@/utils/functions.ts";
 
 const FormData = ({readProjectContractSectionAction , updateProjectContractForm, updateProjectContractAction}) => {
     const params = useParams();
@@ -84,11 +84,11 @@ const FormData = ({readProjectContractSectionAction , updateProjectContractForm,
                                                                     onClick={(e) => {
                                                                         e.stopPropagation();
 
-                                                                        const result = removeArticle(updateProjectContractForm.values.articles, updateProjectContractForm.values.sections, updateProjectContractForm.values.notes, article.number);
+                                                                        const data = removeArticleForContract(updateProjectContractForm.values.articles, updateProjectContractForm.values.sections, updateProjectContractForm.values.notes, article.number);
 
-                                                                        updateProjectContractForm.setFieldValue("notes", result.notes);
-                                                                        updateProjectContractForm.setFieldValue("sections", result.sections);
-                                                                        updateProjectContractForm.setFieldValue("articles", result.articles);
+                                                                        updateProjectContractForm.setFieldValue("notes", data.notes);
+                                                                        updateProjectContractForm.setFieldValue("sections", data.sections);
+                                                                        updateProjectContractForm.setFieldValue("articles", data.articles);
 
                                                                         updateProjectContractForm.setFieldValue(`sections[${updateProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${updateProjectContractForm.values.articles.length - 1} ماده و ${updateProjectContractForm.values.articles[0].employers.length + updateProjectContractForm.values.articles[0].contractors.length} نسخه تنظیم گردیده و هر کدام از ${updateProjectContractForm.values.articles[0].employers.length + updateProjectContractForm.values.articles[0].contractors.length} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
                                                                     }}

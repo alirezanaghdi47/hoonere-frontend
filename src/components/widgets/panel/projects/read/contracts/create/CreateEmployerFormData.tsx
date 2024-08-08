@@ -8,7 +8,7 @@ import {LuTrash} from "react-icons/lu";
 const CreateOfficialPartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/create/CreateOfficialPartiesModal.tsx"));
 const CreateUnOfficialPartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/create/CreateUnOfficialPartiesModal.tsx"));
 
-import {Section, Note} from "@/components/partials/panel/projects/read/contracts/create/Tools.tsx";
+import {Section, Note} from "@/components/widgets/panel/projects/read/contracts/create/Actions.tsx";
 
 // hooks
 import useModal from "@/hooks/useModal";
@@ -19,7 +19,7 @@ import Button from "@/modules/Button";
 import IconButton from "@/modules/IconButton";
 
 // utils
-import {removeNote} from "@/utils/functions.ts";
+import {removeNoteForContract} from "@/utils/functions.ts";
 
 const BlankEmployerCard = ({createProjectContractForm}) => {
     const location = useLocation();
@@ -196,30 +196,54 @@ const EmployerLegalCard = ({employer, createProjectContractForm}) => {
 
             {
                 employer?.representatives.length !== 0 && (
-                    <Typography
-                        size="sm"
-                        color="dark"
-                    >
-                        به نمایندگی :
-                        &nbsp;
-                        <ul className="hstack justify-content-start gap-5 p-0 m-0">
+                    <div className="d-flex flex-wrap justify-content-start align-items-start gap-2 w-100">
+
+                        <Typography
+                            size="sm"
+                            color="dark"
+                        >
+                            به نمایندگی :
+                        </Typography>
+
+                        <ul className="vstack justify-content-start gap-5 p-0 m-0">
                             {
-                                employer?.representatives.map(representative =>
+                                employer?.representatives.map((representative , index) =>
                                     <li
                                         key={representative.id}
-                                        className="d-flex justify-content-start align-items-center gap-5"
+                                        className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-2"
                                     >
+                                        <Typography
+                                            size="sm"
+                                            color="dark"
+                                        >
+                                            {index + 1} .
+                                        </Typography>
+
                                         <Typography
                                             size="sm"
                                             color="dark"
                                         >
                                             {representative.full_name}
                                         </Typography>
+
+                                        <Typography
+                                            size="sm"
+                                            color="dark"
+                                        >
+                                            {representative.national_code}
+                                        </Typography>
+
+                                        <Typography
+                                            size="sm"
+                                            color="dark"
+                                        >
+                                            {representative.post}
+                                        </Typography>
                                     </li>
                                 )
                             }
                         </ul>
-                    </Typography>
+                    </div>
                 )
             }
 
@@ -263,7 +287,8 @@ const CreateEmployerFormData = ({article, section, createProjectContractForm}) =
 
                     {
                         createProjectContractForm.values.articles.find(item => item.number === article.number)?.employers?.map(employer =>
-                            <Fragment key={employer.user_type === "1" ? `employer-real-${employer.id}` : `employer-legal-${employer.id}`}>
+                            <Fragment
+                                key={employer.user_type === "1" ? `employer-real-${employer.id}` : `employer-legal-${employer.id}`}>
                                 {
                                     employer.user_type === "1" && (
                                         <EmployerRealCard
@@ -325,7 +350,7 @@ const CreateEmployerFormData = ({article, section, createProjectContractForm}) =
                                             data-tooltip-id="my-tooltip"
                                             data-tooltip-content="حذف تبصره"
                                             onClick={() => {
-                                                const notes = removeNote(createProjectContractForm.values.notes , note.number);
+                                                const notes = removeNoteForContract(createProjectContractForm.values.notes, note.number);
                                                 createProjectContractForm.setFieldValue("notes", notes);
                                             }}
                                         >

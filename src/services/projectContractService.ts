@@ -32,7 +32,7 @@ export const readAllProjectContractService = async (data) => {
     }
 }
 
-export const readProjectContractService = async (data) => {
+export const readProjectOfficialContractService = async (data) => {
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -57,10 +57,37 @@ export const readProjectContractService = async (data) => {
     }
 }
 
-export const createProjectContractService = async (data) => {
+export const readProjectUnOfficialContractService = async (data) => {
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/informalContracts/show", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const createProjectOfficialContractService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        console.log(data)
 
         formData.append("data", encodeData(JSON.stringify(data)));
 
@@ -82,7 +109,34 @@ export const createProjectContractService = async (data) => {
     }
 }
 
-export const updateProjectContractService = async (data) => {
+export const createProjectUnOfficialContractService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        console.log(data)
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/informalContracts/create", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const updateProjectOfficialContractService = async (data) => {
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -107,7 +161,32 @@ export const updateProjectContractService = async (data) => {
     }
 }
 
-export const deleteProjectContractService = async (data) => {
+export const updateProjectUnOfficialContractService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/informalContracts/update", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const deleteProjectOfficialContractService = async (data) => {
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -115,6 +194,31 @@ export const deleteProjectContractService = async (data) => {
         formData.append("data", encodeData(JSON.stringify(data)));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/destroy", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const deleteProjectUnOfficialContractService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/informalContracts/destroy", formData, {
             headers: {
                 "Authorization": "Bearer " + token
             }

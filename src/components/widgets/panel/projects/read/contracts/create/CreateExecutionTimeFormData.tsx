@@ -4,7 +4,7 @@ import {format} from "date-fns-jalali";
 import {LuTrash} from "react-icons/lu";
 
 // components
-import {Section, Note} from "@/components/partials/panel/projects/read/contracts/create/Tools.tsx";
+import {Section, Note} from "@/components/widgets/panel/projects/read/contracts/create/Actions.tsx";
 
 // modules
 import Typography from "@/modules/Typography";
@@ -12,7 +12,7 @@ import DatePicker from "@/modules/DatePicker";
 import IconButton from "@/modules/IconButton";
 
 // utils
-import {removeNote} from "@/utils/functions.ts";
+import {removeNoteForContract} from "@/utils/functions.ts";
 
 const CreateExecutionTimeFormData = ({article, section, createProjectContractForm}) => {
 
@@ -133,7 +133,7 @@ const CreateExecutionTimeFormData = ({article, section, createProjectContractFor
                                             data-tooltip-id="my-tooltip"
                                             data-tooltip-content="حذف تبصره"
                                             onClick={() => {
-                                                const notes = removeNote(createProjectContractForm.values.notes , note.number);
+                                                const notes = removeNoteForContract(createProjectContractForm.values.notes , note.number);
                                                 createProjectContractForm.setFieldValue("notes", notes);
                                             }}
                                         >

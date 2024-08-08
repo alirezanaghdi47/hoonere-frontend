@@ -77,7 +77,7 @@ const DataTable = ({
                 accessorKey: 'actions',
                 header: () => 'ابزار',
                 cell: ({row}) => (
-                    <div className="d-flex justify-content-start align-items-center gap-2 w-max">
+                    <div className="d-flex justify-content-end align-items-center gap-2 w-100">
                         <IconButton
                             color="light-info"
                             size="sm"
@@ -98,61 +98,45 @@ const DataTable = ({
     );
 
     return (
-        <>
-            <div className="card w-100">
-                <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
-                    <Filter
-                        readAllProjectAfficheHistoryAction={readAllProjectAfficheHistoryAction}
-                        filter={filter}
-                        initialFilter={initialFilter}
-                        changeFilter={changeFilter}
-                        isOpenFilter={isOpenFilter}
-                        showFilter={showFilter}
-                        hideFilter={hideFilter}
-                        resetFilter={resetFilter}
-                    />
+        <div className="card w-100">
+            <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
+                <Filter
+                    readAllProjectAfficheHistoryAction={readAllProjectAfficheHistoryAction}
+                    filter={filter}
+                    initialFilter={initialFilter}
+                    changeFilter={changeFilter}
+                    isOpenFilter={isOpenFilter}
+                    showFilter={showFilter}
+                    hideFilter={hideFilter}
+                    resetFilter={resetFilter}
+                />
 
-                    {
-                        readAllProjectAfficheHistoryAction.data?.data?.history.length > 0 && (
-                            <Table
-                                data={readAllProjectAfficheHistoryAction?.data?.data?.history}
-                                columns={tableColumns}
-                            />
-                        )
-                    }
+                {
+                    readAllProjectAfficheHistoryAction.data?.data?.history.length > 0 && (
+                        <Table
+                            data={readAllProjectAfficheHistoryAction?.data?.data?.history}
+                            columns={tableColumns}
+                        />
+                    )
+                }
 
-                    {
-                        readAllProjectAfficheHistoryAction.data?.data?.history.length === 0 && (
-                            <Empty
-                                title="تاریخچه ای یافت نشد"
-                                width="100%"
-                                height={300}
-                            />
-                        )
-                    }
+                {
+                    readAllProjectAfficheHistoryAction.data?.data?.history.length === 0 && (
+                        <Empty
+                            title="تاریخچه ای یافت نشد"
+                            width="100%"
+                            height={300}
+                        />
+                    )
+                }
 
-                    <Finder
-                        readAllProjectAfficheHistoryAction={readAllProjectAfficheHistoryAction}
-                        filter={filter}
-                        changeFilter={changeFilter}
-                    />
-                </div>
+                <Finder
+                    readAllProjectAfficheHistoryAction={readAllProjectAfficheHistoryAction}
+                    filter={filter}
+                    changeFilter={changeFilter}
+                />
             </div>
-
-            {/*{*/}
-            {/*    modal.isOpen &&*/}
-            {/*    !readProjectAfficheAction.isPending && readProjectAfficheAction.data?.data?.affiche_info && Object.keys(readProjectAfficheAction.data?.data?.affiche_info).length > 0 &&*/}
-            {/*    !readAllProjectAfficheActorAction.isPending &&*/}
-            {/*    !readAllProjectAfficheMemberAction.isPending &&*/}
-            {/*    !readAllProjectAfficheReceptionAction.isPending &&*/}
-            {/*    !readAllProjectAfficheScreenPlayAction.isPending && (*/}
-            {/*        <Print*/}
-            {/*            modal={modal}*/}
-            {/*            _handleHideModal={_handleHideModal}*/}
-            {/*        />*/}
-            {/*    )*/}
-            {/*}*/}
-        </>
+        </div>
     )
 }
 

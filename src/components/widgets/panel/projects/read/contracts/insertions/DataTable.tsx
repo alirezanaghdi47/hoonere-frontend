@@ -6,9 +6,9 @@ import {format} from "date-fns-jalali";
 import {LuCheck, LuDownload, LuPen, LuTrash2} from "react-icons/lu";
 
 // components
-import Print from "@/components/widgets/panel/projects/read/contracts/Print.tsx";
-import Finder from "@/components/widgets/panel/projects/read/contracts/Finder.tsx";
-import Filter from "@/components/widgets/panel/projects/read/contracts/Filter.tsx";
+import Print from "@/components/widgets/panel/projects/read/contracts/insertions/Print.tsx";
+import Finder from "@/components/widgets/panel/projects/read/contracts/insertions/Finder.tsx";
+import Filter from "@/components/widgets/panel/projects/read/contracts/insertions/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
 // helpers
@@ -213,7 +213,7 @@ const DataTable = ({
                 accessorKey: 'actions',
                 header: () => 'ابزار',
                 cell: ({row}) => (
-                    <div className="d-flex justify-content-start align-items-center gap-2 w-max">
+                    <div className="d-flex justify-content-end align-items-center gap-2 w-100">
                         <IconButton
                             color="light-dark"
                             size="sm"
@@ -238,7 +238,7 @@ const DataTable = ({
                             onClick={() => readProjectContractAction.mutate({
                                 project_id: row.original.project_id,
                                 contract_id: row.original.id.toString(),
-                                get_last: 0
+                                get_last: 1
                             })}
                         >
                             <LuDownload

@@ -4,18 +4,18 @@ import {useFormik} from "formik";
 import {LuPlus} from "react-icons/lu";
 
 // hooks
-import usePart from "@/hooks/usePart";
+import usePart from "@/hooks/usePart.tsx";
 
 // modules
-import Typography from "@/modules/Typography";
-import Form from "@/modules/Form";
-import Textarea from "@/modules/Textarea";
-import Button from "@/modules/Button";
-import TextInput from "@/modules/TextInput";
+import Typography from "@/modules/Typography.tsx";
+import Form from "@/modules/Form.tsx";
+import Textarea from "@/modules/Textarea.tsx";
+import Button from "@/modules/Button.tsx";
+import TextInput from "@/modules/TextInput.tsx";
 
 //utils
 import {createArticleSchema, createSectionSchema, createNoteSchema} from "@/utils/validations.ts";
-import {addArticle, addNote, addSection} from "@/utils/functions.ts";
+import {addArticleForContract, addNoteForContract, addSectionForContract} from "@/utils/functions.ts";
 
 export const BlankArticle = ({changeCurrentPart}) => {
     const article = document.querySelector("div.szh-accordion__item-content");
@@ -241,7 +241,7 @@ export const CreateArticle = ({articles , sections, resetPart, updateProjectCont
         },
         validationSchema: createArticleSchema,
         onSubmit: async (result, {resetForm}) => {
-            const data = addArticle(articles, sections, result.article);
+            const data = addArticleForContract(articles, sections, result.article);
 
             updateProjectContractForm.setFieldValue("articles", data.articles);
             updateProjectContractForm.setFieldValue("sections", data.sections);
@@ -366,7 +366,7 @@ export const CreateSection = ({article,  sections, resetPart, updateProjectContr
         },
         validationSchema: createSectionSchema,
         onSubmit: async (result, {resetForm}) => {
-            const data = addSection(sections, result.section, article.number);
+            const data = addSectionForContract(sections, result.section, article.number);
 
             updateProjectContractForm.setFieldValue("sections", data);
 
@@ -489,7 +489,7 @@ export const CreateNote = ({article , section , notes, resetPart, updateProjectC
         },
         validationSchema: createNoteSchema,
         onSubmit: async (result, {resetForm}) => {
-            const data = addNote(notes, result.note, article.number, section.number);
+            const data = addNoteForContract(notes, result.note, article.number, section.number);
 
             updateProjectContractForm.setFieldValue("notes", data);
 

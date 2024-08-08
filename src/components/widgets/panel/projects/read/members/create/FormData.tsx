@@ -102,6 +102,7 @@ const FormDataWithUserName = ({readAllJobAction, createProjectMemberFormWithUser
                                 isSearchable
                                 disabled={!createProjectMemberFormWithUserName.values.foa_parent_id}
                                 onChange={(value) => createProjectMemberFormWithUserName.setFieldValue("foa_child_id", value)}
+                                isLoading={readAllJobAction.isPending}
                             />
 
                             <Form.Error

@@ -1,0 +1,108 @@
+// libraries
+import {useState} from "react";
+import {useLocation, useParams} from "react-router-dom";
+import {LuBell, LuMoon, LuSun, LuUser} from "react-icons/lu";
+
+// modules
+import Typography from "@/modules/Typography";
+import IconButton from "@/modules/IconButton";
+import Badge from "@/modules/Badge";
+import Breadcrumbs from "@/modules/Breadcrumbs";
+import Button from "@/modules/Button";
+
+// stores
+import useAuthStore from "@/stores/authStore";
+import useAppStore from "@/stores/appStore";
+
+const Header = () => {
+    const params = useParams();
+    const location = useLocation();
+    const {auth} = useAuthStore();
+    const {app: {isDark}, toggleTheme} = useAppStore();
+
+    const [breadcrumbLinks, setBreadcrumbLinks] = useState([
+        {id: 1, label: "داشبورد", href: auth.panel_url + "dashboard"},
+        {id: 2, label: "پروژه ها", href: auth.panel_url + "projects"},
+        {id: 3, label: ` پروژه ${params.id} `, href: auth.panel_url + `projects/${params.id}`},
+        {id: 4, label: "قرارداد ها", href: auth.panel_url + `projects/${params.id}/contracts`},
+    ]);
+
+    return (
+        <div className="d-flex justify-content-center align-items-center w-100 bg-primary">
+            <div className="row gy-5 w-100 mw-950px p-5 mb-lg-15">
+                <div
+                    className="order-2 order-md-1 col-12 col-md-4 d-flex flex-column justify-content-center align-items-start gap-5">
+                    <Typography
+                        variant="h1"
+                        color="light"
+                        size="xxl"
+                        isBold
+                    >
+                        متمم ها
+                    </Typography>
+                </div>
+
+                <div className="order-1 order-md-2 col-12 col-md-8 d-flex justify-content-end align-items-center gap-2">
+                    <IconButton textColor="light">
+                        <Badge
+                            color="light-success"
+                            size="sm"
+                            placement="top-start"
+                            label="2"
+                        />
+
+                        <LuBell
+                            size={20}
+                            color="currentColor"
+                        />
+                    </IconButton>
+
+                    <IconButton
+                        textColor="light"
+                        onClick={toggleTheme}
+                    >
+                        {
+                            isDark ? (
+                                <LuSun
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            ) : (
+                                <LuMoon
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            )
+                        }
+                    </IconButton>
+
+                    <IconButton
+                        textColor="light"
+                        href={auth.panel_url + "profile"}
+                    >
+                        <LuUser
+                            size={20}
+                            color="currentColor"
+                        />
+                    </IconButton>
+
+                    <Button
+                        href={auth.panel_url + `projects/${params.id}/contracts/${params.subId}/supplements/create`}
+                        color="info"
+                    >
+                        افزودن متمم
+                    </Button>
+                </div>
+
+                <div className="order-3 col-12 d-flex flex-column justify-content-center align-items-start gap-5">
+                    <Breadcrumbs
+                        links={breadcrumbLinks}
+                        activeLink={location.pathname}
+                    />
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default Header;

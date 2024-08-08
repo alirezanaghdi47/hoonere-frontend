@@ -55,7 +55,7 @@ const UnOfficialChangePartiesFormData = ({modal, _handleHideModal, changeCurrent
 
             <Modal.Body>
                 <div className='d-flex justify-content-center align-items-center gap-5 w-100 h-100 p-5'>
-                    <ul className='hstack gap-5 w-100'>
+                    <ul className='hstack gap-5 w-100 mb-0 p-0'>
                         <li
                             className="d-flex flex-column justify-content-center align-items-center gap-5 w-100 h-100px bg-light rounded-2 cursor-pointer"
                             onClick={() => changeCurrentPart("real")}
@@ -578,7 +578,7 @@ const CreateUnOfficialPartiesModal = ({modal, _handleHideModal, createProjectCon
             isOpen={modal.isOpen}
             onClose={_handleHideModal}
             position='center'
-            width="lg"
+            width="md"
         >
             {
                 currentPart === "read" && (

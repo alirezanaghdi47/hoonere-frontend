@@ -3,7 +3,7 @@ import Num2persian from 'num2persian';
 import {LuPen, LuTrash} from "react-icons/lu";
 
 // components
-import {Section , Note} from "@/components/partials/panel/projects/read/contracts/update/Tools.tsx";
+import {Section , Note} from "@/components/widgets/panel/projects/read/contracts/update/Actions.tsx";
 
 // hooks
 import usePart from "@/hooks/usePart";
@@ -14,7 +14,7 @@ import NumberInput from "@/modules/NumberInput";
 import IconButton from "@/modules/IconButton";
 
 // utils
-import {removeNote} from "@/utils/functions.ts";
+import {removeNoteForContract} from "@/utils/functions.ts";
 
 const CreateAmountFormData = ({article, section, updateProjectContractForm}) => {
     const {
@@ -154,7 +154,7 @@ const CreateAmountFormData = ({article, section, updateProjectContractForm}) => 
                                     data-tooltip-id="my-tooltip"
                                     data-tooltip-content="حذف تبصره"
                                     onClick={() => {
-                                        const notes = removeNote(updateProjectContractForm.values.notes, note.number);
+                                        const notes = removeNoteForContract(updateProjectContractForm.values.notes, note.number);
                                         updateProjectContractForm.setFieldValue("notes", notes);
                                     }}
                                 >

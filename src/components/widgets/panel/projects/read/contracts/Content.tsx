@@ -46,6 +46,8 @@ const Content = () => {
         });
     }, []);
 
+    console.log(readAllProjectContractAction.data?.data.contracts)
+
     return (
         <div
             className="d-flex flex-column flex-lg-row justify-content-start align-items-start gap-5 w-100 mw-950px p-5">

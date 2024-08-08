@@ -3,7 +3,15 @@ import {useMemo, useRef} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {format} from "date-fns-jalali";
-import {LuCheck, LuClipboardSignature, LuDownload, LuFileSignature, LuPen, LuThumbsUp, LuTrash2} from "react-icons/lu";
+import {
+    LuClipboardSignature,
+    LuDownload,
+    LuFileCheck, LuFilePlus,
+    LuFileSignature,
+    LuPen,
+    LuThumbsUp,
+    LuTrash2
+} from "react-icons/lu";
 
 // components
 import Print from "@/components/widgets/panel/projects/read/contracts/Print.tsx";
@@ -24,8 +32,10 @@ import Chip from "@/modules/Chip";
 // services
 import {
     changeProjectContractStatusService,
-    deleteProjectContractService,
-    readProjectContractService
+    deleteProjectUnOfficialContractService,
+    deleteProjectOfficialContractService,
+    readProjectOfficialContractService,
+    readProjectUnOfficialContractService
 } from "@/services/projectContractService";
 
 // stores
@@ -45,8 +55,18 @@ const DataTable = ({
     const parentRef = useRef();
     const {auth} = useAuthStore();
 
-    const readProjectContractAction = useMutation({
-        mutationFn: (data) => readProjectContractService(data),
+    const readProjectOfficialContractAction = useMutation({
+        mutationFn: (data) => readProjectOfficialContractService(data),
+        onSuccess: async (data) => {
+            if (!data.error) {
+                parentRef.current.contract_info = data?.data?.contract_info;
+                parentRef.current.print();
+            }
+        }
+    });
+
+    const readProjectUnOfficialContractAction = useMutation({
+        mutationFn: (data) => readProjectUnOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 parentRef.current.contract_info = data?.data?.contract_info;
@@ -71,8 +91,24 @@ const DataTable = ({
         }
     });
 
-    const deleteProjectContractAction = useMutation({
-        mutationFn: (data) => deleteProjectContractService(data),
+    const deleteProjectOfficialContractAction = useMutation({
+        mutationFn: (data) => deleteProjectOfficialContractService(data),
+        onSuccess: async (data) => {
+            if (!data.error) {
+                toast("success", data.message);
+
+                readAllProjectContractAction.mutate({
+                    ...filter,
+                    project_id: params.id
+                });
+            } else {
+                toast("error", data.message);
+            }
+        }
+    });
+
+    const deleteProjectUnOfficialContractAction = useMutation({
+        mutationFn: (data) => deleteProjectUnOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -157,7 +193,7 @@ const DataTable = ({
                     <div className="w-100px">
                         <ul className="hstack flex-wrap list-unstyled justify-content-start align-items-start gap-2 p-0 m-0">
                             {
-                                row.original.members.map(member =>
+                                row.original.type_id === "1" ? row.original.members.map(member =>
                                     <li
                                         key={member.id}
                                         className=""
@@ -165,7 +201,19 @@ const DataTable = ({
                                         data-tooltip-content={member.side_info.title}
                                     >
                                         <Chip
-                                            label={member?.user_info?.first_name + " " + member?.user_info?.last_name}
+                                            label={member?.user_info?.company_name ? member?.user_info?.company_name : member?.user_info?.first_name + " " + member?.user_info?.last_name}
+                                            color={member.side_info.class_name}
+                                        />
+                                    </li>
+                                ) : row.original.informal_members.map(member =>
+                                    <li
+                                        key={member.id}
+                                        className=""
+                                        data-tooltip-id="my-tooltip"
+                                        data-tooltip-content={member.side_info.title}
+                                    >
+                                        <Chip
+                                            label={member?.company_name ? member?.company_name : member?.first_name + " " + member?.last_name}
                                             color={member.side_info.class_name}
                                         />
                                     </li>
@@ -213,7 +261,7 @@ const DataTable = ({
                 accessorKey: 'actions',
                 header: () => 'ابزار',
                 cell: ({row}) => (
-                    <div className="d-flex justify-content-start align-items-center gap-2 w-max">
+                    <div className="d-flex justify-content-end align-items-center gap-2 w-100">
                         <IconButton
                             href={auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/supplements"}
                             color="light-info"
@@ -221,7 +269,7 @@ const DataTable = ({
                             data-tooltip-id="my-tooltip"
                             data-tooltip-content="متمم ها"
                         >
-                            <LuClipboardSignature
+                            <LuFileCheck
                                 size={20}
                                 color="currentColor"
                             />
@@ -234,20 +282,20 @@ const DataTable = ({
                             data-tooltip-id="my-tooltip"
                             data-tooltip-content="الحاقیه ها"
                         >
-                            <LuFileSignature
+                            <LuFilePlus
                                 size={20}
                                 color="currentColor"
                             />
                         </IconButton>
 
                         {
-                            row.original.status_id === "1" && (
+                            row.original.type_id === "1" && row.original.status_id === "1" && (
                                 <IconButton
                                     color="light-success"
                                     size="sm"
                                     data-tooltip-id="my-tooltip"
                                     data-tooltip-content="ثبت نهایی"
-                                    onClick={() => readProjectContractAction.mutate({
+                                    onClick={() => changeProjectContractStatusAction.mutate({
                                         project_id: row.original.project_id,
                                         contract_id: row.original.id.toString(),
                                     })}
@@ -265,7 +313,11 @@ const DataTable = ({
                             size="sm"
                             data-tooltip-id="my-tooltip"
                             data-tooltip-content="دانلود قرارداد"
-                            onClick={() => readProjectContractAction.mutate({
+                            onClick={() => row.original.type_id === "1" ? readProjectOfficialContractAction.mutate({
+                                project_id: row.original.project_id,
+                                contract_id: row.original.id.toString(),
+                                get_last: 1
+                            }) : readProjectUnOfficialContractAction.mutate({
                                 project_id: row.original.project_id,
                                 contract_id: row.original.id.toString(),
                                 get_last: 1
@@ -278,13 +330,13 @@ const DataTable = ({
                         </IconButton>
 
                         {
-                            !readProjectContractAction.isPending && (
+                            (!readProjectOfficialContractAction.isPending || !readProjectUnOfficialContractAction.isPending) && (
                                 <Print ref={parentRef}/>
                             )
                         }
 
                         <IconButton
-                            href={auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/update"}
+                            href={row.original.type_id === "1" ? auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/update#official" : auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/update#un-official"}
                             color="light-warning"
                             size="sm"
                             data-tooltip-id="my-tooltip"
@@ -314,7 +366,10 @@ const DataTable = ({
                                         text: "انصراف",
                                         color: "light-dark",
                                     },
-                                    async () => deleteProjectContractAction.mutate({
+                                    async () => row.original.type_id === "1" ? deleteProjectOfficialContractAction.mutate({
+                                        contract_id: row.original.id.toString(),
+                                        project_id: row.original.project_id
+                                    }) : deleteProjectUnOfficialContractAction.mutate({
                                         contract_id: row.original.id.toString(),
                                         project_id: row.original.project_id
                                     })

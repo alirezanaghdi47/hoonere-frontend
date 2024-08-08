@@ -2,7 +2,7 @@
 import {LuTrash} from "react-icons/lu";
 
 // components
-import {Note, Section} from "@/components/partials/panel/projects/read/contracts/create/Tools.tsx";
+import {Note, Section} from "@/components/widgets/panel/projects/read/contracts/create/Actions.tsx";
 
 // modules
 import Typography from "@/modules/Typography";
@@ -10,7 +10,7 @@ import IconButton from "@/modules/IconButton";
 import CheckBox from "@/modules/CheckBox.tsx";
 
 // utils
-import {removeNote, removeSection, toggleSection} from "@/utils/functions.ts";
+import {removeNoteForContract, removeSectionForContract, toggleSectionForContract} from "@/utils/functions.ts";
 
 const CreateRegularFormData = ({article, section, createProjectContractForm}) => {
     return (
@@ -28,10 +28,10 @@ const CreateRegularFormData = ({article, section, createProjectContractForm}) =>
                             value={true}
                             checked={!createProjectContractForm.values.sections.find(item => item.number === section.number && item.article_number === section.article_number)?.isOff}
                             onChange={(value) => {
-                                const result = toggleSection(createProjectContractForm.values.sections, createProjectContractForm.values.notes, article.number, section.number);
+                                const data = toggleSectionForContract(createProjectContractForm.values.sections, createProjectContractForm.values.notes, article.number, section.number);
 
-                                createProjectContractForm.setFieldValue("notes", result.notes);
-                                createProjectContractForm.setFieldValue("sections", result.sections);
+                                createProjectContractForm.setFieldValue("notes", data.notes);
+                                createProjectContractForm.setFieldValue("sections", data.sections);
                             }}
                         />
                     )
@@ -67,10 +67,10 @@ const CreateRegularFormData = ({article, section, createProjectContractForm}) =>
                                 data-tooltip-id="my-tooltip"
                                 data-tooltip-content="حذف بند"
                                 onClick={() => {
-                                    const result = removeSection(createProjectContractForm.values.sections, createProjectContractForm.values.notes, article.number, section.number);
+                                    const data = removeSectionForContract(createProjectContractForm.values.sections, createProjectContractForm.values.notes, article.number, section.number);
 
-                                    createProjectContractForm.setFieldValue("notes", result.notes);
-                                    createProjectContractForm.setFieldValue("sections", result.sections);
+                                    createProjectContractForm.setFieldValue("notes", data.notes);
+                                    createProjectContractForm.setFieldValue("sections", data.sections);
                                 }}
                             >
                                 <LuTrash
@@ -121,7 +121,7 @@ const CreateRegularFormData = ({article, section, createProjectContractForm}) =>
                                             data-tooltip-id="my-tooltip"
                                             data-tooltip-content="حذف تبصره"
                                             onClick={() => {
-                                                const notes = removeNote(createProjectContractForm.values.notes , note.number);
+                                                const notes = removeNoteForContract(createProjectContractForm.values.notes , note.number);
                                                 createProjectContractForm.setFieldValue("notes", notes);
                                             }}
                                         >

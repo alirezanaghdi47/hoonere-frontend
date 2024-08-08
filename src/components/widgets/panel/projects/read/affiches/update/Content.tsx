@@ -22,7 +22,8 @@ import useFilter from "@/hooks/useFilter";
 
 // services
 import {
-    readAllProjectAfficheActorService, readAllProjectAfficheAddressService,
+    readAllProjectAfficheActorService,
+    readAllProjectAfficheAddressService,
     readAllProjectAfficheMemberService,
     readAllProjectAfficheReceptionService,
     readAllProjectAfficheScreenPlayService,
@@ -243,6 +244,8 @@ const Content = () => {
         });
     }, []);
 
+    console.log(updateProjectAfficheP2Form.values)
+
     return (
         <div
             className="d-flex flex-column flex-lg-row justify-content-start align-items-start gap-5 w-100 mw-950px p-5">
@@ -290,6 +293,7 @@ const Content = () => {
                     !readAllProjectScreenPlayAction.isPending && currentStep === 3 && (
                         <FormDataP3
                             readAllProjectScreenPlayAction={readAllProjectScreenPlayAction}
+                            updateProjectAfficheAction={updateProjectAfficheAction}
                             updateProjectAfficheP3Form={updateProjectAfficheP3Form}
                             prevStep={prevStep}
                             filter={filter}
