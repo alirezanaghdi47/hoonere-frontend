@@ -1,4 +1,5 @@
 // libraries
+import {useParams} from "react-router-dom";
 import {LuSearch, LuX} from "react-icons/lu";
 
 // modules
@@ -16,6 +17,8 @@ const AdvanceFilter = ({
                            resetFilter,
                            readAllProjectContractAction
                        }) => {
+    const params = useParams();
+
     return (
         <div className='row gy-5 w-100'>
             <div className="col-12 col-sm-6 col-md-4">
@@ -75,7 +78,10 @@ const AdvanceFilter = ({
                     onClick={() => {
                         resetFilter();
                         hideFilter();
-                        readAllProjectContractAction.mutate(initialFilter);
+                        readAllProjectContractAction.mutate({
+                            ...initialFilter,
+                            project_id: params.id
+                        });
                     }}
                 >
                     انصراف
@@ -83,7 +89,10 @@ const AdvanceFilter = ({
 
                 <Button
                     color='light-info'
-                    onClick={() => readAllProjectContractAction.mutate(filter)}
+                    onClick={() => readAllProjectContractAction.mutate({
+                        ...filter,
+                        project_id: params.id
+                    })}
                 >
                     فیلتر
                 </Button>
@@ -93,6 +102,8 @@ const AdvanceFilter = ({
 }
 
 const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectContractAction}) => {
+    const params = useParams();
+
     return (
         <div className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-5">
             <div className="w-200px">
@@ -105,7 +116,10 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectContractA
                         <IconButton
                             size="sm"
                             color="light"
-                            onClick={() => readAllProjectContractAction.mutate(filter)}
+                            onClick={() => readAllProjectContractAction.mutate({
+                                ...filter,
+                                project_id: params.id
+                            })}
                         >
                             <LuSearch
                                 size={20}
@@ -120,7 +134,11 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectContractA
                                 textColor="danger"
                                 onClick={() => {
                                     changeFilter({contract_number: ""});
-                                    readAllProjectContractAction.mutate({...filter, contract_number: ""});
+                                    readAllProjectContractAction.mutate({
+                                        ...filter,
+                                        contract_number: "",
+                                        project_id: params.id
+                                    });
                                 }}
                             >
                                 <LuX

@@ -170,6 +170,7 @@ export const getBankInfoFromCardNumber = (cardNumber: string): object | null => 
 export const formattedBankCardNumber = (cardNumber: string): string => cardNumber.match(/.{1,4}/g).join('-');
 
 
+
 export const addArticleForContract = (articles, sections, content) => {
     const updatedArticles = articles.map(article => ({...article}));
     const updatedSections = sections.map(section => ({...section}));
@@ -384,12 +385,14 @@ export const removeNoteForContract = (notes, noteNumberToRemove) => {
 }
 
 
+
 export const addArticleForInsertion = (articles, content) => {
     const updatedArticles = articles.map(article => ({...article}));
 
     updatedArticles.push({
         number: updatedArticles.length + 1,
         content: content,
+        is_added: "1"
     });
 
     return updatedArticles;
@@ -438,74 +441,6 @@ export const addSectionForInsertion = (sections, content, articleNumber) => {
 }
 
 export const removeSectionForInsertion = (sections, articleNumber, sectionNumberToRemove) => {
-    let updatedSections = sections.map(section => ({...section}));
-
-    updatedSections = updatedSections.filter(section => !(section.article_number === articleNumber && section.number === sectionNumberToRemove));
-
-    updatedSections.forEach(section => {
-        if (section.article_number === articleNumber && section.number > sectionNumberToRemove) {
-            section.number -= 1;
-        }
-    });
-
-    return updatedSections;
-}
-
-
-export const addArticleForSupplement = (articles, content) => {
-    const updatedArticles = articles.map(article => ({...article}));
-
-    updatedArticles.push({
-        number: updatedArticles.length + 1,
-        content: content,
-    });
-
-    return updatedArticles;
-}
-
-export const removeArticleForSupplement = (articles, sections, articleNumberToRemove) => {
-    const updatedArticles = articles.map(article => ({...article}));
-    let updatedSections = sections.map(section => ({...section}));
-
-    const selectedArticleIndex = updatedArticles.findIndex(article => article.number === articleNumberToRemove);
-    updatedArticles.splice(selectedArticleIndex, 1);
-
-    updatedArticles.forEach((article) => {
-        if (article.number > articleNumberToRemove) {
-            article.number--;
-        }
-    });
-
-    const sectionIndexesForDelete = getAllIndexes(updatedSections.map(item => item.article_number), articleNumberToRemove);
-
-    updatedSections = removeElementsByIndices(updatedSections, sectionIndexesForDelete);
-
-    updatedSections.forEach((section) => {
-        if (section.article_number > articleNumberToRemove) {
-            section.article_number--;
-        }
-    });
-
-    return {articles: updatedArticles, sections: updatedSections};
-}
-
-export const addSectionForSupplement = (sections, content, articleNumber) => {
-    const updatedSections = sections.map(section => ({...section}));
-
-    const articleSections = updatedSections.filter(section => section.article_number === articleNumber);
-
-    updatedSections.push({
-        number: articleSections.length + 1,
-        article_number: articleNumber,
-        content: content,
-        isAdded: true,
-        isStatic: false,
-    })
-
-    return updatedSections;
-}
-
-export const removeSectionForSupplement = (sections, articleNumber, sectionNumberToRemove) => {
     let updatedSections = sections.map(section => ({...section}));
 
     updatedSections = updatedSections.filter(section => !(section.article_number === articleNumber && section.number === sectionNumberToRemove));

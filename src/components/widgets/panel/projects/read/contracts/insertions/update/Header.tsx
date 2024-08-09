@@ -8,7 +8,6 @@ import Typography from "@/modules/Typography";
 import IconButton from "@/modules/IconButton";
 import Badge from "@/modules/Badge";
 import Breadcrumbs from "@/modules/Breadcrumbs";
-import Button from "@/modules/Button";
 
 // stores
 import useAuthStore from "@/stores/authStore";
@@ -25,6 +24,7 @@ const Header = () => {
         {id: 2, label: "پروژه ها", href: auth.panel_url + "projects"},
         {id: 3, label: ` پروژه ${params.id} `, href: auth.panel_url + `projects/${params.id}`},
         {id: 4, label: "قرارداد ها", href: auth.panel_url + `projects/${params.id}/contracts`},
+        {id: 5, label: "متمم و الحاقیه ها", href: auth.panel_url + `projects/${params.id}/contracts/${params.subId}/insertions`},
     ]);
 
     return (
@@ -38,7 +38,9 @@ const Header = () => {
                         size="xxl"
                         isBold
                     >
-                        متمم ها
+                        ویرایش
+                        &nbsp;
+                        {location.hash === "#is_supplement=0" ? "الحاقیه" : "متمم"}
                     </Typography>
                 </div>
 
@@ -85,13 +87,6 @@ const Header = () => {
                             color="currentColor"
                         />
                     </IconButton>
-
-                    <Button
-                        href={auth.panel_url + `projects/${params.id}/contracts/${params.subId}/supplements/create`}
-                        color="info"
-                    >
-                        افزودن متمم
-                    </Button>
                 </div>
 
                 <div className="order-3 col-12 d-flex flex-column justify-content-center align-items-start gap-5">

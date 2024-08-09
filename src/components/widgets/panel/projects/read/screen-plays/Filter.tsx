@@ -1,5 +1,6 @@
 // libraries
 import {useLayoutEffect} from "react";
+import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {LuSearch, LuX} from "react-icons/lu";
 
@@ -21,6 +22,8 @@ const AdvanceFilter = ({
                            resetFilter,
                            readAllProjectScreenPlayAction
                        }) => {
+    const params = useParams();
+
     const readAllProjectTypeAction = useMutation({
         mutationFn: () => readAllProjectTypeService(),
     });
@@ -88,7 +91,10 @@ const AdvanceFilter = ({
                     onClick={() => {
                         resetFilter();
                         hideFilter();
-                        readAllProjectScreenPlayAction.mutate(initialFilter);
+                        readAllProjectScreenPlayAction.mutate({
+                            ...initialFilter,
+                            project_id: params.id
+                        });
                     }}
                 >
                     انصراف
@@ -96,7 +102,10 @@ const AdvanceFilter = ({
 
                 <Button
                     color='light-info'
-                    onClick={() => readAllProjectScreenPlayAction.mutate(filter)}
+                    onClick={() => readAllProjectScreenPlayAction.mutate({
+                        ...filter,
+                        project_id: params.id
+                    })}
                 >
                     فیلتر
                 </Button>
@@ -106,6 +115,8 @@ const AdvanceFilter = ({
 }
 
 const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectScreenPlayAction}) => {
+    const params = useParams();
+
     return (
         <div className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-5">
             <div className="w-200px">
@@ -118,7 +129,10 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectScreenPla
                         <IconButton
                             size="sm"
                             color="light"
-                            onClick={() => readAllProjectScreenPlayAction.mutate(filter)}
+                            onClick={() => readAllProjectScreenPlayAction.mutate({
+                                ...filter,
+                                project_id: params.id
+                            })}
                         >
                             <LuSearch
                                 size={20}
@@ -133,7 +147,11 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectScreenPla
                                 textColor="danger"
                                 onClick={() => {
                                     changeFilter({text: ""});
-                                    readAllProjectScreenPlayAction.mutate({...filter, text: ""});
+                                    readAllProjectScreenPlayAction.mutate({
+                                        ...filter,
+                                        text: "",
+                                        project_id: params.id
+                                    });
                                 }}
                             >
                                 <LuX

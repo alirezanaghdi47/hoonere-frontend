@@ -101,7 +101,7 @@ const FormDataWithUserName = ({readAllJobAction, readProjectMemberAction, update
                         <Alert
                             color="success"
                             size="sm"
-                            message={`${readProjectMemberAction?.data?.data?.member_info?.user_info?.first_name} ${readProjectMemberAction?.data?.data?.member_info?.user_info?.last_name}`}
+                            message={readProjectMemberAction?.data?.data?.member_info?.user_info?.user_type === "1" ? `${readProjectMemberAction?.data?.data?.member_info?.user_info?.first_name} ${readProjectMemberAction?.data?.data?.member_info?.user_info?.last_name}` : readProjectMemberAction?.data?.data?.member_info?.user_info?.company_name}
                         />
                     </div>
                 </div>

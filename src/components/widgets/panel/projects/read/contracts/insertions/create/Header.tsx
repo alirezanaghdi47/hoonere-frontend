@@ -24,7 +24,7 @@ const Header = () => {
         {id: 2, label: "پروژه ها", href: auth.panel_url + "projects"},
         {id: 3, label: ` پروژه ${params.id} `, href: auth.panel_url + `projects/${params.id}`},
         {id: 4, label: "قرارداد ها", href: auth.panel_url + `projects/${params.id}/contracts`},
-        {id: 5, label: "الحاقیه ها", href: auth.panel_url + `projects/${params.id}/contracts/${params.subId}/insertions`},
+        {id: 5, label: "متمم و الحاقیه ها", href: auth.panel_url + `projects/${params.id}/contracts/${params.subId}/insertions`},
     ]);
 
     return (
@@ -38,7 +38,9 @@ const Header = () => {
                         size="xxl"
                         isBold
                     >
-                        افزودن الحاقیه
+                        افزودن
+                        &nbsp;
+                        {location.hash === "#is_supplement=0" ? "الحاقیه" : "متمم"}
                     </Typography>
                 </div>
 

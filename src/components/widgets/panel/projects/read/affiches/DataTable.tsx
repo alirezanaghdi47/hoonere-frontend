@@ -118,7 +118,7 @@ const DataTable = ({
                 accessorKey: 'actions',
                 header: () => 'ابزار',
                 cell: ({row}) => (
-                    <div className="d-flex justify-content-end align-items-center gap-2 w-100">
+                    <div className="d-flex justify-content-start align-items-center gap-2 w-100">
                         <IconButton
                             href={auth.panel_url + "projects/" + row.original.project_id + "/affiches/" + row.original.id + "/histories"}
                             color="light-info"

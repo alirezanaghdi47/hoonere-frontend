@@ -208,6 +208,28 @@ export const readAllReceptionTypeService = async () => {
     }
 }
 
+export const readAllProjectMoodBoardTypeService = async () => {
+    try {
+        const {token} = useAuthStore.getState().auth;
+
+        const response = await axios.post(process.env.API_URL + "/panel/public/getMoodboardTypes", null, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
 export const readAllProjectContractArticleService = async () => {
     try {
         const {token} = useAuthStore.getState().auth;
@@ -252,11 +274,33 @@ export const readAllProjectContractSectionService = async () => {
     }
 }
 
-export const readAllProjectMoodBoardTypeService = async () => {
+export const readAllProjectContractInsertionArticleService = async () => {
     try {
         const {token} = useAuthStore.getState().auth;
 
-        const response = await axios.post(process.env.API_URL + "/panel/public/getMoodboardTypes", null, {
+        const response = await axios.post(process.env.API_URL + "/panel/public/getInsertionDefaultArticles", null, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readAllProjectContractInsertionSectionService = async () => {
+    try {
+        const {token} = useAuthStore.getState().auth;
+
+        const response = await axios.post(process.env.API_URL + "/panel/public/getInsertionReadySections", null, {
             headers: {
                 "Authorization": "Bearer " + token
             }

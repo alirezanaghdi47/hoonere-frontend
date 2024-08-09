@@ -148,7 +148,7 @@ const Content = () => {
             actors: readAllProjectAfficheActorAction.data?.data?.actors.length > 0 ? readAllProjectAfficheActorAction.data?.data?.actors.map(actor => ({
                 actor_id: actor.info?.actor_id,
                 coming_time: actor.info?.coming_time,
-                full_name: actor.info?.first_name + " " + actor.info?.last_name,
+                full_name: actor.info?.is_fake === "0" ? actor.info?.user_type === "1" ? actor.info?.first_name + " " + actor.info?.last_name : actor.info?.company_name : actor.info?.first_name + " " + actor.info?.last_name,
                 is_fake: actor.info?.is_fake,
                 makeup_time: actor.info?.makeup_time,
                 role: actor.info?.role
@@ -157,14 +157,14 @@ const Content = () => {
                 member_id: member.info?.member_id,
                 coming_time: member.info?.coming_time,
                 description: member.info?.description,
-                full_name: member.info?.first_name + " " + member.info?.last_name,
+                full_name: member.info?.is_fake === "0" ? member.info?.user_type === "1" ? member.info?.first_name + " " + member.info?.last_name : member.info?.company_name : member.info?.first_name + " " + member.info?.last_name,
                 is_fake: member.info?.is_fake
             })) : [],
             receptions: readAllProjectAfficheReceptionAction.data?.data?.receptions.length > 0 ? readAllProjectAfficheReceptionAction.data?.data?.receptions.map(reception => ({
                 member_id: reception.info?.member_id,
                 reception_type: reception.info?.reception_type,
                 reception_name: reception.info?.reception_name,
-                full_name: reception.info?.first_name + " " + reception.info?.last_name,
+                full_name: reception.info?.is_fake === "0" ? reception.info?.user_type === "1" ? reception.info?.first_name + " " + reception.info?.last_name : reception.info?.company_name : reception.info?.first_name + " " + reception.info?.last_name,
                 is_fake: reception.info?.is_fake
             })) : [],
         },
@@ -244,7 +244,11 @@ const Content = () => {
         });
     }, []);
 
+
     console.log(updateProjectAfficheP2Form.values)
+    // console.log(readAllProjectAfficheActorAction.data?.data?.actors)
+    // console.log(readAllProjectAfficheMemberAction.data?.data?.members)
+    // console.log(readAllProjectAfficheReceptionAction.data?.data?.receptions)
 
     return (
         <div

@@ -38,7 +38,7 @@ const Header = () => {
                         size="xxl"
                         isBold
                     >
-                        الحاقیه ها
+                        متمم و الحاقیه ها
                     </Typography>
                 </div>
 
@@ -87,7 +87,14 @@ const Header = () => {
                     </IconButton>
 
                     <Button
-                        href={auth.panel_url + `projects/${params.id}/contracts/${params.subId}/insertions/create`}
+                        href={auth.panel_url + `projects/${params.id}/contracts/${params.subId}/insertions/create#is_supplement=1`}
+                        color="info"
+                    >
+                        افزودن متمم
+                    </Button>
+
+                    <Button
+                        href={auth.panel_url + `projects/${params.id}/contracts/${params.subId}/insertions/create#is_supplement=0`}
                         color="info"
                     >
                         افزودن الحاقیه

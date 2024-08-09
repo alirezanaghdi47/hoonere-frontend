@@ -100,7 +100,7 @@ const Content = () => {
                     return article;
                 }
             }) : [],
-            sections: readProjectOfficialContractAction.data?.data?.contract_info?.articles ? readProjectOfficialContractAction.data?.data?.contract_info?.articles.flatMap(article => article.sections).filter(section => !(section.number === 1 && [1, 3, 4, 5].includes(section.article_number))) : [],
+            sections: readProjectOfficialContractAction.data?.data?.contract_info?.articles ? readProjectOfficialContractAction.data?.data?.contract_info?.articles.flatMap(article => article.sections).filter(section => !((section.number === 1 && [1, 3, 4, 5].includes(section.article_number)) || (section.number === 2 && [1].includes(section.article_number)))) : [],
             notes: readProjectOfficialContractAction.data?.data?.contract_info?.articles ? readProjectOfficialContractAction.data?.data?.contract_info?.articles.flatMap(article => article.notes).filter(note => note !== undefined).map(note => ({
                 ...note,
                 isAdded: true,
@@ -137,7 +137,7 @@ const Content = () => {
                     return article;
                 }
             }) : [],
-            sections: readProjectUnOfficialContractAction.data?.data?.contract_info?.articles ? readProjectUnOfficialContractAction.data?.data?.contract_info?.articles.flatMap(article => article.sections).filter(section => !(section.number === 1 && [1, 3, 4, 5].includes(section.article_number) || section.number === 2 && [1].includes(section.article_number))) : [],
+            sections: readProjectUnOfficialContractAction.data?.data?.contract_info?.articles ? readProjectUnOfficialContractAction.data?.data?.contract_info?.articles.flatMap(article => article.sections).filter(section => !((section.number === 1 && [1, 3, 4, 5].includes(section.article_number)) || (section.number === 2 && [1].includes(section.article_number)))) : [],
             notes: readProjectUnOfficialContractAction.data?.data?.contract_info?.articles ? readProjectUnOfficialContractAction.data?.data?.contract_info?.articles.flatMap(article => article.notes).filter(note => note !== undefined).map(note => ({
                 ...note,
                 isAdded: true,

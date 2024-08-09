@@ -1,0 +1,277 @@
+// libraries
+import Loadable from "@loadable/component";
+import {format} from "date-fns-jalali";
+import {LuTrash} from "react-icons/lu";
+
+// components
+const CreatePaymentModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/insertions/update/CreatePaymentModal.tsx"));
+
+import {Section} from "@/components/widgets/panel/projects/read/contracts/insertions/update/Actions.tsx";
+import Forbidden from "@/components/partials/panel/Forbidden.tsx";
+
+// hooks
+import useModal from "@/hooks/useModal";
+import usePart from "@/hooks/usePart.tsx";
+
+// modules
+import RadioBox from "@/modules/RadioBox";
+import Typography from "@/modules/Typography";
+import IconButton from "@/modules/IconButton";
+import Button from "@/modules/Button";
+
+const PaymentActionBar = ({article, section, updateProjectContractInsertionForm}) => {
+    return (
+        <ul className="hstack justify-content-start gap-5 p-0 m-0">
+            <li className="d-flex justify-content-start align-items-center gap-2">
+                <RadioBox
+                    id="payment-status"
+                    name="payment-status"
+                    value="1"
+                    checked={updateProjectContractInsertionForm.values.articles.find(item => item.number === article.number)?.payment_state === "1"}
+                    onChange={(value) => {
+                        updateProjectContractInsertionForm.setFieldValue(`sections[${updateProjectContractInsertionForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number)}].content`, "");
+                        updateProjectContractInsertionForm.setFieldValue(`articles[${updateProjectContractInsertionForm.values.articles.findIndex(item => item.number === article.number)}].payment_state`, value);
+                    }}
+                />
+
+                <Typography
+                    size="sm"
+                    color="muted"
+                    isBold
+                >
+                    پرداخت بر اساس فاز بندی
+                </Typography>
+            </li>
+
+            <li className="d-flex justify-content-start align-items-center gap-2">
+                <RadioBox
+                    id="payment-status"
+                    name="payment-status"
+                    value="2"
+                    checked={updateProjectContractInsertionForm.values.articles.find(item => item.number === article.number)?.payment_state === "2"}
+                    onChange={(value) => {
+                        updateProjectContractInsertionForm.setFieldValue(`sections[${updateProjectContractInsertionForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number)}].content`, "کلیه پرداخت ها به مجری بر اساس فاکتور های تایید شده توسط کارفرما پرداخت میگردد.");
+                        updateProjectContractInsertionForm.setFieldValue(`articles[${updateProjectContractInsertionForm.values.articles.findIndex(item => item.number === article.number)}].payment_state`, value);
+                    }}
+                />
+
+                <Typography
+                    size="sm"
+                    color="muted"
+                    isBold
+                >
+                    پرداخت بر اساس فاکتور
+                </Typography>
+            </li>
+        </ul>
+    )
+}
+
+const BlankPaymentWithPhasesCard = ({article, section, updateProjectContractInsertionForm}) => {
+    const {modal, _handleShowModal, _handleHideModal} = useModal();
+
+    return (
+        <>
+            <li className='d-flex flex-wrap justify-content-start align-items-center gap-5'>
+                <Typography
+                    size="sm"
+                    color="dark"
+                >
+                    فاز بندی :
+                </Typography>
+
+                <Button
+                    color="light-dark"
+                    size="sm"
+                    onClick={() => _handleShowModal({article: article, section: section})}
+                >
+                    انتخاب فاز
+                </Button>
+            </li>
+
+            {
+                modal.isOpen && (
+                    <CreatePaymentModal
+                        modal={modal}
+                        _handleHideModal={_handleHideModal}
+                        updateProjectContractInsertionForm={updateProjectContractInsertionForm}
+                    />
+                )
+            }
+        </>
+    )
+}
+
+const PaymentWithPhasesCard = ({article, payment, updateProjectContractInsertionForm}) => {
+    return (
+        <li className='d-flex flex-wrap justify-content-start align-items-center gap-5 border border-dashed border-secondary rounded-2 p-5'>
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                {payment.percent}
+                &nbsp;
+                درصد مبلغ قرارداد معادل
+                &nbsp;
+                {Math.ceil(updateProjectContractInsertionForm.values.articles.find(item => item.number === article.number - 1)?.total_price * (payment.percent / 100))}
+                &nbsp;
+                ریال در تاریخ
+                &nbsp;
+                {format(payment.date, "dd-MM-yyyy")}
+                &nbsp;
+                پرداخت گردد.
+            </Typography>
+
+            <div className='ms-auto'>
+                <IconButton
+                    color="light-danger"
+                    size="sm"
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content="حذف فاز"
+                    onClick={() => updateProjectContractInsertionForm.setFieldValue(`articles[${updateProjectContractInsertionForm.values.articles.findIndex(item => item.number === article.number)}].payments`, updateProjectContractInsertionForm.values.articles[updateProjectContractInsertionForm.values.articles.findIndex(item => item.number === article.number)].payments.filter(item => JSON.stringify(item) !== JSON.stringify(payment)))}
+                >
+                    <LuTrash
+                        size={20}
+                        color="currentColor"
+                    />
+                </IconButton>
+            </div>
+        </li>
+    )
+}
+
+const PaymentWithPhases = ({article, section, updateProjectContractInsertionForm , part , currentPart , resetPart , changeCurrentPart}) => {
+    return (
+        <Section
+            article={article}
+            section={section}
+            updateProjectContractInsertionForm={updateProjectContractInsertionForm}
+            part={part}
+            currentPart={currentPart}
+            resetPart={resetPart}
+            changeCurrentPart={changeCurrentPart}
+        >
+            <div className='d-flex justify-content-start align-items-center gap-5 w-100'>
+                <Typography
+                    size="sm"
+                    color="muted"
+                    isBold
+                    className="w-30px"
+                >
+                    {section.number}-{article.number}
+                </Typography>
+
+                <ul className="vstack justify-content-center gap-5 p-0 m-0">
+                    <BlankPaymentWithPhasesCard
+                        article={article}
+                        section={section}
+                        updateProjectContractInsertionForm={updateProjectContractInsertionForm}
+                    />
+
+                    {
+                        updateProjectContractInsertionForm.values.articles.find(item => item.number === article.number)?.payments?.map((payment, i) =>
+                            <PaymentWithPhasesCard
+                                key={i}
+                                article={article}
+                                payment={payment}
+                                updateProjectContractInsertionForm={updateProjectContractInsertionForm}
+                            />
+                        )
+                    }
+                </ul>
+            </div>
+        </Section>
+    )
+}
+
+const PaymentWithBill = ({article, section, updateProjectContractInsertionForm , part , currentPart , resetPart , changeCurrentPart}) => {
+    return (
+        <Section
+            article={article}
+            section={section}
+            updateProjectContractInsertionForm={updateProjectContractInsertionForm}
+            part={part}
+            currentPart={currentPart}
+            resetPart={resetPart}
+            changeCurrentPart={changeCurrentPart}
+        >
+            <div className='d-flex justify-content-start align-items-center gap-5 w-100'>
+                <Typography
+                    size="sm"
+                    color="muted"
+                    isBold
+                    className="w-30px"
+                >
+                    {section.number}-{article.number}
+                </Typography>
+
+                <Typography
+                    size="sm"
+                    color="dark"
+                >
+                    کلیه پرداخت ها به مجری بر اساس فاکتور های تایید شده توسط کارفرما پرداخت میگردد
+                </Typography>
+            </div>
+        </Section>
+    )
+}
+
+const CreatePaymentFormData = ({article, section, updateProjectContractInsertionForm}) => {
+    const {
+        part: sectionPart,
+        currentPart: sectionCurrentPart,
+        changePart: sectionChangePart,
+        resetPart: sectionResetPart,
+        changeCurrentPart: sectionChangeCurrentPart
+    } = usePart(null, "read");
+
+    return (
+        updateProjectContractInsertionForm.values.articles.find(item => item.number === article.number - 2)?.start_date &&
+        updateProjectContractInsertionForm.values.articles.find(item => item.number === article.number - 2)?.end_date &&
+        Math.min(updateProjectContractInsertionForm.values.articles.find(item => item.number === article.number - 1).total_price) > 0
+    ) ? (
+        <>
+            <PaymentActionBar
+                article={article}
+                section={section}
+                updateProjectContractInsertionForm={updateProjectContractInsertionForm}
+            />
+
+            {
+                updateProjectContractInsertionForm.values.articles.find(item => item.number === article.number)?.payment_state === "1" && (
+                    <PaymentWithPhases
+                        article={article}
+                        section={section}
+                        updateProjectContractInsertionForm={updateProjectContractInsertionForm}
+                        part={sectionPart}
+                        currentPart={sectionCurrentPart}
+                        resetPart={sectionResetPart}
+                        changeCurrentPart={sectionChangeCurrentPart}
+                    />
+                )
+            }
+
+            {
+                updateProjectContractInsertionForm.values.articles.find(item => item.number === article.number)?.payment_state === "2" && (
+                    <PaymentWithBill
+                        article={article}
+                        section={section}
+                        updateProjectContractInsertionForm={updateProjectContractInsertionForm}
+                        part={sectionPart}
+                        currentPart={sectionCurrentPart}
+                        resetPart={sectionResetPart}
+                        changeCurrentPart={sectionChangeCurrentPart}
+                    />
+                )
+            }
+        </>
+    ) : (
+        <Forbidden
+            title="ابتدا بند های از پیش تعریف شده را کامل نمایید"
+            width="100%"
+            height={200}
+        />
+    )
+}
+
+export default CreatePaymentFormData;

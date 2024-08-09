@@ -273,7 +273,7 @@ const FormData = ({createProjectForm, createProjectAction}) => {
                                         <Alert
                                             color={readUserInquiryAction.data?.error ? "danger" : "success"}
                                             size="sm"
-                                            message={readUserInquiryAction.data?.data?.user_info ? `${readUserInquiryAction.data?.data?.user_info?.first_name} ${readUserInquiryAction.data?.data?.user_info?.last_name}` : "کاربری با این مشخصات یافت نشد"}
+                                            message={readUserInquiryAction?.data?.data?.user_info ? readUserInquiryAction?.data?.data?.user_info?.user_type === "1" ? `${readUserInquiryAction.data?.data?.user_info?.first_name} ${readUserInquiryAction.data?.data?.user_info?.last_name}` : `${readUserInquiryAction.data?.data?.user_info?.company_name}` : "کاربری با این مشخصات یافت نشد"}
                                         />
                                     )
                                 }

@@ -1,5 +1,4 @@
 // libraries
-import {Fragment} from "react";
 import {useLocation} from "react-router-dom";
 import Loadable from "@loadable/component";
 import {LuTrash} from "react-icons/lu";
@@ -67,7 +66,77 @@ const BlankEmployerCard = ({createProjectContractForm}) => {
     )
 }
 
-const EmployerRealCard = ({employer, createProjectContractForm}) => {
+const EmployerOfficialRealCard = ({employer, createProjectContractForm}) => {
+    return (
+        <li className='d-flex flex-wrap justify-content-start align-items-center gap-5 border border-dashed border-secondary rounded-2 p-5'>
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                کارفرما :
+                &nbsp;
+                {(employer?.user_info?.first_name && employer?.user_info?.last_name) ? employer?.user_info?.first_name + " " + employer?.user_info?.last_name : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                به کد ملی :
+                &nbsp;
+                {employer?.user_info?.national_code ? employer?.user_info?.national_code : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                نشانی :
+                &nbsp;
+                {employer?.user_info?.address ? employer?.user_info?.address : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                کدپستی :
+                &nbsp;
+                {employer?.user_info?.postal_code ? employer?.user_info?.postal_code : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                شماره تماس :
+                &nbsp;
+                {employer?.user_info?.mobile ? employer?.user_info?.mobile : "نا معلوم"}
+            </Typography>
+
+            <div className='ms-auto'>
+                <IconButton
+                    color="light-danger"
+                    size="sm"
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content="حذف کارفرما"
+                    onClick={() => {
+                        createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${createProjectContractForm.values.articles.length + 1} ماده و ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].employers.length - 1} نسخه تنظیم گردیده و هر کدام از ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].employers.length - 1} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
+
+                        createProjectContractForm.setFieldValue("articles[0].employers", createProjectContractForm.values.articles[0].employers.filter(item => JSON.stringify(item) !== JSON.stringify(employer?.user_info)));
+                    }}
+                >
+                    <LuTrash
+                        size={20}
+                        color="currentColor"
+                    />
+                </IconButton>
+            </div>
+        </li>
+    )
+}
+
+const EmployerUnOfficialRealCard = ({employer, createProjectContractForm}) => {
     return (
         <li className='d-flex flex-wrap justify-content-start align-items-center gap-5 border border-dashed border-secondary rounded-2 p-5'>
             <Typography
@@ -122,7 +191,7 @@ const EmployerRealCard = ({employer, createProjectContractForm}) => {
                     data-tooltip-id="my-tooltip"
                     data-tooltip-content="حذف کارفرما"
                     onClick={() => {
-                        createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${createProjectContractForm.values.articles.length + 1} ماده و ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length - 1} نسخه تنظیم گردیده و هر کدام از ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length - 1} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
+                        createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${createProjectContractForm.values.articles.length + 1} ماده و ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].employers.length - 1} نسخه تنظیم گردیده و هر کدام از ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].employers.length - 1} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
 
                         createProjectContractForm.setFieldValue("articles[0].employers", createProjectContractForm.values.articles[0].employers.filter(item => JSON.stringify(item) !== JSON.stringify(employer)));
                     }}
@@ -137,7 +206,135 @@ const EmployerRealCard = ({employer, createProjectContractForm}) => {
     )
 }
 
-const EmployerLegalCard = ({employer, createProjectContractForm}) => {
+const EmployerOfficialLegalCard = ({employer, createProjectContractForm}) => {
+    return (
+        <li className='d-flex flex-wrap justify-content-start align-items-center gap-5 border border-dashed border-secondary rounded-2 p-5'>
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                کارفرما :
+                &nbsp;
+                {employer?.user_info?.company_name ? employer?.user_info?.company_name : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                به شماره ثبت :
+                &nbsp;
+                {employer?.user_info?.register_code ? employer?.user_info?.register_code : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                شناسه ملی :
+                &nbsp;
+                {employer?.user_info?.economic_code ? employer?.user_info?.economic_code : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                نشانی :
+                &nbsp;
+                {employer?.user_info?.address ? employer?.user_info?.address : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                کدپستی :
+                &nbsp;
+                {employer?.user_info?.postal_code ? employer?.user_info?.postal_code : "نا معلوم"}
+            </Typography>
+
+            <Typography
+                size="sm"
+                color="dark"
+            >
+                شماره تماس :
+                &nbsp;
+                {employer?.user_info?.telephone ? employer?.user_info?.telephone : "نا معلوم"}
+            </Typography>
+
+            {
+                employer?.user_info?.representatives.length !== 0 && (
+                    <div className="d-flex flex-wrap justify-content-start align-items-start gap-2 w-100">
+
+                        <Typography
+                            size="sm"
+                            color="dark"
+                        >
+                            به نمایندگی :
+                        </Typography>
+
+                        <ul className="vstack justify-content-start gap-5 p-0 m-0">
+                            {
+                                employer?.user_info?.representatives.map((representative , index) =>
+                                    <li
+                                        key={representative.id}
+                                        className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-2"
+                                    >
+                                        <Typography
+                                            size="sm"
+                                            color="dark"
+                                        >
+                                            {index + 1} .
+                                        </Typography>
+
+                                        <Typography
+                                            size="sm"
+                                            color="dark"
+                                        >
+                                            {representative.full_name}
+                                        </Typography>
+
+                                        <Typography
+                                            size="sm"
+                                            color="dark"
+                                        >
+                                            {representative.national_code}
+                                        </Typography>
+
+                                        <Typography
+                                            size="sm"
+                                            color="dark"
+                                        >
+                                            {representative.post}
+                                        </Typography>
+                                    </li>
+                                )
+                            }
+                        </ul>
+                    </div>
+                )
+            }
+
+            <div className='ms-auto'>
+                <IconButton
+                    color="light-danger"
+                    size="sm"
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content="حذف کارفرما"
+                    onClick={() => createProjectContractForm.setFieldValue("articles[0].employers", createProjectContractForm.values.articles[0].employers.filter(item => JSON.stringify(item) !== JSON.stringify(employer?.user_info)))}
+                >
+                    <LuTrash
+                        size={20}
+                        color="currentColor"
+                    />
+                </IconButton>
+            </div>
+        </li>
+    )
+}
+
+const EmployerUnOfficialLegalCard = ({employer, createProjectContractForm}) => {
     return (
         <li className='d-flex flex-wrap justify-content-start align-items-center gap-5 border border-dashed border-secondary rounded-2 p-5'>
             <Typography
@@ -286,28 +483,51 @@ const CreateEmployerFormData = ({article, section, createProjectContractForm}) =
                     <BlankEmployerCard createProjectContractForm={createProjectContractForm}/>
 
                     {
-                        createProjectContractForm.values.articles.find(item => item.number === article.number)?.employers?.map(employer =>
-                            <Fragment
-                                key={employer.user_type === "1" ? `employer-real-${employer.id}` : `employer-legal-${employer.id}`}>
-                                {
-                                    employer.user_type === "1" && (
-                                        <EmployerRealCard
-                                            employer={employer}
-                                            createProjectContractForm={createProjectContractForm}
-                                        />
-                                    )
-                                }
+                        createProjectContractForm.values.articles.find(item => item.number === article.number)?.employers?.map(employer => {
+                            // رسمی و حقیقی
+                            if (employer.hasOwnProperty("user_info") && employer?.user_info?.user_type === "1"){
+                                return (
+                                    <EmployerOfficialRealCard
+                                        key={employer?.user_info?.id}
+                                        employer={employer}
+                                        createProjectContractForm={createProjectContractForm}
+                                    />
+                                )
+                            }
 
-                                {
-                                    employer.user_type === "2" && (
-                                        <EmployerLegalCard
-                                            employer={employer}
-                                            createProjectContractForm={createProjectContractForm}
-                                        />
-                                    )
-                                }
-                            </Fragment>
-                        )
+                            // رسمی و حقوقی
+                            if (employer.hasOwnProperty("user_info") && employer?.user_info?.user_type === "2"){
+                                return (
+                                    <EmployerOfficialLegalCard
+                                        key={employer?.user_info?.id}
+                                        employer={employer}
+                                        createProjectContractForm={createProjectContractForm}
+                                    />
+                                )
+                            }
+
+                            // غیر رسمی و حقیقی
+                            if (!employer.hasOwnProperty("user_info") && employer?.user_type === "1"){
+                                return (
+                                    <EmployerUnOfficialRealCard
+                                        key={employer?.id}
+                                        employer={employer}
+                                        createProjectContractForm={createProjectContractForm}
+                                    />
+                                )
+                            }
+
+                            // غیر رسمی و حقوقی
+                            if (!employer.hasOwnProperty("user_info") && employer?.user_type === "2"){
+                                return (
+                                    <EmployerUnOfficialLegalCard
+                                        key={employer?.id}
+                                        employer={employer}
+                                        createProjectContractForm={createProjectContractForm}
+                                    />
+                                )
+                            }
+                        })
                     }
                 </ul>
             </div>

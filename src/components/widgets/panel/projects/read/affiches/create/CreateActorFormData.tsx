@@ -44,7 +44,7 @@ const CreateActorFormData = ({createProjectAfficheP2Form, resetPart}) => {
                     ...result,
                     foa_parent_id: "159",
                     foa_id: "",
-                    full_name: user?.first_name + " " + user?.last_name,
+                    full_name: user?.is_fake === 0 ? user?.user_type === "1" ? user.first_name + " " + user.last_name : user.company_name : user.first_name + " " + user.last_name,
                     is_fake: user?.is_fake
                 }
             ]);
@@ -84,7 +84,7 @@ const CreateActorFormData = ({createProjectAfficheP2Form, resetPart}) => {
                                 name="actor_id"
                                 value={createProjectAfficheActorForm.values.actor_id}
                                 options={readAllProjectMembersByFoaAction.data?.data?.members?.map(member => {
-                                    const name = (member.first_name || member.last_name) ? member.first_name + " " + member.last_name: member.username
+                                    const name = member?.is_fake === 0 ? member?.user_type === "1" ? member.first_name + " " + member.last_name : member.company_name : member.first_name + " " + member.last_name;
 
                                     return {
                                         label: name,

@@ -249,10 +249,14 @@ const DataTable = ({
                 header: () => 'وضعیت',
                 cell: ({row}) => (
                     <div className="w-75px">
-                        <Chip
-                            label={row.original.status_info.title}
-                            color={row.original.status_info.class_name}
-                        />
+                        {
+                            row.original.type_id === "1" && (
+                                <Chip
+                                    label={row.original.status_info.title}
+                                    color={row.original.status_info.class_name}
+                                />
+                            )
+                        }
                     </div>
                 ),
                 sortingFn: (rowA, rowB, columnId) => rowA.original?.status_info.title.localeCompare(rowB.original?.status_info.title)
@@ -263,24 +267,11 @@ const DataTable = ({
                 cell: ({row}) => (
                     <div className="d-flex justify-content-end align-items-center gap-2 w-100">
                         <IconButton
-                            href={auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/supplements"}
-                            color="light-info"
-                            size="sm"
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="متمم ها"
-                        >
-                            <LuFileCheck
-                                size={20}
-                                color="currentColor"
-                            />
-                        </IconButton>
-
-                        <IconButton
                             href={auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/insertions"}
                             color="light-info"
                             size="sm"
                             data-tooltip-id="my-tooltip"
-                            data-tooltip-content="الحاقیه ها"
+                            data-tooltip-content="متمم و الحاقیه ها"
                         >
                             <LuFilePlus
                                 size={20}

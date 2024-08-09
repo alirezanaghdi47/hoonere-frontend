@@ -1,4 +1,5 @@
 // libraries
+import {useEffect} from "react";
 import {useFormik} from "formik";
 import {LuPlus} from "react-icons/lu";
 
@@ -12,7 +13,7 @@ import Textarea from "@/modules/Textarea.tsx";
 import Button from "@/modules/Button.tsx";
 import TextInput from "@/modules/TextInput.tsx";
 
-// utils
+//utils
 import {createArticleSchema, createSectionSchema} from "@/utils/validations.ts";
 import {addArticleForInsertion, addSectionForInsertion} from "@/utils/functions.ts";
 
@@ -71,8 +72,15 @@ export const BlankSection = ({changeCurrentPart}) => {
     )
 }
 
-export const Contract = ({children, createProjectContractInsertionForm}) => {
-    const {part, currentPart, changePart, resetPart, changeCurrentPart} = usePart(null, "read");
+export const Contract = ({children , updateProjectContractInsertionForm}) => {
+    const {part, currentPart, changePart, resetPart , changeCurrentPart} = usePart(null, "read");
+
+    useEffect(() => {
+        changePart({
+            articlesLength: updateProjectContractInsertionForm.values.articles.length,
+            sections: updateProjectContractInsertionForm.values.sections
+        });
+    }, [updateProjectContractInsertionForm.values.articles]);
 
     return (
         <div className="d-flex flex-column justify-content-start items-center gap-5 w-100">
@@ -87,9 +95,9 @@ export const Contract = ({children, createProjectContractInsertionForm}) => {
             {
                 currentPart === "create" && (
                     <CreateArticle
-                        articles={createProjectContractInsertionForm.values.articles}
+                        articles={updateProjectContractInsertionForm.values.articles}
                         resetPart={resetPart}
-                        createProjectContractInsertionForm={createProjectContractInsertionForm}
+                        updateProjectContractInsertionForm={updateProjectContractInsertionForm}
                     />
                 )
             }
@@ -97,12 +105,24 @@ export const Contract = ({children, createProjectContractInsertionForm}) => {
     )
 }
 
-export const Article = ({children, article, createProjectContractInsertionForm}) => {
-    const {part, currentPart, changePart, resetPart, changeCurrentPart} = usePart(null, "read");
-
+export const Article = ({children, article, part, currentPart, resetPart , changeCurrentPart, updateProjectContractInsertionForm}) => {
     return (
         <div className="d-flex flex-column justify-content-start items-center gap-5 w-100">
-            {children}
+            {
+                currentPart !== "update" && (
+                    children
+                )
+            }
+
+            {
+                currentPart === "update" && article.number === part?.number && (
+                    <UpdateArticle
+                        article={article}
+                        resetPart={resetPart}
+                        updateProjectContractInsertionForm={updateProjectContractInsertionForm}
+                    />
+                )
+            }
 
             {
                 currentPart === "read" && (
@@ -114,9 +134,9 @@ export const Article = ({children, article, createProjectContractInsertionForm})
                 currentPart === "create" && (
                     <CreateSection
                         article={article}
-                        sections={createProjectContractInsertionForm.values.sections}
+                        sections={updateProjectContractInsertionForm.values.sections}
                         resetPart={resetPart}
-                        createProjectContractInsertionForm={createProjectContractInsertionForm}
+                        updateProjectContractInsertionForm={updateProjectContractInsertionForm}
                     />
                 )
             }
@@ -124,15 +144,30 @@ export const Article = ({children, article, createProjectContractInsertionForm})
     )
 }
 
-export const Section = ({children, section}) => {
+export const Section = ({children, article, section, part, currentPart, resetPart , changeCurrentPart, updateProjectContractInsertionForm}) => {
     return (
-        <div className="d-flex flex-column justify-content-start items-center gap-5 w-100">
-            {children}
+        <div
+            className="d-flex flex-column justify-content-start items-center gap-5 w-100">
+            {
+                currentPart !== "update" && (
+                    children
+                )
+            }
+
+            {
+                currentPart === "update" && article.number === part?.article_number && section.number === part?.number && (
+                    <UpdateSection
+                        section={section}
+                        resetPart={resetPart}
+                        updateProjectContractInsertionForm={updateProjectContractInsertionForm}
+                    />
+                )
+            }
         </div>
     )
 }
 
-export const CreateArticle = ({articles, resetPart, createProjectContractInsertionForm}) => {
+export const CreateArticle = ({articles, resetPart, updateProjectContractInsertionForm}) => {
     const createArticleForm = useFormik({
         initialValues: {
             article: "",
@@ -141,8 +176,8 @@ export const CreateArticle = ({articles, resetPart, createProjectContractInserti
         onSubmit: async (result, {resetForm}) => {
             const data = addArticleForInsertion(articles, result.article);
 
-            createProjectContractInsertionForm.setFieldValue("articles", data);
-
+            updateProjectContractInsertionForm.setFieldValue("articles", data);
+            
             resetForm();
         },
         onReset: async () => {
@@ -194,7 +229,67 @@ export const CreateArticle = ({articles, resetPart, createProjectContractInserti
     )
 }
 
-export const CreateSection = ({article , sections, resetPart, createProjectContractInsertionForm}) => {
+export const UpdateArticle = ({article, resetPart, updateProjectContractInsertionForm}) => {
+    const createArticleForm = useFormik({
+        initialValues: {
+            article: article?.content? article.content :"",
+        },
+        validationSchema: createArticleSchema,
+        onSubmit: async (result, {resetForm}) => {
+            updateProjectContractInsertionForm.setFieldValue(`articles[${updateProjectContractInsertionForm.values.articles.findIndex(item => item.number === article.number)}].content`, result.article);
+
+            resetForm();
+        },
+        onReset: async () => {
+            resetPart();
+        }
+    });
+
+    return (
+        <div className="w-100">
+            <div className="d-flex justify-content-center align-items-center gap-5 w-100 mb-5">
+                <Form.Group>
+                    <Form.Label
+                        label="ماده"
+                        required
+                        size="sm"
+                        color="dark"
+                    />
+
+                    <TextInput
+                        id="article"
+                        name="article"
+                        value={createArticleForm.values.article}
+                        onChange={(value) => createArticleForm.setFieldValue("article", value)}
+                    />
+
+                    <Form.Error
+                        error={createArticleForm.errors.article}
+                        touched={createArticleForm.touched.article}
+                    />
+                </Form.Group>
+            </div>
+
+            <div className="d-flex justify-content-end align-items-center gap-5 w-100">
+                <Button
+                    color="light-danger"
+                    onClick={() => createArticleForm.handleReset(createArticleForm)}
+                >
+                    انصراف
+                </Button>
+
+                <Button
+                    color="warning"
+                    onClick={createArticleForm.handleSubmit}
+                >
+                    ویرایش
+                </Button>
+            </div>
+        </div>
+    )
+}
+
+export const CreateSection = ({article,  sections, resetPart, updateProjectContractInsertionForm}) => {
     const createSectionForm = useFormik({
         initialValues: {
             section: "",
@@ -203,7 +298,7 @@ export const CreateSection = ({article , sections, resetPart, createProjectContr
         onSubmit: async (result, {resetForm}) => {
             const data = addSectionForInsertion(sections, result.section, article.number);
 
-            createProjectContractInsertionForm.setFieldValue("sections", data);
+            updateProjectContractInsertionForm.setFieldValue("sections", data);
 
             resetForm();
         },
@@ -250,6 +345,67 @@ export const CreateSection = ({article , sections, resetPart, createProjectContr
                     onClick={createSectionForm.handleSubmit}
                 >
                     افزودن
+                </Button>
+            </div>
+        </div>
+    )
+}
+
+export const UpdateSection = ({section, resetPart, updateProjectContractInsertionForm}) => {
+    const createSectionForm = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            section: section?.content ? section.content : "",
+        },
+        validationSchema: createSectionSchema,
+        onSubmit: async (result, {resetForm}) => {
+            updateProjectContractInsertionForm.setFieldValue(`sections[${updateProjectContractInsertionForm.values.sections.findIndex(item => item.article_number === section.article_number && item.number === section.number)}].content`, result.section);
+
+            // resetForm();
+        },
+        onReset: async () => {
+            resetPart();
+        }
+    });
+
+    return (
+        <div className="w-100">
+            <div className="d-flex justify-content-center align-items-center gap-5 w-100 mb-5">
+                <Form.Group>
+                    <Form.Label
+                        label="بند"
+                        required
+                        size="sm"
+                        color="dark"
+                    />
+
+                    <Textarea
+                        id="section"
+                        name="section"
+                        value={createSectionForm.values.section}
+                        onChange={(value) => createSectionForm.setFieldValue("section", value)}
+                    />
+
+                    <Form.Error
+                        error={createSectionForm.errors.section}
+                        touched={createSectionForm.touched.section}
+                    />
+                </Form.Group>
+            </div>
+
+            <div className="d-flex justify-content-end align-items-center gap-5 w-100">
+                <Button
+                    color="light-danger"
+                    onClick={() => createSectionForm.handleReset(createSectionForm)}
+                >
+                    انصراف
+                </Button>
+
+                <Button
+                    color="warning"
+                    onClick={createSectionForm.handleSubmit}
+                >
+                    ویرایش
                 </Button>
             </div>
         </div>

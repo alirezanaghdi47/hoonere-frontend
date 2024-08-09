@@ -87,7 +87,7 @@ const DataTable = ({
                 accessorKey: 'full_name',
                 header: () => 'نام و نام خانوادگی',
                 cell: ({row}) => {
-                    const name = (row.original.user_info?.first_name && row.original.user_info?.last_name) ? row.original.user_info.first_name + " " + row.original.user_info.last_name : row.original.name;
+                    const name = row.original.user_info ? row.original.user_info?.user_type === "1" ? row.original.user_info.first_name + " " + row.original.user_info.last_name : row.original.user_info.company_name : row.original.name;
 
                     return (
                         <div
@@ -145,7 +145,7 @@ const DataTable = ({
                 accessorKey: 'actions',
                 header: () => 'ابزار',
                 cell: ({row}) => (
-                    <div className="d-flex justify-content-end align-items-center gap-2 w-100">
+                    <div className="d-flex justify-content-start align-items-center gap-2 w-100">
                         <IconButton
                             href={auth.panel_url + "projects/" + row.original.project_id + "/members/" + row.original.id + "/update"}
                             color="light-warning"

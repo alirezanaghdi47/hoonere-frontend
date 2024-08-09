@@ -528,4 +528,14 @@ export const createUnOfficialLegalPartiesSchema = Yup.object().shape({
     }))
 });
 
+export const createProjectContractInsertionSchema = Yup.object().shape({
+    articles: Yup.array(),
+    sections: Yup.array(),
+});
+
+export const updateProjectContractInsertionSchema = Yup.object().shape({
+    articles: Yup.array(),
+    sections: Yup.array(),
+});
+
 

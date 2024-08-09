@@ -38,9 +38,6 @@ const UpdateProjectContract = Loadable(() => import('@/pages/panel/projects/read
 const ProjectContractInsertions = Loadable(() => import('@/pages/panel/projects/read/contracts/insertions'));
 const CreateProjectContractInsertion = Loadable(() => import('@/pages/panel/projects/read/contracts/insertions/create'));
 const UpdateProjectContractInsertion = Loadable(() => import('@/pages/panel/projects/read/contracts/insertions/update'));
-const ProjectContractSupplements = Loadable(() => import('@/pages/panel/projects/read/contracts/supplements'));
-const CreateProjectContractSupplement = Loadable(() => import('@/pages/panel/projects/read/contracts/supplements/create'));
-const UpdateProjectContractSupplement = Loadable(() => import('@/pages/panel/projects/read/contracts/supplements/update'));
 const Profile = Loadable(() => import('@/pages/panel/profile'));
 
 // stores
@@ -200,21 +197,6 @@ const pageRoutes = [
                 id: 23,
                 path: "projects/:id/contracts/:subId/insertions/:subSubId/update",
                 component: UpdateProjectContractInsertion,
-            },
-            {
-                id: 24,
-                path: "projects/:id/contracts/:subId/supplements",
-                component: ProjectContractSupplements,
-            },
-            {
-                id: 25,
-                path: "projects/:id/contracts/:subId/supplements/create",
-                component: CreateProjectContractSupplement,
-            },
-            {
-                id: 26,
-                path: "projects/:id/contracts/:subId/supplements/:subSubId/update",
-                component: UpdateProjectContractSupplement,
             },
             {
                 id: 40,

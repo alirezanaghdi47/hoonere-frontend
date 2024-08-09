@@ -2,6 +2,7 @@
 import {forwardRef, useImperativeHandle, useRef} from "react";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {useReactToPrint} from "react-to-print";
+import {format} from "date-fns-jalali";
 
 // modules
 import Typography from "@/modules/Typography";
@@ -62,11 +63,747 @@ const Section = ({children, section}) => {
     )
 }
 
-const RegularSection = ({section}) => {
+const EmployersSection = ({section, employers, typeId}) => {
     return (
         <Section section={section}>
+            <ul className="vstack list-unstyled m-0 p-0 ps-5">
+                {
+                    employers.map(member => {
+                        // رسمی و حقیقی
+                        if (typeId === "1" && member.user_info.user_type === "1") {
+                            return (
+                                <li
+                                    key={member?.user_info?.id}
+                                    className='d-flex flex-wrap justify-content-start align-items-center gap-2 mt-2'
+                                >
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        {(member?.user_info?.first_name && member?.user_info?.last_name) ? member?.user_info?.first_name + " " + member?.user_info?.last_name : "نا معلوم"}
+                                    </Typography>
 
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        به کد ملی :
+                                        &nbsp;
+                                        {member?.user_info?.national_code ? member?.user_info?.national_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        نشانی :
+                                        &nbsp;
+                                        {member?.user_info?.address ? member?.user_info?.address : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        کدپستی :
+                                        &nbsp;
+                                        {member?.user_info?.postal_code ? member?.user_info?.postal_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        شماره تماس :
+                                        &nbsp;
+                                        {member?.user_info?.mobile ? member?.user_info?.mobile : "نا معلوم"}
+                                    </Typography>
+                                </li>
+                            )
+                        }
+
+                        // رسمی و حقوقی
+                        if (typeId === "1" && member.user_info.user_type === "2") {
+                            return (
+                                <li
+                                    key={member?.user_info?.id}
+                                    className='d-flex flex-wrap justify-content-start align-items-center gap-2 mt-2'
+                                >
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        {member?.user_info?.company_name ? member?.user_info?.company_name : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        به شماره ثبت :
+                                        &nbsp;
+                                        {member?.user_info?.register_code ? member?.user_info?.register_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        شناسه ملی :
+                                        &nbsp;
+                                        {member?.user_info?.economic_code ? member?.user_info?.economic_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        نشانی :
+                                        &nbsp;
+                                        {member?.user_info?.address ? member?.user_info?.address : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        کدپستی :
+                                        &nbsp;
+                                        {member?.user_info?.postal_code ? member?.user_info?.postal_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        شماره تماس :
+                                        &nbsp;
+                                        {member?.user_info?.telephone ? member?.user_info?.telephone : "نا معلوم"}
+                                    </Typography>
+
+                                    {
+                                        member?.representatives.length !== 0 && (
+                                            <div
+                                                className="d-flex flex-wrap justify-content-start align-items-start gap-2 w-100">
+
+                                                <Typography
+                                                    size="sm"
+                                                    color="dark"
+                                                >
+                                                    به نمایندگی :
+                                                </Typography>
+
+                                                <ul className="vstack justify-content-start gap-5 p-0 m-0">
+                                                    {
+                                                        member?.representatives.map((representative, index) =>
+                                                            <li
+                                                                key={representative.id}
+                                                                className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-2"
+                                                            >
+                                                                <Typography
+                                                                    size="sm"
+                                                                    color="dark"
+                                                                >
+                                                                    {index + 1} .
+                                                                </Typography>
+
+                                                                <Typography
+                                                                    size="sm"
+                                                                    color="dark"
+                                                                >
+                                                                    {representative.full_name}
+                                                                </Typography>
+
+                                                                <Typography
+                                                                    size="sm"
+                                                                    color="dark"
+                                                                >
+                                                                    {representative.national_code}
+                                                                </Typography>
+
+                                                                <Typography
+                                                                    size="sm"
+                                                                    color="dark"
+                                                                >
+                                                                    {representative.post}
+                                                                </Typography>
+                                                            </li>
+                                                        )
+                                                    }
+                                                </ul>
+                                            </div>
+                                        )
+                                    }
+                                </li>
+                            )
+                        }
+
+                        // غیر رسمی و حقیقی
+                        if (typeId === "2" && member.user_type === "1") {
+                            return (
+                                <li
+                                    key={member?.id}
+                                    className='d-flex flex-wrap justify-content-start align-items-center gap-2 mt-2'
+                                >
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        {(member?.first_name && member?.last_name) ? member?.first_name + " " + member?.last_name : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        به کد ملی :
+                                        &nbsp;
+                                        {member?.national_code ? member?.national_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        نشانی :
+                                        &nbsp;
+                                        {member?.address ? member?.address : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        کدپستی :
+                                        &nbsp;
+                                        {member?.postal_code ? member?.postal_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        شماره تماس :
+                                        &nbsp;
+                                        {member?.mobile ? member?.mobile : "نا معلوم"}
+                                    </Typography>
+                                </li>
+                            )
+                        }
+
+                        // غیر رسمی و حقوقی
+                        if (typeId === "2" && member.user_type === "2") {
+                            return (
+                                <li
+                                    key={member?.id}
+                                    className='d-flex flex-wrap justify-content-start align-items-center gap-2 mt-2'
+                                >
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        {member?.company_name ? member?.company_name : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        به شماره ثبت :
+                                        &nbsp;
+                                        {member?.register_code ? member?.register_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        شناسه ملی :
+                                        &nbsp;
+                                        {member?.economic_code ? member?.economic_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        نشانی :
+                                        &nbsp;
+                                        {member?.address ? member?.address : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        کدپستی :
+                                        &nbsp;
+                                        {member?.postal_code ? member?.postal_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        شماره تماس :
+                                        &nbsp;
+                                        {member?.telephone ? member?.telephone : "نا معلوم"}
+                                    </Typography>
+
+                                    {
+                                        member?.representatives.length !== 0 && (
+                                            <div
+                                                className="d-flex flex-wrap justify-content-start align-items-start gap-2 w-100">
+
+                                                <Typography
+                                                    size="sm"
+                                                    color="dark"
+                                                >
+                                                    به نمایندگی :
+                                                </Typography>
+
+                                                <ul className="vstack justify-content-start gap-5 p-0 m-0">
+                                                    {
+                                                        member?.representatives.map((representative, index) =>
+                                                            <li
+                                                                key={representative.id}
+                                                                className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-2"
+                                                            >
+                                                                <Typography
+                                                                    size="sm"
+                                                                    color="dark"
+                                                                >
+                                                                    {index + 1} .
+                                                                </Typography>
+
+                                                                <Typography
+                                                                    size="sm"
+                                                                    color="dark"
+                                                                >
+                                                                    {representative.full_name}
+                                                                </Typography>
+
+                                                                <Typography
+                                                                    size="sm"
+                                                                    color="dark"
+                                                                >
+                                                                    {representative.national_code}
+                                                                </Typography>
+
+                                                                <Typography
+                                                                    size="sm"
+                                                                    color="dark"
+                                                                >
+                                                                    {representative.post}
+                                                                </Typography>
+                                                            </li>
+                                                        )
+                                                    }
+                                                </ul>
+                                            </div>
+                                        )
+                                    }
+                                </li>
+                            )
+                        }
+                    })
+                }
+            </ul>
         </Section>
+    )
+}
+
+const ContractorsSection = ({section, contractors, typeId}) => {
+    return (
+        <Section section={section}>
+            <ul className="vstack list-unstyled m-0 p-0 ps-5">
+                {
+                    contractors.map(member => {
+                        // رسمی و حقیقی
+                        if (typeId === "1" && member.user_info.user_type === "1") {
+                            return (
+                                <li
+                                    key={member?.user_info?.id}
+                                    className='d-flex flex-wrap justify-content-start align-items-center gap-2 mt-2'
+                                >
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        {(member?.user_info?.first_name && member?.user_info?.last_name) ? member?.user_info?.first_name + " " + member?.user_info?.last_name : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        به شماره ملی :
+                                        &nbsp;
+                                        {member?.user_info?.national_code ? member?.user_info?.national_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        نشانی :
+                                        &nbsp;
+                                        {member?.user_info?.address ? member?.user_info?.address : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        کدپستی :
+                                        &nbsp;
+                                        {member?.user_info?.postal_code ? member?.user_info?.postal_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        شماره تماس :
+                                        &nbsp;
+                                        {member?.user_info?.mobile ? member?.user_info?.mobile : "نا معلوم"}
+                                    </Typography>
+                                </li>
+                            )
+                        }
+
+                        // رسمی و حقوقی
+                        if (typeId === "1" && member.user_info.user_type === "2") {
+                            return (
+                                <li
+                                    key={member?.user_info?.id}
+                                    className='d-flex flex-wrap justify-content-start align-items-center gap-2 mt-2'
+                                >
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        {member?.user_info?.company_name ? member?.user_info?.company_name : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        به شماره ثبت :
+                                        &nbsp;
+                                        {member?.user_info?.register_code ? member?.user_info?.register_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        شناسه ملی :
+                                        &nbsp;
+                                        {member?.user_info?.economic_code ? member?.user_info?.economic_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        نشانی :
+                                        &nbsp;
+                                        {member?.user_info?.address ? member?.user_info?.address : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        کدپستی :
+                                        &nbsp;
+                                        {member?.user_info?.postal_code ? member?.user_info?.postal_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        شماره تماس :
+                                        &nbsp;
+                                        {member?.user_info?.telephone ? member?.user_info?.telephone : "نا معلوم"}
+                                    </Typography>
+
+                                    {
+                                        member?.representatives.length !== 0 && (
+                                            <div
+                                                className="d-flex flex-wrap justify-content-start align-items-start gap-2 w-100">
+
+                                                <Typography
+                                                    size="sm"
+                                                    color="dark"
+                                                >
+                                                    به نمایندگی :
+                                                </Typography>
+
+                                                <ul className="vstack justify-content-start gap-5 p-0 m-0">
+                                                    {
+                                                        member?.representatives.map((representative, index) =>
+                                                            <li
+                                                                key={representative.id}
+                                                                className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-2"
+                                                            >
+                                                                <Typography
+                                                                    size="sm"
+                                                                    color="dark"
+                                                                >
+                                                                    {index + 1} .
+                                                                </Typography>
+
+                                                                <Typography
+                                                                    size="sm"
+                                                                    color="dark"
+                                                                >
+                                                                    {representative.full_name}
+                                                                </Typography>
+
+                                                                <Typography
+                                                                    size="sm"
+                                                                    color="dark"
+                                                                >
+                                                                    {representative.national_code}
+                                                                </Typography>
+
+                                                                <Typography
+                                                                    size="sm"
+                                                                    color="dark"
+                                                                >
+                                                                    {representative.post}
+                                                                </Typography>
+                                                            </li>
+                                                        )
+                                                    }
+                                                </ul>
+                                            </div>
+                                        )
+                                    }
+                                </li>
+                            )
+                        }
+
+                        // غیر رسمی و حقیقی
+                        if (typeId === "2" && member.user_type === "1") {
+                            return (
+                                <li
+                                    key={member?.id}
+                                    className='d-flex flex-wrap justify-content-start align-items-center gap-2 mt-2'
+                                >
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        {(member?.first_name && member?.last_name) ? member?.first_name + " " + member?.last_name : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        به شماره ملی :
+                                        &nbsp;
+                                        {member?.national_code ? member?.national_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        نشانی :
+                                        &nbsp;
+                                        {member?.address ? member?.address : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        کدپستی :
+                                        &nbsp;
+                                        {member?.postal_code ? member?.postal_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        شماره تماس :
+                                        &nbsp;
+                                        {member?.mobile ? member?.mobile : "نا معلوم"}
+                                    </Typography>
+                                </li>
+                            )
+                        }
+
+                        // غیر رسمی و حقوقی
+                        if (typeId === "2" && member.user_type === "2") {
+                            return (
+                                <li
+                                    key={member?.id}
+                                    className='d-flex flex-wrap justify-content-start align-items-center gap-2 mt-2'
+                                >
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        {member?.company_name ? member?.company_name : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        به شماره ثبت :
+                                        &nbsp;
+                                        {member?.register_code ? member?.register_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        شناسه ملی :
+                                        &nbsp;
+                                        {member?.economic_code ? member?.economic_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        نشانی :
+                                        &nbsp;
+                                        {member?.address ? member?.address : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        کدپستی :
+                                        &nbsp;
+                                        {member?.postal_code ? member?.postal_code : "نا معلوم"}
+                                    </Typography>
+
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        شماره تماس :
+                                        &nbsp;
+                                        {member?.telephone ? member?.telephone : "نا معلوم"}
+                                    </Typography>
+
+                                    {
+                                        member?.representatives.length !== 0 && (
+                                            <div
+                                                className="d-flex flex-wrap justify-content-start align-items-start gap-2 w-100">
+
+                                                <Typography
+                                                    size="sm"
+                                                    color="dark"
+                                                >
+                                                    به نمایندگی :
+                                                </Typography>
+
+                                                <ul className="vstack justify-content-start gap-5 p-0 m-0">
+                                                    {
+                                                        member?.representatives.map((representative, index) =>
+                                                            <li
+                                                                key={representative.id}
+                                                                className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-2"
+                                                            >
+                                                                <Typography
+                                                                    size="sm"
+                                                                    color="dark"
+                                                                >
+                                                                    {index + 1} .
+                                                                </Typography>
+
+                                                                <Typography
+                                                                    size="sm"
+                                                                    color="dark"
+                                                                >
+                                                                    {representative.full_name}
+                                                                </Typography>
+
+                                                                <Typography
+                                                                    size="sm"
+                                                                    color="dark"
+                                                                >
+                                                                    {representative.national_code}
+                                                                </Typography>
+
+                                                                <Typography
+                                                                    size="sm"
+                                                                    color="dark"
+                                                                >
+                                                                    {representative.post}
+                                                                </Typography>
+                                                            </li>
+                                                        )
+                                                    }
+                                                </ul>
+                                            </div>
+                                        )
+                                    }
+                                </li>
+                            )
+                        }
+                    })
+                }
+            </ul>
+        </Section>
+    )
+}
+
+const PaymentSection = ({section, totalPrice, payments, paymentState}) => {
+    return (
+        <Section section={section}>
+            {
+                paymentState === "1" && (
+                    <ul className="vstack list-unstyled m-0 p-0 ps-10">
+                        {
+                            payments?.map((payment, i) =>
+                                <li
+                                    key={i}
+                                    className='d-flex flex-wrap justify-content-start align-items-center gap-2 mt-2'
+                                >
+                                    <Typography
+                                        size="sm"
+                                        color="dark"
+                                    >
+                                        {payment.percent}
+                                        &nbsp;
+                                        درصد مبلغ قرارداد معادل
+                                        &nbsp;
+                                        {Math.ceil(Number(totalPrice) * (Number(payment.percent) / 100)).toLocaleString()}
+                                        &nbsp;
+                                        ریال در تاریخ
+                                        &nbsp;
+                                        {format(payment.date, "dd-MM-yyyy")}
+                                        &nbsp;
+                                        پرداخت گردد.
+                                    </Typography>
+                                </li>
+                            )
+                        }
+                    </ul>
+                )
+            }
+        </Section>
+    )
+}
+
+const RegularSection = ({section}) => {
+    return (
+        <Section section={section}/>
     )
 }
 
@@ -74,7 +811,7 @@ const Print = forwardRef((props, ref) => {
     const printRef = useRef();
 
     const _handlePrint = useReactToPrint({
-        documentTitle: `contract-${ref?.current?.contract_info?.contract_number}-insertion-${ref?.current?.contract_info?.contract_number}`,
+        documentTitle: `contract-${ref?.current?.contract_info?.contract_number}`,
         content: () => printRef.current,
     });
 
@@ -87,6 +824,8 @@ const Print = forwardRef((props, ref) => {
             }
         }
     }, []);
+
+    console.log(ref?.current?.contract_info)
 
     return (
         <>
@@ -102,9 +841,9 @@ const Print = forwardRef((props, ref) => {
 
             <div
                 ref={printRef}
-                className='d-none d-print-block'
+                className='d-none d-print-block vw-100 vh-100 '
+                style={{pageBreakAfter: "always"}}
             >
-
                 <table>
                     <thead>
                     <tr>
@@ -134,6 +873,49 @@ const Print = forwardRef((props, ref) => {
                                             >
                                                 <ul className="vstack list-unstyled m-0 p-0 ps-10 mt-5">
                                                     {
+                                                        article.number === 1 && (
+                                                            <EmployersSection
+                                                                section={{
+                                                                    number: 1,
+                                                                    content: "کارفرما",
+                                                                    notes: article.notes
+                                                                }}
+                                                                employers={ref?.current?.contract_info?.type_id === "1" ? ref?.current?.contract_info?.members.filter(member => member.side_id === "1") : ref?.current?.contract_info?.informal_members.filter(member => member.side_id === "1")}
+                                                                typeId={ref?.current?.contract_info?.type_id}
+                                                            />
+                                                        )
+                                                    }
+
+                                                    {
+                                                        article.number === 1 && (
+                                                            <ContractorsSection
+                                                                section={{
+                                                                    number: 2,
+                                                                    content: "مجری",
+                                                                    notes: article.notes
+                                                                }}
+                                                                contractors={ref?.current?.contract_info?.type_id === "1" ? ref?.current?.contract_info?.members.filter(member => member.side_id === "2") : ref?.current?.contract_info?.informal_members.filter(member => member.side_id === "2")}
+                                                                typeId={ref?.current?.contract_info?.type_id}
+                                                            />
+                                                        )
+                                                    }
+
+                                                    {
+                                                        article.number === 5 && (
+                                                            <PaymentSection
+                                                                section={{
+                                                                    number: 1,
+                                                                    content: ref?.current?.contract_info?.payment_state === "2" ? "کلیه پرداخت ها به مجری بر اساس فاکتور های تایید شده توسط کارفرما پرداخت میگردد" : "کلیه پرداخت ها بر اساس فاز های زیر پرداخت میگردد",
+                                                                    note: article.notes
+                                                                }}
+                                                                totalPrice={ref?.current?.contract_info?.total_price}
+                                                                payments={ref?.current?.contract_info?.payments}
+                                                                paymentState={ref?.current?.contract_info?.payment_state}
+                                                            />
+                                                        )
+                                                    }
+
+                                                    {
                                                         article.sections.filter(section => !(section.article_number === 5 && section.number === 1)).map(section => {
                                                             return (
                                                                 <RegularSection
@@ -154,7 +936,6 @@ const Print = forwardRef((props, ref) => {
                     </tbody>
 
                     <tfoot>
-
                     {/* employers & contractors sign */}
                     <tr>
                         <td>
@@ -212,7 +993,7 @@ const Print = forwardRef((props, ref) => {
                                         >
                                             <ul className='vstack list-unstyled gap-5 w-100 mb-0 p-0'>
                                                 {
-                                                    ref?.current?.contract_info?.members.filter(member => member.side_id === "1")?.map(employer =>
+                                                    ref?.current?.contract_info?.type_id === "1" ? ref?.current?.contract_info?.members.filter(member => member.side_id === "1")?.map(employer =>
                                                         <li
                                                             key={employer.id}
                                                             className=""
@@ -239,6 +1020,33 @@ const Print = forwardRef((props, ref) => {
                                                                 )
                                                             }
                                                         </li>
+                                                    ) : ref?.current?.contract_info?.informal_members.filter(member => member.side_id === "1")?.map(employer =>
+                                                        <li
+                                                            key={employer.id}
+                                                            className=""
+                                                        >
+                                                            {
+                                                                employer?.user_type === "1" && (
+                                                                    <Typography
+                                                                        size="xs"
+                                                                        color="dark"
+                                                                    >
+                                                                        {(employer?.first_name && employer?.last_name) ? employer?.first_name + " " + employer?.last_name : "نا معلوم"}
+                                                                    </Typography>
+                                                                )
+                                                            }
+
+                                                            {
+                                                                employer?.user_type === "2" && (
+                                                                    <Typography
+                                                                        size="xs"
+                                                                        color="dark"
+                                                                    >
+                                                                        {employer?.company_name ? employer?.company_name : "نا معلوم"}
+                                                                    </Typography>
+                                                                )
+                                                            }
+                                                        </li>
                                                     )
                                                 }
                                             </ul>
@@ -250,7 +1058,7 @@ const Print = forwardRef((props, ref) => {
                                         >
                                             <ul className='vstack list-unstyled gap-5 w-100 mb-0 p-0'>
                                                 {
-                                                    ref?.current?.contract_info?.members.filter(member => member.side_id === "2")?.map(contractor =>
+                                                    ref?.current?.contract_info?.type_id === "1" ? ref?.current?.contract_info?.members.filter(member => member.side_id === "2")?.map(contractor =>
                                                         <li
                                                             key={contractor.id}
                                                             className=""
@@ -273,6 +1081,33 @@ const Print = forwardRef((props, ref) => {
                                                                         color="dark"
                                                                     >
                                                                         {contractor?.user_info?.company_name ? contractor?.user_info?.company_name : "نا معلوم"}
+                                                                    </Typography>
+                                                                )
+                                                            }
+                                                        </li>
+                                                    ) : ref?.current?.contract_info?.informal_members.filter(member => member.side_id === "2")?.map(contractor =>
+                                                        <li
+                                                            key={contractor.id}
+                                                            className=""
+                                                        >
+                                                            {
+                                                                contractor.user_type === "1" && (
+                                                                    <Typography
+                                                                        size="xs"
+                                                                        color="dark"
+                                                                    >
+                                                                        {(contractor?.first_name && contractor?.last_name) ? contractor?.first_name + " " + contractor?.last_name : "نا معلوم"}
+                                                                    </Typography>
+                                                                )
+                                                            }
+
+                                                            {
+                                                                contractor.user_type === "2" && (
+                                                                    <Typography
+                                                                        size="xs"
+                                                                        color="dark"
+                                                                    >
+                                                                        {contractor?.company_name ? contractor?.company_name : "نا معلوم"}
                                                                     </Typography>
                                                                 )
                                                             }

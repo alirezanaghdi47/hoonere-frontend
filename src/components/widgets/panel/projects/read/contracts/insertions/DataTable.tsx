@@ -3,7 +3,7 @@ import {useMemo, useRef} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {format} from "date-fns-jalali";
-import {LuCheck, LuDownload, LuPen, LuTrash2} from "react-icons/lu";
+import {LuDownload, LuPen, LuThumbsUp, LuTrash2} from "react-icons/lu";
 
 // components
 import Print from "@/components/widgets/panel/projects/read/contracts/insertions/Print.tsx";
@@ -23,16 +23,17 @@ import Chip from "@/modules/Chip";
 
 // services
 import {
+    changeProjectContractInsertionStatusService,
     changeProjectContractStatusService,
-    deleteProjectContractService,
-    readProjectContractService
+    deleteProjectContractInsertionService,
+    readProjectContractInsertionService,
 } from "@/services/projectContractService";
 
 // stores
 import useAuthStore from "@/stores/authStore";
 
 const DataTable = ({
-                       readAllProjectContractAction,
+                       readAllProjectContractInsertionAction,
                        filter,
                        initialFilter,
                        isOpenFilter,
@@ -45,25 +46,26 @@ const DataTable = ({
     const parentRef = useRef();
     const {auth} = useAuthStore();
 
-    const readProjectContractAction = useMutation({
-        mutationFn: (data) => readProjectContractService(data),
+    const readProjectContractInsertionAction = useMutation({
+        mutationFn: (data) => readProjectContractInsertionService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                parentRef.current.contract_info = data?.data?.contract_info;
+                parentRef.current.contract_info = {...data?.data?.contract_info, employers: [], contractors: []};
                 parentRef.current.print();
             }
         }
     });
 
-    const changeProjectContractStatusAction = useMutation({
-        mutationFn: (data) => changeProjectContractStatusService(data),
+    const changeProjectContractInsertionStatusAction = useMutation({
+        mutationFn: (data) => changeProjectContractInsertionStatusService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
 
-                readAllProjectContractAction.mutate({
+                readAllProjectContractInsertionAction.mutate({
                     ...filter,
-                    project_id: params.id
+                    project_id: params.id,
+                    contract_id: params.subId
                 });
             } else {
                 toast("error", data.message);
@@ -71,15 +73,16 @@ const DataTable = ({
         }
     });
 
-    const deleteProjectContractAction = useMutation({
-        mutationFn: (data) => deleteProjectContractService(data),
+    const deleteProjectContractInsertionAction = useMutation({
+        mutationFn: (data) => deleteProjectContractInsertionService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
 
-                readAllProjectContractAction.mutate({
+                readAllProjectContractInsertionAction.mutate({
                     ...filter,
-                    project_id: params.id
+                    project_id: params.id,
+                    contract_id: params.subId
                 });
             } else {
                 toast("error", data.message);
@@ -95,24 +98,24 @@ const DataTable = ({
                 sortingFn: (rowA, rowB, columnId) => rowA.index - rowB.index
             },
             {
-                accessorKey: 'contract_number',
-                header: () => 'شماره قرارداد',
+                accessorKey: 'insertion_number',
+                header: () => 'شماره الحاقیه',
                 cell: ({row}) => (
                     <div
                         className="w-50px"
                         data-tooltip-id="my-tooltip"
-                        data-tooltip-content={row.original.contract_number}
+                        data-tooltip-content={row.original.insertion_number}
                     >
                         <Typography
                             size="xs"
                             color="dark"
                             truncate={1}
                         >
-                            {row.original.contract_number}
+                            {row.original.insertion_number}
                         </Typography>
                     </div>
                 ),
-                sortingFn: (rowA, rowB, columnId) => rowA.original.contract_number - rowB.original.contract_number
+                sortingFn: (rowA, rowB, columnId) => rowA.original.insertion_number - rowB.original.insertion_number
             },
             {
                 accessorKey: 'start_date',
@@ -149,32 +152,6 @@ const DataTable = ({
                 sortingFn: (rowA, rowB, columnId) => {
                     return new Date(rowA.original.end_date).getTime() - new Date(rowB.original.end_date).getTime();
                 }
-            },
-            {
-                accessorKey: 'parties',
-                header: () => 'طرفین قرارداد',
-                cell: ({row}) => (
-                    <div className="w-150px">
-                        <ul className="hstack flex-wrap list-unstyled justify-content-start align-items-start gap-2 p-0 m-0">
-                            {
-                                row.original.members.map(member =>
-                                    <li
-                                        key={member.id}
-                                        className=""
-                                        data-tooltip-id="my-tooltip"
-                                        data-tooltip-content={member.side_info.title}
-                                    >
-                                        <Chip
-                                            label={member?.user_info?.first_name + " " + member?.user_info?.last_name}
-                                            color={member.side_info.class_name}
-                                        />
-                                    </li>
-                                )
-                            }
-                        </ul>
-                    </div>
-                ),
-                enableSorting: false
             },
             {
                 accessorKey: 'total_price',
@@ -214,30 +191,36 @@ const DataTable = ({
                 header: () => 'ابزار',
                 cell: ({row}) => (
                     <div className="d-flex justify-content-end align-items-center gap-2 w-100">
-                        <IconButton
-                            color="light-dark"
-                            size="sm"
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="ثبت نهایی"
-                            onClick={() => readProjectContractAction.mutate({
-                                project_id: row.original.project_id,
-                                contract_id: row.original.id.toString(),
-                            })}
-                        >
-                            <LuCheck
-                                size={20}
-                                color="currentColor"
-                            />
-                        </IconButton>
+                        {
+                            row.original.type_id === "1" && row.original.status_id === "1" && (
+                                <IconButton
+                                    color="light-success"
+                                    size="sm"
+                                    data-tooltip-id="my-tooltip"
+                                    data-tooltip-content="ثبت نهایی"
+                                    onClick={() => changeProjectContractInsertionStatusAction.mutate({
+                                        project_id: params.id,
+                                        contract_id: row.original.contract_id,
+                                        insertion_id: row.original.id.toString(),
+                                    })}
+                                >
+                                    <LuThumbsUp
+                                        size={20}
+                                        color="currentColor"
+                                    />
+                                </IconButton>
+                            )
+                        }
 
                         <IconButton
                             color="light-dark"
                             size="sm"
                             data-tooltip-id="my-tooltip"
-                            data-tooltip-content="دانلود قرارداد"
-                            onClick={() => readProjectContractAction.mutate({
-                                project_id: row.original.project_id,
-                                contract_id: row.original.id.toString(),
+                            data-tooltip-content={` دانلود ${row.original.is_supplement === 1 ? 'متمم' : 'الحاقیه'} `}
+                            onClick={() => readProjectContractInsertionAction.mutate({
+                                project_id: params.id,
+                                contract_id: row.original.contract_id,
+                                insertion_id: row.original.id.toString(),
                                 get_last: 1
                             })}
                         >
@@ -248,13 +231,13 @@ const DataTable = ({
                         </IconButton>
 
                         {
-                            !readProjectContractAction.isPending && (
+                            !readProjectContractInsertionAction.isPending && (
                                 <Print ref={parentRef}/>
                             )
                         }
 
                         <IconButton
-                            href={auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/update"}
+                            href={row.original.is_supplement === 1 ? auth.panel_url + "projects/" + params.id + "/contracts/" + row.original.contract_id + "/insertions/" + row.original.id + "/update#is_supplement=1" : auth.panel_url + "projects/" + params.id + "/contracts/" + row.original.contract_id + "/insertions/" + row.original.id + "/update#is_supplement=0"}
                             color="light-warning"
                             size="sm"
                             data-tooltip-id="my-tooltip"
@@ -271,8 +254,8 @@ const DataTable = ({
                             size="sm"
                             onClick={() => {
                                 dialog(
-                                    "حذف قرارداد",
-                                    "آیا میخواهید این قرارداد را حذف کنید ؟",
+                                    ` حذف ${row.original.is_supplement === 1 ? 'متمم' : 'الحاقیه'}`,
+                                    ` آیا میخواهید این ${row.original.is_supplement === 1 ? 'متمم' : 'الحاقیه'} را حذف کنید ؟ `,
                                     "info",
                                     {
                                         show: true,
@@ -284,9 +267,10 @@ const DataTable = ({
                                         text: "انصراف",
                                         color: "light-dark",
                                     },
-                                    async () => deleteProjectContractAction.mutate({
-                                        contract_id: row.original.id.toString(),
-                                        project_id: row.original.project_id
+                                    async () => deleteProjectContractInsertionAction.mutate({
+                                        project_id: params.id,
+                                        contract_id: row.original.contract_id,
+                                        insertion_id: row.original.id.toString(),
                                     })
                                 )
                             }}
@@ -309,7 +293,7 @@ const DataTable = ({
         <div className="card w-100">
             <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
                 <Filter
-                    readAllProjectContractAction={readAllProjectContractAction}
+                    readAllProjectContractInsertionAction={readAllProjectContractInsertionAction}
                     filter={filter}
                     initialFilter={initialFilter}
                     changeFilter={changeFilter}
@@ -320,16 +304,16 @@ const DataTable = ({
                 />
 
                 {
-                    readAllProjectContractAction.data?.data?.contracts.length > 0 && (
+                    readAllProjectContractInsertionAction.data?.data?.insertions.length > 0 && (
                         <Table
-                            data={readAllProjectContractAction?.data?.data?.contracts}
+                            data={readAllProjectContractInsertionAction?.data?.data?.insertions}
                             columns={tableColumns}
                         />
                     )
                 }
 
                 {
-                    readAllProjectContractAction.data?.data?.contracts.length === 0 && (
+                    readAllProjectContractInsertionAction.data?.data?.insertions.length === 0 && (
                         <Empty
                             title="قرارداد یافت نشد"
                             width="100%"
@@ -339,7 +323,7 @@ const DataTable = ({
                 }
 
                 <Finder
-                    readAllProjectContractAction={readAllProjectContractAction}
+                    readAllProjectContractInsertionAction={readAllProjectContractInsertionAction}
                     filter={filter}
                     changeFilter={changeFilter}
                 />

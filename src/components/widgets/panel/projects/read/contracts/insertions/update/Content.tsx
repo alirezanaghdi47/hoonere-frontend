@@ -1,29 +1,35 @@
 // libraries
 import {useLayoutEffect} from "react";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
 // components
-import FormData from "@/components/widgets/panel/projects/read/contracts/insertions/create/FormData.tsx";
+import FormData from "@/components/widgets/panel/projects/read/contracts/insertions/update/FormData.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // helpers
 import toast from "@/helpers/toast"
 
 // services
-import {createProjectContractInsertionService, readProjectContractForInsertionService} from "@/services/projectContractService";
-import {readAllProjectContractInsertionArticleService, readAllProjectContractInsertionSectionService} from "@/services/publicService";
+import {
+    readProjectContractForInsertionService,
+    readProjectContractInsertionService,
+    updateProjectContractInsertionService
+} from "@/services/projectContractService";
+import {
+    readAllProjectContractInsertionArticleService,
+    readAllProjectContractInsertionSectionService
+} from "@/services/publicService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore";
 
 // utils
-import {createProjectContractInsertionSchema} from "@/utils/validations.ts";
+import {updateProjectContractInsertionSchema} from "@/utils/validations.ts";
 import {getValueByKey} from "@/utils/functions.ts";
 
 const Content = () => {
-    const location = useLocation();
     const params = useParams();
     const navigate = useNavigate();
     const {auth} = useAuthStore();
@@ -36,12 +42,16 @@ const Content = () => {
         mutationFn: () => readAllProjectContractInsertionSectionService(),
     });
 
+    const readProjectContractInsertionAction = useMutation({
+        mutationFn: (data) => readProjectContractInsertionService(data),
+    });
+
     const readProjectContractForInsertionAction = useMutation({
         mutationFn: (data) => readProjectContractForInsertionService(data),
     });
-
-    const createProjectContractInsertionAction = useMutation({
-        mutationFn: (data) => createProjectContractInsertionService(data),
+    
+    const updateProjectContractInsertionAction = useMutation({
+        mutationFn: (data) => updateProjectContractInsertionService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -53,7 +63,7 @@ const Content = () => {
         }
     });
 
-    const createProjectContractInsertionForm = useFormik({
+    const updateProjectContractInsertionForm = useFormik({
         enableReinitialize: true,
         initialValues: {
             articles: readAllProjectContractInsertionArticleAction.data?.data?.insertion_default_articles ? readAllProjectContractInsertionArticleAction.data?.data?.insertion_default_articles.map(article => {
@@ -116,35 +126,26 @@ const Content = () => {
                 }
             }) : [],
         },
-        validationSchema: createProjectContractInsertionSchema,
+        validationSchema: updateProjectContractInsertionSchema,
         onSubmit: async (result) => {
-            const articleNumbers = Array(result.articles.length).fill(null).map((_, index) => index + 1);
-            const sectionArticleNumbers = [...new Set(result.sections.map(section => section.article_number))];
-
-            if (!articleNumbers.every(item => sectionArticleNumbers.includes(item))) {
-                return toast("error", "همه ی ماده ها حداقل باید شامل یک بند باشند");
-            }
-
-            const totalPercent = getValueByKey(createProjectContractInsertionForm.values.articles, "payments").reduce((acc, value) => {
+            const totalPercent = getValueByKey(updateProjectContractInsertionForm.values.articles, "payments").reduce((acc, value) => {
                 return acc += value.percent;
             }, 0);
 
-            if (getValueByKey(createProjectContractInsertionForm.values.articles, "payment_state") === "1" && totalPercent < 100) {
-                return toast("error", "مجموع درصد فازبندی قرار داد کمتر از 100 است.");
-            }
+            if (getValueByKey(updateProjectContractInsertionForm.values.articles, "payment_state") === "1" && totalPercent < 100) return toast("error", "مجموع درصد فازبندی قرار داد کمتر از 100 است.");
 
-            createProjectContractInsertionAction.mutate({
+            updateProjectContractInsertionAction.mutate({
                 ...result,
                 project_id: params.id,
                 contract_id: params.subId,
-                is_supplement: location.hash === "#is_supplement=0" ? 0 : 1,
-                employers: getValueByKey(createProjectContractInsertionForm.values.articles, "employers")?.map(item => item.id.toString()),
-                contractors: getValueByKey(createProjectContractInsertionForm.values.articles, "contractors")?.map(item => item.id.toString()),
-                start_date: getValueByKey(createProjectContractInsertionForm.values.articles, "start_date"),
-                end_date: getValueByKey(createProjectContractInsertionForm.values.articles, "end_date"),
-                total_price: getValueByKey(createProjectContractInsertionForm.values.articles, "total_price"),
-                payment_state: getValueByKey(createProjectContractInsertionForm.values.articles, "payment_state"),
-                payments: getValueByKey(createProjectContractInsertionForm.values.articles, "payments")
+                insertion_id: params.subSubId,
+                employers: getValueByKey(updateProjectContractInsertionForm.values.articles, "employers")?.map(item => item.id.toString()),
+                contractors: getValueByKey(updateProjectContractInsertionForm.values.articles, "contractors")?.map(item => item.id.toString()),
+                start_date: getValueByKey(updateProjectContractInsertionForm.values.articles, "start_date"),
+                end_date: getValueByKey(updateProjectContractInsertionForm.values.articles, "end_date"),
+                total_price: getValueByKey(updateProjectContractInsertionForm.values.articles, "total_price"),
+                payment_state: getValueByKey(updateProjectContractInsertionForm.values.articles, "payment_state"),
+                payments: getValueByKey(updateProjectContractInsertionForm.values.articles, "payments")
             });
         }
     });
@@ -160,16 +161,27 @@ const Content = () => {
     useLayoutEffect(() => {
         readProjectContractForInsertionAction.mutate({
             project_id: params.id,
-            contract_id: params.subId
+            contract_id: params.subId,
         });
     }, []);
+
+    useLayoutEffect(() => {
+        readProjectContractInsertionAction.mutate({
+            project_id: params.id,
+            contract_id: params.subId,
+            insertion_id: params.subSubId,
+            get_last: 1,
+        });
+    }, []);
+    
+    console.log(readProjectContractInsertionAction.data?.data)
 
     return (
         <div
             className="d-flex flex-column flex-lg-row justify-content-start align-items-start gap-5 w-100 mw-950px p-5">
             <div className="d-flex flex-wrap justify-content-center gap-5 w-100 mt-lg-n20">
                 {
-                    (readAllProjectContractInsertionArticleAction.isPending && readAllProjectContractInsertionSectionAction.isPending) && (
+                    readProjectContractInsertionAction.isPending && (
                         <Loading
                             withCard
                             width="100%"
@@ -179,10 +191,11 @@ const Content = () => {
                 }
 
                 {
-                    (!readAllProjectContractInsertionArticleAction.isPending && !readAllProjectContractInsertionSectionAction.isPending) && (
+                    !readProjectContractInsertionAction.isPending && (
                         <FormData
-                            createProjectContractInsertionForm={createProjectContractInsertionForm}
-                            createProjectContractInsertionAction={createProjectContractInsertionAction}
+                            readProjectContractSectionAction={readProjectContractInsertionAction}
+                            updateProjectContractInsertionForm={updateProjectContractInsertionForm}
+                            updateProjectContractInsertionAction={updateProjectContractInsertionAction}
                         />
                     )
                 }

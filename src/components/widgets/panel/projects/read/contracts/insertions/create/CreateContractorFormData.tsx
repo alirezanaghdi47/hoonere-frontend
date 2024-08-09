@@ -1,72 +1,10 @@
-// libraries
-import {useLocation} from "react-router-dom";
-import Loadable from "@loadable/component";
-import {LuTrash} from "react-icons/lu";
-
 // components
-const CreateOfficialPartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/create/CreateOfficialPartiesModal.tsx"));
-const CreateUnOfficialPartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/create/CreateUnOfficialPartiesModal.tsx"));
-
-import {Section , Note} from "@/components/widgets/panel/projects/read/contracts/create/Actions.tsx";
-
-// hooks
-import useModal from "@/hooks/useModal";
+import {Section} from "@/components/widgets/panel/projects/read/contracts/insertions/create/Actions.tsx";
 
 // modules
 import Typography from "@/modules/Typography";
-import Button from "@/modules/Button";
-import IconButton from "@/modules/IconButton";
 
-// utils
-import {removeNoteForContract} from "@/utils/functions.ts";
-
-const BlankContractorCard = ({createProjectContractForm}) => {
-    const location = useLocation();
-    const {modal, _handleShowModal, _handleHideModal} = useModal();
-
-    return (
-        <>
-            <li className='d-flex flex-wrap justify-content-start align-items-center gap-5'>
-                <Typography
-                    size="sm"
-                    color="dark"
-                >
-                    مجری :
-                </Typography>
-
-                <Button
-                    color="light-dark"
-                    size="sm"
-                    onClick={() => _handleShowModal({from: "contractor"})}
-                >
-                    انتخاب مجری
-                </Button>
-            </li>
-
-            {
-                location.hash === "#official" && modal.isOpen && (
-                    <CreateOfficialPartiesModal
-                        modal={modal}
-                        _handleHideModal={_handleHideModal}
-                        createProjectContractForm={createProjectContractForm}
-                    />
-                )
-            }
-
-            {
-                location.hash === "#un-official" && modal.isOpen && (
-                    <CreateUnOfficialPartiesModal
-                        modal={modal}
-                        _handleHideModal={_handleHideModal}
-                        createProjectContractForm={createProjectContractForm}
-                    />
-                )
-            }
-        </>
-    )
-}
-
-const ContractorOfficialRealCard = ({contractor , createProjectContractForm}) => {
+const ContractorOfficialRealCard = ({contractor}) => {
     return (
         <li className='d-flex flex-wrap justify-content-start align-items-center gap-5 border border-dashed border-secondary rounded-2 p-5'>
             <Typography
@@ -82,7 +20,7 @@ const ContractorOfficialRealCard = ({contractor , createProjectContractForm}) =>
                 size="sm"
                 color="dark"
             >
-                به شماره ملی :
+                به کد ملی :
                 &nbsp;
                 {contractor?.user_info?.national_code ? contractor?.user_info?.national_code : "نا معلوم"}
             </Typography>
@@ -113,30 +51,11 @@ const ContractorOfficialRealCard = ({contractor , createProjectContractForm}) =>
                 &nbsp;
                 {contractor?.user_info?.mobile ? contractor?.user_info?.mobile : "نا معلوم"}
             </Typography>
-
-            <div className='ms-auto'>
-                <IconButton
-                    color="light-danger"
-                    size="sm"
-                    data-tooltip-id="my-tooltip"
-                    data-tooltip-content="حذف مجری"
-                    onClick={() => {
-                        createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${createProjectContractForm.values.articles.length + 1} ماده و ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length - 1} نسخه تنظیم گردیده و هر کدام از ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length - 1} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
-
-                        createProjectContractForm.setFieldValue("articles[0].contractors", createProjectContractForm.values.articles[0].contractors.filter(item => JSON.stringify(item) !== JSON.stringify(contractor?.user_info)));
-                    }}
-                >
-                    <LuTrash
-                        size={20}
-                        color="currentColor"
-                    />
-                </IconButton>
-            </div>
         </li>
     )
 }
 
-const ContractorUnOfficialRealCard = ({contractor , createProjectContractForm}) => {
+const ContractorUnOfficialRealCard = ({contractor}) => {
     return (
         <li className='d-flex flex-wrap justify-content-start align-items-center gap-5 border border-dashed border-secondary rounded-2 p-5'>
             <Typography
@@ -152,7 +71,7 @@ const ContractorUnOfficialRealCard = ({contractor , createProjectContractForm}) 
                 size="sm"
                 color="dark"
             >
-                به شماره ملی :
+                به کد ملی :
                 &nbsp;
                 {contractor?.national_code ? contractor?.national_code : "نا معلوم"}
             </Typography>
@@ -183,30 +102,11 @@ const ContractorUnOfficialRealCard = ({contractor , createProjectContractForm}) 
                 &nbsp;
                 {contractor?.mobile ? contractor?.mobile : "نا معلوم"}
             </Typography>
-
-            <div className='ms-auto'>
-                <IconButton
-                    color="light-danger"
-                    size="sm"
-                    data-tooltip-id="my-tooltip"
-                    data-tooltip-content="حذف مجری"
-                    onClick={() => {
-                        createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${createProjectContractForm.values.articles.length + 1} ماده و ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length - 1} نسخه تنظیم گردیده و هر کدام از ${createProjectContractForm.values.articles[0].employers.length + createProjectContractForm.values.articles[0].contractors.length - 1} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
-
-                        createProjectContractForm.setFieldValue("articles[0].contractors", createProjectContractForm.values.articles[0].contractors.filter(item => JSON.stringify(item) !== JSON.stringify(contractor)));
-                    }}
-                >
-                    <LuTrash
-                        size={20}
-                        color="currentColor"
-                    />
-                </IconButton>
-            </div>
         </li>
     )
 }
 
-const ContractorOfficialLegalCard = ({contractor , createProjectContractForm}) => {
+const ContractorOfficialLegalCard = ({contractor}) => {
     return (
         <li className='d-flex flex-wrap justify-content-start align-items-center gap-5 border border-dashed border-secondary rounded-2 p-5'>
             <Typography
@@ -315,26 +215,11 @@ const ContractorOfficialLegalCard = ({contractor , createProjectContractForm}) =
                     </div>
                 )
             }
-
-            <div className='ms-auto'>
-                <IconButton
-                    color="light-danger"
-                    size="sm"
-                    data-tooltip-id="my-tooltip"
-                    data-tooltip-content="حذف مجری"
-                    onClick={() => createProjectContractForm.setFieldValue("articles[0].contractors" , createProjectContractForm.values.articles[0].contractors.filter(item => JSON.stringify(item) !== JSON.stringify(contractor?.user_info)))}
-                >
-                    <LuTrash
-                        size={20}
-                        color="currentColor"
-                    />
-                </IconButton>
-            </div>
         </li>
     )
 }
 
-const ContractorUnOfficialLegalCard = ({contractor , createProjectContractForm}) => {
+const ContractorUnOfficialLegalCard = ({contractor}) => {
     return (
         <li className='d-flex flex-wrap justify-content-start align-items-center gap-5 border border-dashed border-secondary rounded-2 p-5'>
             <Typography
@@ -443,32 +328,13 @@ const ContractorUnOfficialLegalCard = ({contractor , createProjectContractForm})
                     </div>
                 )
             }
-
-            <div className='ms-auto'>
-                <IconButton
-                    color="light-danger"
-                    size="sm"
-                    data-tooltip-id="my-tooltip"
-                    data-tooltip-content="حذف مجری"
-                    onClick={() => createProjectContractForm.setFieldValue("articles[0].contractors" , createProjectContractForm.values.articles[0].contractors.filter(item => JSON.stringify(item) !== JSON.stringify(contractor)))}
-                >
-                    <LuTrash
-                        size={20}
-                        color="currentColor"
-                    />
-                </IconButton>
-            </div>
         </li>
     )
 }
 
-const CreateContractorFormData = ({article , section, createProjectContractForm}) => {
+const CreateContractorFormData = ({article , section, createProjectContractInsertionForm}) => {
     return (
-        <Section
-            article={article}
-            section={section}
-            createProjectContractForm={createProjectContractForm}
-        >
+        <Section section={section}>
             <div className='d-flex justify-content-start align-items-center gap-5 w-100'>
                 <Typography
                     size="sm"
@@ -480,17 +346,14 @@ const CreateContractorFormData = ({article , section, createProjectContractForm}
                 </Typography>
 
                 <ul className="vstack justify-content-center gap-5 p-0 m-0">
-                    <BlankContractorCard createProjectContractForm={createProjectContractForm}/>
-
                     {
-                        createProjectContractForm.values.articles.find(item => item.number === article.number)?.contractors?.map(contractor => {
+                        createProjectContractInsertionForm.values.articles.find(item => item.number === article.number)?.contractors?.map(contractor => {
                             // رسمی و حقیقی
                             if (contractor.hasOwnProperty("user_info") && contractor?.user_info?.user_type === "1"){
                                 return (
                                     <ContractorOfficialRealCard
                                         key={contractor?.user_info?.id}
                                         contractor={contractor}
-                                        createProjectContractForm={createProjectContractForm}
                                     />
                                 )
                             }
@@ -501,7 +364,6 @@ const CreateContractorFormData = ({article , section, createProjectContractForm}
                                     <ContractorOfficialLegalCard
                                         key={contractor?.user_info?.id}
                                         contractor={contractor}
-                                        createProjectContractForm={createProjectContractForm}
                                     />
                                 )
                             }
@@ -512,7 +374,6 @@ const CreateContractorFormData = ({article , section, createProjectContractForm}
                                     <ContractorUnOfficialRealCard
                                         key={contractor?.id}
                                         contractor={contractor}
-                                        createProjectContractForm={createProjectContractForm}
                                     />
                                 )
                             }
@@ -523,7 +384,6 @@ const CreateContractorFormData = ({article , section, createProjectContractForm}
                                     <ContractorUnOfficialLegalCard
                                         key={contractor?.id}
                                         contractor={contractor}
-                                        createProjectContractForm={createProjectContractForm}
                                     />
                                 )
                             }
@@ -531,61 +391,6 @@ const CreateContractorFormData = ({article , section, createProjectContractForm}
                     }
                 </ul>
             </div>
-
-            {
-                createProjectContractForm.values.notes.filter(note => note.section_number === section.number && note.article_number === section.article_number).map(note =>
-                    <Note
-                        key={`${article.number}-${section.number}-${note.number}`}
-                        article={article}
-                        section={section}
-                        note={note}
-                        createProjectContractForm={createProjectContractForm}
-                    >
-                        <div className='d-flex justify-content-start align-items-center gap-5 w-100'>
-                            <Typography
-                                size="xs"
-                                color="muted"
-                                isBold
-                                className="w-60px"
-                            >
-                                تبصره
-                                &nbsp;
-                                {note.number}
-                            </Typography>
-
-                            <Typography
-                                size="xs"
-                                color="dark"
-                                lineHeight="lg"
-                            >
-                                {note.content}
-                            </Typography>
-
-                            {
-                                note.isAdded && (
-                                    <div className='ms-auto'>
-                                        <IconButton
-                                            color="light-danger"
-                                            size="sm"
-                                            data-tooltip-id="my-tooltip"
-                                            data-tooltip-content="حذف تبصره"
-                                            onClick={() => {
-                                                const notes = removeNoteForContract(createProjectContractForm.values.notes , note.number);
-                                                createProjectContractForm.setFieldValue("notes", notes);
-                                            }}
-                                        >
-                                            <LuTrash
-                                                size={20}
-                                                color="currentColor"
-                                            />
-                                        </IconButton>
-                                    </div>
-                                )
-                            }
-                        </div>
-                    </Note>
-                )
-            }
         </Section>
     )
 }

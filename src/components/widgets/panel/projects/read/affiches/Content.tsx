@@ -36,14 +36,14 @@ const Content = () => {
     });
 
     const readAllProjectAfficheAction = useMutation({
-        mutationFn: (data: IReadAllProjectAffiche) => readAllProjectAfficheService({
-            ...data,
-            project_id: params.id
-        }),
+        mutationFn: (data: IReadAllProjectAffiche) => readAllProjectAfficheService(data),
     });
 
     useLayoutEffect(() => {
-        readAllProjectAfficheAction.mutate(filter);
+        readAllProjectAfficheAction.mutate({
+            ...filter,
+            project_id: params.id
+        });
     }, []);
 
     return (

@@ -33,10 +33,7 @@ const Content = () => {
     });
 
     const readAllProjectContractAction = useMutation({
-        mutationFn: (data) => readAllProjectContractService({
-            ...data,
-            project_id: params.id
-        }),
+        mutationFn: (data) => readAllProjectContractService(data),
     });
 
     useLayoutEffect(() => {
@@ -45,8 +42,6 @@ const Content = () => {
             project_id: params.id
         });
     }, []);
-
-    console.log(readAllProjectContractAction.data?.data.contracts)
 
     return (
         <div

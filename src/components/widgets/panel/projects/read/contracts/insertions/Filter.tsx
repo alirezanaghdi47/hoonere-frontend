@@ -1,4 +1,5 @@
 // libraries
+import {useParams} from "react-router-dom";
 import {LuSearch, LuX} from "react-icons/lu";
 
 // modules
@@ -14,23 +15,25 @@ const AdvanceFilter = ({
                            changeFilter,
                            hideFilter,
                            resetFilter,
-                           readAllProjectContractAction
+                           readAllProjectContractInsertionAction
                        }) => {
+    const params = useParams();
+
     return (
         <div className='row gy-5 w-100'>
             <div className="col-12 col-sm-6 col-md-4">
                 <Form.Group>
                     <Form.Label
-                        label="شماره قرارداد"
+                        label="شماره الحاقیه"
                         color="dark"
                         size="sm"
                     />
 
                     <TextInput
-                        id="contract_number"
-                        name="contract_number"
-                        value={filter.contract_number}
-                        onChange={(value) => changeFilter({contract_number: value})}
+                        id="insertion_number"
+                        name="insertion_number"
+                        value={filter.insertion_number}
+                        onChange={(value) => changeFilter({insertion_number: value})}
                     />
                 </Form.Group>
             </div>
@@ -75,7 +78,11 @@ const AdvanceFilter = ({
                     onClick={() => {
                         resetFilter();
                         hideFilter();
-                        readAllProjectContractAction.mutate(initialFilter);
+                        readAllProjectContractInsertionAction.mutate({
+                            ...initialFilter,
+                            project_id: params.id,
+                            contract_id: params.subId
+                        });
                     }}
                 >
                     انصراف
@@ -83,7 +90,11 @@ const AdvanceFilter = ({
 
                 <Button
                     color='light-info'
-                    onClick={() => readAllProjectContractAction.mutate(filter)}
+                    onClick={() => readAllProjectContractInsertionAction.mutate({
+                        ...filter,
+                        project_id: params.id,
+                        contract_id: params.subId
+                    })}
                 >
                     فیلتر
                 </Button>
@@ -92,20 +103,26 @@ const AdvanceFilter = ({
     )
 }
 
-const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectContractAction}) => {
+const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectContractInsertionAction}) => {
+    const params = useParams();
+
     return (
         <div className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-5">
             <div className="w-200px">
                 <TextInput
-                    id="contract_number"
-                    name="contract_number"
-                    value={filter.contract_number}
-                    placeholder="شماره قرارداد"
+                    id="insertion_number"
+                    name="insertion_number"
+                    value={filter.insertion_number}
+                    placeholder="شماره الحاقیه"
                     startAdornment={
                         <IconButton
                             size="sm"
                             color="light"
-                            onClick={() => readAllProjectContractAction.mutate(filter)}
+                            onClick={() => readAllProjectContractInsertionAction.mutate({
+                                ...filter,
+                                project_id: params.id,
+                                contract_id: params.subId
+                            })}
                         >
                             <LuSearch
                                 size={20}
@@ -114,13 +131,18 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectContractA
                         </IconButton>
                     }
                     endAdornment={
-                        filter.contract_number.length > 0 ? (
+                        filter.insertion_number.length > 0 ? (
                             <IconButton
                                 size="sm"
                                 textColor="danger"
                                 onClick={() => {
-                                    changeFilter({contract_number: ""});
-                                    readAllProjectContractAction.mutate({...filter, contract_number: ""});
+                                    changeFilter({insertion_number: ""});
+                                    readAllProjectContractInsertionAction.mutate({
+                                        ...filter,
+                                        insertion_number: "",
+                                        project_id: params.id,
+                                        contract_id: params.subId
+                                    });
                                 }}
                             >
                                 <LuX
@@ -130,7 +152,7 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectContractA
                             </IconButton>
                         ) : null
                     }
-                    onChange={(value) => changeFilter({contract_number: value})}
+                    onChange={(value) => changeFilter({insertion_number: value})}
                 />
             </div>
 
@@ -145,7 +167,7 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectContractA
 }
 
 const Filter = ({
-                    readAllProjectContractAction,
+                    readAllProjectContractInsertionAction,
                     filter,
                     initialFilter,
                     changeFilter,
@@ -164,14 +186,14 @@ const Filter = ({
                         changeFilter={changeFilter}
                         hideFilter={hideFilter}
                         resetFilter={resetFilter}
-                        readAllProjectContractAction={readAllProjectContractAction}
+                        readAllProjectContractInsertionAction={readAllProjectContractInsertionAction}
                     />
                 ) : (
                     <SimpleFilter
                         filter={filter}
                         changeFilter={changeFilter}
                         showFilter={showFilter}
-                        readAllProjectContractAction={readAllProjectContractAction}
+                        readAllProjectContractInsertionAction={readAllProjectContractInsertionAction}
                     />
                 )
             }

@@ -11,7 +11,7 @@ import IconButton from "@/modules/IconButton";
 // utils
 import {removeSectionForInsertion} from "@/utils/functions.ts";
 
-const CreateRegularFormData = ({article, section, createProjectContractForm}) => {
+const CreateRegularFormData = ({article, section, createProjectContractInsertionForm}) => {
     return (
         <Section section={section}>
             <div className='d-flex justify-content-start align-items-center gap-5 w-100'>
@@ -32,24 +32,28 @@ const CreateRegularFormData = ({article, section, createProjectContractForm}) =>
                     {section.content}
                 </Typography>
 
-                <div className='ms-auto'>
-                    <IconButton
-                        color="light-danger"
-                        size="sm"
-                        data-tooltip-id="my-tooltip"
-                        data-tooltip-content="حذف بند"
-                        onClick={() => {
-                            const data = removeSectionForInsertion(createProjectContractForm.values.sections, article.number, section.number);
+                {
+                    section.isAdded && (
+                        <div className='ms-auto'>
+                            <IconButton
+                                color="light-danger"
+                                size="sm"
+                                data-tooltip-id="my-tooltip"
+                                data-tooltip-content="حذف بند"
+                                onClick={() => {
+                                    const data = removeSectionForInsertion(createProjectContractInsertionForm.values.sections, article.number, section.number);
 
-                            createProjectContractForm.setFieldValue("sections", data);
-                        }}
-                    >
-                        <LuTrash
-                            size={20}
-                            color="currentColor"
-                        />
-                    </IconButton>
-                </div>
+                                    createProjectContractInsertionForm.setFieldValue("sections", data);
+                                }}
+                            >
+                                <LuTrash
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            </IconButton>
+                        </div>
+                    )
+                }
             </div>
         </Section>
     )

@@ -9,10 +9,10 @@ const options = [
     {value: 96, label: '96'}
 ];
 
-const Finder = ({readAllProjectContractAction, filter, changeFilter}) => {
+const Finder = ({readAllProjectContractInsertionAction, filter, changeFilter}) => {
     return (
         <div
-            className={`d-flex flex-wrap ${readAllProjectContractAction.data?.data?.pagination?.total > filter.per_page ? "justify-content-center justify-content-sm-between" : "justify-content-start"} align-items-center w-100 gap-5`}>
+            className={`d-flex flex-wrap ${readAllProjectContractInsertionAction.data?.data?.pagination?.total > filter.per_page ? "justify-content-center justify-content-sm-between" : "justify-content-start"} align-items-center w-100 gap-5`}>
             <div className="w-125px">
                 <SelectBox
                     id='pageSize'
@@ -21,20 +21,20 @@ const Finder = ({readAllProjectContractAction, filter, changeFilter}) => {
                     options={options}
                     onChange={(value) => {
                         changeFilter({per_page: value});
-                        readAllProjectContractAction.mutate({per_page: value});
+                        readAllProjectContractInsertionAction.mutate({per_page: value});
                     }}
                 />
             </div>
 
             {
-                readAllProjectContractAction.data?.data?.pagination?.total > filter.per_page && (
+                readAllProjectContractInsertionAction.data?.data?.pagination?.total > filter.per_page && (
                     <Pagination
                         current={filter.page}
                         pageSize={filter.per_page}
-                        total={readAllProjectContractAction.data?.data?.pagination?.total}
+                        total={readAllProjectContractInsertionAction.data?.data?.pagination?.total}
                         onChange={(value) => {
                             changeFilter({page: value});
-                            readAllProjectContractAction.mutate({page: value});
+                            readAllProjectContractInsertionAction.mutate({page: value});
                         }}
                     />
                 )

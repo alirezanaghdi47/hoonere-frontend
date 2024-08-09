@@ -184,7 +184,7 @@ const CreateOfficialPartiesModal = ({modal, _handleHideModal, createProjectContr
                             name="user_info"
                             value={JSON.stringify(createPartiesForm.values.user_info)}
                             options={readAllProjectContractMemberAction.data?.data?.members?.map(item => ({
-                                label: item.user_info?.first_name + " " + item.user_info?.last_name,
+                                label: item.user_info?.user_type === "1" ? item.user_info?.first_name + " " + item.user_info?.last_name: item.user_info?.company_name,
                                 value: JSON.stringify(item.user_info)
                             }))}
                             isSearchable

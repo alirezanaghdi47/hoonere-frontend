@@ -1,5 +1,6 @@
 // libraries
 import {useLayoutEffect} from "react";
+import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {LuSearch, LuX} from "react-icons/lu";
 
@@ -22,6 +23,7 @@ const AdvanceFilter = ({
                            resetFilter,
                            readAllProjectAfficheAction
                        }) => {
+    const params = useParams();
 
     const readAllAfficheTypeAction = useMutation({
         mutationFn: () => readAllAfficheTypeService(),
@@ -96,7 +98,10 @@ const AdvanceFilter = ({
                     onClick={() => {
                         resetFilter();
                         hideFilter();
-                        readAllProjectAfficheAction.mutate(initialFilter);
+                        readAllProjectAfficheAction.mutate({
+                            ...initialFilter,
+                            project_id: params.id
+                        });
                     }}
                 >
                     انصراف
@@ -104,7 +109,10 @@ const AdvanceFilter = ({
 
                 <Button
                     color='light-info'
-                    onClick={() => readAllProjectAfficheAction.mutate(filter)}
+                    onClick={() => readAllProjectAfficheAction.mutate({
+                        ...filter,
+                        project_id: params.id
+                    })}
                 >
                     فیلتر
                 </Button>
@@ -114,6 +122,8 @@ const AdvanceFilter = ({
 }
 
 const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectAfficheAction}) => {
+    const params = useParams();
+
     return (
         <div className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-5">
             <div className="w-200px">
@@ -126,7 +136,10 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectAfficheAc
                         <IconButton
                             size="sm"
                             color="light"
-                            onClick={() => readAllProjectAfficheAction.mutate(filter)}
+                            onClick={() => readAllProjectAfficheAction.mutate({
+                                ...filter,
+                                project_id: params.id
+                            })}
                         >
                             <LuSearch
                                 size={20}
@@ -141,7 +154,11 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectAfficheAc
                                 textColor="danger"
                                 onClick={() => {
                                     changeFilter({number_string: ""});
-                                    readAllProjectAfficheAction.mutate({...filter, number_string: ""});
+                                    readAllProjectAfficheAction.mutate({
+                                        ...filter,
+                                        number_string: "",
+                                        project_id: params.id
+                                    });
                                 }}
                             >
                                 <LuX

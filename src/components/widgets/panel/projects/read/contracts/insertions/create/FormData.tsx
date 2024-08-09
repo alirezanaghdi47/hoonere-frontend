@@ -1,9 +1,14 @@
 // libraries
-import {useParams} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 import {LuTrash} from "react-icons/lu";
 
 // components
 import {Contract, Article} from "@/components/widgets/panel/projects/read/contracts/insertions/create/Actions.tsx";
+import CreateEmployerFormData from "@/components/widgets/panel/projects/read/contracts/insertions/create/CreateEmployerFormData.tsx";
+import CreateContractorFormData from "@/components/widgets/panel/projects/read/contracts/insertions/create/CreateContractorFormData.tsx";
+import CreateExecutionTimeFormData from "@/components/widgets/panel/projects/read/contracts/insertions/create/CreateExecutionTimeFormData.tsx";
+import CreateAmountFormData from "@/components/widgets/panel/projects/read/contracts/insertions/create/CreateAmountFormData.tsx";
+import CreatePaymentFormData from "@/components/widgets/panel/projects/read/contracts/insertions/create/CreatePaymentFormData.tsx";
 import CreateRegularFormData from "@/components/widgets/panel/projects/read/contracts/insertions/create/CreateRegularFormData.tsx";
 
 // modules
@@ -17,7 +22,8 @@ import useAuthStore from "@/stores/authStore";
 // utils
 import {removeArticleForInsertion} from "@/utils/functions.ts";
 
-const FormData = ({createProjectContractForm, createProjectContractAction}) => {
+const FormData = ({createProjectContractInsertionForm, createProjectContractInsertionAction}) => {
+    const location = useLocation();
     const params = useParams();
     const {auth} = useAuthStore();
 
@@ -27,50 +33,107 @@ const FormData = ({createProjectContractForm, createProjectContractAction}) => {
                 <div className="card-body d-flex justify-content-center align-items-center flex-column gap-5">
                     <div className="row gy-5 w-100">
                         <div className="col-12">
-                            <Contract createProjectContractForm={createProjectContractForm}>
+                            <Contract createProjectContractInsertionForm={createProjectContractInsertionForm}>
                                 <Accordion>
                                     {
-                                        createProjectContractForm.values.articles?.map(article =>
+                                        createProjectContractInsertionForm.values.articles?.map(article =>
                                             <Accordion.Item
                                                 key={article.number}
                                                 title={article.content}
                                                 number={article.number}
                                                 initialEntered={article.number === 1}
                                                 endAdornment={
-                                                    <div className='ms-auto'>
-                                                        <IconButton
-                                                            color="light-danger"
-                                                            size="sm"
-                                                            data-tooltip-id="my-tooltip"
-                                                            data-tooltip-content="حذف ماده"
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
+                                                    article.is_added === "1" ? (
+                                                        <div className='ms-auto'>
+                                                            <IconButton
+                                                                color="light-danger"
+                                                                size="sm"
+                                                                data-tooltip-id="my-tooltip"
+                                                                data-tooltip-content="حذف ماده"
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
 
-                                                                const data = removeArticleForInsertion(createProjectContractForm.values.articles, createProjectContractForm.values.sections, article.number);
+                                                                    const data = removeArticleForInsertion(createProjectContractInsertionForm.values.articles, createProjectContractInsertionForm.values.sections, article.number);
 
-                                                                createProjectContractForm.setFieldValue("sections", data.sections);
-                                                                createProjectContractForm.setFieldValue("articles", data.articles);
-                                                            }}
-                                                        >
-                                                            <LuTrash
-                                                                size={20}
-                                                                color="currentColor"
-                                                            />
-                                                        </IconButton>
-                                                    </div>
+                                                                    createProjectContractInsertionForm.setFieldValue("sections", data.sections);
+                                                                    createProjectContractInsertionForm.setFieldValue("articles", data.articles);
+                                                                }}
+                                                            >
+                                                                <LuTrash
+                                                                    size={20}
+                                                                    color="currentColor"
+                                                                />
+                                                            </IconButton>
+                                                        </div>
+                                                    ) : null
                                                 }
                                             >
                                                 <Article
                                                     article={article}
-                                                    createProjectContractForm={createProjectContractForm}
+                                                    createProjectContractInsertionForm={createProjectContractInsertionForm}
                                                 >
                                                     {
-                                                        createProjectContractForm.values.sections.filter(section => section.article_number === article.number && !section.isStatic).map(section =>
+                                                        article.number === 1 && (
+                                                            <CreateEmployerFormData
+                                                                key={`${article.number}-1`}
+                                                                article={article}
+                                                                section={{number: 1, article_number: 1, content: ""}}
+                                                                createProjectContractInsertionForm={createProjectContractInsertionForm}
+                                                            />
+                                                        )
+                                                    }
+
+                                                    {
+                                                        article.number === 1 && (
+                                                            <CreateContractorFormData
+                                                                key={`${article.number}-2`}
+                                                                article={article}
+                                                                section={{number: 2, article_number: 1, content: ""}}
+                                                                createProjectContractInsertionForm={createProjectContractInsertionForm}
+                                                            />
+                                                        )
+                                                    }
+
+                                                    {
+                                                        article.number === 2 && (
+                                                            <CreateExecutionTimeFormData
+                                                                key={`${article.number}-1`}
+                                                                article={article}
+                                                                section={{number: 1, article_number: 2, content: ""}}
+                                                                createProjectContractInsertionForm={createProjectContractInsertionForm}
+                                                            />
+                                                        )
+                                                    }
+
+                                                    {
+                                                        article.number === 3 && (
+                                                            <CreateAmountFormData
+                                                                key={`${article.number}-1`}
+                                                                article={article}
+                                                                section={{number: 1, article_number: 3, content: ""}}
+                                                                createProjectContractInsertionForm={createProjectContractInsertionForm}
+                                                            />
+                                                        )
+                                                    }
+
+                                                    {
+                                                        article.number === 4 && (
+                                                            <CreatePaymentFormData
+                                                                key={`${article.number}-1`}
+                                                                article={article}
+                                                                section={{number: 1, article_number: 4, content: ""}}
+                                                                createProjectContractInsertionForm={createProjectContractInsertionForm}
+                                                            />
+                                                        )
+                                                    }
+
+                                                    {
+                                                        createProjectContractInsertionForm.values.sections.filter(section => section.article_number === article.number && !section.isStatic).map(section =>
                                                             <CreateRegularFormData
                                                                 key={`${article.number}-${section.number}`}
                                                                 article={article}
                                                                 section={section}
-                                                                createProjectContractForm={createProjectContractForm}
+                                                                createProjectContractInsertionForm={createProjectContractInsertionForm}
                                                             />
                                                         )
                                                     }
@@ -87,7 +150,7 @@ const FormData = ({createProjectContractForm, createProjectContractAction}) => {
 
             <div className="d-flex justify-content-end align-items-center gap-5 w-100">
                 <Button
-                    href={auth.panel_url + `projects/${params.id}/contracts/${params.subId}/insertions`}
+                    href={auth.panel_url + `projects/${params.id}/contracts`}
                     color="light-danger"
                 >
                     انصراف
@@ -95,10 +158,12 @@ const FormData = ({createProjectContractForm, createProjectContractAction}) => {
 
                 <Button
                     color="success"
-                    onClick={createProjectContractForm.handleSubmit}
-                    isLoading={createProjectContractAction.isPending}
+                    onClick={createProjectContractInsertionForm.handleSubmit}
+                    isLoading={createProjectContractInsertionAction.isPending}
                 >
-                    افزودن الحاقیه
+                    افزودن
+                    &nbsp;
+                    {location.hash === "#is_supplement=0" ? "الحاقیه" : "متمم"}
                 </Button>
             </div>
         </>

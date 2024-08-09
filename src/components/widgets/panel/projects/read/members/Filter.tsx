@@ -1,5 +1,6 @@
 // libraries
 import {useLayoutEffect} from "react";
+import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {LuSearch, LuX} from "react-icons/lu";
 
@@ -14,6 +15,8 @@ import SelectBox from "@/modules/SelectBox";
 import {readAllJobService, readAllProjectTypeService, readAllUserStatusService} from "@/services/publicService";
 
 const AdvanceFilter = ({readAllProjectMemberAction, filter, initialFilter, changeFilter, hideFilter, resetFilter}) => {
+    const params = useParams();
+
     const readAllProjectTypeAction = useMutation({
         mutationFn: () => readAllProjectTypeService(),
     });
@@ -110,7 +113,10 @@ const AdvanceFilter = ({readAllProjectMemberAction, filter, initialFilter, chang
                     onClick={() => {
                         resetFilter();
                         hideFilter();
-                        readAllProjectMemberAction.mutate(initialFilter);
+                        readAllProjectMemberAction.mutate({
+                            ...initialFilter,
+                            project_id: params.id
+                        });
                     }}
                 >
                     انصراف
@@ -118,7 +124,10 @@ const AdvanceFilter = ({readAllProjectMemberAction, filter, initialFilter, chang
 
                 <Button
                     color='light-info'
-                    onClick={() => readAllProjectMemberAction.mutate(filter)}
+                    onClick={() => readAllProjectMemberAction.mutate({
+                        ...filter,
+                        project_id: params.id
+                    })}
                 >
                     فیلتر
                 </Button>
@@ -128,6 +137,8 @@ const AdvanceFilter = ({readAllProjectMemberAction, filter, initialFilter, chang
 }
 
 const SimpleFilter = ({readAllProjectMemberAction, filter, changeFilter, showFilter}) => {
+    const params = useParams();
+
     return (
         <div className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-5">
             <div className="w-200px">
@@ -140,7 +151,10 @@ const SimpleFilter = ({readAllProjectMemberAction, filter, changeFilter, showFil
                         <IconButton
                             size="sm"
                             color="light"
-                            onClick={() => readAllProjectMemberAction.mutate(filter)}
+                            onClick={() => readAllProjectMemberAction.mutate({
+                                ...filter,
+                                project_id: params.id
+                            })}
                         >
                             <LuSearch
                                 size={20}
@@ -155,7 +169,11 @@ const SimpleFilter = ({readAllProjectMemberAction, filter, changeFilter, showFil
                                 textColor="danger"
                                 onClick={() => {
                                     changeFilter({text: ""});
-                                    readAllProjectMemberAction.mutate({text: ""});
+                                    readAllProjectMemberAction.mutate({
+                                        ...filter,
+                                        text: "",
+                                        project_id: params.id
+                                    });
                                 }}
                             >
                                 <LuX
