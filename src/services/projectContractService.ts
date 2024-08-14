@@ -314,7 +314,7 @@ export const readAllProjectContractInsertionService = async (data) => {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(data)));
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/insertions/index", formData, {
             headers: {
@@ -442,6 +442,31 @@ export const changeProjectContractInsertionStatusService = async (data) => {
         formData.append("data", encodeData(JSON.stringify(data)));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/insertions/finalizeInsertion", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const checkProjectContractHasSupplementService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/checkContractHasSupplement", formData, {
             headers: {
                 "Authorization": "Bearer " + token
             }

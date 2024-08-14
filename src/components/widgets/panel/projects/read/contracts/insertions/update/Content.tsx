@@ -49,7 +49,7 @@ const Content = () => {
     const readProjectContractForInsertionAction = useMutation({
         mutationFn: (data) => readProjectContractForInsertionService(data),
     });
-    
+
     const updateProjectContractInsertionAction = useMutation({
         mutationFn: (data) => updateProjectContractInsertionService(data),
         onSuccess: async (data) => {

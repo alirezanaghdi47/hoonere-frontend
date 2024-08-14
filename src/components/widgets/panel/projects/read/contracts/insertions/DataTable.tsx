@@ -1,6 +1,6 @@
 // libraries
 import {useMemo, useRef} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {format} from "date-fns-jalali";
 import {LuDownload, LuPen, LuThumbsUp, LuTrash2} from "react-icons/lu";
@@ -41,6 +41,7 @@ const DataTable = ({
                        showFilter,
                        hideFilter
                    }) => {
+    const navigate = useNavigate();
     const params = useParams();
     const parentRef = useRef();
     const {auth} = useAuthStore();
@@ -66,11 +67,13 @@ const DataTable = ({
             if (!data.error) {
                 toast("success", data.message);
 
-                readAllProjectContractInsertionAction.mutate({
-                    ...filter,
-                    project_id: params.id,
-                    contract_id: params.subId
-                });
+                // readAllProjectContractInsertionAction.mutate({
+                //     ...filter,
+                //     project_id: params.id,
+                //     contract_id: params.subId
+                // });
+
+                navigate(0);
             } else {
                 toast("error", data.message);
             }
