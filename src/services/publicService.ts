@@ -25,7 +25,7 @@ export const readAllJobService = async () => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -47,7 +47,7 @@ export const readAllUserStatusService = async () => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -69,7 +69,7 @@ export const readAllProjectTypeService = async () => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -91,7 +91,7 @@ export const readAllInvestorService = async () => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -116,7 +116,7 @@ export const readUserInquiryService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -138,7 +138,7 @@ export const readAllScreenPlayTimeTypeService = async () => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -160,7 +160,7 @@ export const readAllScreenPlayLocationSideService = async () => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -182,7 +182,7 @@ export const readAllAfficheTypeService = async () => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -204,7 +204,7 @@ export const readAllReceptionTypeService = async () => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -226,7 +226,7 @@ export const readAllProjectMoodBoardTypeService = async () => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -248,7 +248,7 @@ export const readAllProjectContractArticleService = async () => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -270,7 +270,7 @@ export const readAllProjectContractSectionService = async () => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -292,7 +292,7 @@ export const readAllProjectContractInsertionArticleService = async () => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -314,6 +314,6 @@ export const readAllProjectContractInsertionSectionService = async () => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
