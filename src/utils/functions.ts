@@ -21,14 +21,14 @@ export const formattedSize = (bytes: number): string => {
 export const toEnglishDigits = (data: string): string => {
     let e = '۰'.charCodeAt(0);
 
-    data = data.replace(/[۰-۹]/g, function (t: string) {
-        return t.charCodeAt(0) - e;
+    data = data.replace(/[۰-۹]/g, function (t: string): string {
+        return (t.charCodeAt(0) - e).toString();
     });
 
     e = '٠'.charCodeAt(0);
 
-    data = data.replace(/[٠-٩]/g, function (t: string) {
-        return t.charCodeAt(0) - e;
+    data = data.replace(/[٠-٩]/g, function (t: string): string {
+        return (t.charCodeAt(0) - e).toString();
     });
 
     return data;
@@ -64,14 +64,14 @@ export const hexToRgba = (hex: string, alpha: number = 1): string => {
 
 export const generateRandomNumber = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1) + min);
 
-export const convertJalaliToGregorian = (date: string): string => new DateObject({
+export const convertJalaliToGregorian = (date): string => new DateObject({
     date: date,
     format: "YYYY-MM-DD",
     calendar: persian,
     locale: persian_fa
 }).convert(gregorian, gregorian_en).format("YYYY-MM-DD");
 
-export const convertGregorianToJalali = (date: string): string => new DateObject({
+export const convertGregorianToJalali = (date): string => new DateObject({
     date: date,
     format: "YYYY-MM-DD",
     calendar: gregorian,
@@ -85,7 +85,7 @@ export const generateTimeWithSecond = (time) => {
 
 export const generateTimeWithoutSecond = (time) => new DateObject(time).setSecond(0).format("HH:mm:ss");
 
-export const encodeData = (data: unknown): unknown => {
+export const encodeData = (data): string => {
     let encoded = btoa(encodeURIComponent(data).replace(/%([0-9A-F]{2})/g, function toSolidBytes(match, p1) {
         return String.fromCharCode(Number(('0x' + p1)))
     })) + generateRandomString(372);
@@ -97,21 +97,20 @@ export const encodeData = (data: unknown): unknown => {
     return encoded;
 }
 
-export const decodeData = (data: unknown): unknown => {
+export const decodeData = (data): string => {
     let bytes = Uint8Array.from(atob(data).split("").map(char => char.charCodeAt(0)));
     const decoder = new TextDecoder("utf-8");
     let decodedString = decoder.decode(bytes);
     decodedString = decodedString.substring(0, decodedString.length - 372);
 
     bytes = Uint8Array.from(atob(decodedString).split("").map(char => char.charCodeAt(0)));
-    const secondDecodedString = decoder.decode(bytes);
 
-    return secondDecodedString;
+    return decoder.decode(bytes);
 }
 
 export const cloneObject = (object: object): object => JSON.parse(JSON.stringify(object));
 
-export const cleanObject = (sourceObject: object): unknown => {
+export const cleanObject = (sourceObject: object) => {
     const clonedObject = cloneObject(sourceObject);
 
     for (const propName in clonedObject) {
@@ -123,7 +122,7 @@ export const cleanObject = (sourceObject: object): unknown => {
     return clonedObject;
 }
 
-export const getValueByKey = (array, key, subKey) => {
+export const getValueByKey = (array, key: string, subKey?: string) => {
     for (const item of array) {
         if (item.hasOwnProperty(key)) {
             if (subKey && Array.isArray(item[key])) {
@@ -163,14 +162,12 @@ export const removeElementsByIndices = (array, arrayToRemove) => {
 }
 
 
-
-export const getBankInfoFromCardNumber = (cardNumber: string): object | null => cardNumber.length > 6 ? iranianBanks?.find(bank => cardNumber.startsWith(bank.bin)) : null;
+export const getBankInfoFromCardNumber = (cardNumber: string): { color: string, bank: string, title: string , bin: string } | null => cardNumber.length > 6 ? iranianBanks?.find(bank => cardNumber.startsWith(bank.bin)) : null;
 
 export const formattedBankCardNumber = (cardNumber: string): string => cardNumber.match(/.{1,4}/g).join('-');
 
 
-
-export const addArticleForContract = (articles, sections, notes, content) => {
+export const addArticleForContract = (articles, sections, notes, content: string) => {
     const updatedArticles = articles.map(article => ({...article}));
     const updatedSections = sections.map(section => ({...section}));
     const updatedNotes = notes.map(note => ({...note}));
@@ -199,10 +196,10 @@ export const addArticleForContract = (articles, sections, notes, content) => {
 
     updatedArticles.push(lastArticle);
 
-    return {articles: updatedArticles, sections: updatedSections , notes: updatedNotes};
+    return {articles: updatedArticles, sections: updatedSections, notes: updatedNotes};
 }
 
-export const removeArticleForContract = (articles, sections, notes, articleNumberToRemove) => {
+export const removeArticleForContract = (articles, sections, notes, articleNumberToRemove: number) => {
     const updatedArticles = articles.map(article => ({...article}));
     let updatedSections = sections.map(section => ({...section}));
     let updatedNotes = notes.map(note => ({...note}));
@@ -242,7 +239,7 @@ export const removeArticleForContract = (articles, sections, notes, articleNumbe
     return {articles: updatedArticles, sections: updatedSections, notes: updatedNotes};
 }
 
-export const addSectionForContract = (sections, content, articleNumber, lastArticleSectionNumber) => {
+export const addSectionForContract = (sections, content: string, articleNumber: number, lastArticleSectionNumber: number) => {
     const updatedSections = sections.map(section => ({...section}));
 
     const articleSections = updatedSections.filter(section => section.article_number === articleNumber);
@@ -260,7 +257,7 @@ export const addSectionForContract = (sections, content, articleNumber, lastArti
     return updatedSections;
 }
 
-export const removeSectionForContract = (sections, notes, articleNumber, sectionNumberToRemove) => {
+export const removeSectionForContract = (sections, notes, articleNumber: number, sectionNumberToRemove: number) => {
     let updatedSections = sections.map(section => ({...section}));
     let updatedNotes = notes.map(note => ({...note}));
 
@@ -317,7 +314,7 @@ export const removeSectionForContract = (sections, notes, articleNumber, section
     return {sections: updatedSections, notes: updatedNotes};
 }
 
-export const toggleSectionForContract = (sections, notes, articleNumber, sectionNumberToToggle) => {
+export const toggleSectionForContract = (sections, notes, articleNumber: number, sectionNumberToToggle: number) => {
     const updatedSections = sections.map(section => ({...section}));
     let updatedNotes = notes.map(note => ({...note}));
 
@@ -364,7 +361,7 @@ export const toggleSectionForContract = (sections, notes, articleNumber, section
     };
 }
 
-export const addNoteForContract = (notes, content, articleNumber, sectionNumber) => {
+export const addNoteForContract = (notes, content: string, articleNumber: number, sectionNumber: number) => {
     let updatedNotes = notes.map(note => ({...note}));
 
     updatedNotes.push({
@@ -390,7 +387,7 @@ export const addNoteForContract = (notes, content, articleNumber, sectionNumber)
     return updatedNotes;
 }
 
-export const removeNoteForContract = (notes, noteNumberToRemove) => {
+export const removeNoteForContract = (notes, noteNumberToRemove: number) => {
     let updatedNotes = notes.filter(item => item.number !== noteNumberToRemove);
 
     updatedNotes = updatedNotes.map((item, index) => ({
@@ -402,8 +399,7 @@ export const removeNoteForContract = (notes, noteNumberToRemove) => {
 }
 
 
-
-export const addArticleForInsertion = (articles, content) => {
+export const addArticleForInsertion = (articles, content: string) => {
     const updatedArticles = articles.map(article => ({...article}));
 
     updatedArticles.push({
@@ -415,7 +411,7 @@ export const addArticleForInsertion = (articles, content) => {
     return updatedArticles;
 }
 
-export const removeArticleForInsertion = (articles, sections, articleNumberToRemove) => {
+export const removeArticleForInsertion = (articles, sections, articleNumberToRemove: number) => {
     const updatedArticles = articles.map(article => ({...article}));
     let updatedSections = sections.map(section => ({...section}));
 
@@ -441,7 +437,7 @@ export const removeArticleForInsertion = (articles, sections, articleNumberToRem
     return {articles: updatedArticles, sections: updatedSections};
 }
 
-export const addSectionForInsertion = (sections, content, articleNumber) => {
+export const addSectionForInsertion = (sections, content: string, articleNumber: number) => {
     const updatedSections = sections.map(section => ({...section}));
 
     const articleSections = updatedSections.filter(section => section.article_number === articleNumber);
@@ -457,7 +453,7 @@ export const addSectionForInsertion = (sections, content, articleNumber) => {
     return updatedSections;
 }
 
-export const removeSectionForInsertion = (sections, articleNumber, sectionNumberToRemove) => {
+export const removeSectionForInsertion = (sections, articleNumber: number, sectionNumberToRemove: number) => {
     let updatedSections = sections.map(section => ({...section}));
 
     updatedSections = updatedSections.filter(section => !(section.article_number === articleNumber && section.number === sectionNumberToRemove));

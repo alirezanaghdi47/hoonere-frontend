@@ -12,7 +12,7 @@ import IconButton from "@/modules/IconButton";
 
 const DataModal = ({history}) => {
     const navigate = useNavigate();
-    const printRef = useRef();
+    const printRef = useRef(null);
 
     const _handlePrint = useReactToPrint({
         documentTitle: `affiche_${history?.affiche_date}`,

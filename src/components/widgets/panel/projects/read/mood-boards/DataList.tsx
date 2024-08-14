@@ -22,6 +22,9 @@ import {deleteProjectMoodBoardsService} from "@/services/projectMoodBoardService
 // stores
 import useAuthStore from "@/stores/authStore";
 
+// types
+import {IDeleteProjectMoodBoard} from "@/types/serviceType.ts";
+
 const MoodBoardCard = ({moodBoard, readAllProjectMoodBoardAction , filter}) => {
     const params = useParams();
     const location = useLocation();
@@ -29,7 +32,7 @@ const MoodBoardCard = ({moodBoard, readAllProjectMoodBoardAction , filter}) => {
     const {auth} = useAuthStore();
 
     const deleteProjectMoodBoardAction = useMutation({
-        mutationFn: (data) => deleteProjectMoodBoardsService(data),
+        mutationFn: (data: IDeleteProjectMoodBoard) => deleteProjectMoodBoardsService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);

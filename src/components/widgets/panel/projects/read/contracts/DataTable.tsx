@@ -40,6 +40,16 @@ import {
 
 // stores
 import useAuthStore from "@/stores/authStore";
+import {
+    IChangeProjectContractStatus,
+    IDeleteProjectOfficialContract,
+    IDeleteProjectUnOfficialContract,
+    IReadProjectOfficialContract,
+    IReadProjectUnOfficialContract
+} from "@/types/serviceType.ts";
+
+// types
+
 
 const DataTable = ({
                        readAllProjectContractAction,
@@ -52,11 +62,11 @@ const DataTable = ({
                        hideFilter
                    }) => {
     const params = useParams();
-    const parentRef = useRef();
+    const parentRef = useRef(null);
     const {auth} = useAuthStore();
 
     const readProjectOfficialContractAction = useMutation({
-        mutationFn: (data) => readProjectOfficialContractService(data),
+        mutationFn: (data: IReadProjectOfficialContract) => readProjectOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 parentRef.current.contract_info = data?.data?.contract_info;
@@ -66,7 +76,7 @@ const DataTable = ({
     });
 
     const readProjectUnOfficialContractAction = useMutation({
-        mutationFn: (data) => readProjectUnOfficialContractService(data),
+        mutationFn: (data: IReadProjectUnOfficialContract) => readProjectUnOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 parentRef.current.contract_info = data?.data?.contract_info;
@@ -76,7 +86,7 @@ const DataTable = ({
     });
 
     const changeProjectContractStatusAction = useMutation({
-        mutationFn: (data) => changeProjectContractStatusService(data),
+        mutationFn: (data: IChangeProjectContractStatus) => changeProjectContractStatusService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -92,7 +102,7 @@ const DataTable = ({
     });
 
     const deleteProjectOfficialContractAction = useMutation({
-        mutationFn: (data) => deleteProjectOfficialContractService(data),
+        mutationFn: (data: IDeleteProjectOfficialContract) => deleteProjectOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -108,7 +118,7 @@ const DataTable = ({
     });
 
     const deleteProjectUnOfficialContractAction = useMutation({
-        mutationFn: (data) => deleteProjectUnOfficialContractService(data),
+        mutationFn: (data: IDeleteProjectUnOfficialContract) => deleteProjectUnOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);

@@ -872,8 +872,8 @@ const RegularSection = ({section}) => {
     )
 }
 
-const Print = forwardRef((props, ref) => {
-    const printRef = useRef();
+const Print = forwardRef((props, ref: any) => {
+    const printRef = useRef(null);
 
     const _handlePrint = useReactToPrint({
         documentTitle: `contract-${ref?.current?.contract_info?.contract_number}`,

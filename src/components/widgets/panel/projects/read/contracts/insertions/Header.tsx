@@ -18,6 +18,9 @@ import {checkProjectContractHasSupplementService,} from "@/services/projectContr
 import useAuthStore from "@/stores/authStore";
 import useAppStore from "@/stores/appStore";
 
+// types
+import {ICheckProjectContractHasSupplementAction} from "@/types/serviceType.ts";
+
 const Header = () => {
     const params = useParams();
     const location = useLocation();
@@ -32,7 +35,7 @@ const Header = () => {
     ]);
 
     const checkProjectContractHasSupplementAction = useMutation({
-        mutationFn: (data) => checkProjectContractHasSupplementService(data),
+        mutationFn: (data: ICheckProjectContractHasSupplementAction) => checkProjectContractHasSupplementService(data),
     });
 
     useLayoutEffect(() => {

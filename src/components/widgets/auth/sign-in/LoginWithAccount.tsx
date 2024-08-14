@@ -12,7 +12,7 @@ const LoginWithAccount = ({setOtpWay}) => {
 
             <div className="d-flex flex-column justify-content-center align-items-center gap-5 w-100">
                 <Button
-                    textcolor="muted"
+                    textColor="muted"
                     isDense
                     fullWidth
                     onClick={setOtpWay}

@@ -234,7 +234,7 @@ const RouterProvider = () => {
     return (
         <>
             <Routes location={background || location}>
-                <Route path="/" element={<Navigate to={auth.panel_url + "dashboard"}/>}/>
+                <Route path="/" element={<Navigate to={auth.panel_url ? auth.panel_url + "dashboard" : "/panel/dashboard"}/>}/>
 
                 {
                     pageRoutes.map(pageRoute => (

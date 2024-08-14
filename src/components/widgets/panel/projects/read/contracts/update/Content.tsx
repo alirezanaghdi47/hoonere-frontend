@@ -22,6 +22,14 @@ import {
 // stores
 import useAuthStore from "@/stores/authStore";
 
+// types
+import {
+    IReadProjectOfficialContract,
+    IReadProjectUnOfficialContract,
+    IUpdateProjectOfficialContract,
+    IUpdateProjectUnOfficialContract
+} from "@/types/serviceType.ts";
+
 // utils
 import {updateProjectContractSchema} from "@/utils/validations.ts";
 import {getValueByKey} from "@/utils/functions.ts";
@@ -33,15 +41,15 @@ const Content = () => {
     const {auth} = useAuthStore();
 
     const readProjectOfficialContractAction = useMutation({
-        mutationFn: (data) => readProjectOfficialContractService(data),
+        mutationFn: (data: IReadProjectOfficialContract) => readProjectOfficialContractService(data),
     });
 
     const readProjectUnOfficialContractAction = useMutation({
-        mutationFn: (data) => readProjectUnOfficialContractService(data),
+        mutationFn: (data: IReadProjectUnOfficialContract) => readProjectUnOfficialContractService(data),
     });
 
     const updateProjectOfficialContractAction = useMutation({
-        mutationFn: (data) => updateProjectOfficialContractService(data),
+        mutationFn: (data: IUpdateProjectOfficialContract) => updateProjectOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -54,7 +62,7 @@ const Content = () => {
     });
 
     const updateProjectUnOfficialContractAction = useMutation({
-        mutationFn: (data) => updateProjectUnOfficialContractService(data),
+        mutationFn: (data: IUpdateProjectUnOfficialContract) => updateProjectUnOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);

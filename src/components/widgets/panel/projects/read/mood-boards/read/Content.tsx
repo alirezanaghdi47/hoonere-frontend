@@ -9,12 +9,15 @@ import DataModal from "@/components/widgets/panel/projects/read/mood-boards/read
 // services
 import {readProjectMoodBoardService} from "@/services/projectMoodBoardService.ts";
 
+// types
+import {IReadProjectMoodBoard} from "@/types/serviceType.ts";
+
 const Content = () => {
     const params = useParams();
     const [data, setData] = useState({});
 
-    const readProjectAfficheAction = useMutation({
-        mutationFn: (data) => readProjectMoodBoardService(data),
+    const readProjectMoodBoardAction = useMutation({
+        mutationFn: (data: IReadProjectMoodBoard) => readProjectMoodBoardService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 setData(data?.data?.moodboard_info);
@@ -23,13 +26,13 @@ const Content = () => {
     });
 
     useLayoutEffect(() => {
-        readProjectAfficheAction.mutate({
+        readProjectMoodBoardAction.mutate({
             project_id: params.id,
             moodboard_id: params.subId,
         })
     }, []);
 
-    return !readProjectAfficheAction.isPending && readProjectAfficheAction.data?.data?.moodboard_info && Object.keys(readProjectAfficheAction.data?.data?.moodboard_info).length > 0 && (
+    return !readProjectMoodBoardAction.isPending && readProjectMoodBoardAction.data?.data?.moodboard_info && Object.keys(readProjectMoodBoardAction.data?.data?.moodboard_info).length > 0 && (
         <DataModal moodBoard={data}/>
     )
 }

@@ -37,7 +37,7 @@ const RegisterForm = ({resetStep}) => {
 
                 changeStatusId(data.data.status_id);
 
-                navigate(auth.panel_url + "dashboard");
+                navigate(auth.panel_url ? auth.panel_url + "dashboard" : "/panel/dashboard");
             } else {
                 toast("error", data.message);
             }

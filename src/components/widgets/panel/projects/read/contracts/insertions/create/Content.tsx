@@ -18,6 +18,12 @@ import {readAllProjectContractInsertionArticleService, readAllProjectContractIns
 // stores
 import useAuthStore from "@/stores/authStore";
 
+// types
+import {
+    ICreateProjectContractInsertion,
+    IReadProjectContractForInsertion
+} from "@/types/serviceType.ts";
+
 // utils
 import {createProjectContractInsertionSchema} from "@/utils/validations.ts";
 import {getValueByKey} from "@/utils/functions.ts";
@@ -37,11 +43,11 @@ const Content = () => {
     });
 
     const readProjectContractForInsertionAction = useMutation({
-        mutationFn: (data) => readProjectContractForInsertionService(data),
+        mutationFn: (data: IReadProjectContractForInsertion) => readProjectContractForInsertionService(data),
     });
 
     const createProjectContractInsertionAction = useMutation({
-        mutationFn: (data) => createProjectContractInsertionService(data),
+        mutationFn: (data : ICreateProjectContractInsertion) => createProjectContractInsertionService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);

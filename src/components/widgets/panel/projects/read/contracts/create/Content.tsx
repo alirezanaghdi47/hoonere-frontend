@@ -18,6 +18,9 @@ import {readAllProjectContractArticleService, readAllProjectContractSectionServi
 // stores
 import useAuthStore from "@/stores/authStore";
 
+// types
+import {ICreateProjectOfficialContract, ICreateProjectUnOfficialContract} from "@/types/serviceType.ts";
+
 // utils
 import {createProjectContractSchema} from "@/utils/validations.ts";
 import {getValueByKey} from "@/utils/functions.ts";
@@ -37,7 +40,7 @@ const Content = () => {
     });
 
     const createProjectOfficialContractAction = useMutation({
-        mutationFn: (data) => createProjectOfficialContractService(data),
+        mutationFn: (data: ICreateProjectOfficialContract) => createProjectOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -50,7 +53,7 @@ const Content = () => {
     });
 
     const createProjectUnOfficialContractAction = useMutation({
-        mutationFn: (data) => createProjectUnOfficialContractService(data),
+        mutationFn: (data: ICreateProjectUnOfficialContract) => createProjectUnOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);

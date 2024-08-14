@@ -15,7 +15,7 @@ import usePart from "@/hooks/usePart";
 import {updateProfileIdentityService} from "@/services/profileService";
 
 // types
-import {IUpdateProfileIdentity} from "@/types/serviceType.ts";
+import {IUpdateProfileIdentityLegal, IUpdateProfileIdentityReal} from "@/types/serviceType.ts";
 
 // utils
 import {updateProfileRealSchema, updateProfileLegalSchema} from "@/utils/validations.ts";
@@ -28,7 +28,7 @@ const Identify = ({readMyProfileAction}) => {
     } = usePart(null, readMyProfileAction.data?.data?.user_info?.user_type === "1" ? "real" : "legal");
 
     const updateProfileIdentityAction = useMutation({
-        mutationFn: (data: IUpdateProfileIdentity) => updateProfileIdentityService(data),
+        mutationFn: (data: IUpdateProfileIdentityReal | IUpdateProfileIdentityLegal) => updateProfileIdentityService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);

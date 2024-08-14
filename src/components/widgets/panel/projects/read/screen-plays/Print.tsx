@@ -3,8 +3,8 @@ import {forwardRef, useImperativeHandle, useRef} from "react";
 import {useReactToPrint} from "react-to-print";
 import parse from "html-react-parser";
 
-const Print = forwardRef((props, ref) => {
-    const printRef = useRef();
+const Print = forwardRef((props, ref: any) => {
+    const printRef = useRef(null);
 
     const _handlePrint = useReactToPrint({
         documentTitle: `screenplay-${ref?.current?.screenplay_info?.created}`,

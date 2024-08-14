@@ -13,10 +13,13 @@ import useFilter from "@/hooks/useFilter";
 // services
 import {readAllProjectMoodBoardService} from "@/services/projectMoodBoardService.ts";
 
+// types
+import {IReadAllProjectMoodBoard} from "@/types/serviceType.ts";
+
 const Content = () => {
     const params = useParams();
 
-    const {filter, initialFilter, isOpenFilter, showFilter, hideFilter, resetFilter, changeFilter} = useFilter({
+    const {filter, initialFilter, isOpenFilter, showFilter, hideFilter, resetFilter, changeFilter} = useFilter<IReadAllProjectMoodBoard>({
         title: "",
         type: "",
         page: 1,
@@ -24,7 +27,7 @@ const Content = () => {
     });
 
     const readAllProjectMoodBoardAction = useMutation({
-        mutationFn: (data) => readAllProjectMoodBoardService(data),
+        mutationFn: (data: IReadAllProjectMoodBoard) => readAllProjectMoodBoardService(data),
     });
 
     useLayoutEffect(() => {

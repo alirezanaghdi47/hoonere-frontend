@@ -25,6 +25,13 @@ import {
 // stores
 import useAuthStore from "@/stores/authStore";
 
+// types
+import {
+    IReadProjectContractForInsertion,
+    IReadProjectContractInsertion,
+    IUpdateProjectContractInsertion
+} from "@/types/serviceType.ts";
+
 // utils
 import {updateProjectContractInsertionSchema} from "@/utils/validations.ts";
 import {getValueByKey} from "@/utils/functions.ts";
@@ -43,15 +50,15 @@ const Content = () => {
     });
 
     const readProjectContractInsertionAction = useMutation({
-        mutationFn: (data) => readProjectContractInsertionService(data),
+        mutationFn: (data: IReadProjectContractInsertion) => readProjectContractInsertionService(data),
     });
 
     const readProjectContractForInsertionAction = useMutation({
-        mutationFn: (data) => readProjectContractForInsertionService(data),
+        mutationFn: (data: IReadProjectContractForInsertion) => readProjectContractForInsertionService(data),
     });
 
     const updateProjectContractInsertionAction = useMutation({
-        mutationFn: (data) => updateProjectContractInsertionService(data),
+        mutationFn: (data: IUpdateProjectContractInsertion) => updateProjectContractInsertionService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);

@@ -25,11 +25,14 @@ import {readAllProjectMoodBoardService} from "@/services/projectMoodBoardService
 // stores
 import useAuthStore from "@/stores/authStore";
 
+// types
+import {IReadAllProjectMoodBoard} from "@/types/serviceType.ts";
+
 const ReadMoodBoardsModal = ({modal, _handleHideModal}) => {
     const params = useParams();
     const {auth} = useAuthStore();
 
-    const {filter, initialFilter, isOpenFilter, showFilter, hideFilter, resetFilter, changeFilter} = useFilter({
+    const {filter, initialFilter, isOpenFilter, showFilter, hideFilter, resetFilter, changeFilter} = useFilter<IReadAllProjectMoodBoard>({
         title: "",
         type: "",
         page: 1,
@@ -37,7 +40,7 @@ const ReadMoodBoardsModal = ({modal, _handleHideModal}) => {
     });
 
     const readAllProjectMoodBoardAction = useMutation({
-        mutationFn: (data) => readAllProjectMoodBoardService(data),
+        mutationFn: (data: IReadAllProjectMoodBoard) => readAllProjectMoodBoardService(data),
     });
 
     const attachProjectMoodBoardForm = useFormik({

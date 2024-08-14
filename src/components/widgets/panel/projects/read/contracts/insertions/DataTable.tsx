@@ -31,6 +31,13 @@ import {
 // stores
 import useAuthStore from "@/stores/authStore";
 
+// types
+import {
+    IChangeProjectContractInsertionStatus,
+    IDeleteProjectContractInsertion,
+    IReadProjectContractInsertion
+} from "@/types/serviceType.ts";
+
 const DataTable = ({
                        readAllProjectContractInsertionAction,
                        filter,
@@ -43,11 +50,11 @@ const DataTable = ({
                    }) => {
     const navigate = useNavigate();
     const params = useParams();
-    const parentRef = useRef();
+    const parentRef = useRef(null);
     const {auth} = useAuthStore();
 
     const readProjectContractInsertionAction = useMutation({
-        mutationFn: (data) => readProjectContractInsertionService(data),
+        mutationFn: (data: IReadProjectContractInsertion) => readProjectContractInsertionService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 parentRef.current.insertion_info = {
@@ -62,7 +69,7 @@ const DataTable = ({
     });
 
     const changeProjectContractInsertionStatusAction = useMutation({
-        mutationFn: (data) => changeProjectContractInsertionStatusService(data),
+        mutationFn: (data: IChangeProjectContractInsertionStatus) => changeProjectContractInsertionStatusService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);
@@ -81,7 +88,7 @@ const DataTable = ({
     });
 
     const deleteProjectContractInsertionAction = useMutation({
-        mutationFn: (data) => deleteProjectContractInsertionService(data),
+        mutationFn: (data: IDeleteProjectContractInsertion) => deleteProjectContractInsertionService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);

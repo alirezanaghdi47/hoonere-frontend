@@ -26,7 +26,7 @@ import {deleteProjectScreenPlayService, readProjectScreenPlayService} from "@/se
 import useAuthStore from "@/stores/authStore";
 
 // types
-import {IDeleteProjectScreenPlay} from "@/types/serviceType.ts";
+import {IDeleteProjectScreenPlay, IReadProjectScreenPlay} from "@/types/serviceType.ts";
 
 const DataTable = ({
                        readAllProjectScreenPlayAction,
@@ -39,11 +39,11 @@ const DataTable = ({
                        hideFilter
                    }) => {
     const params = useParams();
-    const parentRef = useRef();
+    const parentRef = useRef(null);
     const {auth} = useAuthStore();
 
     const readProjectScreenPlayAction = useMutation({
-        mutationFn: (data) => readProjectScreenPlayService(data),
+        mutationFn: (data: IReadProjectScreenPlay) => readProjectScreenPlayService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 parentRef.current.screenplay_info = data?.data?.screenplay_info;

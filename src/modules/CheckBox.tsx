@@ -24,7 +24,7 @@ const CheckBox = ({
                 name={name}
                 id={id}
                 className="form-check-input cursor-pointer"
-                value={value}
+                value={value as string}
                 checked={checked}
                 onChange={(e) => onChange(e.target.value)}
                 disabled={disabled}

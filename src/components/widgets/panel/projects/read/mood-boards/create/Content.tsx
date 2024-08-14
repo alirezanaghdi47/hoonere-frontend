@@ -16,6 +16,9 @@ import {createProjectMoodBoardService} from "@/services/projectMoodBoardService.
 // stores
 import useAuthStore from "@/stores/authStore";
 
+// types
+import {ICreateProjectMoodBoard} from "@/types/serviceType.ts";
+
 // utils
 import {createProjectMoodBoardSchema} from "@/utils/validations.ts";
 
@@ -25,7 +28,7 @@ const Content = () => {
     const {auth} = useAuthStore();
 
     const createProjectMoodBoardAction = useMutation({
-        mutationFn: (data) => createProjectMoodBoardService(data),
+        mutationFn: (data: ICreateProjectMoodBoard) => createProjectMoodBoardService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 toast("success", data.message);

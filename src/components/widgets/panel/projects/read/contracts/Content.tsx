@@ -13,6 +13,9 @@ import useFilter from "@/hooks/useFilter";
 // services
 import {readAllProjectContractService} from "@/services/projectContractService";
 
+// types
+import {IReadAllProjectContract} from "@/types/serviceType.ts";
+
 const Content = () => {
     const params = useParams();
 
@@ -24,7 +27,7 @@ const Content = () => {
         hideFilter,
         resetFilter,
         changeFilter
-    } = useFilter({
+    } = useFilter<IReadAllProjectContract>({
         contract_number: "",
         start_date: "",
         end_date: "",
@@ -33,7 +36,7 @@ const Content = () => {
     });
 
     const readAllProjectContractAction = useMutation({
-        mutationFn: (data) => readAllProjectContractService(data),
+        mutationFn: (data: IReadAllProjectContract) => readAllProjectContractService(data),
     });
 
     useLayoutEffect(() => {

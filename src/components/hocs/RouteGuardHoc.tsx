@@ -5,10 +5,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-// types
-import {TWrappedComponent} from "@/types/componentType.ts";
-
-const RouteGuardHoc = <P extends TWrappedComponent>(WrappedComponent: ComponentType<P>): ComponentType<P> => {
+const RouteGuardHoc = <P extends { [key: string]: unknown }>(WrappedComponent: ComponentType<P>): ComponentType<P> => {
     const RouteGuardHoc = (props) => {
         const navigate = useNavigate();
         const location = useLocation();

@@ -1,5 +1,5 @@
 // libraries
-import {forwardRef, useImperativeHandle, useRef} from "react";
+import {forwardRef, ReactNode, useImperativeHandle, useRef} from "react";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {useReactToPrint} from "react-to-print";
 import {format} from "date-fns-jalali";
@@ -803,12 +803,12 @@ const PaymentSection = ({section, totalPrice, payments, paymentState}) => {
 
 const RegularSection = ({section}) => {
     return (
-        <Section section={section}/>
+        <Section children={null} section={section}/>
     )
 }
 
-const Print = forwardRef((props, ref) => {
-    const printRef = useRef();
+const Print = forwardRef((props, ref: any) => {
+    const printRef = useRef(null);
 
     const _handlePrint = useReactToPrint({
         documentTitle: `insertion-${ref?.current?.insertion_info?.insertion_number}`,

@@ -188,7 +188,8 @@
     {
       "bank": "middleEast",
       "title": "بانک خاورمیانه",
-      "bin": "585947"
+      "bin": "585947",
+      "color": "#f8a438"
     },
     {
       "bank": "ghavamin",

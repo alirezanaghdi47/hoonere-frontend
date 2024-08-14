@@ -1,3 +1,5 @@
+import {getValueByKey} from "@/utils/functions.ts";
+
 export interface IAuth {
     mobile: string,
 }
@@ -20,7 +22,7 @@ export interface IVerify {
     mobile: string,
 }
 
-export interface IUpdateProfileIdentity {
+export interface IUpdateProfileIdentityReal {
     profile_img: File | object,
     national_card: File | object,
     username: string | null,
@@ -31,6 +33,22 @@ export interface IUpdateProfileIdentity {
     birthdate: string | null,
     email: string | null,
     address: string | null,
+    postal_code: string | null,
+    user_type: string,
+}
+
+export interface IUpdateProfileIdentityLegal {
+    profile_img: File | object,
+    newspaper_file: File | object,
+    username: string | null,
+    company_name: string | null,
+    register_code: string | null,
+    economic_code: string | null,
+    address: string | null,
+    postal_code: string | null,
+    telephone: string | null,
+    email: string | null,
+    representatives: unknown
     user_type: string,
 }
 
@@ -301,4 +319,194 @@ export interface IReadAllProjectAfficheHistory {
 
 export interface IReadAllProjectMoodBoard {
     project_id: string,
+    title: string | null,
+    type: string | null,
+    page: number,
+    per_page: number,
+}
+
+export interface IReadProjectMoodBoard {
+    project_id: string
+    moodboard_id: string,
+}
+
+export interface ICreateProjectMoodBoard {
+    project_id: string,
+    title: string | null,
+    type: string | null,
+    content: unknown
+}
+
+export interface IDeleteProjectMoodBoard {
+    project_id: string
+    moodboard_id: string,
+}
+
+export interface IReadAllProjectContract {
+    project_id: string,
+    contract_number: string | null,
+    start_date: string | null,
+    end_date: string | null,
+    page: number,
+    per_page: number,
+}
+
+export interface IReadProjectOfficialContract {
+    project_id: string,
+    contract_id: string,
+    get_last: number,
+}
+
+export interface IReadProjectUnOfficialContract {
+    project_id: string,
+    contract_id: string,
+    get_last: number,
+}
+
+export interface ICreateProjectOfficialContract {
+    project_id: string,
+    articles: unknown,
+    sections: unknown,
+    notes: unknown,
+    employers: unknown,
+    contractors: unknown,
+    start_date: string,
+    end_date: string,
+    total_price: string | number,
+    payment_state: string,
+    payments: unknown
+}
+
+export interface ICreateProjectUnOfficialContract {
+    project_id: string,
+    articles: unknown,
+    sections: unknown,
+    notes: unknown,
+    employers: unknown,
+    contractors: unknown,
+    start_date: string,
+    end_date: string,
+    total_price: string | number,
+    payment_state: string,
+    payments: unknown
+}
+
+export interface IUpdateProjectOfficialContract {
+    project_id: string,
+    contract_id: string,
+    articles: unknown,
+    sections: unknown,
+    notes: unknown,
+    employers: unknown,
+    contractors: unknown,
+    start_date: string,
+    end_date: string,
+    total_price: string | number,
+    payment_state: string,
+    payments: unknown
+}
+
+export interface IUpdateProjectUnOfficialContract {
+    project_id: string,
+    contract_id: string,
+    articles: unknown,
+    sections: unknown,
+    notes: unknown,
+    employers: unknown,
+    contractors: unknown,
+    start_date: string,
+    end_date: string,
+    total_price: string | number,
+    payment_state: string,
+    payments: unknown
+}
+
+export interface IReadAllProjectContractMember {
+    project_id: string,
+    foa_parent_id: string,
+    foa_child_id: string
+}
+
+export interface IChangeProjectContractStatus {
+    project_id: string,
+    contract_id: string,
+}
+
+export interface IDeleteProjectOfficialContract {
+    project_id: string,
+    contract_id: string,
+}
+
+export interface IDeleteProjectUnOfficialContract {
+    project_id: string,
+    contract_id: string,
+}
+
+export interface IReadAllProjectContractInsertion {
+    project_id: string,
+    contract_id: string,
+    insertion_number: string | null,
+    start_date: string | null,
+    end_date: string | null,
+    page: number,
+    per_page: number,
+}
+
+export interface IReadProjectContractInsertion {
+    project_id: string,
+    contract_id: string,
+    insertion_id: string,
+    get_last: number,
+}
+
+export interface IReadProjectContractForInsertion {
+    project_id: string,
+    contract_id: string,
+}
+
+export interface ICreateProjectContractInsertion {
+    project_id: string,
+    contract_id: string,
+    articles: unknown,
+    sections: unknown,
+    is_supplement: number,
+    employers: unknown,
+    contractors: unknown,
+    start_date: string,
+    end_date: string,
+    total_price: string | number,
+    payment_state: string,
+    payments: unknown
+}
+
+export interface IUpdateProjectContractInsertion {
+    project_id: string,
+    contract_id: string,
+    insertion_id: string,
+    articles: unknown,
+    sections: unknown,
+    employers: unknown,
+    contractors: unknown,
+    start_date: string,
+    end_date: string,
+    total_price: string | number,
+    payment_state: string,
+    payments: unknown
+}
+
+export interface IChangeProjectContractInsertionStatus {
+    project_id: string,
+    contract_id: string,
+    insertion_id: string,
+}
+
+export interface ICheckProjectContractHasSupplementAction {
+    project_id: string,
+    contract_id: string,
+}
+
+export interface IDeleteProjectContractInsertion {
+    project_id: string,
+    contract_id: string,
+    insertion_id: string,
 }

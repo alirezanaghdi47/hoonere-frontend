@@ -23,7 +23,7 @@ const FormData = ({createProjectMoodBoardForm, createProjectMoodBoardAction}) =>
     const {auth} = useAuthStore();
 
     const readAllProjectMoodBoardTypeAction = useMutation({
-        mutationFn: (data) => readAllProjectMoodBoardTypeService(data),
+        mutationFn: () => readAllProjectMoodBoardTypeService(),
     });
 
     useLayoutEffect(() => {

@@ -17,6 +17,9 @@ import Button from "@/modules/Button";
 import {readAllProjectContractMemberService} from "@/services/projectContractService";
 import {readAllJobService} from "@/services/publicService";
 
+// types
+import {IReadAllProjectContractMember} from "@/types/serviceType.ts";
+
 // utils
 import {createPartiesSchema} from "@/utils/validations.ts";
 
@@ -28,7 +31,7 @@ const CreateOfficialPartiesModal = ({modal, _handleHideModal, updateProjectContr
     });
 
     const readAllProjectContractMemberAction = useMutation({
-        mutationFn: (data) => readAllProjectContractMemberService(data),
+        mutationFn: (data: IReadAllProjectContractMember) => readAllProjectContractMemberService(data),
     });
 
     const createPartiesForm = useFormik({
