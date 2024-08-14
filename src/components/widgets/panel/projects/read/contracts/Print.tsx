@@ -890,7 +890,7 @@ const Print = forwardRef((props, ref) => {
         }
     }, []);
 
-    console.log(ref?.current?.contract_info)
+    // console.log(ref?.current?.contract_info)
 
     return (
         <>
@@ -943,7 +943,7 @@ const Print = forwardRef((props, ref) => {
                                                                 section={{
                                                                     number: 1,
                                                                     content: "کارفرما",
-                                                                    notes: article.notes
+                                                                    notes: ref?.current?.contract_info?.notes.filter(note => note.article_number === 1 && note.section_number === 1)
                                                                 }}
                                                                 employers={ref?.current?.contract_info?.type_id === "1" ? ref?.current?.contract_info?.members.filter(member => member.side_id === "1") : ref?.current?.contract_info?.informal_members.filter(member => member.side_id === "1")}
                                                                 typeId={ref?.current?.contract_info?.type_id}
@@ -957,7 +957,7 @@ const Print = forwardRef((props, ref) => {
                                                                 section={{
                                                                     number: 2,
                                                                     content: "مجری",
-                                                                    notes: article.notes
+                                                                    notes: ref?.current?.contract_info?.notes.filter(note => note.article_number === 1 && note.section_number === 2)
                                                                 }}
                                                                 contractors={ref?.current?.contract_info?.type_id === "1" ? ref?.current?.contract_info?.members.filter(member => member.side_id === "2") : ref?.current?.contract_info?.informal_members.filter(member => member.side_id === "2")}
                                                                 typeId={ref?.current?.contract_info?.type_id}
@@ -971,7 +971,7 @@ const Print = forwardRef((props, ref) => {
                                                                 section={{
                                                                     number: 1,
                                                                     content: ref?.current?.contract_info?.payment_state === "2" ? "کلیه پرداخت ها به مجری بر اساس فاکتور های تایید شده توسط کارفرما پرداخت میگردد" : "کلیه پرداخت ها بر اساس فاز های زیر پرداخت میگردد",
-                                                                    note: article.notes
+                                                                    notes: ref?.current?.contract_info?.notes.filter(note => note.article_number === 5 && note.section_number === 1)
                                                                 }}
                                                                 totalPrice={ref?.current?.contract_info?.total_price}
                                                                 payments={ref?.current?.contract_info?.payments}
@@ -985,7 +985,10 @@ const Print = forwardRef((props, ref) => {
                                                             return (
                                                                 <RegularSection
                                                                     key={section.id}
-                                                                    section={section}
+                                                                    section={{
+                                                                        ...section,
+                                                                        notes: ref?.current?.contract_info?.notes.filter(note => article.sections.filter(section => !((section.article_number === 5 && section.number === 1) || !section.content))?.map(section => section.article_number).includes(note.article_number) && article.sections.filter(section => !((section.article_number === 5 && section.number === 1) || !section.content))?.map(section => section.number).includes(note.section_number))
+                                                                    }}
                                                                 />
                                                             )
                                                         })
