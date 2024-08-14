@@ -123,6 +123,7 @@ export const Contract = ({children , updateProjectContractForm}) => {
                     <CreateArticle
                         articles={updateProjectContractForm.values.articles}
                         sections={updateProjectContractForm.values.sections}
+                        notes={updateProjectContractForm.values.notes}
                         resetPart={resetPart}
                         updateProjectContractForm={updateProjectContractForm}
                     />
@@ -162,6 +163,7 @@ export const Article = ({children, article, part, currentPart, resetPart , chang
                     <CreateSection
                         article={article}
                         sections={updateProjectContractForm.values.sections}
+                        lastArticleSection={updateProjectContractForm.values.sections.find(section => section.last_article === "1")}
                         resetPart={resetPart}
                         updateProjectContractForm={updateProjectContractForm}
                     />
@@ -234,17 +236,18 @@ export const Note = ({children, article, section, note, part, currentPart, reset
     )
 }
 
-export const CreateArticle = ({articles , sections, resetPart, updateProjectContractForm}) => {
+export const CreateArticle = ({articles , sections , notes, resetPart, updateProjectContractForm}) => {
     const createArticleForm = useFormik({
         initialValues: {
             article: "",
         },
         validationSchema: createArticleSchema,
         onSubmit: async (result, {resetForm}) => {
-            const data = addArticleForContract(articles, sections, result.article);
+            const data = addArticleForContract(articles, sections , notes, result.article);
 
             updateProjectContractForm.setFieldValue("articles", data.articles);
             updateProjectContractForm.setFieldValue("sections", data.sections);
+            updateProjectContractForm.setFieldValue("notes", data.notes);
 
             updateProjectContractForm.setFieldValue(`sections[${updateProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${updateProjectContractForm.values.articles.length + 1} ماده و ${updateProjectContractForm.values.articles[0].employers.length + updateProjectContractForm.values.articles[0].contractors.length} نسخه تنظیم گردیده و هر کدام از ${updateProjectContractForm.values.articles[0].employers.length + updateProjectContractForm.values.articles[0].contractors.length} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
 
@@ -359,14 +362,14 @@ export const UpdateArticle = ({article, resetPart, updateProjectContractForm}) =
     )
 }
 
-export const CreateSection = ({article,  sections, resetPart, updateProjectContractForm}) => {
+export const CreateSection = ({article,  sections , lastArticleSection, resetPart, updateProjectContractForm}) => {
     const createSectionForm = useFormik({
         initialValues: {
             section: "",
         },
         validationSchema: createSectionSchema,
         onSubmit: async (result, {resetForm}) => {
-            const data = addSectionForContract(sections, result.section, article.number);
+            const data = addSectionForContract(sections, result.section, article.number, lastArticleSection.article_number);
 
             updateProjectContractForm.setFieldValue("sections", data);
 

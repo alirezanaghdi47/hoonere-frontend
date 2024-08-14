@@ -335,6 +335,7 @@ export const readAllProjectContractInsertionService = async (data) => {
 }
 
 export const readProjectContractInsertionService = async (data) => {
+    console.log(data)
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -441,7 +442,7 @@ export const changeProjectContractInsertionStatusService = async (data) => {
 
         formData.append("data", encodeData(JSON.stringify(data)));
 
-        const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/insertions/finalizeContract", formData, {
+        const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/insertions/finalizeInsertion", formData, {
             headers: {
                 "Authorization": "Bearer " + token
             }

@@ -146,6 +146,7 @@ const Content = () => {
                 createProjectOfficialContractAction.mutate({
                     ...result,
                     project_id: params.id,
+                    sections: createProjectContractForm.values.sections.filter(section => !section.isOff),
                     employers: getValueByKey(createProjectContractForm.values.articles, "employers")?.map(item => item.id.toString()),
                     contractors: getValueByKey(createProjectContractForm.values.articles, "contractors")?.map(item => item.id.toString()),
                     start_date: getValueByKey(createProjectContractForm.values.articles, "start_date"),
@@ -158,6 +159,7 @@ const Content = () => {
                 createProjectUnOfficialContractAction.mutate({
                     ...result,
                     project_id: params.id,
+                    sections: createProjectContractForm.values.sections.filter(section => !section.isOff),
                     employers: getValueByKey(createProjectContractForm.values.articles, "employers"),
                     contractors: getValueByKey(createProjectContractForm.values.articles, "contractors"),
                     start_date: getValueByKey(createProjectContractForm.values.articles, "start_date"),
@@ -170,6 +172,7 @@ const Content = () => {
         }
     });
 
+
     useLayoutEffect(() => {
         readAllProjectContractArticleAction.mutate();
     }, []);
@@ -177,6 +180,8 @@ const Content = () => {
     useLayoutEffect(() => {
         readAllProjectContractSectionAction.mutate();
     }, []);
+
+    console.log(createProjectContractForm.values.notes)
 
     return (
         <div

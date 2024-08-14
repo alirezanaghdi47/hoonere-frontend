@@ -204,7 +204,7 @@ const EmployersSection = ({section, employers, typeId}) => {
                                     </Typography>
 
                                     {
-                                        member?.representatives.length !== 0 && (
+                                        member?.user_info?.representatives.length !== 0 && (
                                             <div
                                                 className="d-flex flex-wrap justify-content-start align-items-start gap-2 w-100">
 
@@ -217,7 +217,7 @@ const EmployersSection = ({section, employers, typeId}) => {
 
                                                 <ul className="vstack justify-content-start gap-5 p-0 m-0">
                                                     {
-                                                        member?.representatives.map((representative, index) =>
+                                                        member?.user_info?.representatives.map((representative, index) =>
                                                             <li
                                                                 key={representative.id}
                                                                 className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-2"
@@ -565,9 +565,8 @@ const ContractorsSection = ({section, contractors, typeId}) => {
                                     </Typography>
 
                                     {
-                                        member?.representatives.length !== 0 && (
-                                            <div
-                                                className="d-flex flex-wrap justify-content-start align-items-start gap-2 w-100">
+                                        member?.user_info?.representatives.length > 0 && (
+                                            <div className="d-flex flex-wrap justify-content-start align-items-start gap-2 w-100">
 
                                                 <Typography
                                                     size="sm"
@@ -578,7 +577,7 @@ const ContractorsSection = ({section, contractors, typeId}) => {
 
                                                 <ul className="vstack justify-content-start gap-5 p-0 m-0">
                                                     {
-                                                        member?.representatives.map((representative, index) =>
+                                                        member?.user_info?.representatives.map((representative, index) =>
                                                             <li
                                                                 key={representative.id}
                                                                 className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-2"
@@ -982,7 +981,7 @@ const Print = forwardRef((props, ref) => {
                                                     }
 
                                                     {
-                                                        article.sections.filter(section => !(section.article_number === 5 && section.number === 1)).map(section => {
+                                                        article.sections.filter(section => !((section.article_number === 5 && section.number === 1) || !section.content)).map(section => {
                                                             return (
                                                                 <RegularSection
                                                                     key={section.id}

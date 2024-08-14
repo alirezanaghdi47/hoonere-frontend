@@ -182,7 +182,7 @@ const EmployersSection = ({section, employers, typeId}) => {
                                     </Typography>
 
                                     {
-                                        member?.representatives.length !== 0 && (
+                                        member?.user_info?.representatives.length !== 0 && (
                                             <div
                                                 className="d-flex flex-wrap justify-content-start align-items-start gap-2 w-100">
 
@@ -195,7 +195,7 @@ const EmployersSection = ({section, employers, typeId}) => {
 
                                                 <ul className="vstack justify-content-start gap-5 p-0 m-0">
                                                     {
-                                                        member?.representatives.map((representative, index) =>
+                                                        member?.user_info?.representatives.map((representative, index) =>
                                                             <li
                                                                 key={representative.id}
                                                                 className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-2"
@@ -532,7 +532,7 @@ const ContractorsSection = ({section, contractors, typeId}) => {
                                     </Typography>
 
                                     {
-                                        member?.representatives.length !== 0 && (
+                                        member?.user_info?.representatives.length !== 0 && (
                                             <div
                                                 className="d-flex flex-wrap justify-content-start align-items-start gap-2 w-100">
 
@@ -545,7 +545,7 @@ const ContractorsSection = ({section, contractors, typeId}) => {
 
                                                 <ul className="vstack justify-content-start gap-5 p-0 m-0">
                                                     {
-                                                        member?.representatives.map((representative, index) =>
+                                                        member?.user_info?.representatives.map((representative, index) =>
                                                             <li
                                                                 key={representative.id}
                                                                 className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-2"
@@ -811,7 +811,7 @@ const Print = forwardRef((props, ref) => {
     const printRef = useRef();
 
     const _handlePrint = useReactToPrint({
-        documentTitle: `contract-${ref?.current?.contract_info?.contract_number}`,
+        documentTitle: `insertion-${ref?.current?.insertion_info?.insertion_number}`,
         content: () => printRef.current,
     });
 
@@ -825,7 +825,7 @@ const Print = forwardRef((props, ref) => {
         }
     }, []);
 
-    console.log(ref?.current?.contract_info)
+    console.log(ref?.current?.insertion_info)
 
     return (
         <>
@@ -866,7 +866,7 @@ const Print = forwardRef((props, ref) => {
                             <div className="page">
                                 <Contract>
                                     {
-                                        ref?.current?.contract_info?.articles.map(article =>
+                                        ref?.current?.insertion_info?.articles.map(article =>
                                             <Article
                                                 key={article.id}
                                                 article={article}
@@ -880,8 +880,8 @@ const Print = forwardRef((props, ref) => {
                                                                     content: "کارفرما",
                                                                     notes: article.notes
                                                                 }}
-                                                                employers={ref?.current?.contract_info?.type_id === "1" ? ref?.current?.contract_info?.members.filter(member => member.side_id === "1") : ref?.current?.contract_info?.informal_members.filter(member => member.side_id === "1")}
-                                                                typeId={ref?.current?.contract_info?.type_id}
+                                                                employers={ref?.current?.insertion_info?.type_id === "1" ? ref?.current?.insertion_info?.members.filter(member => member.side_id === "1") : ref?.current?.insertion_info?.informal_members.filter(member => member.side_id === "1")}
+                                                                typeId={ref?.current?.insertion_info?.type_id}
                                                             />
                                                         )
                                                     }
@@ -894,8 +894,8 @@ const Print = forwardRef((props, ref) => {
                                                                     content: "مجری",
                                                                     notes: article.notes
                                                                 }}
-                                                                contractors={ref?.current?.contract_info?.type_id === "1" ? ref?.current?.contract_info?.members.filter(member => member.side_id === "2") : ref?.current?.contract_info?.informal_members.filter(member => member.side_id === "2")}
-                                                                typeId={ref?.current?.contract_info?.type_id}
+                                                                contractors={ref?.current?.insertion_info?.type_id === "1" ? ref?.current?.insertion_info?.members.filter(member => member.side_id === "2") : ref?.current?.insertion_info?.informal_members.filter(member => member.side_id === "2")}
+                                                                typeId={ref?.current?.insertion_info?.type_id}
                                                             />
                                                         )
                                                     }
@@ -905,12 +905,12 @@ const Print = forwardRef((props, ref) => {
                                                             <PaymentSection
                                                                 section={{
                                                                     number: 1,
-                                                                    content: ref?.current?.contract_info?.payment_state === "2" ? "کلیه پرداخت ها به مجری بر اساس فاکتور های تایید شده توسط کارفرما پرداخت میگردد" : "کلیه پرداخت ها بر اساس فاز های زیر پرداخت میگردد",
+                                                                    content: ref?.current?.insertion_info?.payment_state === "2" ? "کلیه پرداخت ها به مجری بر اساس فاکتور های تایید شده توسط کارفرما پرداخت میگردد" : "کلیه پرداخت ها بر اساس فاز های زیر پرداخت میگردد",
                                                                     note: article.notes
                                                                 }}
-                                                                totalPrice={ref?.current?.contract_info?.total_price}
-                                                                payments={ref?.current?.contract_info?.payments}
-                                                                paymentState={ref?.current?.contract_info?.payment_state}
+                                                                totalPrice={ref?.current?.insertion_info?.total_price}
+                                                                payments={ref?.current?.insertion_info?.payments}
+                                                                paymentState={ref?.current?.insertion_info?.payment_state}
                                                             />
                                                         )
                                                     }
@@ -993,7 +993,7 @@ const Print = forwardRef((props, ref) => {
                                         >
                                             <ul className='vstack list-unstyled gap-5 w-100 mb-0 p-0'>
                                                 {
-                                                    ref?.current?.contract_info?.type_id === "1" ? ref?.current?.contract_info?.members.filter(member => member.side_id === "1")?.map(employer =>
+                                                    ref?.current?.insertion_info?.type_id === "1" ? ref?.current?.insertion_info?.members.filter(member => member.side_id === "1")?.map(employer =>
                                                         <li
                                                             key={employer.id}
                                                             className=""
@@ -1020,7 +1020,7 @@ const Print = forwardRef((props, ref) => {
                                                                 )
                                                             }
                                                         </li>
-                                                    ) : ref?.current?.contract_info?.informal_members.filter(member => member.side_id === "1")?.map(employer =>
+                                                    ) : ref?.current?.insertion_info?.informal_members.filter(member => member.side_id === "1")?.map(employer =>
                                                         <li
                                                             key={employer.id}
                                                             className=""
@@ -1058,7 +1058,7 @@ const Print = forwardRef((props, ref) => {
                                         >
                                             <ul className='vstack list-unstyled gap-5 w-100 mb-0 p-0'>
                                                 {
-                                                    ref?.current?.contract_info?.type_id === "1" ? ref?.current?.contract_info?.members.filter(member => member.side_id === "2")?.map(contractor =>
+                                                    ref?.current?.insertion_info?.type_id === "1" ? ref?.current?.insertion_info?.members.filter(member => member.side_id === "2")?.map(contractor =>
                                                         <li
                                                             key={contractor.id}
                                                             className=""
@@ -1085,7 +1085,7 @@ const Print = forwardRef((props, ref) => {
                                                                 )
                                                             }
                                                         </li>
-                                                    ) : ref?.current?.contract_info?.informal_members.filter(member => member.side_id === "2")?.map(contractor =>
+                                                    ) : ref?.current?.insertion_info?.informal_members.filter(member => member.side_id === "2")?.map(contractor =>
                                                         <li
                                                             key={contractor.id}
                                                             className=""

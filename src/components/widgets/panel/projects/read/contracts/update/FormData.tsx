@@ -4,9 +4,12 @@ import {LuPen, LuTrash} from "react-icons/lu";
 
 // components
 import {Contract, Article} from "@/components/widgets/panel/projects/read/contracts/update/Actions.tsx";
-import CreateEmployerFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateEmployerFormData.tsx";
-import CreateContractorFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateContractorFormData.tsx";
-import CreateExecutionTimeFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateExecutionTimeFormData.tsx";
+import CreateEmployerFormData
+    from "@/components/widgets/panel/projects/read/contracts/update/CreateEmployerFormData.tsx";
+import CreateContractorFormData
+    from "@/components/widgets/panel/projects/read/contracts/update/CreateContractorFormData.tsx";
+import CreateExecutionTimeFormData
+    from "@/components/widgets/panel/projects/read/contracts/update/CreateExecutionTimeFormData.tsx";
 import CreateAmountFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateAmountFormData.tsx";
 import CreatePaymentFormData from "@/components/widgets/panel/projects/read/contracts/update/CreatePaymentFormData.tsx";
 import CreateRegularFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateRegularFormData.tsx";
@@ -25,7 +28,7 @@ import useAuthStore from "@/stores/authStore";
 // utils
 import {removeArticleForContract} from "@/utils/functions.ts";
 
-const FormData = ({readProjectContractSectionAction , updateProjectContractForm, updateProjectContractAction}) => {
+const FormData = ({updateProjectContractForm, updateProjectContractAction}) => {
     const params = useParams();
     const {auth} = useAuthStore();
     const {
@@ -117,7 +120,6 @@ const FormData = ({readProjectContractSectionAction , updateProjectContractForm,
                                                                 key={`${article.number}-1`}
                                                                 article={article}
                                                                 section={{number: 1, article_number: 1, content: ""}}
-                                                                readProjectContractSectionAction={readProjectContractSectionAction}
                                                                 updateProjectContractForm={updateProjectContractForm}
                                                             />
                                                         )
@@ -129,7 +131,6 @@ const FormData = ({readProjectContractSectionAction , updateProjectContractForm,
                                                                 key={`${article.number}-2`}
                                                                 article={article}
                                                                 section={{number: 2, article_number: 1, content: ""}}
-                                                                readProjectContractSectionAction={readProjectContractSectionAction}
                                                                 updateProjectContractForm={updateProjectContractForm}
                                                             />
                                                         )
@@ -169,7 +170,7 @@ const FormData = ({readProjectContractSectionAction , updateProjectContractForm,
                                                     }
 
                                                     {
-                                                        updateProjectContractForm.values.sections.filter(section => section.article_number === article.number && !section.isStatic).map(section =>
+                                                        updateProjectContractForm.values.sections.filter(section => !([3, 4, 5].includes(section.article_number) && section.number === 1)).filter(section => section.article_number === article.number && section.content).map(section =>
                                                             <CreateRegularFormData
                                                                 key={`${article.number}-${section.number}`}
                                                                 article={article}

@@ -164,6 +164,9 @@ const Content = () => {
         });
     }, []);
 
+    console.log(createProjectContractInsertionForm.values.sections)
+
+
     return (
         <div
             className="d-flex flex-column flex-lg-row justify-content-start align-items-start gap-5 w-100 mw-950px p-5">

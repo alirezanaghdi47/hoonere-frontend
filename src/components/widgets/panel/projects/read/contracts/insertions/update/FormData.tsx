@@ -25,7 +25,7 @@ import useAuthStore from "@/stores/authStore";
 // utils
 import {removeArticleForInsertion} from "@/utils/functions.ts";
 
-const FormData = ({readProjectContractSectionAction , updateProjectContractInsertionForm, updateProjectContractInsertionAction}) => {
+const FormData = ({updateProjectContractInsertionForm, updateProjectContractInsertionAction}) => {
     const location = useLocation();
     const params = useParams();
     const {auth} = useAuthStore();
@@ -165,7 +165,7 @@ const FormData = ({readProjectContractSectionAction , updateProjectContractInser
                                                     }
 
                                                     {
-                                                        updateProjectContractInsertionForm.values.sections.filter(section => section.article_number === article.number && !section.isStatic).map(section =>
+                                                        updateProjectContractInsertionForm.values.sections.filter(section => !(section.article_number === 2 && section.number === 1)).filter(section => section.article_number === article.number && section.content).map(section =>
                                                             <CreateRegularFormData
                                                                 key={`${article.number}-${section.number}`}
                                                                 article={article}

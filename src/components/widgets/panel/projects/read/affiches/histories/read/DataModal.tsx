@@ -170,35 +170,35 @@ const DataModal = ({history}) => {
                             </tr>
 
                             {/* کارگردان و تهیه کننده */}
-                            <tr>
-                                <td
-                                    colSpan={4}
-                                    rowSpan={1}
-                                    className="text-start align-center border-bottom-2 border-solid border-secondary p-2"
-                                >
-                                    <Typography
-                                        size="xs"
-                                        color="dark"
-                                    >
-                                        کارگردان :
-                                        &nbsp;
-                                    </Typography>
-                                </td>
+                            {/*<tr>*/}
+                            {/*    <td*/}
+                            {/*        colSpan={4}*/}
+                            {/*        rowSpan={1}*/}
+                            {/*        className="text-start align-center border-bottom-2 border-solid border-secondary p-2"*/}
+                            {/*    >*/}
+                            {/*        <Typography*/}
+                            {/*            size="xs"*/}
+                            {/*            color="dark"*/}
+                            {/*        >*/}
+                            {/*            کارگردان :*/}
+                            {/*            &nbsp;*/}
+                            {/*        </Typography>*/}
+                            {/*    </td>*/}
 
-                                <td
-                                    colSpan={4}
-                                    rowSpan={1}
-                                    className="text-start align-center border-bottom-2 border-solid border-secondary p-2"
-                                >
-                                    <Typography
-                                        size="xs"
-                                        color="dark"
-                                    >
-                                        تهیه کننده :
-                                        &nbsp;
-                                    </Typography>
-                                </td>
-                            </tr>
+                            {/*    <td*/}
+                            {/*        colSpan={4}*/}
+                            {/*        rowSpan={1}*/}
+                            {/*        className="text-start align-center border-bottom-2 border-solid border-secondary p-2"*/}
+                            {/*    >*/}
+                            {/*        <Typography*/}
+                            {/*            size="xs"*/}
+                            {/*            color="dark"*/}
+                            {/*        >*/}
+                            {/*            تهیه کننده :*/}
+                            {/*            &nbsp;*/}
+                            {/*        </Typography>*/}
+                            {/*    </td>*/}
+                            {/*</tr>*/}
 
                             {/* وضعیت آفیش */}
                             <tr>
@@ -395,7 +395,7 @@ const DataModal = ({history}) => {
                                                             size="xs"
                                                             color="dark"
                                                         >
-                                                            {actor?.info?.first_name + " " + actor?.info?.last_name}
+                                                            {actor.info?.is_fake === "0" ? actor.info?.user_type ? actor.info?.user_type === "1" ? actor.info?.first_name + " " + actor.info?.last_name : actor.info?.company_name : actor.info?.company_name ? actor.info?.company_name : actor.info?.first_name + " " + actor.info?.last_name : actor.info?.first_name + " " + actor.info?.last_name}
                                                         </Typography>
                                                     </td>
 
@@ -827,7 +827,7 @@ const DataModal = ({history}) => {
                                                             size="xs"
                                                             color="dark"
                                                         >
-                                                            {member?.info?.first_name + " " + member?.info?.last_name}
+                                                            {member.info?.is_fake === "0" ? member.info?.user_type ? member.info?.user_type === "1" ? member.info?.first_name + " " + member.info?.last_name : member.info?.company_name : member.info?.company_name ? member.info?.company_name : member.info?.first_name + " " + member.info?.last_name : member.info?.first_name + " " + member.info?.last_name}
                                                         </Typography>
                                                     </td>
 
@@ -1064,7 +1064,7 @@ const DataModal = ({history}) => {
                                                             size="xs"
                                                             color="dark"
                                                         >
-                                                            {reception?.info?.first_name + " " + reception?.info?.last_name}
+                                                            {reception.info?.is_fake === "0" ? reception.info?.user_type ? reception.info?.user_type === "1" ? reception.info?.first_name + " " + reception.info?.last_name : reception.info?.company_name : reception.info?.company_name ? reception.info?.company_name : reception.info?.first_name + " " + reception.info?.last_name : reception.info?.first_name + " " + reception.info?.last_name}
                                                         </Typography>
                                                     </td>
 

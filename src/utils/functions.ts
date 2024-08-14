@@ -164,19 +164,20 @@ export const removeElementsByIndices = (array, arrayToRemove) => {
 
 
 
-
 export const getBankInfoFromCardNumber = (cardNumber: string): object | null => cardNumber.length > 6 ? iranianBanks?.find(bank => cardNumber.startsWith(bank.bin)) : null;
 
 export const formattedBankCardNumber = (cardNumber: string): string => cardNumber.match(/.{1,4}/g).join('-');
 
 
 
-export const addArticleForContract = (articles, sections, content) => {
+export const addArticleForContract = (articles, sections, notes, content) => {
     const updatedArticles = articles.map(article => ({...article}));
     const updatedSections = sections.map(section => ({...section}));
+    const updatedNotes = notes.map(note => ({...note}));
 
     const lastArticle = updatedArticles.slice(-1)[0];
     const lastArticleSections = updatedSections.filter(section => section.last_article === "1");
+    const lastArticleNotes = updatedNotes.filter(note => note.article_number === lastArticle.number && lastArticleSections.map(section => section.number).includes(note.section_number));
 
     updatedArticles.pop();
 
@@ -190,11 +191,15 @@ export const addArticleForContract = (articles, sections, content) => {
         section.article_number++;
     });
 
+    lastArticleNotes.forEach(note => {
+        note.article_number++;
+    })
+
     lastArticle.number++;
 
     updatedArticles.push(lastArticle);
 
-    return {articles: updatedArticles, sections: updatedSections};
+    return {articles: updatedArticles, sections: updatedSections , notes: updatedNotes};
 }
 
 export const removeArticleForContract = (articles, sections, notes, articleNumberToRemove) => {
@@ -237,7 +242,7 @@ export const removeArticleForContract = (articles, sections, notes, articleNumbe
     return {articles: updatedArticles, sections: updatedSections, notes: updatedNotes};
 }
 
-export const addSectionForContract = (sections, content, articleNumber) => {
+export const addSectionForContract = (sections, content, articleNumber, lastArticleSectionNumber) => {
     const updatedSections = sections.map(section => ({...section}));
 
     const articleSections = updatedSections.filter(section => section.article_number === articleNumber);
@@ -249,8 +254,8 @@ export const addSectionForContract = (sections, content, articleNumber) => {
         isAdded: true,
         isOff: false,
         isStatic: false,
-        last_article: "0"
-    })
+        last_article: articleNumber === lastArticleSectionNumber ? "1" : "0"
+    });
 
     return updatedSections;
 }
@@ -360,7 +365,7 @@ export const toggleSectionForContract = (sections, notes, articleNumber, section
 }
 
 export const addNoteForContract = (notes, content, articleNumber, sectionNumber) => {
-    const updatedNotes = notes.map(note => ({...note}));
+    let updatedNotes = notes.map(note => ({...note}));
 
     updatedNotes.push({
         number: updatedNotes.length + 1,
@@ -368,7 +373,19 @@ export const addNoteForContract = (notes, content, articleNumber, sectionNumber)
         section_number: sectionNumber,
         content: content,
         isAdded: true
-    })
+    });
+
+    updatedNotes = updatedNotes.sort((a, b) => {
+        if (a.article_number !== b.article_number) {
+            return a.article_number - b.article_number;
+        } else {
+            return a.section_number - b.section_number;
+        }
+    });
+
+    for (let i = 0; i < updatedNotes.length; i++) {
+        updatedNotes[i].number = i + 1;
+    }
 
     return updatedNotes;
 }

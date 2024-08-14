@@ -66,7 +66,7 @@ const Content = () => {
     const updateProjectContractInsertionForm = useFormik({
         enableReinitialize: true,
         initialValues: {
-            articles: readAllProjectContractInsertionArticleAction.data?.data?.insertion_default_articles ? readAllProjectContractInsertionArticleAction.data?.data?.insertion_default_articles.map(article => {
+            articles: readProjectContractInsertionAction.data?.data?.insertion_info?.articles ? readProjectContractInsertionAction.data?.data?.insertion_info?.articles.map(article => {
                 if (article.number === 1) {
                     return ({
                         ...article,
@@ -78,21 +78,21 @@ const Content = () => {
                     return ({
                         ...article,
                         is_added: "0",
-                        start_date: readProjectContractForInsertionAction.data?.data?.contract_info?.start_date,
-                        end_date: readProjectContractForInsertionAction.data?.data?.contract_info?.end_date
+                        start_date: readProjectContractInsertionAction.data?.data?.insertion_info?.start_date,
+                        end_date: readProjectContractInsertionAction.data?.data?.insertion_info?.end_date
                     });
                 } else if (article.number === 3) {
                     return ({
                         ...article,
                         is_added: "0",
-                        total_price: readProjectContractForInsertionAction.data?.data?.contract_info?.total_price,
+                        total_price: readProjectContractInsertionAction.data?.data?.insertion_info?.total_price,
                     });
                 } else if (article.number === 4) {
                     return ({
                         ...article,
                         is_added: "0",
-                        payment_state: readProjectContractForInsertionAction.data?.data?.contract_info?.payment_state,
-                        payments: readProjectContractForInsertionAction.data?.data?.contract_info?.payments.map(payment => ({
+                        payment_state: readProjectContractInsertionAction.data?.data?.insertion_info?.payment_state,
+                        payments: readProjectContractInsertionAction.data?.data?.insertion_info?.payments.map(payment => ({
                             date: payment.date,
                             percent: Number(payment.percent)
                         })),
@@ -100,31 +100,11 @@ const Content = () => {
                 } else {
                     return ({
                         ...article,
-                        is_added: "0"
+                        is_added: "1"
                     });
                 }
             }) : [],
-            sections: readAllProjectContractInsertionSectionAction.data?.data?.insertion_ready_sections ? readAllProjectContractInsertionSectionAction.data?.data?.insertion_ready_sections.map(section => {
-                if (
-                    (section.number === 1 && section.article_number === 1) ||
-                    (section.number === 2 && section.article_number === 1) ||
-                    (section.number === 1 && section.article_number === 2) ||
-                    (section.number === 1 && section.article_number === 3) ||
-                    (section.number === 1 && section.article_number === 4)
-                ) {
-                    return ({
-                        ...section,
-                        isAdded: false,
-                        isStatic: true
-                    });
-                } else {
-                    return ({
-                        ...section,
-                        isAdded: false,
-                        isStatic: false
-                    });
-                }
-            }) : [],
+            sections: readProjectContractInsertionAction.data?.data?.insertion_info?.articles ? readProjectContractInsertionAction.data?.data?.insertion_info?.articles.flatMap(article => article.sections) : [],
         },
         validationSchema: updateProjectContractInsertionSchema,
         onSubmit: async (result) => {
@@ -139,6 +119,7 @@ const Content = () => {
                 project_id: params.id,
                 contract_id: params.subId,
                 insertion_id: params.subSubId,
+                // sections: result.sections.filter(section => !section.content),
                 employers: getValueByKey(updateProjectContractInsertionForm.values.articles, "employers")?.map(item => item.id.toString()),
                 contractors: getValueByKey(updateProjectContractInsertionForm.values.articles, "contractors")?.map(item => item.id.toString()),
                 start_date: getValueByKey(updateProjectContractInsertionForm.values.articles, "start_date"),
@@ -173,8 +154,6 @@ const Content = () => {
             get_last: 1,
         });
     }, []);
-    
-    console.log(readProjectContractInsertionAction.data?.data)
 
     return (
         <div
@@ -193,7 +172,6 @@ const Content = () => {
                 {
                     !readProjectContractInsertionAction.isPending && (
                         <FormData
-                            readProjectContractSectionAction={readProjectContractInsertionAction}
                             updateProjectContractInsertionForm={updateProjectContractInsertionForm}
                             updateProjectContractInsertionAction={updateProjectContractInsertionAction}
                         />

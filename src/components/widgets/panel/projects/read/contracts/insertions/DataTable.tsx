@@ -24,7 +24,6 @@ import Chip from "@/modules/Chip";
 // services
 import {
     changeProjectContractInsertionStatusService,
-    changeProjectContractStatusService,
     deleteProjectContractInsertionService,
     readProjectContractInsertionService,
 } from "@/services/projectContractService";
@@ -50,7 +49,12 @@ const DataTable = ({
         mutationFn: (data) => readProjectContractInsertionService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                parentRef.current.contract_info = {...data?.data?.contract_info, employers: [], contractors: []};
+                parentRef.current.insertion_info = {
+                    ...data?.data?.insertion_info,
+                    type_id: data?.data?.contract_info?.type_id,
+                    members: data?.data?.contract_info?.members,
+                    informal_members: data?.data?.contract_info?.informal_members
+                };
                 parentRef.current.print();
             }
         }
@@ -99,10 +103,10 @@ const DataTable = ({
             },
             {
                 accessorKey: 'insertion_number',
-                header: () => 'شماره الحاقیه',
+                header: () => 'شماره الحاقیه یا متمم',
                 cell: ({row}) => (
                     <div
-                        className="w-50px"
+                        className="w-75px"
                         data-tooltip-id="my-tooltip"
                         data-tooltip-content={row.original.insertion_number}
                     >
@@ -116,6 +120,22 @@ const DataTable = ({
                     </div>
                 ),
                 sortingFn: (rowA, rowB, columnId) => rowA.original.insertion_number - rowB.original.insertion_number
+            },
+            {
+                accessorKey: 'status_info',
+                header: () => 'نوع',
+                cell: ({row}) => (
+                    <div className="w-50px">
+                        <Typography
+                            size="xs"
+                            color="dark"
+                            truncate={1}
+                        >
+                            {row.original.is_supplement === "0" ? "الحاقیه" : "متمم"}
+                        </Typography>
+                    </div>
+                ),
+                sortingFn: (rowA, rowB, columnId) => rowA.original?.status_info.title.localeCompare(rowB.original?.status_info.title)
             },
             {
                 accessorKey: 'start_date',
@@ -192,7 +212,7 @@ const DataTable = ({
                 cell: ({row}) => (
                     <div className="d-flex justify-content-end align-items-center gap-2 w-100">
                         {
-                            row.original.type_id === "1" && row.original.status_id === "1" && (
+                            row.original.status_id === "1" && (
                                 <IconButton
                                     color="light-success"
                                     size="sm"
@@ -216,7 +236,7 @@ const DataTable = ({
                             color="light-dark"
                             size="sm"
                             data-tooltip-id="my-tooltip"
-                            data-tooltip-content={` دانلود ${row.original.is_supplement === 1 ? 'متمم' : 'الحاقیه'} `}
+                            data-tooltip-content={` دانلود ${row.original.is_supplement === "1" ? 'متمم' : 'الحاقیه'} `}
                             onClick={() => readProjectContractInsertionAction.mutate({
                                 project_id: params.id,
                                 contract_id: row.original.contract_id,
@@ -237,7 +257,7 @@ const DataTable = ({
                         }
 
                         <IconButton
-                            href={row.original.is_supplement === 1 ? auth.panel_url + "projects/" + params.id + "/contracts/" + row.original.contract_id + "/insertions/" + row.original.id + "/update#is_supplement=1" : auth.panel_url + "projects/" + params.id + "/contracts/" + row.original.contract_id + "/insertions/" + row.original.id + "/update#is_supplement=0"}
+                            href={row.original.is_supplement === "1" ? auth.panel_url + "projects/" + params.id + "/contracts/" + row.original.contract_id + "/insertions/" + row.original.id + "/update#is_supplement=1" : auth.panel_url + "projects/" + params.id + "/contracts/" + row.original.contract_id + "/insertions/" + row.original.id + "/update#is_supplement=0"}
                             color="light-warning"
                             size="sm"
                             data-tooltip-id="my-tooltip"
