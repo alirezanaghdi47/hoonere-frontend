@@ -335,7 +335,6 @@ export const readAllProjectContractInsertionService = async (data) => {
 }
 
 export const readProjectContractInsertionService = async (data) => {
-    console.log(data)
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;

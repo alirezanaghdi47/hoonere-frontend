@@ -890,8 +890,6 @@ const Print = forwardRef((props, ref) => {
         }
     }, []);
 
-    // console.log(ref?.current?.contract_info)
-
     return (
         <>
             <style>

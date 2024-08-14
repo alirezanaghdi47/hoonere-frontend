@@ -825,8 +825,6 @@ const Print = forwardRef((props, ref) => {
         }
     }, []);
 
-    console.log(ref?.current?.insertion_info)
-
     return (
         <>
             <style>

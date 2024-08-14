@@ -119,7 +119,6 @@ const Content = () => {
                 project_id: params.id,
                 contract_id: params.subId,
                 insertion_id: params.subSubId,
-                // sections: result.sections.filter(section => !section.content),
                 employers: getValueByKey(updateProjectContractInsertionForm.values.articles, "employers")?.map(item => item.id.toString()),
                 contractors: getValueByKey(updateProjectContractInsertionForm.values.articles, "contractors")?.map(item => item.id.toString()),
                 start_date: getValueByKey(updateProjectContractInsertionForm.values.articles, "start_date"),
