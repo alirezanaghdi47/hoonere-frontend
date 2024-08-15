@@ -1,3 +1,6 @@
+// libraries
+import {useParams} from "react-router-dom";
+
 // modules
 import SelectBox from "@/modules/SelectBox";
 import Pagination from "@/modules/Pagination";
@@ -10,6 +13,8 @@ const options = [
 ];
 
 const Finder = ({readAllProjectContractInsertionAction, filter, changeFilter}) => {
+    const params = useParams();
+
     return (
         <div
             className={`d-flex flex-wrap ${readAllProjectContractInsertionAction.data?.data?.pagination?.total > filter.per_page ? "justify-content-center justify-content-sm-between" : "justify-content-start"} align-items-center w-100 gap-5`}>
@@ -21,7 +26,11 @@ const Finder = ({readAllProjectContractInsertionAction, filter, changeFilter}) =
                     options={options}
                     onChange={(value) => {
                         changeFilter({per_page: value});
-                        readAllProjectContractInsertionAction.mutate({per_page: value});
+                        readAllProjectContractInsertionAction.mutate({
+                            ...filter,
+                            per_page: value,
+                            project_id: params.id
+                        });
                     }}
                 />
             </div>
@@ -34,7 +43,11 @@ const Finder = ({readAllProjectContractInsertionAction, filter, changeFilter}) =
                         total={readAllProjectContractInsertionAction.data?.data?.pagination?.total}
                         onChange={(value) => {
                             changeFilter({page: value});
-                            readAllProjectContractInsertionAction.mutate({page: value});
+                            readAllProjectContractInsertionAction.mutate({
+                                ...filter,
+                                page: value,
+                                project_id: params.id
+                            });
                         }}
                     />
                 )

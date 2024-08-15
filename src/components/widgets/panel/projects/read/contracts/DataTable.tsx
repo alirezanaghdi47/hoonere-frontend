@@ -296,10 +296,27 @@ const DataTable = ({
                                     size="sm"
                                     data-tooltip-id="my-tooltip"
                                     data-tooltip-content="ثبت نهایی"
-                                    onClick={() => changeProjectContractStatusAction.mutate({
-                                        project_id: row.original.project_id,
-                                        contract_id: row.original.id.toString(),
-                                    })}
+                                    onClick={() => {
+                                        dialog(
+                                            "ثبت نهایی قرارداد",
+                                            "آیا میخواهید این قرارداد را ثبت نهایی کنید ؟",
+                                            "info",
+                                            {
+                                                show: true,
+                                                text: "بله",
+                                                color: "success",
+                                            },
+                                            {
+                                                show: true,
+                                                text: "خیر",
+                                                color: "light-danger",
+                                            },
+                                            async () => changeProjectContractStatusAction.mutate({
+                                                project_id: row.original.project_id,
+                                                contract_id: row.original.id.toString(),
+                                            })
+                                        )
+                                    }}
                                 >
                                     <LuThumbsUp
                                         size={20}

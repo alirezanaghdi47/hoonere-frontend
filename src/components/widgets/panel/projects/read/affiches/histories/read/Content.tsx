@@ -34,7 +34,7 @@ const Content = () => {
         mutationFn: (data: IReadProjectAffiche) => readProjectAfficheService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                setData(prevState => ({...prevState , ...data?.data?.affiche_info}));
+                setData(prevState => ({...prevState , ...data?.data?.affiche_info , project_title: data?.data?.project_title}));
             }
         }
     });

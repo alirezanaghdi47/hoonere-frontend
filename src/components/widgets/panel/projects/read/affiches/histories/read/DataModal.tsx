@@ -103,7 +103,7 @@ const DataModal = ({history}) => {
                                         size="xs"
                                         color="dark"
                                     >
-                                        جلسه :
+                                        شماره آفیش :
                                         &nbsp;
                                         {history?.number_string}
                                     </Typography>
@@ -134,7 +134,7 @@ const DataModal = ({history}) => {
                                         color="dark"
                                         isBold
                                     >
-                                        {history?.title}
+                                        {history?.project_title}
                                     </Typography>
                                 </td>
 
@@ -203,7 +203,7 @@ const DataModal = ({history}) => {
                             {/* وضعیت آفیش */}
                             <tr>
                                 <td
-                                    colSpan={3}
+                                    colSpan={2}
                                     rowSpan={1}
                                     className="text-start align-center border-right-2 border-solid border-secondary p-2"
                                 >
@@ -218,7 +218,7 @@ const DataModal = ({history}) => {
                                 </td>
 
                                 <td
-                                    colSpan={3}
+                                    colSpan={2}
                                     rowSpan={1}
                                     className="text-start align-center border-right-2 border-solid border-secondary p-2"
                                 >
@@ -233,7 +233,7 @@ const DataModal = ({history}) => {
                                 </td>
 
                                 <td
-                                    colSpan={3}
+                                    colSpan={2}
                                     rowSpan={1}
                                     className="text-start align-center border-right-2 border-solid border-secondary p-2"
                                 >
@@ -248,7 +248,7 @@ const DataModal = ({history}) => {
                                 </td>
 
                                 <td
-                                    colSpan={3}
+                                    colSpan={2}
                                     rowSpan={1}
                                     className="text-start align-center border-solid border-secondary p-2"
                                 >
@@ -1397,6 +1397,65 @@ const DataModal = ({history}) => {
                                                 </tr>
                                             )
                                         }
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            {/* توضیحات */}
+                            <tr>
+                                <td
+                                    colSpan={12}
+                                    rowSpan={1}
+                                    className="p-0"
+                                >
+                                    <table className="table table-borderless mb-0">
+                                        <colgroup>
+                                            <col width={100}/>
+                                            <col width={100}/>
+                                            <col width={100}/>
+                                            <col width={100}/>
+                                            <col width={100}/>
+                                            <col width={100}/>
+                                            <col width={100}/>
+                                            <col width={100}/>
+                                            <col width={100}/>
+                                            <col width={100}/>
+                                            <col width={100}/>
+                                            <col width={100}/>
+                                        </colgroup>
+
+                                        <tbody>
+                                        <tr>
+                                            <td
+                                                colSpan={12}
+                                                rowSpan={1}
+                                                className="bg-secondary text-center align-center p-2"
+                                            >
+                                                <Typography
+                                                    size="xs"
+                                                    color="dark"
+                                                    isBold
+                                                >
+                                                    توضیحات
+                                                </Typography>
+                                            </td>
+                                        </tr>
+
+                                        <tr className="border-bottom-2 border-solid border-secondary">
+                                            <td
+                                                colSpan={12}
+                                                rowSpan={1}
+                                                className="bg-light text-start align-center p-2"
+                                            >
+                                                <Typography
+                                                    size="xs"
+                                                    color="dark"
+                                                >
+                                                    {history?.description}
+                                                </Typography>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </td>

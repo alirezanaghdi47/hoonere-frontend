@@ -228,11 +228,28 @@ const DataTable = ({
                                     size="sm"
                                     data-tooltip-id="my-tooltip"
                                     data-tooltip-content="ثبت نهایی"
-                                    onClick={() => changeProjectContractInsertionStatusAction.mutate({
-                                        project_id: params.id,
-                                        contract_id: row.original.contract_id,
-                                        insertion_id: row.original.id.toString(),
-                                    })}
+                                    onClick={() => {
+                                        dialog(
+                                            ` ثبت نهایی ${row.original.is_supplement === "1" ? 'متمم' : 'الحاقیه'}`,
+                                            ` آیا میخواهید این ${row.original.is_supplement === "1" ? 'متمم' : 'الحاقیه'} را ثبت نهایی کنید ؟ `,
+                                            "info",
+                                            {
+                                                show: true,
+                                                text: "بله",
+                                                color: "success",
+                                            },
+                                            {
+                                                show: true,
+                                                text: "خیر",
+                                                color: "light-danger",
+                                            },
+                                            async () => changeProjectContractInsertionStatusAction.mutate({
+                                                project_id: params.id,
+                                                contract_id: row.original.contract_id,
+                                                insertion_id: row.original.id.toString(),
+                                            })
+                                        )
+                                    }}
                                 >
                                     <LuThumbsUp
                                         size={20}

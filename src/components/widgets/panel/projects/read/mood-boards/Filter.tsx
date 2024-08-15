@@ -54,7 +54,7 @@ const AdvanceFilter = ({
             <div className="col-12 col-sm-6 col-md-4">
                 <Form.Group>
                     <Form.Label
-                        label="عنوان شغلی"
+                        label="نوع"
                         color="dark"
                         size="sm"
                     />

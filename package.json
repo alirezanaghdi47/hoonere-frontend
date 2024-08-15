@@ -2,7 +2,7 @@
   "name": "hoonere-frontend",
   "homepage": "https://panel.hoonere.com",
   "private": true,
-  "version": "0.10.01",
+  "version": "0.10.05",
   "type": "module",
   "scripts": {
     "dev": "vite",
