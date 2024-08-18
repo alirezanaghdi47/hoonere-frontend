@@ -10,12 +10,12 @@ import Typography from "@/modules/Typography";
 import Modal from "@/modules/Modal";
 import IconButton from "@/modules/IconButton";
 
-const DataModal = ({history}) => {
+const DataModal = ({affiche}) => {
     const navigate = useNavigate();
     const printRef = useRef(null);
 
     const _handlePrint = useReactToPrint({
-        documentTitle: `affiche_${history?.affiche_date}`,
+        documentTitle: `affiche_${affiche?.affiche_date}`,
         content: () => printRef.current,
     });
 
@@ -44,7 +44,7 @@ const DataModal = ({history}) => {
                         color="dark"
                         isBold
                     >
-                        جزییات تاریخچه آفیش
+                        جزییات آفیش
                     </Typography>
 
                     <div className='d-flex justify-content-end align-items-center gap-5'>
@@ -105,7 +105,7 @@ const DataModal = ({history}) => {
                                     >
                                         شماره آفیش :
                                         &nbsp;
-                                        {history?.number_string}
+                                        {affiche?.number_string}
                                     </Typography>
                                 </td>
 
@@ -120,7 +120,7 @@ const DataModal = ({history}) => {
                                     >
                                         ساعت کلید :
                                         &nbsp;
-                                        {history?.start_time.slice(0, -3)}
+                                        {affiche?.start_time.slice(0, -3)}
                                     </Typography>
                                 </td>
 
@@ -134,7 +134,7 @@ const DataModal = ({history}) => {
                                         color="dark"
                                         isBold
                                     >
-                                        {history?.project_title}
+                                        {affiche?.project_title}
                                     </Typography>
                                 </td>
 
@@ -149,7 +149,7 @@ const DataModal = ({history}) => {
                                     >
                                         روز :
                                         &nbsp;
-                                        {format(history?.affiche_date, "EEEE")}
+                                        {format(affiche?.affiche_date, "EEEE")}
                                     </Typography>
                                 </td>
 
@@ -164,7 +164,7 @@ const DataModal = ({history}) => {
                                     >
                                         تاریخ :
                                         &nbsp;
-                                        {format(history?.affiche_date, "dd-MM-yyyy")}
+                                        {format(affiche?.affiche_date, "dd-MM-yyyy")}
                                     </Typography>
                                 </td>
                             </tr>
@@ -213,7 +213,7 @@ const DataModal = ({history}) => {
                                     >
                                         داخلی :
                                         &nbsp;
-                                        {["1", "3"].includes(history?.location_side_id) && "*"}
+                                        {["1", "3"].includes(affiche?.location_side_id) && "*"}
                                     </Typography>
                                 </td>
 
@@ -228,7 +228,7 @@ const DataModal = ({history}) => {
                                     >
                                         خارجی :
                                         &nbsp;
-                                        {["2", "3"].includes(history?.location_side_id) && "*"}
+                                        {["2", "3"].includes(affiche?.location_side_id) && "*"}
                                     </Typography>
                                 </td>
 
@@ -243,7 +243,7 @@ const DataModal = ({history}) => {
                                     >
                                         روز :
                                         &nbsp;
-                                        {["1", "3"].includes(history?.time_type_id) && "*"}
+                                        {["1", "3"].includes(affiche?.time_type_id) && "*"}
                                     </Typography>
                                 </td>
 
@@ -258,7 +258,7 @@ const DataModal = ({history}) => {
                                     >
                                         شب :
                                         &nbsp;
-                                        {["2", "3"].includes(history?.time_type_id) && "*"}
+                                        {["2", "3"].includes(affiche?.time_type_id) && "*"}
                                     </Typography>
                                 </td>
                             </tr>
@@ -371,7 +371,7 @@ const DataModal = ({history}) => {
                                         </tr>
 
                                         {
-                                            history?.actors?.map((actor, index) =>
+                                            affiche?.actors?.map((actor, index) =>
                                                 <tr key={actor.id}>
                                                     <td
                                                         colSpan={1}
@@ -442,7 +442,7 @@ const DataModal = ({history}) => {
                                         }
 
                                         {
-                                            (Math.max(history?.actors?.length, history?.screenplays?.length) - history?.actors?.length > 0) && Array(Math.max(history?.actors?.length, history?.screenplays?.length) - history?.actors?.length).fill("").map((blank, index) =>
+                                            (Math.max(affiche?.actors?.length, affiche?.screenplays?.length) - affiche?.actors?.length > 0) && Array(Math.max(affiche?.actors?.length, affiche?.screenplays?.length) - affiche?.actors?.length).fill("").map((blank, index) =>
                                                 <tr key={index}>
                                                     <td
                                                         colSpan={1}
@@ -453,7 +453,7 @@ const DataModal = ({history}) => {
                                                             size="xs"
                                                             color="dark"
                                                         >
-                                                            {history?.actors?.length + index + 1}
+                                                            {affiche?.actors?.length + index + 1}
                                                         </Typography>
                                                     </td>
 
@@ -621,7 +621,7 @@ const DataModal = ({history}) => {
                                         </tr>
 
                                         {
-                                            history?.screenplays?.map(screenPlay =>
+                                            affiche?.screenplays?.map(screenPlay =>
                                                 <tr key={screenPlay.id}>
                                                     <td
                                                         colSpan={2}
@@ -803,7 +803,7 @@ const DataModal = ({history}) => {
                                         </tr>
 
                                         {
-                                            history?.members?.map((member, index) =>
+                                            affiche?.members?.map((member, index) =>
                                                 <tr key={member.id}>
                                                     <td
                                                         colSpan={1}
@@ -874,7 +874,7 @@ const DataModal = ({history}) => {
                                         }
 
                                         {
-                                            (Math.max(history?.members?.length, history?.receptions?.length) - history?.members?.length > 0) && Array(Math.max(history?.members?.length, history?.receptions?.length) - history?.members?.length).fill("").map((blank, index) =>
+                                            (Math.max(affiche?.members?.length, affiche?.receptions?.length) - affiche?.members?.length > 0) && Array(Math.max(affiche?.members?.length, affiche?.receptions?.length) - affiche?.members?.length).fill("").map((blank, index) =>
                                                 <tr key={index}>
                                                     <td
                                                         colSpan={1}
@@ -885,7 +885,7 @@ const DataModal = ({history}) => {
                                                             size="xs"
                                                             color="dark"
                                                         >
-                                                            {history?.members.length + index + 1}
+                                                            {affiche?.members.length + index + 1}
                                                         </Typography>
                                                     </td>
 
@@ -1053,7 +1053,7 @@ const DataModal = ({history}) => {
                                         </tr>
 
                                         {
-                                            history?.receptions?.map(reception =>
+                                            affiche?.receptions?.map(reception =>
                                                 <tr key={reception.id}>
                                                     <td
                                                         colSpan={4}
@@ -1367,7 +1367,7 @@ const DataModal = ({history}) => {
                                         </tr>
 
                                         {
-                                            history?.addresses?.map((address, index) =>
+                                            affiche?.addresses?.map((address, index) =>
                                                 <tr key={address.id}>
                                                     <td
                                                         colSpan={1}
@@ -1452,7 +1452,7 @@ const DataModal = ({history}) => {
                                                     size="xs"
                                                     color="dark"
                                                 >
-                                                    {history?.description}
+                                                    {affiche?.description}
                                                 </Typography>
                                             </td>
                                         </tr>

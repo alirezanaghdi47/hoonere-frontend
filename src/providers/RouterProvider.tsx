@@ -25,6 +25,7 @@ const ProjectScreenPlay = Loadable(() => import('@/pages/panel/projects/read/scr
 const CreateProjectScreenPlay = Loadable(() => import('@/pages/panel/projects/read/screen-plays/create'));
 const UpdateProjectScreenPlay = Loadable(() => import('@/pages/panel/projects/read/screen-plays/update'));
 const ProjectAffiches = Loadable(() => import('@/pages/panel/projects/read/affiches'));
+const ProjectAffiche = Loadable(() => import('@/pages/panel/projects/read/affiches/read'));
 const CreateProjectAffiche = Loadable(() => import('@/pages/panel/projects/read/affiches/create'));
 const UpdateProjectAffiche = Loadable(() => import('@/pages/panel/projects/read/affiches/update'));
 const ProjectAfficheHistories = Loadable(() => import('@/pages/panel/projects/read/affiches/histories'));
@@ -33,9 +34,11 @@ const ProjectMoodBoards = Loadable(() => import('@/pages/panel/projects/read/moo
 const ProjectMoodBoard = Loadable(() => import('@/pages/panel/projects/read/mood-boards/read'));
 const CreateProjectMoodBoard = Loadable(() => import('@/pages/panel/projects/read/mood-boards/create'));
 const ProjectContracts = Loadable(() => import('@/pages/panel/projects/read/contracts'));
+const ProjectContract = Loadable(() => import('@/pages/panel/projects/read/contracts/read'));
 const CreateProjectContract = Loadable(() => import('@/pages/panel/projects/read/contracts/create'));
 const UpdateProjectContract = Loadable(() => import('@/pages/panel/projects/read/contracts/update'));
 const ProjectContractInsertions = Loadable(() => import('@/pages/panel/projects/read/contracts/insertions'));
+const ProjectContractInsertion = Loadable(() => import('@/pages/panel/projects/read/contracts/insertions/read'));
 const CreateProjectContractInsertion = Loadable(() => import('@/pages/panel/projects/read/contracts/insertions/create'));
 const UpdateProjectContractInsertion = Loadable(() => import('@/pages/panel/projects/read/contracts/insertions/update'));
 const Profile = Loadable(() => import('@/pages/panel/profile'));
@@ -210,18 +213,33 @@ const pageRoutes = [
 const modalRoutes = [
     {
         id: 1,
+        path: "panel/projects/:id/screen-plays/:subId",
+        component: ProjectScreenPlay,
+    },
+    {
+        id: 2,
+        path: "panel/projects/:id/affiches/:subId",
+        component: ProjectAffiche,
+    },
+    {
+        id: 3,
         path: "panel/projects/:id/affiches/:subId/histories/:subSubId",
         component: ProjectAfficheHistory,
     },
     {
-        id: 2,
+        id: 4,
         path: "panel/projects/:id/mood-boards/:subId",
         component: ProjectMoodBoard,
     },
     {
-        id: 3,
-        path: "panel/projects/:id/screen-plays/:subId",
-        component: ProjectScreenPlay,
+        id: 5,
+        path: "panel/projects/:id/contracts/:subId",
+        component: ProjectContract,
+    },
+    {
+        id: 6,
+        path: "panel/projects/:id/contracts/:subId/insertions/:subSubId",
+        component: ProjectContractInsertion,
     },
 ];
 

@@ -92,7 +92,8 @@ const AdvanceFilter = ({
                         hideFilter();
                         readAllProjectScreenPlayAction.mutate({
                             ...initialFilter,
-                            project_id: params.id
+                            project_id: params.id,
+                            affiche_id: params.subId
                         });
                     }}
                 >
@@ -103,7 +104,8 @@ const AdvanceFilter = ({
                     color='light-info'
                     onClick={() => readAllProjectScreenPlayAction.mutate({
                         ...filter,
-                        project_id: params.id
+                        project_id: params.id,
+                        affiche_id: params.subId
                     })}
                 >
                     فیلتر
@@ -130,7 +132,8 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectScreenPla
                             color="light"
                             onClick={() => readAllProjectScreenPlayAction.mutate({
                                 ...filter,
-                                project_id: params.id
+                                project_id: params.id,
+                                affiche_id: params.subId
                             })}
                         >
                             <LuSearch
@@ -149,7 +152,8 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectScreenPla
                                     readAllProjectScreenPlayAction.mutate({
                                         ...filter,
                                         text: "",
-                                        project_id: params.id
+                                        project_id: params.id,
+                                        affiche_id: params.subId
                                     });
                                 }}
                             >

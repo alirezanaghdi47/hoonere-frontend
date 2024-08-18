@@ -1,12 +1,11 @@
 // libraries
-import {useMemo, useRef} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useMemo} from "react";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {format} from "date-fns-jalali";
-import {LuDownload, LuPen, LuThumbsUp, LuTrash2} from "react-icons/lu";
+import {LuInfo, LuPen, LuThumbsUp, LuTrash2} from "react-icons/lu";
 
 // components
-import Print from "@/components/widgets/panel/projects/read/contracts/insertions/Print.tsx";
 import Finder from "@/components/widgets/panel/projects/read/contracts/insertions/Finder.tsx";
 import Filter from "@/components/widgets/panel/projects/read/contracts/insertions/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
@@ -24,19 +23,14 @@ import Chip from "@/modules/Chip";
 // services
 import {
     changeProjectContractInsertionStatusService,
-    deleteProjectContractInsertionService,
-    readProjectContractInsertionService,
+    deleteProjectContractInsertionService
 } from "@/services/projectContractService";
 
 // stores
 import useAuthStore from "@/stores/authStore";
 
 // types
-import {
-    IChangeProjectContractInsertionStatus,
-    IDeleteProjectContractInsertion,
-    IReadProjectContractInsertion
-} from "@/types/serviceType.ts";
+import {IChangeProjectContractInsertionStatus, IDeleteProjectContractInsertion} from "@/types/serviceType.ts";
 
 const DataTable = ({
                        readAllProjectContractInsertionAction,
@@ -49,24 +43,9 @@ const DataTable = ({
                        hideFilter
                    }) => {
     const navigate = useNavigate();
+    const location = useLocation();
     const params = useParams();
-    const parentRef = useRef(null);
     const {auth} = useAuthStore();
-
-    const readProjectContractInsertionAction = useMutation({
-        mutationFn: (data: IReadProjectContractInsertion) => readProjectContractInsertionService(data),
-        onSuccess: async (data) => {
-            if (!data.error) {
-                parentRef.current.insertion_info = {
-                    ...data?.data?.insertion_info,
-                    type_id: data?.data?.contract_info?.type_id,
-                    members: data?.data?.contract_info?.members,
-                    informal_members: data?.data?.contract_info?.informal_members
-                };
-                parentRef.current.print();
-            }
-        }
-    });
 
     const changeProjectContractInsertionStatusAction = useMutation({
         mutationFn: (data: IChangeProjectContractInsertionStatus) => changeProjectContractInsertionStatusService(data),
@@ -132,7 +111,7 @@ const DataTable = ({
                 sortingFn: (rowA, rowB, columnId) => rowA.original.insertion_number - rowB.original.insertion_number
             },
             {
-                accessorKey: 'status_info',
+                accessorKey: 'status',
                 header: () => 'نوع',
                 cell: ({row}) => (
                     <div className="w-50px">
@@ -260,28 +239,17 @@ const DataTable = ({
                         }
 
                         <IconButton
-                            color="light-dark"
+                            color="light-info"
                             size="sm"
+                            onClick={() => navigate(row.original.is_supplement === "1" ? auth.panel_url + "projects/" + params.id + "/contracts/" + params.subId + "/insertions/" + row.original.id + "#is_supplement=1" : auth.panel_url + "projects/" + params.id + "/contracts/" + params.subId + "/insertions/" + row.original.id + "#is_supplement=0", {state: {background: location}})}
                             data-tooltip-id="my-tooltip"
-                            data-tooltip-content={` دانلود ${row.original.is_supplement === "1" ? 'متمم' : 'الحاقیه'} `}
-                            onClick={() => readProjectContractInsertionAction.mutate({
-                                project_id: params.id,
-                                contract_id: row.original.contract_id,
-                                insertion_id: row.original.id.toString(),
-                                get_last: 1
-                            })}
+                            data-tooltip-content="جزییات"
                         >
-                            <LuDownload
+                            <LuInfo
                                 size={20}
                                 color="currentColor"
                             />
                         </IconButton>
-
-                        {
-                            !readProjectContractInsertionAction.isPending && (
-                                <Print ref={parentRef}/>
-                            )
-                        }
 
                         <IconButton
                             href={row.original.is_supplement === "1" ? auth.panel_url + "projects/" + params.id + "/contracts/" + row.original.contract_id + "/insertions/" + row.original.id + "/update#is_supplement=1" : auth.panel_url + "projects/" + params.id + "/contracts/" + row.original.contract_id + "/insertions/" + row.original.id + "/update#is_supplement=0"}
@@ -362,7 +330,7 @@ const DataTable = ({
                 {
                     readAllProjectContractInsertionAction.data?.data?.insertions.length === 0 && (
                         <Empty
-                            title="قرارداد یافت نشد"
+                            title={` ${location.hash === "#is_supplement=1" ? "متمم" : "الحاقیه"} یافت نشد `}
                             width="100%"
                             height={300}
                         />

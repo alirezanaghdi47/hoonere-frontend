@@ -7,7 +7,7 @@ const Print = forwardRef((props, ref: any) => {
     const printRef = useRef(null);
 
     const _handlePrint = useReactToPrint({
-        documentTitle: `screenplay-${ref?.current?.screenplay_info?.created}`,
+        documentTitle: `screenplay`,
         content: () => printRef.current,
     });
 

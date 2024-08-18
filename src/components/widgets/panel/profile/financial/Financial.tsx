@@ -20,7 +20,6 @@ const Financial = ({readMyProfileAction , readMyAllBankCardAction}) => {
                 currentPart === "read" && (
                     <Banks
                         readMyAllBankCardAction={readMyAllBankCardAction}
-                        readMyProfileAction={readMyProfileAction}
                         changePart={changePart}
                         changeCurrentPart={changeCurrentPart}
                     />

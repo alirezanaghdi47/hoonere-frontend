@@ -1,9 +1,9 @@
 // libraries
 import {useMemo} from "react";
-import {useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {format} from "date-fns-jalali";
-import {LuHistory, LuPen, LuTrash2} from "react-icons/lu";
+import {LuHistory, LuInfo, LuPen, LuTrash2} from "react-icons/lu";
 
 // components
 import Finder from "@/components/widgets/panel/projects/read/affiches/Finder.tsx";
@@ -39,6 +39,8 @@ const DataTable = ({
                        hideFilter
                    }) => {
     const params = useParams();
+    const location = useLocation();
+    const navigate = useNavigate();
     const {auth} = useAuthStore();
 
     const deleteProjectAfficheAction = useMutation({
@@ -127,6 +129,19 @@ const DataTable = ({
                             data-tooltip-content="تاریخچه"
                         >
                             <LuHistory
+                                size={20}
+                                color="currentColor"
+                            />
+                        </IconButton>
+
+                        <IconButton
+                            color="light-info"
+                            size="sm"
+                            onClick={() => navigate(auth.panel_url + "projects/" + params.id + "/affiches/" + row.original.id, {state: {background: location}})}
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content="جزییات"
+                        >
+                            <LuInfo
                                 size={20}
                                 color="currentColor"
                             />

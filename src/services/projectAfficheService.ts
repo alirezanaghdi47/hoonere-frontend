@@ -195,8 +195,6 @@ export const readAllProjectAfficheHistoryService = async (data) => {
             }
         });
 
-        console.log(JSON.parse(decodeData(response.data.data)));
-
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))

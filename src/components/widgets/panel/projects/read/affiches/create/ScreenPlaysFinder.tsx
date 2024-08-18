@@ -29,7 +29,8 @@ const ScreenPlaysFinder = ({readAllProjectScreenPlayAction, filter, changeFilter
                         readAllProjectScreenPlayAction.mutate({
                             ...filter,
                             per_page: value,
-                            project_id: params.id
+                            project_id: params.id,
+                            affiche_id: params.subId
                         });
                     }}
                 />
@@ -46,7 +47,8 @@ const ScreenPlaysFinder = ({readAllProjectScreenPlayAction, filter, changeFilter
                             readAllProjectScreenPlayAction.mutate({
                                 ...filter,
                                 page: value,
-                                project_id: params.id
+                                project_id: params.id,
+                                affiche_id: params.subId
                             });
                         }}
                     />

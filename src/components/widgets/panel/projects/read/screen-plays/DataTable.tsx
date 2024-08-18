@@ -1,11 +1,10 @@
 // libraries
 import {useMemo, useRef} from "react";
-import {useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
-import {LuDownload, LuPen, LuTrash2} from "react-icons/lu";
+import {LuInfo, LuPen, LuTrash2} from "react-icons/lu";
 
 // components
-import Print from "@/components/widgets/panel/projects/read/screen-plays/Print.tsx";
 import Finder from "@/components/widgets/panel/projects/read/screen-plays/Finder.tsx";
 import Filter from "@/components/widgets/panel/projects/read/screen-plays/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
@@ -39,6 +38,8 @@ const DataTable = ({
                        hideFilter
                    }) => {
     const params = useParams();
+    const location = useLocation();
+    const navigate = useNavigate();
     const parentRef = useRef(null);
     const {auth} = useAuthStore();
 
@@ -133,26 +134,17 @@ const DataTable = ({
                 cell: ({row}) => (
                     <div className="d-flex justify-content-start align-items-center gap-2 w-100">
                         <IconButton
-                            color="light-dark"
+                            color="light-info"
                             size="sm"
+                            onClick={() => navigate(auth.panel_url + "projects/" + params.id + "/screen-plays/" + row.original.id, {state: {background: location}})}
                             data-tooltip-id="my-tooltip"
-                            data-tooltip-content="دانلود فیلم نامه"
-                            onClick={() => readProjectScreenPlayAction.mutate({
-                                project_id: row.original.project_id,
-                                screenplay_id: row.original.id.toString()
-                            })}
+                            data-tooltip-content="جزییات"
                         >
-                            <LuDownload
+                            <LuInfo
                                 size={20}
                                 color="currentColor"
                             />
                         </IconButton>
-
-                        {
-                            !readProjectScreenPlayAction.isPending && (
-                                <Print ref={parentRef}/>
-                            )
-                        }
 
                         <IconButton
                             href={auth.panel_url + "projects/" + row.original.project_id + "/screen-plays/" + row.original.id + "/update"}

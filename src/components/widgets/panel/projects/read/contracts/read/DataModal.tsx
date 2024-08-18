@@ -1,11 +1,14 @@
 // libraries
-import {forwardRef, useImperativeHandle, useRef} from "react";
-import {LazyLoadImage} from "react-lazy-load-image-component";
-import {useReactToPrint} from "react-to-print";
+import {useRef} from "react";
+import {useNavigate} from "react-router-dom";
+import {useReactToPrint} from 'react-to-print';
 import {format} from "date-fns-jalali";
+import {LuDownload, LuX} from "react-icons/lu";
 
 // modules
 import Typography from "@/modules/Typography";
+import Modal from "@/modules/Modal";
+import IconButton from "@/modules/IconButton";
 
 const Contract = ({children}) => {
     return (
@@ -20,8 +23,8 @@ const Article = ({children, article}) => {
         <li className="mb-2">
             <div className='d-flex justify-content-start align-items-center gap-2 w-100'>
                 <Typography
-                    size="lg"
-                    color="muted"
+                    size="md"
+                    color="dark"
                     isBold
                 >
                     ماده
@@ -44,8 +47,8 @@ const Section = ({children, section}) => {
         <li className="mb-2">
             <div className='d-flex justify-content-start align-items-center gap-2 w-100'>
                 <Typography
-                    size="md"
-                    color="muted"
+                    size="sm"
+                    color="dark"
                     lineHeight="lg"
                 >
                     بند
@@ -69,7 +72,7 @@ const Note = ({note}) => {
             <div className='d-flex justify-content-start align-items-center gap-2 w-100'>
                 <Typography
                     size="xs"
-                    color="muted"
+                    color="dark"
                     lineHeight="lg"
                 >
                     تبصره
@@ -872,23 +875,16 @@ const RegularSection = ({section}) => {
     )
 }
 
-const Print = forwardRef((props, ref: any) => {
+const DataModal = ({contract}) => {
+    const navigate = useNavigate();
     const printRef = useRef(null);
 
     const _handlePrint = useReactToPrint({
-        documentTitle: `contract-${ref?.current?.contract_info?.contract_number}`,
+        documentTitle: `contract`,
         content: () => printRef.current,
     });
 
-    useImperativeHandle(ref, () => {
-        return {
-            print() {
-                setTimeout(() => {
-                    _handlePrint();
-                }, 100);
-            }
-        }
-    }, []);
+    console.log(contract)
 
     return (
         <>
@@ -902,303 +898,352 @@ const Print = forwardRef((props, ref: any) => {
                 `}
             </style>
 
-            <div
-                ref={printRef}
-                className='d-none d-print-block vw-100 vh-100 '
-                style={{pageBreakAfter: "always"}}
+            <Modal
+                isOpen={true}
+                onClose={() => navigate(-1)}
+                position='center'
+                width="xl"
             >
-                <table>
-                    <thead>
-                    <tr>
-                        <td>
-                            <div className="page__header">
-                                <LazyLoadImage
-                                    src="/assets/images/logo.svg"
-                                    alt="logo"
-                                    width={40}
-                                    className='z-index-3'
-                                />
-                            </div>
-                        </td>
-                    </tr>
-                    </thead>
+                <Modal.Header>
+                    <Typography
+                        variant='h3'
+                        size="lg"
+                        color="dark"
+                        isBold
+                    >
+                        جزییات قرارداد
+                    </Typography>
 
-                    <tbody>
-                    <tr>
-                        <td>
-                            <div className="page">
-                                <Contract>
-                                    {
-                                        ref?.current?.contract_info?.articles.map(article =>
-                                            <Article
-                                                key={article.id}
-                                                article={article}
-                                            >
-                                                <ul className="vstack list-unstyled m-0 p-0 ps-10 mt-5">
-                                                    {
-                                                        article.number === 1 && (
-                                                            <EmployersSection
-                                                                section={{
-                                                                    number: 1,
-                                                                    content: "کارفرما",
-                                                                    notes: ref?.current?.contract_info?.notes.filter(note => note.article_number === 1 && note.section_number === 1)
-                                                                }}
-                                                                employers={ref?.current?.contract_info?.type_id === "1" ? ref?.current?.contract_info?.members.filter(member => member.side_id === "1") : ref?.current?.contract_info?.informal_members.filter(member => member.side_id === "1")}
-                                                                typeId={ref?.current?.contract_info?.type_id}
-                                                            />
-                                                        )
-                                                    }
+                    <div className='d-flex justify-content-end align-items-center gap-5'>
+                        <IconButton
+                            size="sm"
+                            color="light-dark"
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content="دانلود قرارداد"
+                            onClick={_handlePrint}
+                        >
+                            <LuDownload size={20}/>
+                        </IconButton>
 
-                                                    {
-                                                        article.number === 1 && (
-                                                            <ContractorsSection
-                                                                section={{
-                                                                    number: 2,
-                                                                    content: "مجری",
-                                                                    notes: ref?.current?.contract_info?.notes.filter(note => note.article_number === 1 && note.section_number === 2)
-                                                                }}
-                                                                contractors={ref?.current?.contract_info?.type_id === "1" ? ref?.current?.contract_info?.members.filter(member => member.side_id === "2") : ref?.current?.contract_info?.informal_members.filter(member => member.side_id === "2")}
-                                                                typeId={ref?.current?.contract_info?.type_id}
-                                                            />
-                                                        )
-                                                    }
+                        <IconButton
+                            size="sm"
+                            color="light-danger"
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content="خروج"
+                            onClick={() => navigate(-1)}
+                        >
+                            <LuX size={20}/>
+                        </IconButton>
+                    </div>
+                </Modal.Header>
 
-                                                    {
-                                                        article.number === 5 && (
-                                                            <PaymentSection
-                                                                section={{
-                                                                    number: 1,
-                                                                    content: ref?.current?.contract_info?.payment_state === "2" ? "کلیه پرداخت ها به مجری بر اساس فاکتور های تایید شده توسط کارفرما پرداخت میگردد" : "کلیه پرداخت ها بر اساس فاز های زیر پرداخت میگردد",
-                                                                    notes: ref?.current?.contract_info?.notes.filter(note => note.article_number === 5 && note.section_number === 1)
-                                                                }}
-                                                                totalPrice={ref?.current?.contract_info?.total_price}
-                                                                payments={ref?.current?.contract_info?.payments}
-                                                                paymentState={ref?.current?.contract_info?.payment_state}
-                                                            />
-                                                        )
-                                                    }
+                <Modal.Body>
+                    <div
+                        ref={printRef}
+                        style={{pageBreakAfter: "always"}}
+                    >
+                        <table>
+                            <thead>
+                            <tr>
+                                <td>
+                                    <div className="page__header">
 
-                                                    {
-                                                        article.sections.filter(section => !((section.article_number === 5 && section.number === 1) || !section.content)).map(section => {
-                                                            return (
-                                                                <RegularSection
-                                                                    key={section.id}
-                                                                    section={{
-                                                                        ...section,
-                                                                        notes: ref?.current?.contract_info?.notes.filter(note => article.sections.filter(section => !((section.article_number === 5 && section.number === 1) || !section.content))?.map(section => section.article_number).includes(note.article_number) && article.sections.filter(section => !((section.article_number === 5 && section.number === 1) || !section.content))?.map(section => section.number).includes(note.section_number))
-                                                                    }}
-                                                                />
+                                    </div>
+                                </td>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <div className="page">
+                                        <Contract>
+                                            {
+                                                contract?.articles.map(article =>
+                                                    <Article
+                                                        key={article.id}
+                                                        article={article}
+                                                    >
+                                                        <ul className="vstack list-unstyled m-0 p-0 ps-10 mt-5">
+                                                            {
+                                                                article.number === 1 && (
+                                                                    <EmployersSection
+                                                                        section={{
+                                                                            number: 1,
+                                                                            content: "کارفرما",
+                                                                            notes: contract?.notes.filter(note => note.article_number === 1 && note.section_number === 1)
+                                                                        }}
+                                                                        employers={contract?.type_id === "1" ? contract?.members.filter(member => member.side_id === "1") : contract?.informal_members.filter(member => member.side_id === "1")}
+                                                                        typeId={contract?.type_id}
+                                                                    />
+                                                                )
+                                                            }
+
+                                                            {
+                                                                article.number === 1 && (
+                                                                    <ContractorsSection
+                                                                        section={{
+                                                                            number: 2,
+                                                                            content: "مجری",
+                                                                            notes: contract?.notes.filter(note => note.article_number === 1 && note.section_number === 2)
+                                                                        }}
+                                                                        contractors={contract?.type_id === "1" ? contract?.members.filter(member => member.side_id === "2") : contract?.informal_members.filter(member => member.side_id === "2")}
+                                                                        typeId={contract?.type_id}
+                                                                    />
+                                                                )
+                                                            }
+
+                                                            {
+                                                                article.number === 4 && article.sections.find(section => section.number === 1) && (
+                                                                    <RegularSection
+                                                                        section={{
+                                                                            number: article.sections.find(section => section.article_number === 4 && section.number === 1)?.number,
+                                                                            content: ` مبلغ قرارداد ${Number(contract?.total_price).toLocaleString()} ریال می باشد. `,
+                                                                            notes: contract?.notes.filter(note => note.article_number === 4 && note.section_number === 1)
+                                                                        }}
+                                                                    />
+                                                                )
+                                                            }
+
+                                                            {
+                                                                article.number === 5 && (
+                                                                    <PaymentSection
+                                                                        section={{
+                                                                            number: 1,
+                                                                            content: contract?.payment_state === "2" ? "کلیه پرداخت ها به مجری بر اساس فاکتور های تایید شده توسط کارفرما پرداخت میگردد" : "کلیه پرداخت ها بر اساس فاز های زیر پرداخت میگردد",
+                                                                            notes: contract?.notes.filter(note => note.article_number === 5 && note.section_number === 1)
+                                                                        }}
+                                                                        totalPrice={contract?.total_price}
+                                                                        payments={contract?.payments}
+                                                                        paymentState={contract?.payment_state}
+                                                                    />
+                                                                )
+                                                            }
+
+                                                            {
+                                                                article.sections.filter(section => !((section.article_number === 4 && section.number === 1) || (section.article_number === 5 && section.number === 1) || !section.content)).map(section => {
+                                                                    return (
+                                                                        <RegularSection
+                                                                            key={section.id}
+                                                                            section={{
+                                                                                ...section,
+                                                                                notes: contract?.notes.filter(note => article.sections.filter(section => !((section.article_number === 5 && section.number === 1) || !section.content))?.map(section => section.article_number).includes(note.article_number) && article.sections.filter(section => !((section.article_number === 5 && section.number === 1) || !section.content))?.map(section => section.number).includes(note.section_number))
+                                                                            }}
+                                                                        />
+                                                                    )
+                                                                })
+                                                            }
+                                                        </ul>
+                                                    </Article>
+                                                )
+                                            }
+                                        </Contract>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+
+                            <tfoot>
+                            {/* employers & contractors sign */}
+                            <tr>
+                                <td>
+                                    <div className="position-sticky bottom-0 w-100 mt-5">
+                                        <table
+                                            className="table table-borderless border-2 border-solid border-secondary mb-0">
+                                            <colgroup>
+                                                <col width={100}/>
+                                                <col width={100}/>
+                                                <col width={100}/>
+                                                <col width={100}/>
+                                                <col width={100}/>
+                                                <col width={100}/>
+                                                <col width={100}/>
+                                                <col width={100}/>
+                                                <col width={100}/>
+                                                <col width={100}/>
+                                                <col width={100}/>
+                                                <col width={100}/>
+                                            </colgroup>
+
+                                            <tbody>
+                                            <tr className="border-2 border-solid border-secondary">
+                                                <td
+                                                    colSpan={6}
+                                                    rowSpan={1}
+                                                    className="bg-secondary text-start align-center border-right-2 border-solid border-secondary p-2"
+                                                >
+                                                    <Typography
+                                                        size="xs"
+                                                        color="dark"
+                                                        isBold
+                                                    >
+                                                        کارفرما ها
+                                                    </Typography>
+                                                </td>
+                                                <td
+                                                    colSpan={6}
+                                                    rowSpan={1}
+                                                    className="bg-secondary text-start align-center p-2"
+                                                >
+                                                    <Typography
+                                                        size="xs"
+                                                        color="dark"
+                                                        isBold
+                                                    >
+                                                        مجری ها
+                                                    </Typography>
+                                                </td>
+                                            </tr>
+                                            <tr className="border-2 border-solid border-secondary">
+                                                <td
+                                                    colSpan={6}
+                                                    rowSpan={1}
+                                                    className="text-start align-center border-right-2 border-solid border-secondary px-2 py-4"
+                                                >
+                                                    <ul className='vstack list-unstyled gap-5 w-100 mb-0 p-0'>
+                                                        {
+                                                            contract?.type_id === "1" ? contract?.members.filter(member => member.side_id === "1")?.map(employer =>
+                                                                <li
+                                                                    key={employer.id}
+                                                                    className=""
+                                                                >
+                                                                    {
+                                                                        employer?.user_info?.user_type === "1" && (
+                                                                            <Typography
+                                                                                size="xs"
+                                                                                color="dark"
+                                                                            >
+                                                                                {(employer?.user_info?.first_name && employer?.user_info?.last_name) ? employer?.user_info?.first_name + " " + employer?.user_info?.last_name : "نا معلوم"}
+                                                                            </Typography>
+                                                                        )
+                                                                    }
+
+                                                                    {
+                                                                        employer?.user_info?.user_type === "2" && (
+                                                                            <Typography
+                                                                                size="xs"
+                                                                                color="dark"
+                                                                            >
+                                                                                {employer?.user_info?.company_name ? employer?.user_info?.company_name : "نا معلوم"}
+                                                                            </Typography>
+                                                                        )
+                                                                    }
+                                                                </li>
+                                                            ) : contract?.informal_members.filter(member => member.side_id === "1")?.map(employer =>
+                                                                <li
+                                                                    key={employer.id}
+                                                                    className=""
+                                                                >
+                                                                    {
+                                                                        employer?.user_type === "1" && (
+                                                                            <Typography
+                                                                                size="xs"
+                                                                                color="dark"
+                                                                            >
+                                                                                {(employer?.first_name && employer?.last_name) ? employer?.first_name + " " + employer?.last_name : "نا معلوم"}
+                                                                            </Typography>
+                                                                        )
+                                                                    }
+
+                                                                    {
+                                                                        employer?.user_type === "2" && (
+                                                                            <Typography
+                                                                                size="xs"
+                                                                                color="dark"
+                                                                            >
+                                                                                {employer?.company_name ? employer?.company_name : "نا معلوم"}
+                                                                            </Typography>
+                                                                        )
+                                                                    }
+                                                                </li>
                                                             )
-                                                        })
-                                                    }
-                                                </ul>
-                                            </Article>
-                                        )
-                                    }
-                                </Contract>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
+                                                        }
+                                                    </ul>
+                                                </td>
+                                                <td
+                                                    colSpan={6}
+                                                    rowSpan={1}
+                                                    className="text-start align-center px-2 py-4"
+                                                >
+                                                    <ul className='vstack list-unstyled gap-5 w-100 mb-0 p-0'>
+                                                        {
+                                                            contract?.type_id === "1" ? contract?.members.filter(member => member.side_id === "2")?.map(contractor =>
+                                                                <li
+                                                                    key={contractor.id}
+                                                                    className=""
+                                                                >
+                                                                    {
+                                                                        contractor?.user_info.user_type === "1" && (
+                                                                            <Typography
+                                                                                size="xs"
+                                                                                color="dark"
+                                                                            >
+                                                                                {(contractor?.user_info?.first_name && contractor?.user_info?.last_name) ? contractor?.user_info?.first_name + " " + contractor?.user_info?.last_name : "نا معلوم"}
+                                                                            </Typography>
+                                                                        )
+                                                                    }
 
-                    <tfoot>
-                    {/* employers & contractors sign */}
-                    <tr>
-                        <td>
-                            <div className="position-sticky bottom-0 w-100 mt-5">
-                                <table className="table table-borderless border-2 border-solid border-secondary mb-0">
-                                    <colgroup>
-                                        <col width={100}/>
-                                        <col width={100}/>
-                                        <col width={100}/>
-                                        <col width={100}/>
-                                        <col width={100}/>
-                                        <col width={100}/>
-                                        <col width={100}/>
-                                        <col width={100}/>
-                                        <col width={100}/>
-                                        <col width={100}/>
-                                        <col width={100}/>
-                                        <col width={100}/>
-                                    </colgroup>
+                                                                    {
+                                                                        contractor?.user_info.user_type === "2" && (
+                                                                            <Typography
+                                                                                size="xs"
+                                                                                color="dark"
+                                                                            >
+                                                                                {contractor?.user_info?.company_name ? contractor?.user_info?.company_name : "نا معلوم"}
+                                                                            </Typography>
+                                                                        )
+                                                                    }
+                                                                </li>
+                                                            ) : contract?.informal_members.filter(member => member.side_id === "2")?.map(contractor =>
+                                                                <li
+                                                                    key={contractor.id}
+                                                                    className=""
+                                                                >
+                                                                    {
+                                                                        contractor.user_type === "1" && (
+                                                                            <Typography
+                                                                                size="xs"
+                                                                                color="dark"
+                                                                            >
+                                                                                {(contractor?.first_name && contractor?.last_name) ? contractor?.first_name + " " + contractor?.last_name : "نا معلوم"}
+                                                                            </Typography>
+                                                                        )
+                                                                    }
 
-                                    <tbody>
-                                    <tr className="border-2 border-solid border-secondary">
-                                        <td
-                                            colSpan={6}
-                                            rowSpan={1}
-                                            className="bg-secondary text-start align-center border-right-2 border-solid border-secondary p-2"
-                                        >
-                                            <Typography
-                                                size="xs"
-                                                color="dark"
-                                                isBold
-                                            >
-                                                کارفرما ها
-                                            </Typography>
-                                        </td>
-                                        <td
-                                            colSpan={6}
-                                            rowSpan={1}
-                                            className="bg-secondary text-start align-center p-2"
-                                        >
-                                            <Typography
-                                                size="xs"
-                                                color="dark"
-                                                isBold
-                                            >
-                                                مجری ها
-                                            </Typography>
-                                        </td>
-                                    </tr>
-                                    <tr className="border-2 border-solid border-secondary">
-                                        <td
-                                            colSpan={6}
-                                            rowSpan={1}
-                                            className="text-start align-center border-right-2 border-solid border-secondary px-2 py-4"
-                                        >
-                                            <ul className='vstack list-unstyled gap-5 w-100 mb-0 p-0'>
-                                                {
-                                                    ref?.current?.contract_info?.type_id === "1" ? ref?.current?.contract_info?.members.filter(member => member.side_id === "1")?.map(employer =>
-                                                        <li
-                                                            key={employer.id}
-                                                            className=""
-                                                        >
-                                                            {
-                                                                employer?.user_info?.user_type === "1" && (
-                                                                    <Typography
-                                                                        size="xs"
-                                                                        color="dark"
-                                                                    >
-                                                                        {(employer?.user_info?.first_name && employer?.user_info?.last_name) ? employer?.user_info?.first_name + " " + employer?.user_info?.last_name : "نا معلوم"}
-                                                                    </Typography>
-                                                                )
-                                                            }
+                                                                    {
+                                                                        contractor.user_type === "2" && (
+                                                                            <Typography
+                                                                                size="xs"
+                                                                                color="dark"
+                                                                            >
+                                                                                {contractor?.company_name ? contractor?.company_name : "نا معلوم"}
+                                                                            </Typography>
+                                                                        )
+                                                                    }
+                                                                </li>
+                                                            )
+                                                        }
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
 
-                                                            {
-                                                                employer?.user_info?.user_type === "2" && (
-                                                                    <Typography
-                                                                        size="xs"
-                                                                        color="dark"
-                                                                    >
-                                                                        {employer?.user_info?.company_name ? employer?.user_info?.company_name : "نا معلوم"}
-                                                                    </Typography>
-                                                                )
-                                                            }
-                                                        </li>
-                                                    ) : ref?.current?.contract_info?.informal_members.filter(member => member.side_id === "1")?.map(employer =>
-                                                        <li
-                                                            key={employer.id}
-                                                            className=""
-                                                        >
-                                                            {
-                                                                employer?.user_type === "1" && (
-                                                                    <Typography
-                                                                        size="xs"
-                                                                        color="dark"
-                                                                    >
-                                                                        {(employer?.first_name && employer?.last_name) ? employer?.first_name + " " + employer?.last_name : "نا معلوم"}
-                                                                    </Typography>
-                                                                )
-                                                            }
-
-                                                            {
-                                                                employer?.user_type === "2" && (
-                                                                    <Typography
-                                                                        size="xs"
-                                                                        color="dark"
-                                                                    >
-                                                                        {employer?.company_name ? employer?.company_name : "نا معلوم"}
-                                                                    </Typography>
-                                                                )
-                                                            }
-                                                        </li>
-                                                    )
-                                                }
-                                            </ul>
-                                        </td>
-                                        <td
-                                            colSpan={6}
-                                            rowSpan={1}
-                                            className="text-start align-center px-2 py-4"
-                                        >
-                                            <ul className='vstack list-unstyled gap-5 w-100 mb-0 p-0'>
-                                                {
-                                                    ref?.current?.contract_info?.type_id === "1" ? ref?.current?.contract_info?.members.filter(member => member.side_id === "2")?.map(contractor =>
-                                                        <li
-                                                            key={contractor.id}
-                                                            className=""
-                                                        >
-                                                            {
-                                                                contractor?.user_info.user_type === "1" && (
-                                                                    <Typography
-                                                                        size="xs"
-                                                                        color="dark"
-                                                                    >
-                                                                        {(contractor?.user_info?.first_name && contractor?.user_info?.last_name) ? contractor?.user_info?.first_name + " " + contractor?.user_info?.last_name : "نا معلوم"}
-                                                                    </Typography>
-                                                                )
-                                                            }
-
-                                                            {
-                                                                contractor?.user_info.user_type === "2" && (
-                                                                    <Typography
-                                                                        size="xs"
-                                                                        color="dark"
-                                                                    >
-                                                                        {contractor?.user_info?.company_name ? contractor?.user_info?.company_name : "نا معلوم"}
-                                                                    </Typography>
-                                                                )
-                                                            }
-                                                        </li>
-                                                    ) : ref?.current?.contract_info?.informal_members.filter(member => member.side_id === "2")?.map(contractor =>
-                                                        <li
-                                                            key={contractor.id}
-                                                            className=""
-                                                        >
-                                                            {
-                                                                contractor.user_type === "1" && (
-                                                                    <Typography
-                                                                        size="xs"
-                                                                        color="dark"
-                                                                    >
-                                                                        {(contractor?.first_name && contractor?.last_name) ? contractor?.first_name + " " + contractor?.last_name : "نا معلوم"}
-                                                                    </Typography>
-                                                                )
-                                                            }
-
-                                                            {
-                                                                contractor.user_type === "2" && (
-                                                                    <Typography
-                                                                        size="xs"
-                                                                        color="dark"
-                                                                    >
-                                                                        {contractor?.company_name ? contractor?.company_name : "نا معلوم"}
-                                                                    </Typography>
-                                                                )
-                                                            }
-                                                        </li>
-                                                    )
-                                                }
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div className="page__footer"/>
-                        </td>
-                    </tr>
-                    </tfoot>
-                </table>
-            </div>
+                            <tr>
+                                <td>
+                                    <div className="page__footer"/>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </Modal.Body>
+            </Modal>
         </>
     )
-});
+}
 
-export default Print;
+export default DataModal;

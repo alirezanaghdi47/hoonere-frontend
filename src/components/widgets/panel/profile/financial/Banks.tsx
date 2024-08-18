@@ -138,7 +138,7 @@ export const BankCard = ({card, dropdownOptions}) => {
     )
 }
 
-const Banks = ({readMyAllBankCardAction, readMyProfileAction, changePart, changeCurrentPart}) => {
+const Banks = ({readMyAllBankCardAction, changePart, changeCurrentPart}) => {
     const changeStatusOfBankCardAction = useMutation({
         mutationFn: (data: IChangeStatusOfBankCard) => changeStatusOfBankCardService(data),
         onSuccess: async (data) => {
@@ -184,7 +184,7 @@ const Banks = ({readMyAllBankCardAction, readMyProfileAction, changePart, change
                                         <BankCard
                                             key={bankCard.id}
                                             card={bankCard}
-                                            dropdownOptions={[
+                                            dropdownOptions={bankCard?.is_main === "0" ? [
                                                 {
                                                     id: 1,
                                                     label: "انتخاب پیش فرض",
@@ -202,6 +202,37 @@ const Banks = ({readMyAllBankCardAction, readMyProfileAction, changePart, change
                                                 },
                                                 {
                                                     id: 3,
+                                                    label: "حذف",
+                                                    onClick: () => dialog(
+                                                        "حذف کارت",
+                                                        "آیا میخواهید این کارت را حذف کنید ؟",
+                                                        "info",
+                                                        {
+                                                            show: true,
+                                                            text: "حذف",
+                                                            color: "danger",
+                                                        },
+                                                        {
+                                                            show: true,
+                                                            text: "انصراف",
+                                                            color: "light-dark",
+                                                        },
+                                                        async () => {
+                                                            deleteBankCardAction.mutate({card_id: bankCard?.id.toString()});
+                                                        }
+                                                    )
+                                                }
+                                            ] : [
+                                                {
+                                                    id: 1,
+                                                    label: "ویرایش",
+                                                    onClick: () => {
+                                                        changePart(bankCard);
+                                                        changeCurrentPart("update");
+                                                    }
+                                                },
+                                                {
+                                                    id: 2,
                                                     label: "حذف",
                                                     onClick: () => dialog(
                                                         "حذف کارت",

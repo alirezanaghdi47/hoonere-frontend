@@ -1,20 +1,17 @@
 // libraries
-import {useMemo, useRef} from "react";
-import {useParams} from "react-router-dom";
+import {useMemo} from "react";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {format} from "date-fns-jalali";
 import {
-    LuClipboardSignature,
-    LuDownload,
-    LuFileCheck, LuFilePlus,
-    LuFileSignature,
+    LuFilePlus,
+    LuInfo,
     LuPen,
     LuThumbsUp,
     LuTrash2
 } from "react-icons/lu";
 
 // components
-import Print from "@/components/widgets/panel/projects/read/contracts/Print.tsx";
 import Finder from "@/components/widgets/panel/projects/read/contracts/Finder.tsx";
 import Filter from "@/components/widgets/panel/projects/read/contracts/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
@@ -34,22 +31,17 @@ import {
     changeProjectContractStatusService,
     deleteProjectUnOfficialContractService,
     deleteProjectOfficialContractService,
-    readProjectOfficialContractService,
-    readProjectUnOfficialContractService
 } from "@/services/projectContractService";
 
 // stores
 import useAuthStore from "@/stores/authStore";
+
+// types
 import {
     IChangeProjectContractStatus,
     IDeleteProjectOfficialContract,
     IDeleteProjectUnOfficialContract,
-    IReadProjectOfficialContract,
-    IReadProjectUnOfficialContract
 } from "@/types/serviceType.ts";
-
-// types
-
 
 const DataTable = ({
                        readAllProjectContractAction,
@@ -61,29 +53,10 @@ const DataTable = ({
                        showFilter,
                        hideFilter
                    }) => {
+    const navigate = useNavigate();
+    const location = useLocation();
     const params = useParams();
-    const parentRef = useRef(null);
     const {auth} = useAuthStore();
-
-    const readProjectOfficialContractAction = useMutation({
-        mutationFn: (data: IReadProjectOfficialContract) => readProjectOfficialContractService(data),
-        onSuccess: async (data) => {
-            if (!data.error) {
-                parentRef.current.contract_info = data?.data?.contract_info;
-                parentRef.current.print();
-            }
-        }
-    });
-
-    const readProjectUnOfficialContractAction = useMutation({
-        mutationFn: (data: IReadProjectUnOfficialContract) => readProjectUnOfficialContractService(data),
-        onSuccess: async (data) => {
-            if (!data.error) {
-                parentRef.current.contract_info = data?.data?.contract_info;
-                parentRef.current.print();
-            }
-        }
-    });
 
     const changeProjectContractStatusAction = useMutation({
         mutationFn: (data: IChangeProjectContractStatus) => changeProjectContractStatusService(data),
@@ -276,19 +249,6 @@ const DataTable = ({
                 header: () => 'ابزار',
                 cell: ({row}) => (
                     <div className="d-flex justify-content-end align-items-center gap-2 w-100">
-                        <IconButton
-                            href={auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/insertions"}
-                            color="light-info"
-                            size="sm"
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="متمم و الحاقیه ها"
-                        >
-                            <LuFilePlus
-                                size={20}
-                                color="currentColor"
-                            />
-                        </IconButton>
-
                         {
                             row.original.type_id === "1" && row.original.status_id === "1" && (
                                 <IconButton
@@ -327,31 +287,30 @@ const DataTable = ({
                         }
 
                         <IconButton
-                            color="light-dark"
+                            href={auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/insertions"}
+                            color="light-info"
                             size="sm"
                             data-tooltip-id="my-tooltip"
-                            data-tooltip-content="دانلود قرارداد"
-                            onClick={() => row.original.type_id === "1" ? readProjectOfficialContractAction.mutate({
-                                project_id: row.original.project_id,
-                                contract_id: row.original.id.toString(),
-                                get_last: 1
-                            }) : readProjectUnOfficialContractAction.mutate({
-                                project_id: row.original.project_id,
-                                contract_id: row.original.id.toString(),
-                                get_last: 1
-                            })}
+                            data-tooltip-content="متمم و الحاقیه ها"
                         >
-                            <LuDownload
+                            <LuFilePlus
                                 size={20}
                                 color="currentColor"
                             />
                         </IconButton>
 
-                        {
-                            (!readProjectOfficialContractAction.isPending || !readProjectUnOfficialContractAction.isPending) && (
-                                <Print ref={parentRef}/>
-                            )
-                        }
+                        <IconButton
+                            color="light-info"
+                            size="sm"
+                            onClick={() => navigate(row.original.type_id === "1" ? auth.panel_url + "projects/" + params.id + "/contracts/" + row.original.id + "#official" : auth.panel_url + "projects/" + params.id + "/contracts/" + row.original.id + "#un-official", {state: {background: location}})}
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content="جزییات"
+                        >
+                            <LuInfo
+                                size={20}
+                                color="currentColor"
+                            />
+                        </IconButton>
 
                         <IconButton
                             href={row.original.type_id === "1" ? auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/update#official" : auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/update#un-official"}
