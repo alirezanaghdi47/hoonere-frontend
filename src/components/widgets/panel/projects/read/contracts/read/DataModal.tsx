@@ -884,8 +884,6 @@ const DataModal = ({contract}) => {
         content: () => printRef.current,
     });
 
-    console.log(contract)
-
     return (
         <>
             <style>

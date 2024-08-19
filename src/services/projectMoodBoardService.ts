@@ -89,31 +89,6 @@ export const createProjectMoodBoardService = async (data) => {
     }
 }
 
-export const updateProjectMoodBoardService = async (data) => {
-    try {
-        const formData = new FormData();
-        const {token} = useAuthStore.getState().auth;
-
-        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
-
-        const response = await axios.post(process.env.API_URL + "/panel/projects/moodboards/update", formData, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        });
-
-        return {
-            ...response.data,
-            data: JSON.parse(decodeData(response.data.data))
-        }
-    } catch (err) {
-        const {logout} = useAuthStore.getState();
-
-        if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
-    }
-}
-
 export const deleteProjectMoodBoardsService = async (data) => {
     try {
         const formData = new FormData();

@@ -62,7 +62,7 @@ export const readAllProjectAfficheAddressService = async (data) => {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(data)));
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/affiches/getAddresses", formData, {
             headers: {
@@ -87,7 +87,7 @@ export const readAllProjectAfficheActorService = async (data) => {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(data)));
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/affiches/getActors", formData, {
             headers: {
@@ -112,7 +112,7 @@ export const readAllProjectAfficheMemberService = async (data) => {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(data)));
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/affiches/getMembers", formData, {
             headers: {
@@ -137,7 +137,7 @@ export const readAllProjectAfficheReceptionService = async (data) => {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(data)));
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/affiches/getReceptions", formData, {
             headers: {
@@ -162,7 +162,7 @@ export const readAllProjectAfficheScreenPlayService = async (data) => {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(data)));
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/affiches/getScreenplays", formData, {
             headers: {
@@ -187,7 +187,7 @@ export const readAllProjectAfficheHistoryService = async (data) => {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(data)));
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/affiches/getHistory", formData, {
             headers: {

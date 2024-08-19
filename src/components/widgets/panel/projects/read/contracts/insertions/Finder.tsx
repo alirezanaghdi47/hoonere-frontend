@@ -29,7 +29,8 @@ const Finder = ({readAllProjectContractInsertionAction, filter, changeFilter}) =
                         readAllProjectContractInsertionAction.mutate({
                             ...filter,
                             per_page: value,
-                            project_id: params.id
+                            project_id: params.id,
+                            contract_id: params.subId,
                         });
                     }}
                 />
@@ -46,7 +47,8 @@ const Finder = ({readAllProjectContractInsertionAction, filter, changeFilter}) =
                             readAllProjectContractInsertionAction.mutate({
                                 ...filter,
                                 page: value,
-                                project_id: params.id
+                                project_id: params.id,
+                                contract_id: params.subId,
                             });
                         }}
                     />

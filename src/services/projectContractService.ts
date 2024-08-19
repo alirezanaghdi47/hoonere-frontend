@@ -262,7 +262,7 @@ export const readAllProjectContractMemberService = async (data) => {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
 
-        formData.append("data", encodeData(JSON.stringify(data)));
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
 
         const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/getProjectMembersForContract", formData, {
             headers: {
@@ -281,8 +281,6 @@ export const readAllProjectContractMemberService = async (data) => {
         if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
-
-
 
 export const readProjectContractForInsertionService = async (data) => {
     try {

@@ -1,11 +1,14 @@
 // libraries
-import {useLayoutEffect} from "react";
+import React, {useLayoutEffect} from "react";
 import {Outlet, useLocation, useNavigate} from "react-router-dom";
 
 // components
 import Navbar from "@/components/partials/panel/Navbar.tsx";
 import Sidebar from "@/components/partials/panel/Sidebar.tsx";
 import Overlay from "@/components/partials/panel/Overlay.tsx";
+
+// modules
+import Tooltip from "@/modules/Tooltip.tsx";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
@@ -38,6 +41,8 @@ const PanelLayout = () => {
                     </div>
                 </div>
             </div>
+
+            <Tooltip/>
 
             <Overlay/>
         </>

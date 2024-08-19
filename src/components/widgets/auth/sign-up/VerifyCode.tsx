@@ -55,7 +55,7 @@ const VerifyCode = ({nextStep, resetStep, step}) => {
     const authAction = useMutation({
         mutationFn: (data: IAuth) => authService(data),
         onSuccess: async (data) => {
-            console.log(data.data)
+            // console.log(data.data)
             if (!data.error) {
                 toast("success", data.message);
             } else {

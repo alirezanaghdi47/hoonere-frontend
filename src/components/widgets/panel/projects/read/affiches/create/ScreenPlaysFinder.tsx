@@ -30,7 +30,8 @@ const ScreenPlaysFinder = ({readAllProjectScreenPlayAction, filter, changeFilter
                             ...filter,
                             per_page: value,
                             project_id: params.id,
-                            affiche_id: params.subId
+                            affiche_id: params.subId,
+                            get_last: 1,
                         });
                     }}
                 />
@@ -48,7 +49,8 @@ const ScreenPlaysFinder = ({readAllProjectScreenPlayAction, filter, changeFilter
                                 ...filter,
                                 page: value,
                                 project_id: params.id,
-                                affiche_id: params.subId
+                                affiche_id: params.subId,
+                                get_last: 1,
                             });
                         }}
                     />

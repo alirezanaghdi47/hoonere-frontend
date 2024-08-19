@@ -12,7 +12,7 @@ import useStep from "@/hooks/useStep";
 
 const Register = () => {
     const {step, currentStep,resetStep, nextStep, changeStep} = useStep();
-    console.log(step)
+    // console.log(step)
     return (
         <>
             {

@@ -24,6 +24,7 @@ import useAuthStore from "@/stores/authStore";
 
 // types
 import {IDeleteProjectMoodBoard} from "@/types/serviceType.ts";
+import {LazyLoadImage} from "react-lazy-load-image-component";
 
 const MoodBoardCard = ({moodBoard, readAllProjectMoodBoardAction , filter}) => {
     const params = useParams();
@@ -53,10 +54,11 @@ const MoodBoardCard = ({moodBoard, readAllProjectMoodBoardAction , filter}) => {
                 className="d-flex flex-column justify-content-center align-items-center w-100 min-h-200px border border-dashed border-secondary rounded-2 p-5">
                 {
                     moodBoard?.type === "1" && (
-                        <LuImage
-                            size={25}
-                            color='currentColor'
-                            className="text-muted mb-5"
+                        <LazyLoadImage
+                            src={moodBoard?.content}
+                            width={300}
+                            height={150}
+                            className="w-100 h-100 min-h-150px mh-150px object-fit-cover rounded-2 mb-5"
                         />
                     )
                 }

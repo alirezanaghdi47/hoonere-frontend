@@ -12,7 +12,7 @@ import Form from "@/modules/Form";
 import SelectBox from "@/modules/SelectBox";
 
 // services
-import {readAllJobService, readAllProjectTypeService, readAllUserStatusService} from "@/services/publicService";
+import {readAllJobService, readAllProjectTypeService} from "@/services/publicService";
 
 const AdvanceFilter = ({readAllProjectMemberAction, filter, initialFilter, changeFilter, hideFilter, resetFilter}) => {
     const params = useParams();
@@ -25,16 +25,8 @@ const AdvanceFilter = ({readAllProjectMemberAction, filter, initialFilter, chang
         mutationFn: () => readAllJobService(),
     });
 
-    const readAllUserStatusAction = useMutation({
-        mutationFn: () => readAllUserStatusService(),
-    });
-
     useLayoutEffect(() => {
         readAllJobAction.mutate();
-    }, []);
-
-    useLayoutEffect(() => {
-        readAllUserStatusAction.mutate();
     }, []);
 
     useLayoutEffect(() => {

@@ -20,7 +20,6 @@ const Content = () => {
         mutationFn: (data: IReadProjectContractInsertion) => readProjectContractInsertionService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                console.log(data?.data?.contract_info)
                 setData(prevState => ({
                     ...prevState,
                     ...data?.data?.insertion_info,
