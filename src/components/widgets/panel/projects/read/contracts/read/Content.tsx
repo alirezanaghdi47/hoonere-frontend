@@ -7,10 +7,7 @@ import {useMutation} from "@tanstack/react-query";
 import DataModal from "@/components/widgets/panel/projects/read/contracts/read/DataModal.tsx";
 
 // services
-import {
-    readProjectOfficialContractService,
-    readProjectUnOfficialContractService
-} from "@/services/projectContractService.ts";
+import {readProjectOfficialContractService, readProjectUnOfficialContractService} from "@/services/projectContractService.ts";
 
 // types
 import {IReadProjectOfficialContract, IReadProjectUnOfficialContract} from "@/types/serviceType.ts";
@@ -23,7 +20,7 @@ const Content = () => {
         mutationFn: (data: IReadProjectOfficialContract) => readProjectOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                setData(prevState => ({...prevState, ...data?.data?.contract_info}));
+                setData(prevState => ({...prevState, ...data?.data?.contract_info , project_title: data?.data?.project_title}));
             }
         }
     });
@@ -32,7 +29,7 @@ const Content = () => {
         mutationFn: (data: IReadProjectUnOfficialContract) => readProjectUnOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                setData(prevState => ({...prevState, ...data?.data?.contract_info}));
+                setData(prevState => ({...prevState, ...data?.data?.contract_info , project_title: data?.data?.project_title}));
             }
         }
     });

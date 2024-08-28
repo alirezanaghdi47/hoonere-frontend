@@ -589,7 +589,7 @@
     const setup$2 = editor => {
       editor.on('click keyup touchend', () => {
         const selectedNode = editor.selection.getNode();
-        if (selectedNode && editor.dom.hasClass(selectedNode, 'mce-preview-object')) {
+        if (selectedNode && editor.dom.hasClass(selectedNode, 'mce-invited-object')) {
           if (editor.dom.getAttrib(selectedNode, 'data-mce-selected')) {
             selectedNode.setAttribute('data-mce-selected', '2');
           }
@@ -977,7 +977,7 @@
         'contentEditable': 'false',
         'style': node.attr('style'),
         'data-mce-object': name,
-        'class': 'mce-preview-object mce-object-' + name
+        'class': 'mce-invited-object mce-object-' + name
       });
       retainAttributesAndInnerHtml(editor, node, previewWrapper);
       const styles = editor.dom.parseStyle((_a = node.attr('style')) !== null && _a !== void 0 ? _a : '');
@@ -1116,7 +1116,7 @@
             const realElm = new global$2(realElmName, 1);
             if (realElmName !== 'audio') {
               const className = node.attr('class');
-              if (className && className.indexOf('mce-preview-object') !== -1 && node.firstChild) {
+              if (className && className.indexOf('mce-invited-object') !== -1 && node.firstChild) {
                 realElm.attr({
                   width: node.firstChild.attr('width'),
                   height: node.firstChild.attr('height')
@@ -1148,7 +1148,7 @@
       });
       editor.on('SetContent', () => {
         const dom = editor.dom;
-        each$1(dom.select('span.mce-preview-object'), elm => {
+        each$1(dom.select('span.mce-invited-object'), elm => {
           if (dom.select('span.mce-shim', elm).length === 0) {
             dom.add(elm, 'span', { class: 'mce-shim' });
           }

@@ -12,7 +12,7 @@ import TimePicker from "@/modules/TimePicker";
 import TextInput from "@/modules/TextInput";
 
 // services
-import {readAllProjectMemberByFoaService} from "@/services/projectService";
+import {readAllProjectMemberByFoaService} from "@/services/projectService.ts";
 
 // types
 import {IReadAllProjectMembersByFoa} from "@/types/serviceType.ts";

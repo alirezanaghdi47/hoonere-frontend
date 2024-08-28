@@ -8,10 +8,10 @@ import DataTable from "@/components/widgets/panel/projects/read/screen-plays/Dat
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // hooks
-import useFilter from "@/hooks/useFilter";
+import useFilter from "@/hooks/useFilter.tsx";
 
 // services
-import {readAllProjectScreenPlayService} from "@/services/projectScreenPlayService";
+import {readAllProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
 
 // types
 import {IReadAllProjectScreenPlay} from "@/types/serviceType.ts";

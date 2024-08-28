@@ -2,7 +2,7 @@
 import Register from "@/components/widgets/auth/sign-up/Register.tsx";
 
 // hocs
-import RouteGuardHoc from "@/components/hocs/RouteGuardHoc.tsx";
+import WithRouteGuard from "@/hocs/WithRouteGuard.tsx";
 
 const SignUp = () => {
     return (
@@ -10,4 +10,4 @@ const SignUp = () => {
     )
 }
 
-export default RouteGuardHoc(SignUp);
+export default WithRouteGuard(SignUp);

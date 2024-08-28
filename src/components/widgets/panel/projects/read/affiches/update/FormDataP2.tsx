@@ -11,7 +11,7 @@ import Members from "@/components/widgets/panel/projects/read/affiches/update/Me
 import Receptions from "@/components/widgets/panel/projects/read/affiches/update/Receptions.tsx";
 
 // hooks
-import usePart from "@/hooks/usePart";
+import usePart from "@/hooks/usePart.tsx";
 // modules
 import Button from "@/modules/Button";
 

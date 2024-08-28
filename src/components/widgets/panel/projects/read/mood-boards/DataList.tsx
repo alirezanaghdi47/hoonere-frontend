@@ -8,19 +8,17 @@ import Filter from "@/components/widgets/panel/projects/read/mood-boards/Filter.
 import Finder from "@/components/widgets/panel/projects/read/mood-boards/Finder.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
-// helpers
-import dialog from "@/helpers/dialog";
-import toast from "@/helpers/toast";
-
 // modules
 import Typography from "@/modules/Typography";
 import IconButton from "@/modules/IconButton";
+import Dialog from "@/modules/Dialog";
+import Toast from "@/modules/Toast";
 
 // services
 import {deleteProjectMoodBoardsService} from "@/services/projectMoodBoardService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {IDeleteProjectMoodBoard} from "@/types/serviceType.ts";
@@ -36,14 +34,14 @@ const MoodBoardCard = ({moodBoard, readAllProjectMoodBoardAction , filter}) => {
         mutationFn: (data: IDeleteProjectMoodBoard) => deleteProjectMoodBoardsService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 readAllProjectMoodBoardAction.mutate({
                     ...filter,
                     project_id: params?.id
                 });
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -127,7 +125,7 @@ const MoodBoardCard = ({moodBoard, readAllProjectMoodBoardAction , filter}) => {
                         size="sm"
                         color="light-danger"
                         onClick={() =>
-                            dialog(
+                            Dialog(
                                 "حذف مود بورد",
                                 "آیا میخواهید این مود بورد را حذف کنید ؟",
                                 "info",

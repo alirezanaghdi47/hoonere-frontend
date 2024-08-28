@@ -3,7 +3,7 @@ import Header from "@/components/widgets/panel/projects/read/affiches/create/Hea
 import Content from "@/components/widgets/panel/projects/read/affiches/create/Content.tsx";
 
 // hocs
-import RouteGuardHoc from "@/components/hocs/RouteGuardHoc.tsx";
+import WithRouteGuard from "@/hocs/WithRouteGuard.tsx";
 
 const CreateProjectAffiche = () => {
     return (
@@ -14,4 +14,4 @@ const CreateProjectAffiche = () => {
     )
 }
 
-export default RouteGuardHoc(CreateProjectAffiche);
+export default WithRouteGuard(CreateProjectAffiche);

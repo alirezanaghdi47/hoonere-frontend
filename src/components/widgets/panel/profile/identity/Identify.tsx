@@ -6,13 +6,14 @@ import {useFormik} from "formik";
 import Real from "@/components/widgets/panel/profile/identity/Real.tsx";
 import Legal from "@/components/widgets/panel/profile/identity/Legal.tsx";
 
-// helpers
-import toast from "@/helpers/toast";
-
 // hooks
-import usePart from "@/hooks/usePart";
+import usePart from "@/hooks/usePart.tsx";
+
+// modules
+import Toast from "@/modules/Toast";
+
 // services
-import {updateProfileIdentityService} from "@/services/profileService";
+import {updateProfileIdentityService} from "@/services/profileService.ts";
 
 // types
 import {IUpdateProfileIdentityLegal, IUpdateProfileIdentityReal} from "@/types/serviceType.ts";
@@ -21,21 +22,17 @@ import {IUpdateProfileIdentityLegal, IUpdateProfileIdentityReal} from "@/types/s
 import {updateProfileRealSchema, updateProfileLegalSchema} from "@/utils/validations.ts";
 
 const Identify = ({readMyProfileAction}) => {
-    const {
-        currentPart,
-        resetPart,
-        changeCurrentPart
-    } = usePart(null, readMyProfileAction.data?.data?.user_info?.user_type === "1" ? "real" : "legal");
+    const {currentPart, changeCurrentPart} = usePart(null, readMyProfileAction.data?.data?.user_info?.user_type === "1" ? "real" : "legal");
 
     const updateProfileIdentityAction = useMutation({
         mutationFn: (data: IUpdateProfileIdentityReal | IUpdateProfileIdentityLegal) => updateProfileIdentityService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 readMyProfileAction.mutate();
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });

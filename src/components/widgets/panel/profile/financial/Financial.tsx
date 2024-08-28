@@ -10,7 +10,7 @@ import UpdateBankFormData from "@/components/widgets/panel/profile/financial/Upd
 import Banks from "@/components/widgets/panel/profile/financial/Banks.tsx";
 
 // hooks
-import usePart from "@/hooks/usePart";
+import usePart from "@/hooks/usePart.tsx";
 const Financial = ({readMyProfileAction , readMyAllBankCardAction}) => {
     const {part, currentPart, resetPart, changePart, changeCurrentPart} = usePart(null , "read");
 

@@ -11,7 +11,7 @@ import Form from "@/modules/Form";
 import DatePicker from "@/modules/DatePicker";
 
 // services
-import {readAllProjectTypeService} from "@/services/publicService";
+import {readAllProjectTypeService} from "@/services/publicService.ts";
 
 const AdvanceFilter = ({
                            filter,

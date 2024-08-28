@@ -12,7 +12,7 @@ import Financial from "@/components/widgets/panel/profile/financial/Financial.ts
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // services
-import {readMyAllBankCardService, readMyProfileService} from "@/services/profileService";
+import {readMyAllBankCardService, readMyProfileService} from "@/services/profileService.ts";
 
 const Content = () => {
     const location = useLocation();

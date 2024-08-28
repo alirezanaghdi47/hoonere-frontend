@@ -7,7 +7,7 @@ import {LuPen, LuTrash} from "react-icons/lu";
 import {Section, Note} from "@/components/widgets/panel/projects/read/contracts/update/Actions.tsx";
 
 // hooks
-import usePart from "@/hooks/usePart";
+import usePart from "@/hooks/usePart.tsx";
 
 // modules
 import Typography from "@/modules/Typography";
@@ -76,7 +76,7 @@ const CreateExecutionTimeFormData = ({article, section, updateProjectContractFor
                         name="start_date"
                         value={updateProjectContractForm.values.articles.find(item => item.number === article.number)?.start_date}
                         onChange={(value) => {
-                            updateProjectContractForm.setFieldValue(`articles[${updateProjectContractForm.values.articles.findIndex(item => item.number === article.number + 2)}].payment_state`, 0);
+                            updateProjectContractForm.setFieldValue(`articles[${updateProjectContractForm.values.articles.findIndex(item => item.number === article.number + 2)}].payment_state`, "1");
                             updateProjectContractForm.setFieldValue(`articles[${updateProjectContractForm.values.articles.findIndex(item => item.number === article.number + 2)}].payments`, []);
                             updateProjectContractForm.setFieldValue(`sections[${updateProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number)}].content` , "");
                             updateProjectContractForm.setFieldValue(`sections[${updateProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number + 2)}].content`, "");
@@ -100,7 +100,7 @@ const CreateExecutionTimeFormData = ({article, section, updateProjectContractFor
                         minDate={updateProjectContractForm.values.articles.find(item => item.number === article.number)?.start_date}
                         value={updateProjectContractForm.values.articles.find(item => item.number === article.number)?.end_date}
                         onChange={(value) => {
-                            updateProjectContractForm.setFieldValue(`articles[${updateProjectContractForm.values.articles.findIndex(item => item.number === article.number + 2)}].payment_state`, 0);
+                            updateProjectContractForm.setFieldValue(`articles[${updateProjectContractForm.values.articles.findIndex(item => item.number === article.number + 2)}].payment_state`, "1");
                             updateProjectContractForm.setFieldValue(`articles[${updateProjectContractForm.values.articles.findIndex(item => item.number === article.number + 2)}].payments`, []);
                             updateProjectContractForm.setFieldValue(`sections[${updateProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number + 2)}].content`, "");
                             updateProjectContractForm.setFieldValue(`articles[${updateProjectContractForm.values.articles.findIndex(item => item.number === article.number)}].end_date`, value);

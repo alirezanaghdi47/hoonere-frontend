@@ -8,7 +8,7 @@ const RegisterForm = Loadable(() => import("@/components/widgets/auth/sign-in/Re
 import Authentication from "@/components/widgets/auth/sign-in/Authentication.tsx";
 
 // hooks
-import useStep from "@/hooks/useStep";
+import useStep from "@/hooks/useStep.tsx";
 
 const LoginWithMobile = ({unSetOtpWay}) => {
     const {step, currentStep, resetStep, nextStep, changeStep} = useStep();

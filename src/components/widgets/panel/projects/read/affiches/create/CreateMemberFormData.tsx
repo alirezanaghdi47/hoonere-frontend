@@ -12,8 +12,8 @@ import TimePicker from "@/modules/TimePicker";
 import Textarea from "@/modules/Textarea";
 
 // services
-import {readAllProjectMemberByFoaService} from "@/services/projectService";
-import {readAllJobService} from "@/services/publicService";
+import {readAllProjectMemberByFoaService} from "@/services/projectService.ts";
+import {readAllJobService} from "@/services/publicService.ts";
 
 // types
 import {IReadAllProjectMembersByFoa} from "@/types/serviceType.ts";

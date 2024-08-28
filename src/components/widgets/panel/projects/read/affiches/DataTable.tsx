@@ -10,20 +10,18 @@ import Finder from "@/components/widgets/panel/projects/read/affiches/Finder.tsx
 import Filter from "@/components/widgets/panel/projects/read/affiches/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
-// helpers
-import dialog from "@/helpers/dialog";
-import toast from "@/helpers/toast";
-
 // modules
 import Table from "@/modules/Table";
 import IconButton from "@/modules/IconButton";
 import Typography from "@/modules/Typography";
+import Dialog from "@/modules/Dialog";
+import Toast from "@/modules/Toast";
 
 // services
 import {deleteProjectAfficheService} from "@/services/projectAfficheService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {IDeleteProjectAffiche} from "@/types/serviceType.ts";
@@ -47,14 +45,14 @@ const DataTable = ({
         mutationFn: (data: IDeleteProjectAffiche) => deleteProjectAfficheService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 readAllProjectAfficheAction.mutate({
                     ...filter,
                     project_id: params.id
                 });
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -119,84 +117,100 @@ const DataTable = ({
             {
                 accessorKey: 'actions',
                 header: () => 'ابزار',
-                cell: ({row}) => (
-                    <div className="d-flex justify-content-start align-items-center gap-2 w-100">
-                        <IconButton
-                            href={auth.panel_url + "projects/" + row.original.project_id + "/affiches/" + row.original.id + "/histories"}
-                            color="light-info"
-                            size="sm"
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="تاریخچه"
-                        >
-                            <LuHistory
-                                size={20}
-                                color="currentColor"
-                            />
-                        </IconButton>
+                cell: ({row}) =>
+                    location.hash === "#is_invited=0" ? (
+                        <div className="d-flex justify-content-start align-items-center gap-2 w-100">
+                            <IconButton
+                                href={auth.panel_url + "projects/" + row.original.project_id + "/affiches/" + row.original.id + "/histories"}
+                                color="light-info"
+                                size="sm"
+                                data-tooltip-id="my-tooltip"
+                                data-tooltip-content="تاریخچه"
+                            >
+                                <LuHistory
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            </IconButton>
 
-                        <IconButton
-                            color="light-info"
-                            size="sm"
-                            onClick={() => navigate(auth.panel_url + "projects/" + params.id + "/affiches/" + row.original.id, {state: {background: location}})}
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="جزییات"
-                        >
-                            <LuInfo
-                                size={20}
-                                color="currentColor"
-                            />
-                        </IconButton>
+                            <IconButton
+                                color="light-info"
+                                size="sm"
+                                onClick={() => navigate(auth.panel_url + "projects/" + params.id + "/affiches/" + row.original.id, {state: {background: location}})}
+                                data-tooltip-id="my-tooltip"
+                                data-tooltip-content="جزییات"
+                            >
+                                <LuInfo
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            </IconButton>
 
-                        <IconButton
-                            href={auth.panel_url + "projects/" + row.original.project_id + "/affiches/" + row.original.id + "/update"}
-                            color="light-warning"
-                            size="sm"
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="ویرایش"
-                        >
-                            <LuPen
-                                size={20}
-                                color="currentColor"
-                            />
-                        </IconButton>
+                            <IconButton
+                                href={auth.panel_url + "projects/" + row.original.project_id + "/affiches/" + row.original.id + "/update"}
+                                color="light-warning"
+                                size="sm"
+                                data-tooltip-id="my-tooltip"
+                                data-tooltip-content="ویرایش"
+                            >
+                                <LuPen
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            </IconButton>
 
-                        <IconButton
-                            color="light-danger"
-                            size="sm"
-                            onClick={() => {
-                                dialog(
-                                    "حذف آفیش",
-                                    "آیا میخواهید این آفیش را حذف کنید ؟",
-                                    "info",
-                                    {
-                                        show: true,
-                                        text: "حذف",
-                                        color: "danger",
-                                    },
-                                    {
-                                        show: true,
-                                        text: "انصراف",
-                                        color: "light-dark",
-                                    },
-                                    async () => deleteProjectAfficheAction.mutate({
-                                        project_id: row.original.project_id,
-                                        affiche_id: row.original.id.toString(),
-                                    })
-                                )
-                            }}
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="حذف"
-                        >
-                            <LuTrash2
-                                size={20}
-                                color="currentColor"
-                            />
-                        </IconButton>
-                    </div>
-                ),
+                            <IconButton
+                                color="light-danger"
+                                size="sm"
+                                onClick={() => {
+                                    Dialog(
+                                        "حذف آفیش",
+                                        "آیا میخواهید این آفیش را حذف کنید ؟",
+                                        "info",
+                                        {
+                                            show: true,
+                                            text: "حذف",
+                                            color: "danger",
+                                        },
+                                        {
+                                            show: true,
+                                            text: "انصراف",
+                                            color: "light-dark",
+                                        },
+                                        async () => deleteProjectAfficheAction.mutate({
+                                            project_id: row.original.project_id,
+                                            affiche_id: row.original.id.toString(),
+                                        })
+                                    )
+                                }}
+                                data-tooltip-id="my-tooltip"
+                                data-tooltip-content="حذف"
+                            >
+                                <LuTrash2
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            </IconButton>
+                        </div>
+                    ) : (
+                        <div className="d-flex justify-content-start align-items-center gap-2 w-100">
+                            <IconButton
+                                color="light-info"
+                                size="sm"
+                                onClick={() => navigate(auth.panel_url + "projects/" + params.id + "/affiches/" + row.original.id + "/invited", {state: {background: location}})}
+                                data-tooltip-id="my-tooltip"
+                                data-tooltip-content="جزییات"
+                            >
+                                <LuInfo
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            </IconButton>
+                        </div>
+                    ),
                 enableSorting: false
             },
-        ], []
+        ], [location.hash]
     );
 
     return (

@@ -43,6 +43,7 @@ const FormDataP3 = ({
                             readAllProjectScreenPlayAction.data?.data.screenplays.length === 0 && (
                                 <Empty
                                     title="فیلم نامه ای یافت نشد"
+                                    withCard
                                     width="100%"
                                     height={300}
                                 />

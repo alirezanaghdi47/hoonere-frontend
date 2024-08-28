@@ -3,7 +3,7 @@ import Header from "@/components/widgets/panel/dashboard/Header.tsx";
 import Content from "@/components/widgets/panel/dashboard/Content.tsx";
 
 // hocs
-import RouteGuardHoc from "@/components/hocs/RouteGuardHoc.tsx";
+import WithRouteGuard from "@/hocs/WithRouteGuard.tsx";
 
 const Dashboard = () => {
     return (
@@ -14,4 +14,4 @@ const Dashboard = () => {
     )
 }
 
-export default RouteGuardHoc(Dashboard);
+export default WithRouteGuard(Dashboard);

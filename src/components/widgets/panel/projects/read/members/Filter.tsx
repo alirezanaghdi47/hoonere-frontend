@@ -12,7 +12,7 @@ import Form from "@/modules/Form";
 import SelectBox from "@/modules/SelectBox";
 
 // services
-import {readAllJobService, readAllProjectTypeService} from "@/services/publicService";
+import {readAllJobService, readAllProjectTypeService} from "@/services/publicService.ts";
 
 const AdvanceFilter = ({readAllProjectMemberAction, filter, initialFilter, changeFilter, hideFilter, resetFilter}) => {
     const params = useParams();

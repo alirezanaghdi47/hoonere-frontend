@@ -7,10 +7,10 @@ import Header from "@/components/widgets/panel/projects/read/contracts/create/He
 import Content from "@/components/widgets/panel/projects/read/contracts/create/Content.tsx";
 
 // hocs
-import RouteGuardHoc from "@/components/hocs/RouteGuardHoc.tsx";
+import WithRouteGuard from "@/hocs/WithRouteGuard.tsx";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 const CreateProjectContract = () => {
     const navigate = useNavigate();
@@ -32,4 +32,4 @@ const CreateProjectContract = () => {
     )
 }
 
-export default RouteGuardHoc(CreateProjectContract);
+export default WithRouteGuard(CreateProjectContract);

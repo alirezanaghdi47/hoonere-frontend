@@ -1,23 +1,28 @@
 // libraries
 import {useLayoutEffect} from "react";
-import {useParams} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 
 // components
+import TabBar from "@/components/widgets/panel/projects/read/contracts/TabBar.tsx";
 import DataTable from "@/components/widgets/panel/projects/read/contracts/DataTable.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // hooks
-import useFilter from "@/hooks/useFilter";
+import useFilter from "@/hooks/useFilter.tsx";
 
 // services
-import {readAllProjectContractService} from "@/services/projectContractService";
+import {
+    readAllInvitedProjectContractService,
+    readAllProjectContractService
+} from "@/services/projectContractService.ts";
 
 // types
 import {IReadAllProjectContract} from "@/types/serviceType.ts";
 
 const Content = () => {
     const params = useParams();
+    const location = useLocation();
 
     const {
         filter,
@@ -36,7 +41,7 @@ const Content = () => {
     });
 
     const readAllProjectContractAction = useMutation({
-        mutationFn: (data: IReadAllProjectContract) => readAllProjectContractService(data),
+        mutationFn: (data: IReadAllProjectContract) => location.hash === "#is_invited=0" ? readAllProjectContractService(data) : readAllInvitedProjectContractService(data),
     });
 
     useLayoutEffect(() => {
@@ -44,7 +49,7 @@ const Content = () => {
             ...filter,
             project_id: params.id
         });
-    }, []);
+    }, [location.hash]);
 
     return (
         <div
@@ -57,6 +62,12 @@ const Content = () => {
                             width="100%"
                             height={500}
                         />
+                    )
+                }
+
+                {
+                    !readAllProjectContractAction.isPending && (
+                        <TabBar/>
                     )
                 }
 

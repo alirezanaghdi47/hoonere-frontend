@@ -3,7 +3,7 @@ import Header from "@/components/widgets/panel/projects/read/contracts/update/He
 import Content from "@/components/widgets/panel/projects/read/contracts/update/Content.tsx";
 
 // hocs
-import RouteGuardHoc from "@/components/hocs/RouteGuardHoc.tsx";
+import WithRouteGuard from "@/hocs/WithRouteGuard.tsx";
 
 const UpdateProjectContract = () => {
     return (
@@ -14,4 +14,4 @@ const UpdateProjectContract = () => {
     )
 }
 
-export default RouteGuardHoc(UpdateProjectContract);
+export default WithRouteGuard(UpdateProjectContract);

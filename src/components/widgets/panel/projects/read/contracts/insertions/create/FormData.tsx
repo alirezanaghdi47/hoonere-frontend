@@ -17,7 +17,7 @@ import Button from "@/modules/Button";
 import IconButton from "@/modules/IconButton";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // utils
 import {removeArticleForInsertion} from "@/utils/functions.ts";

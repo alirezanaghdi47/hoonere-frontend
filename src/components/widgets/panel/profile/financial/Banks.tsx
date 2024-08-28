@@ -3,19 +3,17 @@ import {useMutation} from "@tanstack/react-query";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {LuMoreVertical, LuPlus} from "react-icons/lu";
 
-// helpers
-import toast from "@/helpers/toast";
-import dialog from "@/helpers/dialog";
-
 // modules
 import Form from "@/modules/Form";
 import Dropdown from "@/modules/Dropdown";
 import IconButton from "@/modules/IconButton";
 import Chip from "@/modules/Chip";
 import Typography from "@/modules/Typography";
+import Toast from "@/modules/Toast";
+import Dialog from "@/modules/Dialog";
 
 // services
-import {deleteBankCardService, changeStatusOfBankCardService} from "@/services/profileService";
+import {deleteBankCardService, changeStatusOfBankCardService} from "@/services/profileService.ts";
 
 // types
 import {IChangeStatusOfBankCard, IDeleteBankCard} from "@/types/serviceType.ts";
@@ -143,11 +141,11 @@ const Banks = ({readMyAllBankCardAction, changePart, changeCurrentPart}) => {
         mutationFn: (data: IChangeStatusOfBankCard) => changeStatusOfBankCardService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 readMyAllBankCardAction.mutate();
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -156,11 +154,11 @@ const Banks = ({readMyAllBankCardAction, changePart, changeCurrentPart}) => {
         mutationFn: (data: IDeleteBankCard) => deleteBankCardService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 readMyAllBankCardAction.mutate();
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -203,7 +201,7 @@ const Banks = ({readMyAllBankCardAction, changePart, changeCurrentPart}) => {
                                                 {
                                                     id: 3,
                                                     label: "حذف",
-                                                    onClick: () => dialog(
+                                                    onClick: () => Dialog(
                                                         "حذف کارت",
                                                         "آیا میخواهید این کارت را حذف کنید ؟",
                                                         "info",
@@ -234,7 +232,7 @@ const Banks = ({readMyAllBankCardAction, changePart, changeCurrentPart}) => {
                                                 {
                                                     id: 2,
                                                     label: "حذف",
-                                                    onClick: () => dialog(
+                                                    onClick: () => Dialog(
                                                         "حذف کارت",
                                                         "آیا میخواهید این کارت را حذف کنید ؟",
                                                         "info",

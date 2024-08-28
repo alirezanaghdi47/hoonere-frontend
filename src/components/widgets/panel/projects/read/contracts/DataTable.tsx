@@ -16,25 +16,23 @@ import Finder from "@/components/widgets/panel/projects/read/contracts/Finder.ts
 import Filter from "@/components/widgets/panel/projects/read/contracts/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
-// helpers
-import dialog from "@/helpers/dialog";
-import toast from "@/helpers/toast";
-
 // modules
 import Table from "@/modules/Table";
 import IconButton from "@/modules/IconButton";
 import Typography from "@/modules/Typography";
 import Chip from "@/modules/Chip";
+import Dialog from "@/modules/Dialog";
+import Toast from "@/modules/Toast";
 
 // services
 import {
     changeProjectContractStatusService,
     deleteProjectUnOfficialContractService,
     deleteProjectOfficialContractService,
-} from "@/services/projectContractService";
+} from "@/services/projectContractService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {
@@ -62,14 +60,14 @@ const DataTable = ({
         mutationFn: (data: IChangeProjectContractStatus) => changeProjectContractStatusService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 readAllProjectContractAction.mutate({
                     ...filter,
                     project_id: params.id
                 });
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -78,14 +76,14 @@ const DataTable = ({
         mutationFn: (data: IDeleteProjectOfficialContract) => deleteProjectOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 readAllProjectContractAction.mutate({
                     ...filter,
                     project_id: params.id
                 });
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -94,14 +92,14 @@ const DataTable = ({
         mutationFn: (data: IDeleteProjectUnOfficialContract) => deleteProjectUnOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 readAllProjectContractAction.mutate({
                     ...filter,
                     project_id: params.id
                 });
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -247,124 +245,141 @@ const DataTable = ({
             {
                 accessorKey: 'actions',
                 header: () => 'ابزار',
-                cell: ({row}) => (
-                    <div className="d-flex justify-content-end align-items-center gap-2 w-100">
-                        {
-                            row.original.type_id === "1" && row.original.status_id === "1" && (
-                                <IconButton
-                                    color="light-success"
-                                    size="sm"
-                                    data-tooltip-id="my-tooltip"
-                                    data-tooltip-content="ثبت نهایی"
-                                    onClick={() => {
-                                        dialog(
-                                            "ثبت نهایی قرارداد",
-                                            "آیا میخواهید این قرارداد را ثبت نهایی کنید ؟",
-                                            "info",
-                                            {
-                                                show: true,
-                                                text: "بله",
-                                                color: "success",
-                                            },
-                                            {
-                                                show: true,
-                                                text: "خیر",
-                                                color: "light-danger",
-                                            },
-                                            async () => changeProjectContractStatusAction.mutate({
-                                                project_id: row.original.project_id,
-                                                contract_id: row.original.id.toString(),
-                                            })
-                                        )
-                                    }}
-                                >
-                                    <LuThumbsUp
-                                        size={20}
-                                        color="currentColor"
-                                    />
-                                </IconButton>
-                            )
-                        }
-
-                        <IconButton
-                            href={auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/insertions"}
-                            color="light-info"
-                            size="sm"
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="متمم و الحاقیه ها"
-                        >
-                            <LuFilePlus
-                                size={20}
-                                color="currentColor"
-                            />
-                        </IconButton>
-
-                        <IconButton
-                            color="light-info"
-                            size="sm"
-                            onClick={() => navigate(row.original.type_id === "1" ? auth.panel_url + "projects/" + params.id + "/contracts/" + row.original.id + "#official" : auth.panel_url + "projects/" + params.id + "/contracts/" + row.original.id + "#un-official", {state: {background: location}})}
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="جزییات"
-                        >
-                            <LuInfo
-                                size={20}
-                                color="currentColor"
-                            />
-                        </IconButton>
-
-                        <IconButton
-                            href={row.original.type_id === "1" ? auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/update#official" : auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/update#un-official"}
-                            color="light-warning"
-                            size="sm"
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="ویرایش"
-                        >
-                            <LuPen
-                                size={20}
-                                color="currentColor"
-                            />
-                        </IconButton>
-
-                        <IconButton
-                            color="light-danger"
-                            size="sm"
-                            onClick={() => {
-                                dialog(
-                                    "حذف قرارداد",
-                                    "آیا میخواهید این قرارداد را حذف کنید ؟",
-                                    "info",
-                                    {
-                                        show: true,
-                                        text: "حذف",
-                                        color: "danger",
-                                    },
-                                    {
-                                        show: true,
-                                        text: "انصراف",
-                                        color: "light-dark",
-                                    },
-                                    async () => row.original.type_id === "1" ? deleteProjectOfficialContractAction.mutate({
-                                        contract_id: row.original.id.toString(),
-                                        project_id: row.original.project_id
-                                    }) : deleteProjectUnOfficialContractAction.mutate({
-                                        contract_id: row.original.id.toString(),
-                                        project_id: row.original.project_id
-                                    })
+                cell: ({row}) =>
+                    location.hash === "#is_invited=0" ? (
+                        <div className="d-flex justify-content-end align-items-center gap-2 w-100">
+                            {
+                                row.original.type_id === "1" && row.original.status_id === "1" && (
+                                    <IconButton
+                                        color="light-success"
+                                        size="sm"
+                                        data-tooltip-id="my-tooltip"
+                                        data-tooltip-content="ثبت نهایی"
+                                        onClick={() => {
+                                            Dialog(
+                                                "ثبت نهایی قرارداد",
+                                                "آیا میخواهید این قرارداد را ثبت نهایی کنید ؟",
+                                                "info",
+                                                {
+                                                    show: true,
+                                                    text: "بله",
+                                                    color: "success",
+                                                },
+                                                {
+                                                    show: true,
+                                                    text: "خیر",
+                                                    color: "light-danger",
+                                                },
+                                                async () => changeProjectContractStatusAction.mutate({
+                                                    project_id: row.original.project_id,
+                                                    contract_id: row.original.id.toString(),
+                                                })
+                                            )
+                                        }}
+                                    >
+                                        <LuThumbsUp
+                                            size={20}
+                                            color="currentColor"
+                                        />
+                                    </IconButton>
                                 )
-                            }}
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="حذف"
-                        >
-                            <LuTrash2
-                                size={20}
-                                color="currentColor"
-                            />
-                        </IconButton>
-                    </div>
-                ),
+                            }
+
+                            <IconButton
+                                href={auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/insertions"}
+                                color="light-info"
+                                size="sm"
+                                data-tooltip-id="my-tooltip"
+                                data-tooltip-content="متمم و الحاقیه ها"
+                            >
+                                <LuFilePlus
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            </IconButton>
+
+                            <IconButton
+                                color="light-info"
+                                size="sm"
+                                onClick={() => navigate(row.original.type_id === "1" ? auth.panel_url + "projects/" + params.id + "/contracts/" + row.original.id + "#official" : auth.panel_url + "projects/" + params.id + "/contracts/" + row.original.id + "#un-official", {state: {background: location}})}
+                                data-tooltip-id="my-tooltip"
+                                data-tooltip-content="جزییات"
+                            >
+                                <LuInfo
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            </IconButton>
+
+                            <IconButton
+                                href={row.original.type_id === "1" ? auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/update#official" : auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/update#un-official"}
+                                color="light-warning"
+                                size="sm"
+                                data-tooltip-id="my-tooltip"
+                                data-tooltip-content="ویرایش"
+                            >
+                                <LuPen
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            </IconButton>
+
+                            <IconButton
+                                color="light-danger"
+                                size="sm"
+                                onClick={() => {
+                                    Dialog(
+                                        "حذف قرارداد",
+                                        "آیا میخواهید این قرارداد را حذف کنید ؟",
+                                        "info",
+                                        {
+                                            show: true,
+                                            text: "حذف",
+                                            color: "danger",
+                                        },
+                                        {
+                                            show: true,
+                                            text: "انصراف",
+                                            color: "light-dark",
+                                        },
+                                        async () => row.original.type_id === "1" ? deleteProjectOfficialContractAction.mutate({
+                                            contract_id: row.original.id.toString(),
+                                            project_id: row.original.project_id
+                                        }) : deleteProjectUnOfficialContractAction.mutate({
+                                            contract_id: row.original.id.toString(),
+                                            project_id: row.original.project_id
+                                        })
+                                    )
+                                }}
+                                data-tooltip-id="my-tooltip"
+                                data-tooltip-content="حذف"
+                            >
+                                <LuTrash2
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            </IconButton>
+                        </div>
+                    ) : (
+                        <div className="d-flex justify-content-end align-items-center gap-2 w-100">
+                            <IconButton
+                                color="light-info"
+                                size="sm"
+                                onClick={() => navigate( auth.panel_url + "projects/" + params.id + "/contracts/" + row.original.id + "/invited", {state: {background: location}})}
+                                data-tooltip-id="my-tooltip"
+                                data-tooltip-content="جزییات"
+                            >
+                                <LuInfo
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            </IconButton>
+                        </div>
+
+                    ),
                 enableSorting: false
             },
-        ], []
+        ], [location.hash]
     );
 
     return (

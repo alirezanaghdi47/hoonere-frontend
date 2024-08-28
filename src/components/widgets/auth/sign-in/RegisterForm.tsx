@@ -3,21 +3,19 @@ import {useNavigate} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
-// helpers
-import toast from "@/helpers/toast";
-
 // modules
 import TextInput from "@/modules/TextInput";
 import PasswordInput from "@/modules/PasswordInput";
 import Button from "@/modules/Button";
 import Typography from "@/modules/Typography";
 import Form from "@/modules/Form";
+import Toast from "@/modules/Toast";
 
 // services
-import {registerService} from "@/services/authService";
+import {registerService} from "@/services/authService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {IRegister} from "@/types/serviceType.ts";
@@ -33,13 +31,13 @@ const RegisterForm = ({resetStep}) => {
         mutationFn: (data: IRegister) => registerService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 changeStatusId(data.data.status_id);
 
                 navigate(auth.panel_url ? auth.panel_url + "dashboard" : "/panel/dashboard");
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });

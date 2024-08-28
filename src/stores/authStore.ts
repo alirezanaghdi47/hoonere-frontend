@@ -1,7 +1,20 @@
 // libraries
 import {create} from 'zustand';
 import {persist} from 'zustand/middleware';
-import {IAuthState, IAuthStore} from "@/types/storesType.ts";
+
+interface IAuthState {
+    token: string | null,
+    username: string | null,
+    panel_url: string | null,
+    status_id: number | null
+}
+
+interface IAuthStore {
+    auth: IAuthState,
+    login: (data: IAuthState) => void,
+    changeStatusId: (status_id: number) => void,
+    logout: () => void,
+}
 
 const initialState: IAuthState = {
     token: null,

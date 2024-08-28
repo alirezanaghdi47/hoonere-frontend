@@ -2,7 +2,7 @@
 import Content from "@/components/widgets/panel/projects/read/screen-plays/read/Content.tsx";
 
 // hocs
-import RouteGuardHoc from "@/components/hocs/RouteGuardHoc.tsx";
+import WithRouteGuard from "@/hocs/WithRouteGuard.tsx";
 
 const ProjectScreenPlay = () => {
     return (
@@ -10,4 +10,4 @@ const ProjectScreenPlay = () => {
     )
 }
 
-export default RouteGuardHoc(ProjectScreenPlay);
+export default WithRouteGuard(ProjectScreenPlay);

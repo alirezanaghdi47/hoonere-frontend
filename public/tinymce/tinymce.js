@@ -9549,7 +9549,7 @@
     };
 
     const elementSelectionAttr = 'data-mce-selected';
-    const controlElmSelector = 'table,img,figure.image,hr,video,span.mce-preview-object,details';
+    const controlElmSelector = 'table,img,figure.image,hr,video,span.mce-invited-object,details';
     const abs = Math.abs;
     const round$1 = Math.round;
     const resizeHandles = {
@@ -9591,7 +9591,7 @@
       let startScrollWidth;
       let startScrollHeight;
       const isImage = elm => isNonNullable(elm) && (isImg(elm) || dom.is(elm, 'figure.image'));
-      const isMedia = elm => isMedia$2(elm) || dom.hasClass(elm, 'mce-preview-object');
+      const isMedia = elm => isMedia$2(elm) || dom.hasClass(elm, 'mce-invited-object');
       const isEventOnImageOutsideRange = (evt, range) => {
         if (isTouchEvent(evt)) {
           const touch = evt.touches[0];
@@ -9607,7 +9607,7 @@
         }
       };
       const getResizeTargets = elm => {
-        if (dom.hasClass(elm, 'mce-preview-object') && isNonNullable(elm.firstElementChild)) {
+        if (dom.hasClass(elm, 'mce-invited-object') && isNonNullable(elm.firstElementChild)) {
           return [
             elm,
             elm.firstElementChild
@@ -9629,7 +9629,7 @@
         if (elm === editor.getBody()) {
           return false;
         }
-        if (dom.hasClass(elm, 'mce-preview-object') && isNonNullable(elm.firstElementChild)) {
+        if (dom.hasClass(elm, 'mce-invited-object') && isNonNullable(elm.firstElementChild)) {
           return is$1(SugarElement.fromDom(elm.firstElementChild), selector);
         } else {
           return is$1(SugarElement.fromDom(elm), selector);
@@ -20302,7 +20302,7 @@
             preview: 'font-family font-size'
           },
           {
-            selector: '.mce-preview-object,[data-ephox-embed-iri]',
+            selector: '.mce-invited-object,[data-ephox-embed-iri]',
             ceFalseOverride: true,
             styles: { float: 'left' }
           }
@@ -20341,7 +20341,7 @@
             preview: 'font-family font-size'
           },
           {
-            selector: '.mce-preview-object',
+            selector: '.mce-invited-object',
             ceFalseOverride: true,
             styles: {
               display: 'table',
@@ -20393,7 +20393,7 @@
             preview: 'font-family font-size'
           },
           {
-            selector: '.mce-preview-object,[data-ephox-embed-iri]',
+            selector: '.mce-invited-object,[data-ephox-embed-iri]',
             ceFalseOverride: true,
             styles: { float: 'right' },
             preview: false

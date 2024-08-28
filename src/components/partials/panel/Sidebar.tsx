@@ -6,18 +6,16 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {useMediaQuery} from "usehooks-ts";
 import {LuLayers, LuLogOut, LuPieChart} from "react-icons/lu";
 
-// helpers
-import toast from "@/helpers/toast"
-
 // modules
 import IconButton from "@/modules/IconButton";
+import Toast from "@/modules/Toast"
 
 // services
-import {logoutService} from "@/services/authService";
+import {logoutService} from "@/services/authService.ts";
 
 // stores
-import useAppStore from "@/stores/appStore";
-import useAuthStore from "@/stores/authStore";
+import useAppStore from "@/stores/appStore.ts";
+import useAuthStore from "@/stores/authStore.ts";
 
 const Sidebar = () => {
     const navigate = useNavigate();
@@ -44,7 +42,7 @@ const Sidebar = () => {
         mutationFn: () => logoutService(),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 hideDrawer();
 
@@ -52,7 +50,7 @@ const Sidebar = () => {
 
                 navigate("/auth/sign-in", {replace: true});
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });

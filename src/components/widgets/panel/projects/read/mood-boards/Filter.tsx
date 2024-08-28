@@ -12,7 +12,7 @@ import Form from "@/modules/Form";
 import SelectBox from "@/modules/SelectBox";
 
 // services
-import {readAllProjectMoodBoardTypeService} from "@/services/publicService";
+import {readAllProjectMoodBoardTypeService} from "@/services/publicService.ts";
 
 const AdvanceFilter = ({
                            readAllProjectMoodBoardAction,

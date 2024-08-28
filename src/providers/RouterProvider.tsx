@@ -3,9 +3,9 @@ import {Navigate, Route, Routes, useLocation} from "react-router-dom";
 import Loadable from '@loadable/component';
 
 // layouts
-const Panel = Loadable(() => import('@/layouts/PanelLayout.tsx'));
-const Auth = Loadable(() => import('@/layouts/AuthLayout.tsx'));
-const Blank = Loadable(() => import('@/layouts/BlankLayout.tsx'));
+const Panel = Loadable(() => import('@/pages/panel'));
+const Auth = Loadable(() => import('@/pages/auth'));
+const Blank = Loadable(() => import('@/pages/blank'));
 
 // pages
 const Server = Loadable(() => import('@/pages/blank/server'));
@@ -15,6 +15,7 @@ const SignUp = Loadable(() => import('@/pages/auth/sign-up'));
 const Dashboard = Loadable(() => import('@/pages/panel/dashboard'));
 const Projects = Loadable(() => import('@/pages/panel/projects'));
 const Project = Loadable(() => import('@/pages/panel/projects/read'));
+const InvitedProject = Loadable(() => import('@/pages/panel/projects/invited'));
 const CreateProject = Loadable(() => import('@/pages/panel/projects/create'));
 const UpdateProject = Loadable(() => import('@/pages/panel/projects/update'));
 const ProjectMembers = Loadable(() => import('@/pages/panel/projects/read/members'));
@@ -26,6 +27,7 @@ const CreateProjectScreenPlay = Loadable(() => import('@/pages/panel/projects/re
 const UpdateProjectScreenPlay = Loadable(() => import('@/pages/panel/projects/read/screen-plays/update'));
 const ProjectAffiches = Loadable(() => import('@/pages/panel/projects/read/affiches'));
 const ProjectAffiche = Loadable(() => import('@/pages/panel/projects/read/affiches/read'));
+const InvitedProjectAffiche = Loadable(() => import('../pages/panel/projects/read/affiches/invited'));
 const CreateProjectAffiche = Loadable(() => import('@/pages/panel/projects/read/affiches/create'));
 const UpdateProjectAffiche = Loadable(() => import('@/pages/panel/projects/read/affiches/update'));
 const ProjectAfficheHistories = Loadable(() => import('@/pages/panel/projects/read/affiches/histories'));
@@ -35,6 +37,7 @@ const ProjectMoodBoard = Loadable(() => import('@/pages/panel/projects/read/mood
 const CreateProjectMoodBoard = Loadable(() => import('@/pages/panel/projects/read/mood-boards/create'));
 const ProjectContracts = Loadable(() => import('@/pages/panel/projects/read/contracts'));
 const ProjectContract = Loadable(() => import('@/pages/panel/projects/read/contracts/read'));
+const InvitedProjectContract = Loadable(() => import('../pages/panel/projects/read/contracts/invited'));
 const CreateProjectContract = Loadable(() => import('@/pages/panel/projects/read/contracts/create'));
 const UpdateProjectContract = Loadable(() => import('@/pages/panel/projects/read/contracts/update'));
 const ProjectContractInsertions = Loadable(() => import('@/pages/panel/projects/read/contracts/insertions'));
@@ -212,6 +215,11 @@ const pageRoutes = [
 
 const modalRoutes = [
     {
+        id: 2,
+        path: "panel/projects/:id/invited",
+        component: InvitedProject,
+    },
+    {
         id: 1,
         path: "panel/projects/:id/screen-plays/:subId",
         component: ProjectScreenPlay,
@@ -220,6 +228,11 @@ const modalRoutes = [
         id: 2,
         path: "panel/projects/:id/affiches/:subId",
         component: ProjectAffiche,
+    },
+    {
+        id: 2,
+        path: "panel/projects/:id/affiches/:subId/invited",
+        component: InvitedProjectAffiche,
     },
     {
         id: 3,
@@ -235,6 +248,11 @@ const modalRoutes = [
         id: 5,
         path: "panel/projects/:id/contracts/:subId",
         component: ProjectContract,
+    },
+    {
+        id: 5,
+        path: "panel/projects/:id/contracts/:subId/invited",
+        component: InvitedProjectContract,
     },
     {
         id: 6,

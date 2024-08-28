@@ -2,8 +2,17 @@
 import {create} from 'zustand';
 import {persist} from "zustand/middleware";
 
-// types
-import {IAppState , IAppStore} from "@/types/storesType.ts";
+interface IAppState {
+    isOpenDrawer: boolean,
+    isDark: boolean,
+}
+
+interface IAppStore {
+    app: IAppState,
+    showDrawer: () => void,
+    hideDrawer: () => void,
+    toggleTheme: () => void,
+}
 
 const initialState: IAppState = {
     isOpenDrawer: false,

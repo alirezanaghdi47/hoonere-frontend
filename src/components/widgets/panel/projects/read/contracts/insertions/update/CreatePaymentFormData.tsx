@@ -10,7 +10,7 @@ import {Section} from "@/components/widgets/panel/projects/read/contracts/insert
 import Forbidden from "@/components/partials/panel/Forbidden.tsx";
 
 // hooks
-import useModal from "@/hooks/useModal";
+import useModal from "@/hooks/useModal.tsx";
 import usePart from "@/hooks/usePart.tsx";
 
 // modules

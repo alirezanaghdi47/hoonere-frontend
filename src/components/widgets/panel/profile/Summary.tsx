@@ -9,7 +9,7 @@ import Chip from "@/modules/Chip";
 import Tabs from "@/modules/Tabs";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 const Summary = ({readMyProfileAction}) => {
     const location = useLocation();
@@ -31,7 +31,7 @@ const Summary = ({readMyProfileAction}) => {
                     <div
                         className="d-flex justify-content-center align-items-center w-150px h-150px overflow-hidden">
                         <LazyLoadImage
-                            src={readMyProfileAction.data?.data?.user_info?.profile_img}
+                            src={readMyProfileAction.data?.data?.user_info?.profile_img_asset}
                             width={150}
                             height={150}
                             className="w-100 h-100 object-fit-cover rounded-circle"

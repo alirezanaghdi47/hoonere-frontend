@@ -884,6 +884,8 @@ const DataModal = ({contract}) => {
         content: () => printRef.current,
     });
 
+    console.log(contract)
+
     return (
         <>
             <style>
@@ -945,7 +947,17 @@ const DataModal = ({contract}) => {
                             <tr>
                                 <td>
                                     <div className="page__header">
-
+                                        <div className="d-flex justify-content-center align-items-center w-100 h-100">
+                                            <Typography
+                                                size="lg"
+                                                color="light"
+                                                isBold
+                                            >
+                                                پروژه :
+                                                &nbsp;
+                                                {contract?.project_title}
+                                            </Typography>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -996,7 +1008,7 @@ const DataModal = ({contract}) => {
                                                                     <RegularSection
                                                                         section={{
                                                                             number: article.sections.find(section => section.article_number === 4 && section.number === 1)?.number,
-                                                                            content: ` مبلغ قرارداد ${Number(contract?.total_price).toLocaleString()} ریال می باشد. `,
+                                                                            content: article.sections.find(section => section.article_number === 4 && section.number === 1)?.content,
                                                                             notes: contract?.notes.filter(note => note.article_number === 4 && note.section_number === 1)
                                                                         }}
                                                                     />
@@ -1008,7 +1020,7 @@ const DataModal = ({contract}) => {
                                                                     <PaymentSection
                                                                         section={{
                                                                             number: 1,
-                                                                            content: contract?.payment_state === "2" ? "کلیه پرداخت ها به مجری بر اساس فاکتور های تایید شده توسط کارفرما پرداخت میگردد" : "کلیه پرداخت ها بر اساس فاز های زیر پرداخت میگردد",
+                                                                            content: contract?.payment_state === "1" ? "کلیه پرداخت ها بر اساس فاز های زیر پرداخت میگردد" : article.sections.find(section => section.article_number === 5 && section.number === 1)?.content,
                                                                             notes: contract?.notes.filter(note => note.article_number === 5 && note.section_number === 1)
                                                                         }}
                                                                         totalPrice={contract?.total_price}

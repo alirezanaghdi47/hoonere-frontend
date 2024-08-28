@@ -6,14 +6,14 @@ import {useFormik} from "formik";
 // components
 import FormData from "@/components/widgets/panel/projects/read/screen-plays/create/FormData.tsx";
 
-// helpers
-import toast from "@/helpers/toast"
+// modules
+import Toast from "@/modules/Toast"
 
 // services
-import {createProjectScreenPlayService} from "@/services/projectScreenPlayService";
+import {createProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {ICreateProjectScreenPlay} from "@/types/serviceType.ts";
@@ -30,11 +30,11 @@ const Content = () => {
         mutationFn: (data: ICreateProjectScreenPlay) => createProjectScreenPlayService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 navigate(auth.panel_url + "projects/" + params.id + "/screen-plays");
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });

@@ -1,21 +1,25 @@
 // libraries
 import {useLayoutEffect} from "react";
+import {useLocation} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 
 // components
+import TabBar from "@/components/widgets/panel/projects/TabBar.tsx";
 import DataTable from "@/components/widgets/panel/projects/DataTable.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // hooks
-import useFilter from "@/hooks/useFilter";
+import useFilter from "@/hooks/useFilter.tsx";
 
 // services
-import {readAllProjectService} from "@/services/projectService";
+import {readAllInvitedProjectService, readAllProjectService} from "@/services/projectService.ts";
 
 // types
 import {IReadAllProject} from "@/types/serviceType.ts";
 
 const Content = () => {
+    const location = useLocation();
+
     const {filter, initialFilter, isOpenFilter, showFilter, hideFilter, resetFilter, changeFilter} = useFilter<IReadAllProject>({
         text: "",
         type_id: "",
@@ -24,12 +28,12 @@ const Content = () => {
     });
 
     const readAllProjectAction = useMutation({
-        mutationFn: (data: IReadAllProject) => readAllProjectService(data),
+        mutationFn: (data: IReadAllProject) => location.hash === "#is_invited=0" ? readAllProjectService(data) : readAllInvitedProjectService(data),
     });
 
     useLayoutEffect(() => {
         readAllProjectAction.mutate(filter);
-    }, []);
+    }, [location.hash]);
 
     return (
         <div
@@ -42,6 +46,12 @@ const Content = () => {
                             width="100%"
                             height={500}
                         />
+                    )
+                }
+
+                {
+                    !readAllProjectAction.isPending && (
+                        <TabBar/>
                     )
                 }
 

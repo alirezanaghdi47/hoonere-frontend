@@ -54,7 +54,7 @@ const CreateExecutionTimeFormData = ({article, section, createProjectContractFor
                         name="start_date"
                         value={createProjectContractForm.values.articles.find(item => item.number === article.number)?.start_date}
                         onChange={(value) => {
-                            createProjectContractForm.setFieldValue(`articles[${createProjectContractForm.values.articles.findIndex(item => item.number === article.number + 2)}].payment_state`, 0);
+                            createProjectContractForm.setFieldValue(`articles[${createProjectContractForm.values.articles.findIndex(item => item.number === article.number + 2)}].payment_state`, "1");
                             createProjectContractForm.setFieldValue(`articles[${createProjectContractForm.values.articles.findIndex(item => item.number === article.number + 2)}].payments`, []);
                             createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number)}].content` , "");
                             createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number + 2)}].content`, "");
@@ -78,7 +78,7 @@ const CreateExecutionTimeFormData = ({article, section, createProjectContractFor
                         minDate={createProjectContractForm.values.articles.find(item => item.number === article.number)?.start_date}
                         value={createProjectContractForm.values.articles.find(item => item.number === article.number)?.end_date}
                         onChange={(value) => {
-                            createProjectContractForm.setFieldValue(`articles[${createProjectContractForm.values.articles.findIndex(item => item.number === article.number + 2)}].payment_state`, 0);
+                            createProjectContractForm.setFieldValue(`articles[${createProjectContractForm.values.articles.findIndex(item => item.number === article.number + 2)}].payment_state`, "1");
                             createProjectContractForm.setFieldValue(`articles[${createProjectContractForm.values.articles.findIndex(item => item.number === article.number + 2)}].payments`, []);
                             createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number + 2)}].content`, "");
                             createProjectContractForm.setFieldValue(`articles[${createProjectContractForm.values.articles.findIndex(item => item.number === article.number)}].end_date`, value);

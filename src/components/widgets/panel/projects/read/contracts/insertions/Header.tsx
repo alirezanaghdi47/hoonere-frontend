@@ -2,12 +2,12 @@
 import {useLayoutEffect, useState} from "react";
 import {useLocation, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
-import {LuBell, LuMoon, LuSun, LuUser} from "react-icons/lu";
+
+// components
+import ActionBar from "@/components/partials/panel/ActionBar.tsx";
 
 // modules
 import Typography from "@/modules/Typography";
-import IconButton from "@/modules/IconButton";
-import Badge from "@/modules/Badge";
 import Breadcrumbs from "@/modules/Breadcrumbs";
 import Button from "@/modules/Button";
 
@@ -15,8 +15,7 @@ import Button from "@/modules/Button";
 import {checkProjectContractHasSupplementService,} from "@/services/projectContractService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
-import useAppStore from "@/stores/appStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {ICheckProjectContractHasSupplementAction} from "@/types/serviceType.ts";
@@ -25,7 +24,6 @@ const Header = () => {
     const params = useParams();
     const location = useLocation();
     const {auth} = useAuthStore();
-    const {app: {isDark}, toggleTheme} = useAppStore();
 
     const [breadcrumbLinks, setBreadcrumbLinks] = useState([
         {id: 1, label: "داشبورد", href: auth.panel_url + "dashboard"},
@@ -60,50 +58,7 @@ const Header = () => {
                     </Typography>
                 </div>
 
-                <div className="order-1 order-md-2 col-12 col-md-8 d-flex justify-content-end align-items-center gap-2">
-                    <IconButton textColor="light">
-                        <Badge
-                            color="light-success"
-                            size="sm"
-                            placement="top-start"
-                            label="2"
-                        />
-
-                        <LuBell
-                            size={20}
-                            color="currentColor"
-                        />
-                    </IconButton>
-
-                    <IconButton
-                        textColor="light"
-                        onClick={toggleTheme}
-                    >
-                        {
-                            isDark ? (
-                                <LuSun
-                                    size={20}
-                                    color="currentColor"
-                                />
-                            ) : (
-                                <LuMoon
-                                    size={20}
-                                    color="currentColor"
-                                />
-                            )
-                        }
-                    </IconButton>
-
-                    <IconButton
-                        textColor="light"
-                        href={auth.panel_url + "profile"}
-                    >
-                        <LuUser
-                            size={20}
-                            color="currentColor"
-                        />
-                    </IconButton>
-
+                <ActionBar>
                     {
                         checkProjectContractHasSupplementAction.data?.data?.has_supplement === "0" && (
                             <>
@@ -123,7 +78,7 @@ const Header = () => {
                             </>
                         )
                     }
-                </div>
+                </ActionBar>
 
                 <div className="order-3 col-12 d-flex flex-column justify-content-center align-items-start gap-5">
                     <Breadcrumbs

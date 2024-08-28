@@ -48,7 +48,7 @@ const CreateAmountFormData = ({article, section, createProjectContractForm}) => 
                         }}
                         value={createProjectContractForm.values.articles.find(item => item.number === article.number)?.total_price}
                         onChange={(value) => {
-                            createProjectContractForm.setFieldValue(`articles[${createProjectContractForm.values.articles.findIndex(item => item.number === article.number + 1)}].payment_state`, 0);
+                            createProjectContractForm.setFieldValue(`articles[${createProjectContractForm.values.articles.findIndex(item => item.number === article.number + 1)}].payment_state`, "1");
                             createProjectContractForm.setFieldValue(`articles[${createProjectContractForm.values.articles.findIndex(item => item.number === article.number + 1)}].payments`, []);
                             createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number)}].content`, "");
                             createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number)}].content` , ` مبلغ قرارداد ${value} ریال می باشد. `);
@@ -66,7 +66,12 @@ const CreateAmountFormData = ({article, section, createProjectContractForm}) => 
                     &nbsp;
                     {Num2persian(createProjectContractForm.values.articles.find(item => item.number === article.number)?.total_price)}
                     &nbsp;
-                    ریال می باشد.
+                    ریال
+                    &nbsp;
+                    {createProjectContractForm.values.articles.find(item => item.number === article.number + 1)?.payment_state === "3" && `دقیقه ای `}
+                    {createProjectContractForm.values.articles.find(item => item.number === article.number + 1)?.payment_state === "4" && `روزانه `}
+                    {createProjectContractForm.values.articles.find(item => item.number === article.number + 1)?.payment_state === "5" && `ماهانه `}
+                    می باشد.
                 </Typography>
             </div>
 

@@ -10,8 +10,8 @@ import SelectBox from "@/modules/SelectBox";
 import Button from "@/modules/Button";
 
 // services
-import {readAllProjectMemberByFoaService} from "@/services/projectService";
-import {readAllJobService, readAllReceptionTypeService} from "@/services/publicService";
+import {readAllProjectMemberByFoaService} from "@/services/projectService.ts";
+import {readAllJobService, readAllReceptionTypeService} from "@/services/publicService.ts";
 
 // types
 import {IReadAllProjectMembersByFoa} from "@/types/serviceType.ts";

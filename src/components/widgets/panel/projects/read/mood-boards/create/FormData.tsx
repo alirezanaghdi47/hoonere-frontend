@@ -13,10 +13,10 @@ import Textarea from "@/modules/Textarea";
 import FileInput from "@/modules/FileInput";
 
 // services
-import {readAllProjectMoodBoardTypeService} from "@/services/publicService";
+import {readAllProjectMoodBoardTypeService} from "@/services/publicService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 const FormData = ({createProjectMoodBoardForm, createProjectMoodBoardAction}) => {
     const params = useParams();

@@ -14,10 +14,10 @@ import ImageInput from "@/modules/ImageInput";
 import Alert from "@/modules/Alert";
 
 // services
-import {readAllProjectTypeService, readUserInquiryService} from "@/services/publicService";
+import {readAllProjectTypeService, readUserInquiryService} from "@/services/publicService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {IReadUserInquiry} from "@/types/serviceType.ts";

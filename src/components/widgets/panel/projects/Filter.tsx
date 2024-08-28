@@ -11,7 +11,7 @@ import Form from "@/modules/Form";
 import SelectBox from "@/modules/SelectBox";
 
 // services
-import {readAllProjectTypeService} from "@/services/publicService";
+import {readAllProjectTypeService} from "@/services/publicService.ts";
 
 const AdvanceFilter = ({filter, initialFilter, changeFilter, hideFilter, resetFilter, readAllProjectAction}) => {
     const readAllProjectTypeAction = useMutation({

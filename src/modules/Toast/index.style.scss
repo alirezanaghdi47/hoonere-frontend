@@ -1,0 +1,19 @@
+.swal2 {
+  &-popup {
+    border-radius: 10px !important;
+  }
+
+  &-toast {
+    background: var(--bs-body-bg) !important;
+    color: var(--bs-body-color) !important;
+    box-shadow: var(--bs-box-shadow-sm) !important;
+  }
+
+  &-timer-progress-bar {
+    background: var(--bs-gray-300) !important;
+  }
+
+  &-confirm , &-cancel{
+    border-radius: 10px !important;
+  }
+}

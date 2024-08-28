@@ -9,14 +9,15 @@ import FormData from "@/components/widgets/panel/profile/occupation/ResumeFormDa
 import Jobs from "@/components/widgets/panel/profile/occupation/Jobs.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
-// helpers
-import toast from "@/helpers/toast";
-
 // hooks
-import usePart from "@/hooks/usePart";
+import usePart from "@/hooks/usePart.tsx";
+
+// modules
+import Toast from "@/modules/Toast";
+
 // services
-import {readAllMyJobService, updateOccupationService} from "@/services/profileService";
-import {readAllJobService} from "@/services/publicService";
+import {readAllMyJobService, updateOccupationService} from "@/services/profileService.ts";
+import {readAllJobService} from "@/services/publicService.ts";
 
 // types
 import {IUpdateOccupation} from "@/types/serviceType.ts";
@@ -39,9 +40,11 @@ const Occupation = ({readMyProfileAction}) => {
         mutationFn: (data: IUpdateOccupation) => updateOccupationService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
+
+                readMyProfileAction.mutate();
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -61,7 +64,7 @@ const Occupation = ({readMyProfileAction}) => {
 
     useEffect(() => {
         // @ts-ignore
-        if (updateOccupationForm.errors.fields_of_activity) toast("error", updateOccupationForm.errors.fields_of_activity);
+        if (updateOccupationForm.errors.fields_of_activity) Toast("error", updateOccupationForm.errors.fields_of_activity);
     }, [updateOccupationForm.errors.fields_of_activity, updateOccupationForm.touched.fields_of_activity]);
 
     useLayoutEffect(() => {

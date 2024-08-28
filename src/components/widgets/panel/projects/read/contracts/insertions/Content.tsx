@@ -8,10 +8,10 @@ import DataTable from "@/components/widgets/panel/projects/read/contracts/insert
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // hooks
-import useFilter from "@/hooks/useFilter";
+import useFilter from "@/hooks/useFilter.tsx";
 
 // services
-import {readAllProjectContractInsertionService} from "@/services/projectContractService";
+import {readAllProjectContractInsertionService} from "@/services/projectContractService.ts";
 
 // types
 import {IReadAllProjectContractInsertion} from "@/types/serviceType.ts";

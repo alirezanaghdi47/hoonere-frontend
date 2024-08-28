@@ -15810,7 +15810,7 @@
       const memPreview = record({
         dom: {
           tag: 'div',
-          classes: [getClass('rgba-preview')],
+          classes: [getClass('rgba-invited')],
           styles: { 'background-color': 'white' },
           attributes: { role: 'presentation' }
         }
@@ -23313,7 +23313,7 @@
     const defaultMenus = {
       file: {
         title: 'File',
-        items: 'newdocument restoredraft | preview | importword exportpdf exportword | export print | deleteallconversations'
+        items: 'newdocument restoredraft | invited | importword exportpdf exportword | export print | deleteallconversations'
       },
       edit: {
         title: 'Edit',
@@ -23321,7 +23321,7 @@
       },
       view: {
         title: 'View',
-        items: 'code revisionhistory | visualaid visualchars visualblocks | spellchecker | preview fullscreen | showcomments'
+        items: 'code revisionhistory | visualaid visualchars visualblocks | spellchecker | invited fullscreen | showcomments'
       },
       insert: {
         title: 'Insert',

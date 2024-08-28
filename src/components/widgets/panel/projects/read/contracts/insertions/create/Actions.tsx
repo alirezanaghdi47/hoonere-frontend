@@ -6,11 +6,11 @@ import {LuPlus} from "react-icons/lu";
 import usePart from "@/hooks/usePart.tsx";
 
 // modules
-import Typography from "@/modules/Typography.tsx";
-import Form from "@/modules/Form.tsx";
-import Textarea from "@/modules/Textarea.tsx";
-import Button from "@/modules/Button.tsx";
-import TextInput from "@/modules/TextInput.tsx";
+import Typography from "@/modules/Typography";
+import Form from "@/modules/Form";
+import Textarea from "@/modules/Textarea";
+import Button from "@/modules/Button";
+import TextInput from "@/modules/TextInput";
 
 // utils
 import {createArticleSchema, createSectionSchema} from "@/utils/validations.ts";

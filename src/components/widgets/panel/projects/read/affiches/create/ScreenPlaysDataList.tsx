@@ -11,10 +11,10 @@ import ScreenPlaysFilter from "@/components/widgets/panel/projects/read/affiches
 import Chip from "@/modules/Chip";
 import Form from "@/modules/Form";
 import IconButton from "@/modules/IconButton";
-import CheckBox from "@/modules/CheckBox.tsx";
+import CheckBox from "@/modules/CheckBox";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 export const ScreenPlayCard = ({screenPlay, createProjectAfficheP3Form}) => {
     const params = useParams();

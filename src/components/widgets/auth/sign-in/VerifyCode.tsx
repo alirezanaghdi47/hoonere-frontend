@@ -3,20 +3,18 @@ import {useNavigate} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
-// helpers
-import toast from "@/helpers/toast";
-
 // modules
 import Button from "@/modules/Button";
 import Typography from "@/modules/Typography";
 import CodeInput from "@/modules/CodeInput";
 import Form from "@/modules/Form";
+import Toast from "@/modules/Toast";
 
 // services
-import {verifyService, authService} from "@/services/authService";
+import {verifyService, authService} from "@/services/authService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {IAuth, IVerify} from "@/types/serviceType.ts";
@@ -32,7 +30,7 @@ const VerifyCode = ({nextStep, resetStep, step}) => {
         mutationFn: (data: IVerify) => verifyService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 login({
                     token: data.data.token,
@@ -47,7 +45,7 @@ const VerifyCode = ({nextStep, resetStep, step}) => {
                     nextStep();
                 }
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -57,9 +55,9 @@ const VerifyCode = ({nextStep, resetStep, step}) => {
         onSuccess: async (data) => {
             // console.log(data.data)
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });

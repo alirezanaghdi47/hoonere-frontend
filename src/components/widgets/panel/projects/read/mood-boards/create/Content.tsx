@@ -7,14 +7,14 @@ import {useFormik} from "formik";
 // components
 import FormData from "@/components/widgets/panel/projects/read/mood-boards/create/FormData.tsx";
 
-// helpers
-import toast from "@/helpers/toast"
+// modules
+import Toast from "@/modules/Toast"
 
 // services
 import {createProjectMoodBoardService} from "@/services/projectMoodBoardService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {ICreateProjectMoodBoard} from "@/types/serviceType.ts";
@@ -31,11 +31,11 @@ const Content = () => {
         mutationFn: (data: ICreateProjectMoodBoard) => createProjectMoodBoardService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 navigate(auth.panel_url + "projects/" + params.id + "/mood-boards");
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });

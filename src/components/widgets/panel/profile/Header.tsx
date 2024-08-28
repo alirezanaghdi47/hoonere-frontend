@@ -1,17 +1,17 @@
 // libraries
 import {useState} from "react";
 import {useLocation} from "react-router-dom";
-import {LuBell, LuMoon, LuSun, LuUser} from "react-icons/lu";
+
+// components
+import ActionBar from "@/components/partials/panel/ActionBar.tsx";
 
 // modules
 import Typography from "@/modules/Typography";
-import IconButton from "@/modules/IconButton";
-import Badge from "@/modules/Badge";
 import Breadcrumbs from "@/modules/Breadcrumbs";
 
 // stores
-import useAuthStore from "@/stores/authStore";
-import useAppStore from "@/stores/appStore";
+import useAuthStore from "@/stores/authStore.ts";
+import useAppStore from "@/stores/appStore.ts";
 
 const Header = () => {
     const location = useLocation();
@@ -36,50 +36,7 @@ const Header = () => {
                     </Typography>
                 </div>
 
-                <div className="order-1 order-md-2 col-12 col-md-8 d-flex justify-content-end align-items-center gap-2">
-                    <IconButton textColor="light">
-                        <Badge
-                            color="light-success"
-                            size="sm"
-                            placement="top-start"
-                            label="2"
-                        />
-
-                        <LuBell
-                            size={20}
-                            color="currentColor"
-                        />
-                    </IconButton>
-
-                    <IconButton
-                        textColor="light"
-                        onClick={toggleTheme}
-                    >
-                        {
-                            isDark ? (
-                                <LuSun
-                                    size={20}
-                                    color="currentColor"
-                                />
-                            ) : (
-                                <LuMoon
-                                    size={20}
-                                    color="currentColor"
-                                />
-                            )
-                        }
-                    </IconButton>
-
-                    <IconButton
-                        textColor="light"
-                        href={auth.panel_url + "profile#review"}
-                    >
-                        <LuUser
-                            size={20}
-                            color="currentColor"
-                        />
-                    </IconButton>
-                </div>
+                <ActionBar/>
 
                 <div className="order-3 col-12 d-flex flex-column justify-content-center align-items-start gap-5">
                     <Breadcrumbs

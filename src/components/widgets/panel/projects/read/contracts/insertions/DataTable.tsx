@@ -10,24 +10,22 @@ import Finder from "@/components/widgets/panel/projects/read/contracts/insertion
 import Filter from "@/components/widgets/panel/projects/read/contracts/insertions/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
-// helpers
-import dialog from "@/helpers/dialog";
-import toast from "@/helpers/toast"
-
 // modules
 import Table from "@/modules/Table";
 import IconButton from "@/modules/IconButton";
 import Typography from "@/modules/Typography";
 import Chip from "@/modules/Chip";
+import Dialog from "@/modules/Dialog";
+import Toast from "@/modules/Toast"
 
 // services
 import {
     changeProjectContractInsertionStatusService,
     deleteProjectContractInsertionService
-} from "@/services/projectContractService";
+} from "@/services/projectContractService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {IChangeProjectContractInsertionStatus, IDeleteProjectContractInsertion} from "@/types/serviceType.ts";
@@ -51,7 +49,7 @@ const DataTable = ({
         mutationFn: (data: IChangeProjectContractInsertionStatus) => changeProjectContractInsertionStatusService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 // readAllProjectContractInsertionAction.mutate({
                 //     ...filter,
@@ -61,7 +59,7 @@ const DataTable = ({
 
                 navigate(0);
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -70,7 +68,7 @@ const DataTable = ({
         mutationFn: (data: IDeleteProjectContractInsertion) => deleteProjectContractInsertionService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 readAllProjectContractInsertionAction.mutate({
                     ...filter,
@@ -78,7 +76,7 @@ const DataTable = ({
                     contract_id: params.subId
                 });
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -208,7 +206,7 @@ const DataTable = ({
                                     data-tooltip-id="my-tooltip"
                                     data-tooltip-content="ثبت نهایی"
                                     onClick={() => {
-                                        dialog(
+                                        Dialog(
                                             ` ثبت نهایی ${row.original.is_supplement === "1" ? 'متمم' : 'الحاقیه'}`,
                                             ` آیا میخواهید این ${row.original.is_supplement === "1" ? 'متمم' : 'الحاقیه'} را ثبت نهایی کنید ؟ `,
                                             "info",
@@ -268,7 +266,7 @@ const DataTable = ({
                             color="light-danger"
                             size="sm"
                             onClick={() => {
-                                dialog(
+                                Dialog(
                                     ` حذف ${row.original.is_supplement === 1 ? 'متمم' : 'الحاقیه'}`,
                                     ` آیا میخواهید این ${row.original.is_supplement === 1 ? 'متمم' : 'الحاقیه'} را حذف کنید ؟ `,
                                     "info",

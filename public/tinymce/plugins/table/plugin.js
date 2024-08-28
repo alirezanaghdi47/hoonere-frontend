@@ -1716,7 +1716,7 @@
             value: 'td'
           },
           {
-            text: 'Header cell',
+            text: 'ActionBar cell',
             value: 'th'
           }
         ]

@@ -8,25 +8,25 @@ import {useFormik} from "formik";
 import FormData from "@/components/widgets/panel/projects/read/contracts/create/FormData.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
-// helpers
-import toast from "@/helpers/toast"
+// modules
+import Toast from "@/modules/Toast"
 
 // services
-import {createProjectOfficialContractService, createProjectUnOfficialContractService} from "@/services/projectContractService";
-import {readAllProjectContractArticleService, readAllProjectContractSectionService} from "@/services/publicService";
+import {createProjectOfficialContractService, createProjectUnOfficialContractService} from "@/services/projectContractService.ts";
+import {readAllProjectContractArticleService, readAllProjectContractSectionService} from "@/services/publicService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {ICreateProjectOfficialContract, ICreateProjectUnOfficialContract} from "@/types/serviceType.ts";
 
 // utils
 import {createProjectContractSchema} from "@/utils/validations.ts";
-import {getValueByKey} from "@/utils/functions.ts";
+import {getObjectValueByKey} from "@/utils/functions.ts";
 
 const Content = () => {
-    const localtion = useLocation();
+    const location = useLocation();
     const params = useParams();
     const navigate = useNavigate();
     const {auth} = useAuthStore();
@@ -43,11 +43,11 @@ const Content = () => {
         mutationFn: (data: ICreateProjectOfficialContract) => createProjectOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 navigate(auth.panel_url + "projects/" + params.id + "/contracts");
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -56,11 +56,11 @@ const Content = () => {
         mutationFn: (data: ICreateProjectUnOfficialContract) => createProjectUnOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 navigate(auth.panel_url + "projects/" + params.id + "/contracts");
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -93,7 +93,7 @@ const Content = () => {
                     return ({
                         ...article,
                         is_added: "0",
-                        payment_state: "",
+                        payment_state: "1",
                         payments: [],
                     });
                 } else {
@@ -134,42 +134,42 @@ const Content = () => {
             const sectionArticleNumbers = [...new Set(result.sections.map(section => section.article_number))];
 
             if (!articleNumbers.every(item => sectionArticleNumbers.includes(item))) {
-                return toast("error", "همه ی ماده ها حداقل باید شامل یک بند باشند");
+                return Toast("error", "همه ی ماده ها حداقل باید شامل یک بند باشند");
             }
 
-            const totalPercent = getValueByKey(createProjectContractForm.values.articles, "payments").reduce((acc, value) => {
+            const totalPercent = getObjectValueByKey(createProjectContractForm.values.articles, "payments").reduce((acc, value) => {
                 return acc += value.percent;
             }, 0);
 
-            if (getValueByKey(createProjectContractForm.values.articles, "payment_state") === "1" && totalPercent < 100) {
-                return toast("error", "مجموع درصد فازبندی قرار داد کمتر از 100 است.");
+            if (getObjectValueByKey(createProjectContractForm.values.articles, "payment_state") === "1" && totalPercent < 100) {
+                return Toast("error", "مجموع درصد فازبندی قرار داد کمتر از 100 است.");
             }
 
-            if (localtion.hash === "#official") {
+            if (location.hash === "#official") {
                 createProjectOfficialContractAction.mutate({
                     ...result,
                     project_id: params.id,
                     sections: createProjectContractForm.values.sections.filter(section => !section.isOff),
-                    employers: getValueByKey(createProjectContractForm.values.articles, "employers")?.map(item => item.id.toString()),
-                    contractors: getValueByKey(createProjectContractForm.values.articles, "contractors")?.map(item => item.id.toString()),
-                    start_date: getValueByKey(createProjectContractForm.values.articles, "start_date"),
-                    end_date: getValueByKey(createProjectContractForm.values.articles, "end_date"),
-                    total_price: getValueByKey(createProjectContractForm.values.articles, "total_price"),
-                    payment_state: getValueByKey(createProjectContractForm.values.articles, "payment_state"),
-                    payments: getValueByKey(createProjectContractForm.values.articles, "payments")
+                    employers: getObjectValueByKey(createProjectContractForm.values.articles, "employers")?.map(item => item.id.toString()),
+                    contractors: getObjectValueByKey(createProjectContractForm.values.articles, "contractors")?.map(item => item.id.toString()),
+                    start_date: getObjectValueByKey(createProjectContractForm.values.articles, "start_date"),
+                    end_date: getObjectValueByKey(createProjectContractForm.values.articles, "end_date"),
+                    total_price: getObjectValueByKey(createProjectContractForm.values.articles, "total_price"),
+                    payment_state: getObjectValueByKey(createProjectContractForm.values.articles, "payment_state"),
+                    payments: getObjectValueByKey(createProjectContractForm.values.articles, "payments")
                 });
             } else if (location.hash === "#un-official") {
                 createProjectUnOfficialContractAction.mutate({
                     ...result,
                     project_id: params.id,
                     sections: createProjectContractForm.values.sections.filter(section => !section.isOff),
-                    employers: getValueByKey(createProjectContractForm.values.articles, "employers"),
-                    contractors: getValueByKey(createProjectContractForm.values.articles, "contractors"),
-                    start_date: getValueByKey(createProjectContractForm.values.articles, "start_date"),
-                    end_date: getValueByKey(createProjectContractForm.values.articles, "end_date"),
-                    total_price: getValueByKey(createProjectContractForm.values.articles, "total_price"),
-                    payment_state: getValueByKey(createProjectContractForm.values.articles, "payment_state"),
-                    payments: getValueByKey(createProjectContractForm.values.articles, "payments")
+                    employers: getObjectValueByKey(createProjectContractForm.values.articles, "employers"),
+                    contractors: getObjectValueByKey(createProjectContractForm.values.articles, "contractors"),
+                    start_date: getObjectValueByKey(createProjectContractForm.values.articles, "start_date"),
+                    end_date: getObjectValueByKey(createProjectContractForm.values.articles, "end_date"),
+                    total_price: getObjectValueByKey(createProjectContractForm.values.articles, "total_price"),
+                    payment_state: getObjectValueByKey(createProjectContractForm.values.articles, "payment_state"),
+                    payments: getObjectValueByKey(createProjectContractForm.values.articles, "payments")
                 });
             }
         }

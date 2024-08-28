@@ -5,7 +5,7 @@ import {LuPen, LuTrash} from "react-icons/lu";
 import {Section} from "@/components/widgets/panel/projects/read/contracts/insertions/update/Actions.tsx";
 
 // hooks
-import usePart from "@/hooks/usePart";
+import usePart from "@/hooks/usePart.tsx";
 
 // modules
 import Typography from "@/modules/Typography";

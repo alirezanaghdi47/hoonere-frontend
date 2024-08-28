@@ -6,7 +6,7 @@ import {useLocation, useNavigate, useParams} from "react-router-dom";
 import Content from "@/components/widgets/panel/projects/read/contracts/read/Content";
 
 // hocs
-import RouteGuardHoc from "@/components/hocs/RouteGuardHoc.tsx";
+import WithRouteGuard from "@/hocs/WithRouteGuard.tsx";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
@@ -28,4 +28,4 @@ const ProjectContract = () => {
     )
 }
 
-export default RouteGuardHoc(ProjectContract);
+export default WithRouteGuard(ProjectContract);

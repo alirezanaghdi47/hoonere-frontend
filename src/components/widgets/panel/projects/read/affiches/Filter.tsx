@@ -13,7 +13,7 @@ import SelectBox from "@/modules/SelectBox";
 import DatePicker from "@/modules/DatePicker";
 
 // services
-import {readAllAfficheTypeService} from "@/services/publicService";
+import {readAllAfficheTypeService} from "@/services/publicService.ts";
 
 const AdvanceFilter = ({
                            filter,

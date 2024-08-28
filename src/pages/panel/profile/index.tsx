@@ -7,7 +7,7 @@ import Header from "@/components/widgets/panel/profile/Header.tsx";
 import Content from "@/components/widgets/panel/profile/Content.tsx";
 
 // hocs
-import RouteGuardHoc from "@/components/hocs/RouteGuardHoc.tsx";
+import WithRouteGuard from "@/hocs/WithRouteGuard.tsx";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
@@ -31,4 +31,4 @@ const Profile = () => {
     )
 }
 
-export default RouteGuardHoc(Profile);
+export default WithRouteGuard(Profile);

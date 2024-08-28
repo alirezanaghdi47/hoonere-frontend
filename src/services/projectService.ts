@@ -28,7 +28,82 @@ export const readAllProjectService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readAllInvitedProjectService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/invited", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readProjectService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/show", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readInvitedProjectService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/invited/preview", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -57,7 +132,7 @@ export const createProjectService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -86,32 +161,7 @@ export const updateProjectService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
-    }
-}
-
-export const readProjectService = async (data) => {
-    try {
-        const formData = new FormData();
-        const {token} = useAuthStore.getState().auth;
-
-        formData.append("data", encodeData(JSON.stringify(data)));
-
-        const response = await axios.post(process.env.API_URL + "/panel/projects/show", formData, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        });
-
-        return {
-            ...response.data,
-            data: JSON.parse(decodeData(response.data.data))
-        }
-    } catch (err) {
-        const {logout} = useAuthStore.getState();
-
-        if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -136,7 +186,33 @@ export const deleteProjectService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const inviteConfirmationProjectService = async (data) => {
+    console.log(data)
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/invited_confirmation", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -161,6 +237,6 @@ export const readAllProjectMemberByFoaService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }

@@ -6,7 +6,7 @@ import Typography from "@/modules/Typography";
 import Button from "@/modules/Button";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 const Content = () => {
     const {auth} = useAuthStore();

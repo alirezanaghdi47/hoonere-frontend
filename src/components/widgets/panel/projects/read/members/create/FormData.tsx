@@ -15,10 +15,10 @@ import SwitchBox from "@/modules/SwitchBox";
 import Typography from "@/modules/Typography";
 
 // services
-import {readAllJobService, readUserInquiryService} from "@/services/publicService";
+import {readAllJobService, readUserInquiryService} from "@/services/publicService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {IReadUserInquiry} from "@/types/serviceType.ts";

@@ -8,15 +8,15 @@ import {useFormik} from "formik";
 import FormData from "@/components/widgets/panel/projects/read/contracts/insertions/create/FormData.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
-// helpers
-import toast from "@/helpers/toast"
+// modules
+import Toast from "@/modules/Toast"
 
 // services
-import {createProjectContractInsertionService, readProjectContractForInsertionService} from "@/services/projectContractService";
-import {readAllProjectContractInsertionArticleService, readAllProjectContractInsertionSectionService} from "@/services/publicService";
+import {createProjectContractInsertionService, readProjectContractForInsertionService} from "@/services/projectContractService.ts";
+import {readAllProjectContractInsertionArticleService, readAllProjectContractInsertionSectionService} from "@/services/publicService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {
@@ -26,7 +26,7 @@ import {
 
 // utils
 import {createProjectContractInsertionSchema} from "@/utils/validations.ts";
-import {getValueByKey} from "@/utils/functions.ts";
+import {getObjectValueByKey} from "@/utils/functions.ts";
 
 const Content = () => {
     const location = useLocation();
@@ -50,11 +50,11 @@ const Content = () => {
         mutationFn: (data : ICreateProjectContractInsertion) => createProjectContractInsertionService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 navigate(auth.panel_url + "projects/" + params.id + "/contracts/" + params.subId + "/insertions");
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -128,15 +128,15 @@ const Content = () => {
             const sectionArticleNumbers = [...new Set(result.sections.map(section => section.article_number))];
 
             if (!articleNumbers.every(item => sectionArticleNumbers.includes(item))) {
-                return toast("error", "همه ی ماده ها حداقل باید شامل یک بند باشند");
+                return Toast("error", "همه ی ماده ها حداقل باید شامل یک بند باشند");
             }
 
-            const totalPercent = getValueByKey(createProjectContractInsertionForm.values.articles, "payments").reduce((acc, value) => {
+            const totalPercent = getObjectValueByKey(createProjectContractInsertionForm.values.articles, "payments").reduce((acc, value) => {
                 return acc += value.percent;
             }, 0);
 
-            if (getValueByKey(createProjectContractInsertionForm.values.articles, "payment_state") === "1" && totalPercent < 100) {
-                return toast("error", "مجموع درصد فازبندی قرار داد کمتر از 100 است.");
+            if (getObjectValueByKey(createProjectContractInsertionForm.values.articles, "payment_state") === "1" && totalPercent < 100) {
+                return Toast("error", "مجموع درصد فازبندی قرار داد کمتر از 100 است.");
             }
 
             createProjectContractInsertionAction.mutate({
@@ -144,13 +144,13 @@ const Content = () => {
                 project_id: params.id,
                 contract_id: params.subId,
                 is_supplement: location.hash === "#is_supplement=0" ? 0 : 1,
-                employers: getValueByKey(createProjectContractInsertionForm.values.articles, "employers")?.map(item => item.id.toString()),
-                contractors: getValueByKey(createProjectContractInsertionForm.values.articles, "contractors")?.map(item => item.id.toString()),
-                start_date: getValueByKey(createProjectContractInsertionForm.values.articles, "start_date"),
-                end_date: getValueByKey(createProjectContractInsertionForm.values.articles, "end_date"),
-                total_price: getValueByKey(createProjectContractInsertionForm.values.articles, "total_price"),
-                payment_state: getValueByKey(createProjectContractInsertionForm.values.articles, "payment_state"),
-                payments: getValueByKey(createProjectContractInsertionForm.values.articles, "payments")
+                employers: getObjectValueByKey(createProjectContractInsertionForm.values.articles, "employers")?.map(item => item.id.toString()),
+                contractors: getObjectValueByKey(createProjectContractInsertionForm.values.articles, "contractors")?.map(item => item.id.toString()),
+                start_date: getObjectValueByKey(createProjectContractInsertionForm.values.articles, "start_date"),
+                end_date: getObjectValueByKey(createProjectContractInsertionForm.values.articles, "end_date"),
+                total_price: getObjectValueByKey(createProjectContractInsertionForm.values.articles, "total_price"),
+                payment_state: getObjectValueByKey(createProjectContractInsertionForm.values.articles, "payment_state"),
+                payments: getObjectValueByKey(createProjectContractInsertionForm.values.articles, "payments")
             });
         }
     });

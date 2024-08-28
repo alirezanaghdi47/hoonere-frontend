@@ -10,23 +10,22 @@ import Finder from "@/components/widgets/panel/projects/read/members/Finder.tsx"
 import Filter from "@/components/widgets/panel/projects/read/members/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
-// helpers
-import dialog from "@/helpers/dialog";
-import toast from "@/helpers/toast";
-
 // modules
 import Table from "@/modules/Table";
 import IconButton from "@/modules/IconButton";
 import Typography from "@/modules/Typography";
+import Dialog from "@/modules/Dialog";
+import Toast from "@/modules/Toast";
 
 // services
-import {deleteProjectMemberService} from "@/services/projectMemberService";
+import {deleteProjectMemberService} from "@/services/projectMemberService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {IDeleteProjectMember} from "@/types/serviceType.ts";
+import Chip from "@/modules/Chip";
 
 const DataTable = ({
                        readAllProjectMemberAction,
@@ -45,14 +44,14 @@ const DataTable = ({
         mutationFn: (data: IDeleteProjectMember) => deleteProjectMemberService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 readAllProjectMemberAction.mutate({
                     ...filter,
                     project_id: params?.id
                 });
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -91,7 +90,7 @@ const DataTable = ({
 
                     return (
                         <div
-                            className="w-100px"
+                            className="w-150px"
                             data-tooltip-id="my-tooltip"
                             data-tooltip-content={name}
                         >
@@ -126,7 +125,7 @@ const DataTable = ({
                 header: () => 'شغل',
                 cell: ({row}) => (
                     <div
-                        className="w-200px"
+                        className="w-150px"
                         data-tooltip-id="my-tooltip"
                         data-tooltip-content={`${row.original.parent_info.title} ( ${row.original.child_info.title} )`}
                     >
@@ -141,6 +140,19 @@ const DataTable = ({
                 ),
                 sortingFn: "text"
             },
+        {
+            accessorKey: 'status_info',
+            header: () => 'وضعیت',
+            cell: ({row}) => (
+                <div className="w-100px">
+                    <Chip
+                        label={row.original.status_info.title}
+                        color={row.original.status_info.class_name}
+                    />
+                </div>
+            ),
+            sortingFn: (rowA, rowB, columnId) => rowA.original?.status_info.title.localeCompare(rowB.original?.status_info.title)
+        },
             {
                 accessorKey: 'actions',
                 header: () => 'ابزار',
@@ -163,7 +175,7 @@ const DataTable = ({
                             color="light-danger"
                             size="sm"
                             onClick={() => {
-                                dialog(
+                                Dialog(
                                     "حذف عضو",
                                     "آیا میخواهید این عضو را حذف کنید ؟",
                                     "info",

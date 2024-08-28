@@ -15,7 +15,7 @@ import CreatePaymentFormData from "@/components/widgets/panel/projects/read/cont
 import CreateRegularFormData from "@/components/widgets/panel/projects/read/contracts/update/CreateRegularFormData.tsx";
 
 // hooks
-import usePart from "@/hooks/usePart";
+import usePart from "@/hooks/usePart.tsx";
 
 // modules
 import Accordion from "@/modules/Accordion";
@@ -23,7 +23,7 @@ import Button from "@/modules/Button";
 import IconButton from "@/modules/IconButton";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // utils
 import {removeArticleForContract} from "@/utils/functions.ts";

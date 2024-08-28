@@ -9,20 +9,18 @@ import Finder from "@/components/widgets/panel/projects/read/screen-plays/Finder
 import Filter from "@/components/widgets/panel/projects/read/screen-plays/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
-// helpers
-import dialog from "@/helpers/dialog";
-import toast from "@/helpers/toast";
-
 // modules
 import Table from "@/modules/Table";
 import IconButton from "@/modules/IconButton";
 import Typography from "@/modules/Typography";
+import Dialog from "@/modules/Dialog";
+import Toast from "@/modules/Toast";
 
 // services
-import {deleteProjectScreenPlayService, readProjectScreenPlayService} from "@/services/projectScreenPlayService";
+import {deleteProjectScreenPlayService, readProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {IDeleteProjectScreenPlay, IReadProjectScreenPlay} from "@/types/serviceType.ts";
@@ -57,14 +55,14 @@ const DataTable = ({
         mutationFn: (data: IDeleteProjectScreenPlay) => deleteProjectScreenPlayService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 readAllProjectScreenPlayAction.mutate({
                     ...filter,
                     project_id: params.id
                 });
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -163,7 +161,7 @@ const DataTable = ({
                             color="light-danger"
                             size="sm"
                             onClick={() => {
-                                dialog(
+                                Dialog(
                                     "حذف بخش فیلم نامه",
                                     "آیا میخواهید این بخش فیلم نامه را حذف کنید ؟",
                                     "info",

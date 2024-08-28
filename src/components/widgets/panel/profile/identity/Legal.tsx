@@ -4,7 +4,7 @@ import LegalFormData from "@/components/widgets/panel/profile/identity/LegalForm
 import Representatives from "@/components/widgets/panel/profile/identity/Representatives.tsx";
 
 // hooks
-import usePart from "@/hooks/usePart";
+import usePart from "@/hooks/usePart.tsx";
 
 const Legal = ({changeCurrentPart, readMyProfileAction, updateProfileLegalForm, updateProfileIdentityAction}) => {
     const {currentPart, resetPart, changeCurrentPart: changeCurrentPart2} = usePart(null, "read");

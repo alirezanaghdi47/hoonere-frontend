@@ -7,7 +7,7 @@ import {Note, Section} from "@/components/widgets/panel/projects/read/contracts/
 // modules
 import Typography from "@/modules/Typography";
 import IconButton from "@/modules/IconButton";
-import CheckBox from "@/modules/CheckBox.tsx";
+import CheckBox from "@/modules/CheckBox";
 
 // utils
 import {removeNoteForContract, removeSectionForContract, toggleSectionForContract} from "@/utils/functions.ts";

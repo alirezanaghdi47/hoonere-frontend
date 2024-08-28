@@ -2,7 +2,7 @@
 import Content from "@/components/widgets/panel/projects/read/affiches/histories/read/Content.tsx";
 
 // hocs
-import RouteGuardHoc from "@/components/hocs/RouteGuardHoc.tsx";
+import WithRouteGuard from "@/hocs/WithRouteGuard.tsx";
 
 const ProjectAfficheHistory = () => {
     return (
@@ -10,4 +10,4 @@ const ProjectAfficheHistory = () => {
     )
 }
 
-export default RouteGuardHoc(ProjectAfficheHistory);
+export default WithRouteGuard(ProjectAfficheHistory);

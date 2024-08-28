@@ -10,10 +10,10 @@ import {Section, Note} from "@/components/widgets/panel/projects/read/contracts/
 import Forbidden from "@/components/partials/panel/Forbidden.tsx";
 
 // hooks
-import useModal from "@/hooks/useModal";
+import useModal from "@/hooks/useModal.tsx";
 
 // modules
-import RadioBox from "@/modules/RadioBox";
+import SelectBox from "@/modules/SelectBox";
 import Typography from "@/modules/Typography";
 import IconButton from "@/modules/IconButton";
 import Button from "@/modules/Button";
@@ -21,51 +21,54 @@ import Button from "@/modules/Button";
 // utils
 import {removeNoteForContract} from "@/utils/functions.ts";
 
+const options = [
+    {id: 1, label: "پرداخت بر اساس فاز بندی", value: "1"},
+    {id: 2, label: "پرداخت بر اساس فاکتور", value: "2"},
+    {id: 3, label: "پرداخت دقیقه ای", value: "3"},
+    {id: 4, label: "پرداخت روزانه", value: "4"},
+    {id: 5, label: "پرداخت ماهانه", value: "5"}
+];
+
 const PaymentActionBar = ({article, section, createProjectContractForm}) => {
     return (
-        <ul className="hstack justify-content-start gap-5 p-0 m-0">
-            <li className="d-flex justify-content-start align-items-center gap-2">
-                <RadioBox
-                    id="payment-status"
-                    name="payment-status"
-                    value="1"
-                    checked={createProjectContractForm.values.articles.find(item => item.number === article.number)?.payment_state === "1"}
-                    onChange={(value) => {
-                        createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number)}].content`, "");
-                        createProjectContractForm.setFieldValue(`articles[${createProjectContractForm.values.articles.findIndex(item => item.number === article.number)}].payment_state`, value);
-                    }}
-                />
-
+        <div className="hstack justify-content-start gap-5 p-0 m-0">
+            <div className='d-flex justify-content-start align-items-center gap-5 w-300px'>
                 <Typography
                     size="sm"
-                    color="muted"
-                    isBold
+                    color="dark"
+                    className="w-150px"
                 >
-                    پرداخت بر اساس فاز بندی
+                    نحوه پرداخت :
                 </Typography>
-            </li>
 
-            <li className="d-flex justify-content-start align-items-center gap-2">
-                <RadioBox
-                    id="payment-status"
-                    name="payment-status"
-                    value="2"
-                    checked={createProjectContractForm.values.articles.find(item => item.number === article.number)?.payment_state === "2"}
+                <SelectBox
+                    id="payment_state"
+                    name="payment_state"
+                    options={options}
+                    value={createProjectContractForm.values.articles.find(item => item.number === article.number)?.payment_state}
                     onChange={(value) => {
-                        createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number)}].content`, "کلیه پرداخت ها به مجری بر اساس فاکتور های تایید شده توسط کارفرما پرداخت میگردد.");
                         createProjectContractForm.setFieldValue(`articles[${createProjectContractForm.values.articles.findIndex(item => item.number === article.number)}].payment_state`, value);
+
+                        if (value === "1") {
+                            createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number - 1)}].content` , ` مبلغ قرارداد ${createProjectContractForm.values.articles.find(item => item.number === article.number - 1)?.total_price} ریال می باشد. `);
+                            createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number)}].content`, "");
+                        } else if (value === "2") {
+                            createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number - 1)}].content` , ` مبلغ قرارداد ${createProjectContractForm.values.articles.find(item => item.number === article.number - 1)?.total_price} ریال می باشد. `);
+                            createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number)}].content`, "کلیه پرداخت ها به مجری بر اساس فاکتور های تایید شده توسط کارفرما پرداخت میگردد.");
+                        } else if (value === "3") {
+                            createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number - 1)}].content` , ` مبلغ قرارداد ${createProjectContractForm.values.articles.find(item => item.number === article.number - 1)?.total_price} ریال دقیقه ای می باشد. `);
+                            createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number)}].content`, "کلیه پرداخت ها به مجری بر اساس میزان حضور دقیقه ای در پروژه توسط کارفرما پرداخت میگردد.");
+                        } else if (value === "4") {
+                            createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number - 1)}].content` , ` مبلغ قرارداد ${createProjectContractForm.values.articles.find(item => item.number === article.number - 1)?.total_price} ریال روزانه می باشد. `);
+                            createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number)}].content`, "کلیه پرداخت ها به مجری بر اساس میزان حضور روزانه در پروژه توسط کارفرما پرداخت میگردد.");
+                        } else if (value === "5") {
+                            createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number - 1)}].content` , ` مبلغ قرارداد ${createProjectContractForm.values.articles.find(item => item.number === article.number - 1)?.total_price} ریال ماهانه می باشد. `);
+                            createProjectContractForm.setFieldValue(`sections[${createProjectContractForm.values.sections.findIndex(item => item.number === section.number && item.article_number === section.article_number)}].content`, "کلیه پرداخت ها به مجری بر اساس میزان حضور ماهانه در پروژه توسط کارفرما پرداخت میگردد.");
+                        }
                     }}
                 />
-
-                <Typography
-                    size="sm"
-                    color="muted"
-                    isBold
-                >
-                    پرداخت بر اساس فاکتور
-                </Typography>
-            </li>
-        </ul>
+            </div>
+        </div>
     )
 }
 
@@ -74,7 +77,7 @@ const BlankPaymentWithPhasesCard = ({article, section, createProjectContractForm
 
     return (
         <>
-            <li className='d-flex flex-wrap justify-content-start align-items-center gap-5'>
+            <div className='d-flex flex-wrap justify-content-start align-items-center gap-5'>
                 <Typography
                     size="sm"
                     color="dark"
@@ -89,7 +92,7 @@ const BlankPaymentWithPhasesCard = ({article, section, createProjectContractForm
                 >
                     انتخاب فاز
                 </Button>
-            </li>
+            </div>
 
             {
                 modal.isOpen && (
@@ -217,7 +220,7 @@ const PaymentWithPhases = ({article, section, createProjectContractForm}) => {
                                             data-tooltip-id="my-tooltip"
                                             data-tooltip-content="حذف تبصره"
                                             onClick={() => {
-                                                const notes = removeNoteForContract(createProjectContractForm.values.notes , note.number);
+                                                const notes = removeNoteForContract(createProjectContractForm.values.notes, note.number);
                                                 createProjectContractForm.setFieldValue("notes", notes);
                                             }}
                                         >
@@ -258,7 +261,7 @@ const PaymentWithBill = ({article, section, createProjectContractForm}) => {
                     size="sm"
                     color="dark"
                 >
-                    کلیه پرداخت ها به مجری بر اساس فاکتور های تایید شده توسط کارفرما پرداخت میگردد
+                    {createProjectContractForm.values.sections.find(item => item.number === section.number && item.article_number === article.number)?.content}
                 </Typography>
             </div>
 
@@ -300,7 +303,7 @@ const PaymentWithBill = ({article, section, createProjectContractForm}) => {
                                             data-tooltip-id="my-tooltip"
                                             data-tooltip-content="حذف تبصره"
                                             onClick={() => {
-                                                const notes = removeNoteForContract(createProjectContractForm.values.notes , note.number);
+                                                const notes = removeNoteForContract(createProjectContractForm.values.notes, note.number);
                                                 createProjectContractForm.setFieldValue("notes", notes);
                                             }}
                                         >
@@ -344,7 +347,7 @@ const CreatePaymentFormData = ({article, section, createProjectContractForm}) =>
             }
 
             {
-                createProjectContractForm.values.articles.find(item => item.number === article.number)?.payment_state === "2" && (
+                createProjectContractForm.values.articles.find(item => item.number === article.number)?.payment_state !== "1" && (
                     <PaymentWithBill
                         article={article}
                         section={section}

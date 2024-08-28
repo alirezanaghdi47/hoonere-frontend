@@ -1,3 +1,7 @@
+// libraries
+import {useMutation} from "@tanstack/react-query";
+import {LuInfo} from "react-icons/lu";
+
 // modules
 import Form from "@/modules/Form";
 import TextInput from "@/modules/TextInput";
@@ -6,6 +10,11 @@ import NumberInput from "@/modules/NumberInput";
 import ImageInput from "@/modules/ImageInput";
 import Button from "@/modules/Button";
 import DatePicker from "@/modules/DatePicker";
+import Dialog from "@/modules/Dialog";
+import Toast from "@/modules/Toast";
+
+// services
+import {deleteProfileFileService} from "@/services/profileService.ts";
 
 const RealFormData = ({
                           changeCurrentPart,
@@ -13,6 +22,18 @@ const RealFormData = ({
                           updateProfileRealForm,
                           updateProfileIdentityAction
                       }) => {
+    const deleteProfileFileAction = useMutation({
+        mutationFn: (data) => deleteProfileFileService(data),
+        onSuccess: async (data) => {
+            if (!data.error) {
+                Toast("success", data.message);
+
+                readMyProfileAction.mutate();
+            } else {
+                Toast("error", data.message);
+            }
+        }
+    });
 
     return (
         <>
@@ -37,11 +58,24 @@ const RealFormData = ({
 
                     <div className="row gy-5 w-100">
                         <div className="col-lg-4">
-                            <Form.Label
-                                label="عکس پروفایل"
-                                size="sm"
-                                color="dark"
-                            />
+                            <div className='d-flex justify-content-start align-items-center w-100 gap-5'>
+                                <Form.Label
+                                    label="تصویر پروفایل"
+                                    size="sm"
+                                    color="dark"
+                                />
+
+                                <span
+                                    data-tooltip-id="my-tooltip"
+                                    data-tooltip-content="حداکثر حجم تصویر پروفایل ارسالی 1 مگابایت و فرمت های (png , jpg , jpeg) قابل قبول است"
+                                >
+                                    <LuInfo
+                                        size={20}
+                                        color="currentColor"
+                                        className="text-info"
+                                    />
+                                </span>
+                            </div>
                         </div>
 
                         <div className="col-lg-8">
@@ -50,10 +84,25 @@ const RealFormData = ({
                                     id="profile_img"
                                     name="profile_img"
                                     isCircle
-                                    preview={null}
-                                    // preview={readMyProfileAction.data?.data?.user_info.profile_img}
+                                    preview={readMyProfileAction.data?.data?.user_info?.profile_img ? readMyProfileAction.data?.data?.user_info?.profile_img_asset : null}
                                     value={updateProfileRealForm.values.profile_img}
                                     onChange={(value) => updateProfileRealForm.setFieldValue("profile_img", value)}
+                                    onRemove={() => Dialog(
+                                        "حذف تصویر پروفایل",
+                                        "آیا میخواهید تصویر پروفایل را حذف کنید ؟",
+                                        "info",
+                                        {
+                                            show: true,
+                                            text: "حذف",
+                                            color: "danger",
+                                        },
+                                        {
+                                            show: true,
+                                            text: "انصراف",
+                                            color: "light-dark",
+                                        },
+                                        async () => deleteProfileFileAction.mutate({file_type: "profile_img"})
+                                    )}
                                 />
 
                                 <Form.Error
@@ -66,11 +115,24 @@ const RealFormData = ({
 
                     <div className="row gy-5 w-100">
                         <div className="col-lg-4">
-                            <Form.Label
-                                label="تصویر جلو کارت ملی"
-                                size="sm"
-                                color="dark"
-                            />
+                            <div className='d-flex justify-content-start align-items-center w-100 gap-5'>
+                                <Form.Label
+                                    label="تصویر جلو کارت ملی"
+                                    size="sm"
+                                    color="dark"
+                                />
+
+                                <span
+                                    data-tooltip-id="my-tooltip"
+                                    data-tooltip-content="حداکثر حجم تصویر جلو کارت ملی ارسالی 2 مگابایت و فرمت های (png , jpg , jpeg) قابل قبول است"
+                                >
+                                    <LuInfo
+                                        size={20}
+                                        color="currentColor"
+                                        className="text-info"
+                                    />
+                                </span>
+                            </div>
                         </div>
 
                         <div className="col-lg-8">
@@ -78,10 +140,25 @@ const RealFormData = ({
                                 <ImageInput
                                     id="national_card"
                                     name="national_card"
-                                    preview={null}
-                                    // preview={readMyProfileAction.data?.data?.user_info.national_card}
+                                    preview={readMyProfileAction.data?.data?.user_info?.national_card ? readMyProfileAction.data?.data?.user_info?.national_card_asset : null}
                                     value={updateProfileRealForm.values.national_card}
                                     onChange={(value) => updateProfileRealForm.setFieldValue("national_card", value)}
+                                    onRemove={() => Dialog(
+                                        "حذف تصویر جلو کارت ملی",
+                                        "آیا میخواهید تصویر جلو کارت ملی را حذف کنید ؟",
+                                        "info",
+                                        {
+                                            show: true,
+                                            text: "حذف",
+                                            color: "danger",
+                                        },
+                                        {
+                                            show: true,
+                                            text: "انصراف",
+                                            color: "light-dark",
+                                        },
+                                        async () => deleteProfileFileAction.mutate({file_type: "national_card"})
+                                    )}
                                 />
 
                                 <Form.Error

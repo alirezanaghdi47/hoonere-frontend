@@ -14,8 +14,8 @@ import Form from "@/modules/Form";
 import Button from "@/modules/Button";
 
 // services
-import {readAllProjectContractMemberService} from "@/services/projectContractService";
-import {readAllJobService} from "@/services/publicService";
+import {readAllProjectContractMemberService} from "@/services/projectContractService.ts";
+import {readAllJobService} from "@/services/publicService.ts";
 
 // types
 import {IReadAllProjectContractMember} from "@/types/serviceType.ts";

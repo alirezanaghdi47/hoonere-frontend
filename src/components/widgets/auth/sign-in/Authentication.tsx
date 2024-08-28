@@ -2,17 +2,15 @@
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
 
-// helpers
-import toast from "@/helpers/toast";
-
 // modules
 import Button from "@/modules/Button";
 import Typography from "@/modules/Typography";
 import NumberInput from "@/modules/NumberInput";
 import Form from "@/modules/Form";
+import Toast from "@/modules/Toast";
 
 // services
-import {authService} from "@/services/authService";
+import {authService} from "@/services/authService.ts";
 
 // types
 import {IAuth} from "@/types/serviceType.ts";
@@ -25,7 +23,7 @@ const Authentication = ({unSetOtpWay, nextStep, changeStep}) => {
         mutationFn: (data: IAuth) => authService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 changeStep({
                     mobile: authForm.values.mobile,
@@ -34,7 +32,7 @@ const Authentication = ({unSetOtpWay, nextStep, changeStep}) => {
 
                 nextStep();
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });

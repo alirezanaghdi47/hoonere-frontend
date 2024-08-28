@@ -5,7 +5,7 @@ import Num2persian from 'num2persian';
 import {Section} from "@/components/widgets/panel/projects/read/contracts/insertions/update/Actions.tsx";
 
 // hooks
-import usePart from "@/hooks/usePart";
+import usePart from "@/hooks/usePart.tsx";
 
 // modules
 import Typography from "@/modules/Typography";

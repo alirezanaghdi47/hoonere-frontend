@@ -7,8 +7,8 @@ import {LuMenu} from "react-icons/lu";
 import IconButton from "@/modules/IconButton";
 
 // stores
-import useAppStore from "@/stores/appStore";
-import useAuthStore from "@/stores/authStore";
+import useAppStore from "@/stores/appStore.ts";
+import useAuthStore from "@/stores/authStore.ts";
 
 const Navbar = () => {
     const {auth} = useAuthStore();

@@ -8,7 +8,7 @@ import DataList from "@/components/widgets/panel/projects/read/mood-boards/DataL
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // hooks
-import useFilter from "@/hooks/useFilter";
+import useFilter from "@/hooks/useFilter.tsx";
 
 // services
 import {readAllProjectMoodBoardService} from "@/services/projectMoodBoardService.ts";

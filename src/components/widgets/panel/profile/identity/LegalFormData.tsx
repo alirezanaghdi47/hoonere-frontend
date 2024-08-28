@@ -1,3 +1,7 @@
+// libraries
+import {useMutation} from "@tanstack/react-query";
+import {LuInfo} from "react-icons/lu";
+
 // modules
 import Form from "@/modules/Form";
 import TextInput from "@/modules/TextInput";
@@ -5,9 +9,27 @@ import Textarea from "@/modules/Textarea";
 import NumberInput from "@/modules/NumberInput";
 import ImageInput from "@/modules/ImageInput";
 import Button from "@/modules/Button";
-import FileInput from "@/modules/FileInput.tsx";
+import FileInput from "@/modules/FileInput";
+import Dialog from "@/modules/Dialog";
+import Toast from "@/modules/Toast";
 
-const LegalFormData = ({readMyProfileAction , changeCurrentPart, updateProfileLegalForm}) => {
+// services
+import {deleteProfileFileService} from "@/services/profileService.ts";
+
+const LegalFormData = ({readMyProfileAction, changeCurrentPart, updateProfileLegalForm}) => {
+    const deleteProfileFileAction = useMutation({
+        mutationFn: (data) => deleteProfileFileService(data),
+        onSuccess: async (data) => {
+            if (!data.error) {
+                Toast("success", data.message);
+
+                readMyProfileAction.mutate();
+            } else {
+                Toast("error", data.message);
+            }
+        }
+    });
+
     return (
         <div className="card w-100">
             <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
@@ -30,23 +52,52 @@ const LegalFormData = ({readMyProfileAction , changeCurrentPart, updateProfileLe
 
                 <div className="row gy-5 w-100">
                     <div className="col-lg-4">
-                        <Form.Label
-                            label="لوگو"
-                            size="sm"
-                            color="dark"
-                            required
-                        />
+                        <div className='d-flex justify-content-start align-items-center w-100 gap-5'>
+                            <Form.Label
+                                label="لوگو"
+                                size="sm"
+                                color="dark"
+                                required
+                            />
+
+                            <span
+                                data-tooltip-id="my-tooltip"
+                                data-tooltip-content="حداکثر حجم لوگو ارسالی 1 مگابایت و فرمت های (png , jpg , jpeg) قابل قبول است"
+                            >
+                                <LuInfo
+                                    size={20}
+                                    color="currentColor"
+                                    className="text-info"
+                                />
+                            </span>
+                        </div>
                     </div>
 
                     <div className="col-lg-8">
                         <Form.Group>
-                        <ImageInput
+                            <ImageInput
                                 id="profile_img"
                                 name="profile_img"
                                 isCircle
-                                preview={readMyProfileAction.data?.data?.user_info?.profile_img}
+                                preview={readMyProfileAction.data?.data?.user_info?.profile_img ? readMyProfileAction.data?.data?.user_info?.profile_img_asset : null}
                                 value={updateProfileLegalForm.values.profile_img}
                                 onChange={(value) => updateProfileLegalForm.setFieldValue("profile_img", value)}
+                                onRemove={() => Dialog(
+                                    "حذف لوگو",
+                                    "آیا میخواهید لوگو را حذف کنید ؟",
+                                    "info",
+                                    {
+                                        show: true,
+                                        text: "حذف",
+                                        color: "danger",
+                                    },
+                                    {
+                                        show: true,
+                                        text: "انصراف",
+                                        color: "light-dark",
+                                    },
+                                    async () => deleteProfileFileAction.mutate({file_type: "profile_img"})
+                                )}
                             />
 
                             <Form.Error
@@ -59,12 +110,25 @@ const LegalFormData = ({readMyProfileAction , changeCurrentPart, updateProfileLe
 
                 <div className="row gy-5 w-100">
                     <div className="col-lg-4">
-                        <Form.Label
-                            label="عکس یا فایل روزنامه رسمی"
-                            size="sm"
-                            color="dark"
-                            required
-                        />
+                        <div className='d-flex justify-content-start align-items-center w-100 gap-5'>
+                            <Form.Label
+                                label="تصویر یا فایل روزنامه رسمی"
+                                size="sm"
+                                color="dark"
+                                required
+                            />
+
+                            <span
+                                data-tooltip-id="my-tooltip"
+                                data-tooltip-content="حداکثر حجم تصویر یا فایل روزنامه رسمی ارسالی 2 مگابایت و فرمت های (png , jpg , jpeg , pdf) قابل قبول است"
+                            >
+                                <LuInfo
+                                    size={20}
+                                    color="currentColor"
+                                    className="text-info"
+                                />
+                            </span>
+                        </div>
                     </div>
 
                     <div className="col-lg-8">
@@ -73,7 +137,24 @@ const LegalFormData = ({readMyProfileAction , changeCurrentPart, updateProfileLe
                                 id="newspaper_file"
                                 name="newspaper_file"
                                 value={updateProfileLegalForm.values.newspaper_file}
+                                preview={readMyProfileAction.data?.data?.user_info?.newspaper_file ? readMyProfileAction.data?.data?.user_info?.newspaper_file_asset : null}
                                 onChange={(value) => updateProfileLegalForm.setFieldValue("newspaper_file", value)}
+                                onRemove={() => Dialog(
+                                    "حذف تصویر یا فایل روزنامه رسمی",
+                                    "آیا میخواهید تصویر یا فایل روزنامه رسمی را حذف کنید ؟",
+                                    "info",
+                                    {
+                                        show: true,
+                                        text: "حذف",
+                                        color: "danger",
+                                    },
+                                    {
+                                        show: true,
+                                        text: "انصراف",
+                                        color: "light-dark",
+                                    },
+                                    async () => deleteProfileFileAction.mutate({file_type: "newspaper_file"})
+                                )}
                             />
 
                             <Form.Error

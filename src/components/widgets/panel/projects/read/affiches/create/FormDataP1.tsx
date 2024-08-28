@@ -10,7 +10,7 @@ const CreateAddressFormData = Loadable(() => import("@/components/widgets/panel/
 import Addresses from "@/components/widgets/panel/projects/read/affiches/create/Addresses.tsx";
 
 // hooks
-import usePart from "@/hooks/usePart";
+import usePart from "@/hooks/usePart.tsx";
 // modules
 import Form from "@/modules/Form";
 import TextInput from "@/modules/TextInput";
@@ -26,10 +26,10 @@ import {
     readAllAfficheTypeService,
     readAllScreenPlayLocationSideService,
     readAllScreenPlayTimeTypeService
-} from "@/services/publicService";
+} from "@/services/publicService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 const FormDataP1 = ({createProjectAfficheP1Form}) => {
     const params = useParams();

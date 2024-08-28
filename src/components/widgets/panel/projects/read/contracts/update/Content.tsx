@@ -8,8 +8,8 @@ import {useFormik} from "formik";
 import FormData from "@/components/widgets/panel/projects/read/contracts/update/FormData.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
-// helpers
-import toast from "@/helpers/toast"
+// modules
+import Toast from "@/modules/Toast"
 
 // services
 import {
@@ -17,10 +17,10 @@ import {
     readProjectUnOfficialContractService,
     updateProjectOfficialContractService,
     updateProjectUnOfficialContractService
-} from "@/services/projectContractService";
+} from "@/services/projectContractService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {
@@ -32,7 +32,7 @@ import {
 
 // utils
 import {updateProjectContractSchema} from "@/utils/validations.ts";
-import {getValueByKey} from "@/utils/functions.ts";
+import {getObjectValueByKey} from "@/utils/functions.ts";
 
 const Content = () => {
     const location = useLocation();
@@ -52,11 +52,11 @@ const Content = () => {
         mutationFn: (data: IUpdateProjectOfficialContract) => updateProjectOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 navigate(auth.panel_url + "projects/" + params.id + "/contracts");
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -65,11 +65,11 @@ const Content = () => {
         mutationFn: (data: IUpdateProjectUnOfficialContract) => updateProjectUnOfficialContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 navigate(auth.panel_url + "projects/" + params.id + "/contracts");
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -154,37 +154,37 @@ const Content = () => {
             validationSchema: updateProjectContractSchema,
             onSubmit:
                 async (result) => {
-                    const totalPercent = getValueByKey(updateProjectContractForm.values.articles, "payments").reduce((acc, value) => {
+                    const totalPercent = getObjectValueByKey(updateProjectContractForm.values.articles, "payments").reduce((acc, value) => {
                         return acc += value.percent;
                     }, 0);
 
-                    if (getValueByKey(updateProjectContractForm.values.articles, "payment_state") === "1" && totalPercent < 100) return toast("error", "مجموع درصد فازبندی قرار داد کمتر از 100 است.");
+                    if (getObjectValueByKey(updateProjectContractForm.values.articles, "payment_state") === "1" && totalPercent < 100) return Toast("error", "مجموع درصد فازبندی قرار داد کمتر از 100 است.");
 
                     if (location.hash === "#official") {
                         updateProjectOfficialContractAction.mutate({
                             ...result,
                             project_id: params.id,
                             contract_id: params.subId,
-                            employers: getValueByKey(updateProjectContractForm.values.articles, "employers")?.map(item => item.id.toString()),
-                            contractors: getValueByKey(updateProjectContractForm.values.articles, "contractors")?.map(item => item.id.toString()),
-                            start_date: getValueByKey(updateProjectContractForm.values.articles, "start_date"),
-                            end_date: getValueByKey(updateProjectContractForm.values.articles, "end_date"),
-                            total_price: getValueByKey(updateProjectContractForm.values.articles, "total_price"),
-                            payment_state: getValueByKey(updateProjectContractForm.values.articles, "payment_state"),
-                            payments: getValueByKey(updateProjectContractForm.values.articles, "payments")
+                            employers: getObjectValueByKey(updateProjectContractForm.values.articles, "employers")?.map(item => item.id.toString()),
+                            contractors: getObjectValueByKey(updateProjectContractForm.values.articles, "contractors")?.map(item => item.id.toString()),
+                            start_date: getObjectValueByKey(updateProjectContractForm.values.articles, "start_date"),
+                            end_date: getObjectValueByKey(updateProjectContractForm.values.articles, "end_date"),
+                            total_price: getObjectValueByKey(updateProjectContractForm.values.articles, "total_price"),
+                            payment_state: getObjectValueByKey(updateProjectContractForm.values.articles, "payment_state"),
+                            payments: getObjectValueByKey(updateProjectContractForm.values.articles, "payments")
                         });
                     } else if (location.hash === "#un-official") {
                         updateProjectUnOfficialContractAction.mutate({
                             ...result,
                             project_id: params.id,
                             contract_id: params.subId,
-                            employers: getValueByKey(updateProjectContractForm.values.articles, "employers"),
-                            contractors: getValueByKey(updateProjectContractForm.values.articles, "contractors"),
-                            start_date: getValueByKey(updateProjectContractForm.values.articles, "start_date"),
-                            end_date: getValueByKey(updateProjectContractForm.values.articles, "end_date"),
-                            total_price: getValueByKey(updateProjectContractForm.values.articles, "total_price"),
-                            payment_state: getValueByKey(updateProjectContractForm.values.articles, "payment_state"),
-                            payments: getValueByKey(updateProjectContractForm.values.articles, "payments")
+                            employers: getObjectValueByKey(updateProjectContractForm.values.articles, "employers"),
+                            contractors: getObjectValueByKey(updateProjectContractForm.values.articles, "contractors"),
+                            start_date: getObjectValueByKey(updateProjectContractForm.values.articles, "start_date"),
+                            end_date: getObjectValueByKey(updateProjectContractForm.values.articles, "end_date"),
+                            total_price: getObjectValueByKey(updateProjectContractForm.values.articles, "total_price"),
+                            payment_state: getObjectValueByKey(updateProjectContractForm.values.articles, "payment_state"),
+                            payments: getObjectValueByKey(updateProjectContractForm.values.articles, "payments")
                         });
                     }
                 }

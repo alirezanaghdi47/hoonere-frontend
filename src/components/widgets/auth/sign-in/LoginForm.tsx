@@ -7,11 +7,8 @@ import {useFormik} from "formik";
 // components
 import Captcha from "@/components/widgets/auth/Captcha.tsx";
 
-// helpers
-import toast from "@/helpers/toast";
-
 // hooks
-import useId from "@/hooks/useId";
+import useId from "@/hooks/useId.tsx";
 
 // modules
 import TextInput from "@/modules/TextInput";
@@ -19,12 +16,13 @@ import PasswordInput from "@/modules/PasswordInput";
 import Button from "@/modules/Button";
 import Typography from "@/modules/Typography";
 import Form from "@/modules/Form";
+import Toast from "@/modules/Toast";
 
 // services
-import {loginService, captchaService} from "@/services/authService";
+import {loginService, captchaService} from "@/services/authService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {ILogin} from "@/types/serviceType.ts";
@@ -44,7 +42,7 @@ const LoginForm = () => {
         mutationFn: (data: ILogin) => loginService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 login({
                     token: data.data.token,
@@ -55,7 +53,7 @@ const LoginForm = () => {
 
                 navigate(data.data.panel_url + "dashboard");
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });

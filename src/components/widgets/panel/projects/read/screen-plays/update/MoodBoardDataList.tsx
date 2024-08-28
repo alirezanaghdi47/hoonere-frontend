@@ -12,7 +12,7 @@ import IconButton from "@/modules/IconButton";
 import RadioBox from "@/modules/RadioBox";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 const MoodBoardCard = ({moodBoard, attachProjectMoodBoardForm}) => {
     const params = useParams();

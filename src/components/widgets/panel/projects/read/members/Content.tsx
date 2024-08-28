@@ -8,10 +8,10 @@ import DataTable from "@/components/widgets/panel/projects/read/members/DataTabl
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // hooks
-import useFilter from "@/hooks/useFilter";
+import useFilter from "@/hooks/useFilter.tsx";
 
 // services
-import {readAllProjectMemberService} from "@/services/projectMemberService";
+import {readAllProjectMemberService} from "@/services/projectMemberService.ts";
 
 // types
 import {IReadAllProjectMember} from "@/types/serviceType.ts";

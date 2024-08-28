@@ -8,7 +8,7 @@ const RegisterForm = Loadable(() => import("@/components/widgets/auth/sign-up/Re
 import Authentication from "@/components/widgets/auth/sign-up/Authentication.tsx";
 
 // hooks
-import useStep from "@/hooks/useStep";
+import useStep from "@/hooks/useStep.tsx";
 
 const Register = () => {
     const {step, currentStep,resetStep, nextStep, changeStep} = useStep();

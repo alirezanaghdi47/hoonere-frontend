@@ -8,8 +8,8 @@ import CreateRepresentativeModal
     from "@/components/widgets/panel/projects/read/contracts/create/CreateRepresentativeModal.tsx";
 
 // hooks
-import usePart from "@/hooks/usePart";
-import useModal from "@/hooks/useModal";
+import usePart from "@/hooks/usePart.tsx";
+import useModal from "@/hooks/useModal.tsx";
 
 // modules
 import Modal from "@/modules/Modal";

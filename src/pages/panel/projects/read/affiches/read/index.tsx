@@ -2,7 +2,7 @@
 import Content from "@/components/widgets/panel/projects/read/affiches/read/Content";
 
 // hocs
-import RouteGuardHoc from "@/components/hocs/RouteGuardHoc.tsx";
+import WithRouteGuard from "@/hocs/WithRouteGuard.tsx";
 
 const ProjectAffiche = () => {
     return (
@@ -10,4 +10,4 @@ const ProjectAffiche = () => {
     )
 }
 
-export default RouteGuardHoc(ProjectAffiche);
+export default WithRouteGuard(ProjectAffiche);

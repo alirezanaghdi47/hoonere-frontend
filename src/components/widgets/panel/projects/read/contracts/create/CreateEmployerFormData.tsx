@@ -10,7 +10,7 @@ const CreateUnOfficialPartiesModal = Loadable(() => import("@/components/widgets
 import {Section, Note} from "@/components/widgets/panel/projects/read/contracts/create/Actions.tsx";
 
 // hooks
-import useModal from "@/hooks/useModal";
+import useModal from "@/hooks/useModal.tsx";
 
 // modules
 import Typography from "@/modules/Typography";

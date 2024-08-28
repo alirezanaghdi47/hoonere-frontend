@@ -12,7 +12,7 @@ import Form from "@/modules/Form";
 import NumberInput from "@/modules/NumberInput";
 
 // services
-import {readAllProjectTypeService} from "@/services/publicService";
+import {readAllProjectTypeService} from "@/services/publicService.ts";
 
 const AdvanceFilter = ({
                            filter,

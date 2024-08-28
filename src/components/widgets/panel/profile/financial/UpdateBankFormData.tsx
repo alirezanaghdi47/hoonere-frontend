@@ -3,18 +3,16 @@ import {useMutation} from "@tanstack/react-query";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {useFormik} from "formik";
 
-// helpers
-import toast from "@/helpers/toast";
-
 // modules
 import NumberInput from "@/modules/NumberInput";
 import Form from "@/modules/Form";
 import Button from "@/modules/Button";
 import TextInput from "@/modules/TextInput";
 import Typography from "@/modules/Typography";
+import Toast from "@/modules/Toast";
 
 // services
-import {updateBankCardService} from "@/services/profileService";
+import {updateBankCardService} from "@/services/profileService.ts";
 
 // types
 import {IUpdateBankCard} from "@/types/serviceType.ts";
@@ -92,7 +90,7 @@ const UpdateBankFormData = ({readMyAllBankCardAction, readMyProfileAction, part,
         mutationFn: (data: IUpdateBankCard) => updateBankCardService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 resetPart();
 
@@ -100,7 +98,7 @@ const UpdateBankFormData = ({readMyAllBankCardAction, readMyProfileAction, part,
 
                 readMyAllBankCardAction.mutate();
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });

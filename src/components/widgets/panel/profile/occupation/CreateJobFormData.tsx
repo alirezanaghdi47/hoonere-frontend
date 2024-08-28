@@ -9,7 +9,7 @@ import SelectBox from "@/modules/SelectBox";
 import Button from "@/modules/Button";
 
 // services
-import {readAllJobService} from "@/services/publicService";
+import {readAllJobService} from "@/services/publicService.ts";
 
 // utils
 import {createJobSchema} from "@/utils/validations.ts";

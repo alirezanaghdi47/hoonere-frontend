@@ -28,7 +28,32 @@ export const readAllProjectAfficheService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readAllInvitedProjectAfficheService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/affiches/invited", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -53,7 +78,32 @@ export const readProjectAfficheService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readInvitedProjectAfficheService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/affiches/invited/preview", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -78,7 +128,7 @@ export const readAllProjectAfficheAddressService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -103,7 +153,7 @@ export const readAllProjectAfficheActorService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -128,7 +178,7 @@ export const readAllProjectAfficheMemberService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -153,7 +203,7 @@ export const readAllProjectAfficheReceptionService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -178,7 +228,7 @@ export const readAllProjectAfficheScreenPlayService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -203,7 +253,7 @@ export const readAllProjectAfficheHistoryService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -228,7 +278,7 @@ export const createProjectAfficheService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -253,7 +303,7 @@ export const updateProjectAfficheService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -278,6 +328,6 @@ export const deleteProjectAfficheService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }

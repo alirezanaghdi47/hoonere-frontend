@@ -122,7 +122,7 @@ export const cleanObject = (sourceObject: object) => {
     return clonedObject;
 }
 
-export const getValueByKey = (array, key: string, subKey?: string) => {
+export const getObjectValueByKey = (array, key: string, subKey?: string) => {
     for (const item of array) {
         if (item.hasOwnProperty(key)) {
             if (subKey && Array.isArray(item[key])) {
@@ -140,15 +140,17 @@ export const getValueByKey = (array, key: string, subKey?: string) => {
 
 export const getAllIndexes = (array, value) => {
     const indexes = [];
-    let i;
 
-    for (i = 0; i < array.length; i++)
-        if (array[i] === value) indexes.push(i);
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] === value) {
+            indexes.push(i);
+        }
+    }
 
     return indexes;
 }
 
-export const removeElementsByIndices = (array, arrayToRemove) => {
+export const removeElementsByIndexes = (array, arrayToRemove) => {
     const newArray = [...array];
 
     arrayToRemove.sort((a, b) => b - a);
@@ -162,7 +164,12 @@ export const removeElementsByIndices = (array, arrayToRemove) => {
 }
 
 
-export const getBankInfoFromCardNumber = (cardNumber: string): { color: string, bank: string, title: string , bin: string } | null => cardNumber.length > 6 ? iranianBanks?.find(bank => cardNumber.startsWith(bank.bin)) : null;
+export const getBankInfoFromCardNumber = (cardNumber: string): {
+    color: string,
+    bank: string,
+    title: string,
+    bin: string
+} | null => cardNumber.length > 6 ? iranianBanks?.find(bank => cardNumber.startsWith(bank.bin)) : null;
 
 export const formattedBankCardNumber = (cardNumber: string): string => cardNumber.match(/.{1,4}/g).join('-');
 
@@ -228,7 +235,7 @@ export const removeArticleForContract = (articles, sections, notes, articleNumbe
         number: index + 1
     }));
 
-    updatedSections = removeElementsByIndices(updatedSections, sectionIndexesForDelete);
+    updatedSections = removeElementsByIndexes(updatedSections, sectionIndexesForDelete);
 
     updatedSections.forEach((section) => {
         if (section.article_number > articleNumberToRemove) {
@@ -426,7 +433,7 @@ export const removeArticleForInsertion = (articles, sections, articleNumberToRem
 
     const sectionIndexesForDelete = getAllIndexes(updatedSections.map(item => item.article_number), articleNumberToRemove);
 
-    updatedSections = removeElementsByIndices(updatedSections, sectionIndexesForDelete);
+    updatedSections = removeElementsByIndexes(updatedSections, sectionIndexesForDelete);
 
     updatedSections.forEach((section) => {
         if (section.article_number > articleNumberToRemove) {

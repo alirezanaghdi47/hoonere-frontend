@@ -22,26 +22,26 @@ export const loginSchema = Yup.object().shape({
 });
 
 export const updateProfileRealSchema = Yup.object().shape({
-    profile_img: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 1 مگابایت باشد", (value: File) => {
+    profile_img: Yup.mixed().nullable().test("fileSize", "حجم تصویر حداکثر 1 مگابایت باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
             return value.size <= 1_024_000;
         }
-    }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
+    }).test("fileType", "فرمت تصویر ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
             return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
         }
     }),
-    national_card: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 2 مگابایت باشد", (value: File) => {
+    national_card: Yup.mixed().nullable().test("fileSize", "حجم تصویر حداکثر 2 مگابایت باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
             return value.size <= 2 * 1_024_000;
         }
-    }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
+    }).test("fileType", "فرمت تصویر ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
@@ -69,17 +69,17 @@ export const occupationSchema = Yup.object().shape({
         foa_parent_id: Yup.number(),
         foa_child_id: Yup.number(),
     })).min(1, "حداقل یک زمینه شغلی باید انتخاب شود"),
-    resume_file: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 1 مگابایت باشد", (value: File) => {
+    resume_file: Yup.mixed().nullable().test("fileSize", "حجم تصویر حداکثر 2 مگابایت باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
-            return value.size <= 1_024_000;
+            return value.size <= 2 * 1_024_000;
         }
-    }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
+    }).test("fileType", "فرمت تصویر یا فایل ارسالی باید از نوع (png , jpg , jpeg) و یا pdf باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
-            return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
+            return ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'].includes(value.type);
         }
     }),
     resume_text: Yup.string().trim().required("رزومه متنی الزامی است")
@@ -93,30 +93,30 @@ export const financialSchema = Yup.object().shape({
 });
 
 export const updateProfileLegalSchema = Yup.object().shape({
-    profile_img: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 1 مگابایت باشد", (value: File) => {
+    profile_img: Yup.mixed().nullable().test("fileSize", "حجم تصویر حداکثر 1 مگابایت باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
             return value.size <= 1_024_000;
         }
-    }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
+    }).test("fileType", "فرمت تصویر ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
             return ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type);
         }
     }),
-    newspaper_file: Yup.mixed().nullable().test("fileSize", "حجم عکس یا فایل حداکثر 2 مگابایت باشد", (value: File) => {
+    newspaper_file: Yup.mixed().nullable().test("fileSize", "حجم تصویر یا فایل حداکثر 2 مگابایت باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
             return value.size <= 2 * 1_024_000;
         }
-    }).test("fileType", "فرمت عکس یا فایل ارسالی باید از نوع (png , jpg , jpeg) و یا pdf باشد", (value: File) => {
+    }).test("fileType", "فرمت تصویر یا فایل ارسالی باید از نوع (png , jpg , jpeg) و یا pdf باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
-            return ['image/png', 'image/jpg', 'image/jpeg' , 'application/pdf'].includes(value.type);
+            return ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'].includes(value.type);
         }
     }),
     username: Yup.string().trim().required("نام کاربری الزامی است"),
@@ -147,13 +147,13 @@ export const readUserInquirySchema = Yup.object().shape({
 });
 
 export const createProjectSchema = Yup.object().shape({
-    logo: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 1 مگابایت باشد", (value: File) => {
+    logo: Yup.mixed().nullable().test("fileSize", "حجم تصویر حداکثر 1 مگابایت باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
             return value.size <= 1_024_000;
         }
-    }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
+    }).test("fileType", "فرمت تصویر ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
@@ -170,13 +170,13 @@ export const createProjectSchema = Yup.object().shape({
 });
 
 export const updateProjectSchema = Yup.object().shape({
-    logo: Yup.mixed().nullable().test("fileSize", "حجم عکس حداکثر 1 مگابایت باشد", (value: File) => {
+    logo: Yup.mixed().nullable().test("fileSize", "حجم تصویر حداکثر 1 مگابایت باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
             return value.size <= 1_024_000;
         }
-    }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
+    }).test("fileType", "فرمت تصویر ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
         if (Object.keys(value).length === 0) {
             return true;
         } else {
@@ -379,13 +379,13 @@ export const createProjectMoodBoardSchema = Yup.object().shape({
         is: (value) => value === "image",
         then: (schema) => schema.test("fileExist", "محتوای مود بورد الزامی است", (value: File) => {
             return Object.keys(value).length !== 0;
-        }).test("fileSize", "حجم عکس ارسالی حداکثر 1 مگابایت باشد", (value: File) => {
+        }).test("fileSize", "حجم تصویر ارسالی حداکثر 1 مگابایت باشد", (value: File) => {
             if (Object.keys(value).length === 0) {
                 return true;
             } else {
                 return value.size <= 1 * 1_024_000;
             }
-        }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
+        }).test("fileType", "فرمت تصویر ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
             if (Object.keys(value).length === 0) {
                 return true;
             } else {
@@ -428,13 +428,13 @@ export const updateProjectMoodBoardSchema = Yup.object().shape({
         is: (value) => value === "image",
         then: (schema) => schema.test("fileExist", "محتوای مود بورد الزامی است", (value: File) => {
             return Object.keys(value).length !== 0;
-        }).test("fileSize", "حجم عکس ارسالی حداکثر 2 مگابایت باشد", (value: File) => {
+        }).test("fileSize", "حجم تصویر ارسالی حداکثر 2 مگابایت باشد", (value: File) => {
             if (Object.keys(value).length === 0) {
                 return true;
             } else {
                 return value.size <= 2 * 1_024_000;
             }
-        }).test("fileType", "فرمت عکس ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
+        }).test("fileType", "فرمت تصویر ارسالی باید از نوع (png , jpg , jpeg) باشد", (value: File) => {
             if (Object.keys(value).length === 0) {
                 return true;
             } else {
@@ -489,7 +489,7 @@ export const createPartiesSchema = Yup.object().shape({
 });
 
 export const createPaymentSchema = Yup.object().shape({
-    percent: Yup.number().min(1 , "مقدار درصد نادرست است").max(100 , "مقدار درصد نادرست است").required("درصد الزامی است"),
+    percent: Yup.number().min(1, "مقدار درصد نادرست است").max(100, "مقدار درصد نادرست است").required("درصد الزامی است"),
     date: Yup.string().trim().required("تاریخ الزامی است"),
 });
 
@@ -538,4 +538,10 @@ export const updateProjectContractInsertionSchema = Yup.object().shape({
     sections: Yup.array(),
 });
 
+export const inviteConfirmationProjectSchema = Yup.object().shape({
+    status_id: Yup.string().trim().required("وضعیت دعوت نامه الزامی است"),
+});
 
+export const checkProjectContractSignatureConfirmCodeSchema = Yup.object().shape({
+    code: Yup.string().trim().required("کد ارسالی الزامی است"),
+});

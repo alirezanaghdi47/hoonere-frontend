@@ -11,7 +11,7 @@ import Fields from "@/components/widgets/panel/projects/read/screen-plays/update
 import MoodBoardEditor from "@/components/widgets/panel/projects/read/screen-plays/update/MoodBoardEditor.tsx";
 
 // hooks
-import usePart from "@/hooks/usePart";
+import usePart from "@/hooks/usePart.tsx";
 // modules
 import Form from "@/modules/Form";
 import SelectBox from "@/modules/SelectBox";
@@ -20,10 +20,10 @@ import NumberInput from "@/modules/NumberInput";
 import Button from "@/modules/Button";
 
 // services
-import {readAllScreenPlayLocationSideService, readAllScreenPlayTimeTypeService} from "@/services/publicService";
+import {readAllScreenPlayLocationSideService, readAllScreenPlayTimeTypeService} from "@/services/publicService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 const FormData = ({updateProjectScreenPlayForm, updateProjectScreenPlayAction}) => {
     const params = useParams();

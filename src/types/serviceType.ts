@@ -1,5 +1,3 @@
-import {getValueByKey} from "@/utils/functions.ts";
-
 export interface IAuth {
     mobile: string,
 }

@@ -11,10 +11,10 @@ import Button from "@/modules/Button";
 import Alert from "@/modules/Alert";
 
 // services
-import {readAllJobService} from "@/services/publicService";
+import {readAllJobService} from "@/services/publicService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 const FormDataWithUserName = ({readAllJobAction, readProjectMemberAction, updateProjectMemberFormWithUserName}) => {
     return (

@@ -11,7 +11,7 @@ import Loading from "@/components/partials/panel/Loading.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
 // hooks
-import useFilter from "@/hooks/useFilter";
+import useFilter from "@/hooks/useFilter.tsx";
 
 // modules
 import Modal from "@/modules/Modal";
@@ -23,7 +23,7 @@ import Button from "@/modules/Button";
 import {readAllProjectMoodBoardService} from "@/services/projectMoodBoardService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {IReadAllProjectMoodBoard} from "@/types/serviceType.ts";

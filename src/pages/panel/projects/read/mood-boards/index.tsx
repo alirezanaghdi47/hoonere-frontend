@@ -3,7 +3,7 @@ import Content from "@/components/widgets/panel/projects/read/mood-boards/Conten
 import Header from "@/components/widgets/panel/projects/read/mood-boards/Header.tsx";
 
 // hocs
-import RouteGuardHoc from "@/components/hocs/RouteGuardHoc.tsx";
+import WithRouteGuard from "@/hocs/WithRouteGuard.tsx";
 
 const ProjectMoodBoards = () => {
     return (
@@ -14,4 +14,4 @@ const ProjectMoodBoards = () => {
     )
 }
 
-export default RouteGuardHoc(ProjectMoodBoards);
+export default WithRouteGuard(ProjectMoodBoards);

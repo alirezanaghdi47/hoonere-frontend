@@ -14,19 +14,19 @@ import Navigation from "@/components/widgets/panel/projects/read/affiches/create
 import FormDataP1 from "@/components/widgets/panel/projects/read/affiches/create/FormDataP1.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
-// helpers
-import toast from "@/helpers/toast"
-
 // hooks
-import useStep from "@/hooks/useStep";
-import useFilter from "@/hooks/useFilter";
+import useStep from "@/hooks/useStep.tsx";
+import useFilter from "@/hooks/useFilter.tsx";
+
+// modules
+import Toast from "@/modules/Toast"
 
 // services
 import {createProjectAfficheService} from "@/services/projectAfficheService.ts";
 import {readAllProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {ICreateProjectAffiche, IReadAllProjectScreenPlay} from "@/types/serviceType.ts";
@@ -68,13 +68,13 @@ const Content = () => {
         mutationFn: (data: ICreateProjectAffiche) => createProjectAfficheService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 resetStep();
 
                 navigate(auth.panel_url + "projects/" + params.id + "/affiches");
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });

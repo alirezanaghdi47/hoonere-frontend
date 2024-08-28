@@ -15,7 +15,7 @@ import IconButton from "@/modules/IconButton";
 import Typography from "@/modules/Typography";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 const DataTable = ({
                        readAllProjectAfficheHistoryAction,

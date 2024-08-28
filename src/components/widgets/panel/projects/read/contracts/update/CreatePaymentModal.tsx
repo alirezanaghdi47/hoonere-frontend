@@ -2,9 +2,6 @@
 import {LuX} from "react-icons/lu";
 import {useFormik} from "formik";
 
-// helpers
-import toast from "@/helpers/toast"
-
 // modules
 import Modal from "@/modules/Modal";
 import Typography from "@/modules/Typography";
@@ -13,6 +10,7 @@ import DatePicker from "@/modules/DatePicker";
 import NumberInput from "@/modules/NumberInput";
 import Form from "@/modules/Form";
 import Button from "@/modules/Button";
+import Toast from "@/modules/Toast"
 
 // utils
 import {createPaymentSchema} from "@/utils/validations.ts";
@@ -29,7 +27,7 @@ const CreatePaymentModal = ({modal, _handleHideModal, updateProjectContractForm}
                 return acc += item.percent
             }, Number(result.percent));
 
-            if (totalPercent > 100) return toast("error" , "مجموع درصد فازبندی قرار داد حداکثر 100 است.")
+            if (totalPercent > 100) return Toast("error" , "مجموع درصد فازبندی قرار داد حداکثر 100 است.")
 
             const newArray = [...updateProjectContractForm.values.articles.find(item => item.number === modal?.data?.article.number)?.payments, {
                 percent: Number(result.percent),
@@ -91,7 +89,6 @@ const CreatePaymentModal = ({modal, _handleHideModal, updateProjectContractForm}
                             name="percent"
                             options={{
                                 numericOnly: true,
-                                blocks: [2],
                                 delimiter: '',
                             }}
                             value={createPaymentModal.values.percent}

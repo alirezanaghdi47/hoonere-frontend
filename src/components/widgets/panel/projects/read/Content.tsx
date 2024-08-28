@@ -15,7 +15,7 @@ import {
 import Button from "@/modules/Button";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 const Content = () => {
     const params = useParams();

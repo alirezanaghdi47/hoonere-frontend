@@ -8,22 +8,22 @@ import {useFormik} from "formik";
 import FormData from "@/components/widgets/panel/projects/read/contracts/insertions/update/FormData.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
-// helpers
-import toast from "@/helpers/toast"
+// modules
+import Toast from "@/modules/Toast"
 
 // services
 import {
     readProjectContractForInsertionService,
     readProjectContractInsertionService,
     updateProjectContractInsertionService
-} from "@/services/projectContractService";
+} from "@/services/projectContractService.ts";
 import {
     readAllProjectContractInsertionArticleService,
     readAllProjectContractInsertionSectionService
 } from "@/services/publicService.ts";
 
 // stores
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "@/stores/authStore.ts";
 
 // types
 import {
@@ -34,7 +34,7 @@ import {
 
 // utils
 import {updateProjectContractInsertionSchema} from "@/utils/validations.ts";
-import {getValueByKey} from "@/utils/functions.ts";
+import {getObjectValueByKey} from "@/utils/functions.ts";
 
 const Content = () => {
     const params = useParams();
@@ -61,11 +61,11 @@ const Content = () => {
         mutationFn: (data: IUpdateProjectContractInsertion) => updateProjectContractInsertionService(data),
         onSuccess: async (data) => {
             if (!data.error) {
-                toast("success", data.message);
+                Toast("success", data.message);
 
                 navigate(auth.panel_url + "projects/" + params.id + "/contracts/" + params.subId + "/insertions");
             } else {
-                toast("error", data.message);
+                Toast("error", data.message);
             }
         }
     });
@@ -115,24 +115,24 @@ const Content = () => {
         },
         validationSchema: updateProjectContractInsertionSchema,
         onSubmit: async (result) => {
-            const totalPercent = getValueByKey(updateProjectContractInsertionForm.values.articles, "payments").reduce((acc, value) => {
+            const totalPercent = getObjectValueByKey(updateProjectContractInsertionForm.values.articles, "payments").reduce((acc, value) => {
                 return acc += value.percent;
             }, 0);
 
-            if (getValueByKey(updateProjectContractInsertionForm.values.articles, "payment_state") === "1" && totalPercent < 100) return toast("error", "مجموع درصد فازبندی قرار داد کمتر از 100 است.");
+            if (getObjectValueByKey(updateProjectContractInsertionForm.values.articles, "payment_state") === "1" && totalPercent < 100) return Toast("error", "مجموع درصد فازبندی قرار داد کمتر از 100 است.");
 
             updateProjectContractInsertionAction.mutate({
                 ...result,
                 project_id: params.id,
                 contract_id: params.subId,
                 insertion_id: params.subSubId,
-                employers: getValueByKey(updateProjectContractInsertionForm.values.articles, "employers")?.map(item => item.id.toString()),
-                contractors: getValueByKey(updateProjectContractInsertionForm.values.articles, "contractors")?.map(item => item.id.toString()),
-                start_date: getValueByKey(updateProjectContractInsertionForm.values.articles, "start_date"),
-                end_date: getValueByKey(updateProjectContractInsertionForm.values.articles, "end_date"),
-                total_price: getValueByKey(updateProjectContractInsertionForm.values.articles, "total_price"),
-                payment_state: getValueByKey(updateProjectContractInsertionForm.values.articles, "payment_state"),
-                payments: getValueByKey(updateProjectContractInsertionForm.values.articles, "payments")
+                employers: getObjectValueByKey(updateProjectContractInsertionForm.values.articles, "employers")?.map(item => item.id.toString()),
+                contractors: getObjectValueByKey(updateProjectContractInsertionForm.values.articles, "contractors")?.map(item => item.id.toString()),
+                start_date: getObjectValueByKey(updateProjectContractInsertionForm.values.articles, "start_date"),
+                end_date: getObjectValueByKey(updateProjectContractInsertionForm.values.articles, "end_date"),
+                total_price: getObjectValueByKey(updateProjectContractInsertionForm.values.articles, "total_price"),
+                payment_state: getObjectValueByKey(updateProjectContractInsertionForm.values.articles, "payment_state"),
+                payments: getObjectValueByKey(updateProjectContractInsertionForm.values.articles, "payments")
             });
         }
     });

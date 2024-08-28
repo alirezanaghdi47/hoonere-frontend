@@ -28,7 +28,32 @@ export const readAllProjectContractService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readAllInvitedProjectContractService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/invited", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -53,7 +78,7 @@ export const readProjectOfficialContractService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -78,7 +103,32 @@ export const readProjectUnOfficialContractService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readInvitedProjectContractService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/invited/preview", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -103,7 +153,7 @@ export const createProjectOfficialContractService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -128,7 +178,7 @@ export const createProjectUnOfficialContractService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -153,7 +203,7 @@ export const updateProjectOfficialContractService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -178,7 +228,7 @@ export const updateProjectUnOfficialContractService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -203,7 +253,7 @@ export const deleteProjectOfficialContractService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -228,7 +278,7 @@ export const deleteProjectUnOfficialContractService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -253,7 +303,7 @@ export const changeProjectContractStatusService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -278,7 +328,7 @@ export const readAllProjectContractMemberService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -303,7 +353,7 @@ export const readProjectContractForInsertionService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -328,7 +378,7 @@ export const readAllProjectContractInsertionService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -353,7 +403,7 @@ export const readProjectContractInsertionService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -378,7 +428,7 @@ export const createProjectContractInsertionService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -403,7 +453,7 @@ export const updateProjectContractInsertionService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -428,7 +478,7 @@ export const deleteProjectContractInsertionService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -453,7 +503,7 @@ export const changeProjectContractInsertionStatusService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -478,7 +528,57 @@ export const checkProjectContractHasSupplementService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const sendProjectContractSignatureConfirmCodeService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/sendSignatureConfirmCode", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const checkProjectContractSignatureConfirmCodeService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/checkSignatureConfirmCode", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 

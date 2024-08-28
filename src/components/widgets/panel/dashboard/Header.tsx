@@ -1,19 +1,10 @@
-// libraries
-import {LuBell, LuMoon, LuSun, LuUser} from "react-icons/lu";
+// components
+import ActionBar from "@/components/partials/panel/ActionBar.tsx";
 
 // modules
 import Typography from "@/modules/Typography";
-import IconButton from "@/modules/IconButton";
-import Badge from "@/modules/Badge";
-
-// stores
-import useAuthStore from "@/stores/authStore";
-import useAppStore from "@/stores/appStore";
 
 const Header = () => {
-    const {auth} = useAuthStore();
-    const {app: {isDark}, toggleTheme} = useAppStore();
-
     return (
         <div className="d-flex justify-content-center align-items-center w-100 bg-primary">
             <div className="row gy-5 w-100 mw-950px p-5 mb-lg-15">
@@ -28,50 +19,7 @@ const Header = () => {
                     </Typography>
                 </div>
 
-                <div className="order-1 order-md-2 col-12 col-md-8 d-flex justify-content-end align-items-center gap-2">
-                    <IconButton textColor="light">
-                        <Badge
-                            color="light-success"
-                            size="sm"
-                            placement="top-start"
-                            label="2"
-                        />
-
-                        <LuBell
-                            size={20}
-                            color="currentColor"
-                        />
-                    </IconButton>
-
-                    <IconButton
-                        textColor="light"
-                        onClick={toggleTheme}
-                    >
-                        {
-                            isDark ? (
-                                <LuSun
-                                    size={20}
-                                    color="currentColor"
-                                />
-                            ) : (
-                                <LuMoon
-                                    size={20}
-                                    color="currentColor"
-                                />
-                            )
-                        }
-                    </IconButton>
-
-                    <IconButton
-                        textColor="light"
-                        href={auth.panel_url + "profile"}
-                    >
-                        <LuUser
-                            size={20}
-                            color="currentColor"
-                        />
-                    </IconButton>
-                </div>
+                <ActionBar/>
             </div>
         </div>
     )

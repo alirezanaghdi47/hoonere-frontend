@@ -1,23 +1,25 @@
 // libraries
 import {useLayoutEffect} from "react";
-import {useParams} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 
 // components
+import TabBar from "@/components/widgets/panel/projects/read/affiches/TabBar.tsx";
 import DataTable from "@/components/widgets/panel/projects/read/affiches/DataTable.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 
 // hooks
-import useFilter from "@/hooks/useFilter";
+import useFilter from "@/hooks/useFilter.tsx";
 
 // services
-import {readAllProjectAfficheService} from "@/services/projectAfficheService.ts";
+import {readAllInvitedProjectAfficheService, readAllProjectAfficheService} from "@/services/projectAfficheService.ts";
 
 // types
 import {IReadAllProjectAffiche} from "@/types/serviceType.ts";
 
 const Content = () => {
     const params = useParams();
+    const location = useLocation();
 
     const {
         filter,
@@ -36,7 +38,7 @@ const Content = () => {
     });
 
     const readAllProjectAfficheAction = useMutation({
-        mutationFn: (data: IReadAllProjectAffiche) => readAllProjectAfficheService(data),
+        mutationFn: (data: IReadAllProjectAffiche) => location.hash === "#is_invited=0" ? readAllProjectAfficheService(data) : readAllInvitedProjectAfficheService(data),
     });
 
     useLayoutEffect(() => {
@@ -44,7 +46,7 @@ const Content = () => {
             ...filter,
             project_id: params.id
         });
-    }, []);
+    }, [location.hash]);
 
     return (
         <div
@@ -57,6 +59,12 @@ const Content = () => {
                             width="100%"
                             height={500}
                         />
+                    )
+                }
+
+                {
+                    !readAllProjectAfficheAction.isPending && (
+                        <TabBar/>
                     )
                 }
 
