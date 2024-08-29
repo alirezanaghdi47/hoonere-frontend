@@ -6,21 +6,6 @@ import classNames from "classnames";
 // utils
 import {toEnglishDigits} from "@/utils/functions.ts";
 
-type TNumberInput = {
-    id: string,
-    name: string,
-    value: string | number | null,
-    placeholder?: string,
-    options?: unknown,
-    onChange?: (value: string | number | null) => void,
-    startAdornment?: ReactNode,
-    endAdornment?: ReactNode,
-    disabled?: boolean,
-    readOnly?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const NumberInput = ({
                          id,
                          name,
@@ -75,6 +60,21 @@ const NumberInput = ({
             }
         </div>
     )
+}
+
+type TNumberInput = {
+    id: string,
+    name: string,
+    value: string | number | null,
+    placeholder?: string,
+    options?: unknown,
+    onChange?: (value: string | number | null) => void,
+    startAdornment?: ReactNode,
+    endAdornment?: ReactNode,
+    disabled?: boolean,
+    readOnly?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default NumberInput;

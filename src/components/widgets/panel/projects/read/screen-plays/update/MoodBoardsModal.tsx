@@ -6,7 +6,7 @@ import {useFormik} from "formik";
 import {LuPlus, LuRotateCcw, LuX} from "react-icons/lu";
 
 // components
-import MoodBoardDataList from "@/components/widgets/panel/projects/read/screen-plays/create/MoodBoardDataList.tsx";
+import MoodBoardDataList from "@/components/widgets/panel/projects/read/screen-plays/update/MoodBoardDataList.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
 
@@ -25,7 +25,7 @@ import {readAllProjectMoodBoardService , IReadAllProjectMoodBoard} from "@/servi
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-const ReadMoodBoardsModal = ({modal, _handleHideModal}) => {
+const MoodBoardsModal = ({modal, _handleHideModal}) => {
     const params = useParams();
     const {auth} = useAuthStore();
 
@@ -61,7 +61,7 @@ const ReadMoodBoardsModal = ({modal, _handleHideModal}) => {
     useLayoutEffect(() => {
         readAllProjectMoodBoardAction.mutate({
             ...filter,
-            project_id: params?.id
+            project_id: params.id
         });
     }, []);
 
@@ -100,7 +100,7 @@ const ReadMoodBoardsModal = ({modal, _handleHideModal}) => {
                         data-tooltip-content="بروزرسانی لیست"
                         onClick={() => readAllProjectMoodBoardAction.mutate({
                             ...filter,
-                            project_id: params?.id
+                            project_id: params.id
                         })}
                     >
                         <LuRotateCcw size={20}/>
@@ -177,4 +177,4 @@ const ReadMoodBoardsModal = ({modal, _handleHideModal}) => {
     )
 }
 
-export default ReadMoodBoardsModal;
+export default MoodBoardsModal;

@@ -12,20 +12,6 @@ import Typography from "@/modules/Typography";
 // types
 import {IExtendedFile} from "@/types/constant.ts";
 
-type TImageInput = {
-    id: string,
-    name: string,
-    value: IExtendedFile | object,
-    preview?: string | null,
-    onChange?: (value: File | object) => void,
-    onRemove?: () => void,
-    disabled?: boolean,
-    readOnly?: boolean,
-    isCircle?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const ImageInput = ({
                         id,
                         name,
@@ -157,6 +143,20 @@ const ImageInput = ({
             }
         </div>
     )
+}
+
+type TImageInput = {
+    id: string,
+    name: string,
+    value: IExtendedFile | object,
+    preview?: string | null,
+    onChange?: (value: File | object) => void,
+    onRemove?: () => void,
+    disabled?: boolean,
+    readOnly?: boolean,
+    isCircle?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default ImageInput;

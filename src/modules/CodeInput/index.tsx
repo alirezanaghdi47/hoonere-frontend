@@ -8,19 +8,6 @@ import Typography from "@/modules/Typography";
 import IconButton from "@/modules/IconButton";
 import NumberInput from "@/modules/NumberInput";
 
-type TCodeInput = {
-    id: string,
-    name: string,
-    value: string | null,
-    placeholder?: string,
-    onChange?: (value: string | null) => void,
-    startAdornment?: ReactNode,
-    onResend: () => void,
-    disabled?: boolean,
-    readOnly?: boolean,
-    style?: CSSProperties
-}
-
 const CodeInput = ({
                        id,
                        name,
@@ -93,6 +80,19 @@ const CodeInput = ({
             </span>
         </div>
     )
+}
+
+type TCodeInput = {
+    id: string,
+    name: string,
+    value: string | null,
+    placeholder?: string,
+    onChange?: (value: string | null) => void,
+    startAdornment?: ReactNode,
+    onResend: () => void,
+    disabled?: boolean,
+    readOnly?: boolean,
+    style?: CSSProperties
 }
 
 export default CodeInput;

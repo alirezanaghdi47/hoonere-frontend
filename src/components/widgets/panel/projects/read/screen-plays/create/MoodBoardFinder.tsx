@@ -1,8 +1,13 @@
+// libraries
+import {useParams} from "react-router-dom";
+
 // modules
 import SelectBox from "@/modules/SelectBox";
 import Pagination from "@/modules/Pagination";
 
 const MoodBoardFinder = ({readAllProjectMoodBoardAction, filter, changeFilter}) => {
+    const params = useParams();
+
     const pageSizeList = [
         {value: 12, label: '12'},
         {value: 24, label: '24'},
@@ -21,7 +26,11 @@ const MoodBoardFinder = ({readAllProjectMoodBoardAction, filter, changeFilter}) 
                     options={pageSizeList}
                     onChange={(value) => {
                         changeFilter({per_page: value});
-                        readAllProjectMoodBoardAction.mutate({per_page: value});
+                        readAllProjectMoodBoardAction.mutate({
+                            ...filter,
+                            per_page: value,
+                            project_id: params.id
+                        });
                     }}
                 />
             </div>
@@ -34,7 +43,11 @@ const MoodBoardFinder = ({readAllProjectMoodBoardAction, filter, changeFilter}) 
                         total={readAllProjectMoodBoardAction.data?.data?.pagination?.total}
                         onChange={(value) => {
                             changeFilter({page: value});
-                            readAllProjectMoodBoardAction.mutate({page: value});
+                            readAllProjectMoodBoardAction.mutate({
+                                ...filter,
+                                page: value,
+                                project_id: params.id
+                            });
                         }}
                     />
                 )

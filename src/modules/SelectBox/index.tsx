@@ -11,22 +11,6 @@ import Typography from "@/modules/Typography";
 // styles
 import "./index.style.scss";
 
-type TSelectBox = {
-    id: string,
-    name: string,
-    value: string | null,
-    onChange?: (value: string | null) => void,
-    options: { label: string, value: string | number }[]
-    placeholder?: string,
-    isSearchable?: boolean,
-    isLoading?: boolean,
-    isMulti?: boolean,
-    disabled?: boolean,
-    readOnly?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const NoOptionsMessage = () => (
     <div className="d-flex justify-content-center align-items-center w-100 py-8">
         <Typography
@@ -122,6 +106,22 @@ const SelectBox = ({
             isLoading={isLoading}
         />
     )
+}
+
+type TSelectBox = {
+    id: string,
+    name: string,
+    value: string | null,
+    onChange?: (value: string | null) => void,
+    options: { label: string, value: string | number }[]
+    placeholder?: string,
+    isSearchable?: boolean,
+    isLoading?: boolean,
+    isMulti?: boolean,
+    disabled?: boolean,
+    readOnly?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default SelectBox;

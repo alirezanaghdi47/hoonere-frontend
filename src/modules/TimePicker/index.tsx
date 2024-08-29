@@ -6,17 +6,6 @@ import ReactTimePicker from "react-multi-date-picker/plugins/time_picker";
 // styles
 import "./index.style.scss";
 
-type TTimePicker = {
-    id: string,
-    name: string,
-    value: string | null,
-    onChange?: (value: DateObject | DateObject[] | string) => void,
-    disabled?: boolean,
-    readOnly?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const TimePicker = ({
                         id,
                         name,
@@ -54,6 +43,17 @@ const TimePicker = ({
             readOnly={readOnly}
         />
     )
+}
+
+type TTimePicker = {
+    id: string,
+    name: string,
+    value: string | null,
+    onChange?: (value: DateObject | DateObject[] | string) => void,
+    disabled?: boolean,
+    readOnly?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default TimePicker;

@@ -20,18 +20,6 @@ const lineHeights = {
     lg: "lg",
 }
 
-type TTypography = {
-    children?: ReactNode,
-    variant?: "p" | "h1" | "h2" | "h3" | "h4" | "span"
-    size: TSizes,
-    color: TColors,
-    isBold?: boolean,
-    truncate?: 1 | 2 | 3,
-    lineHeight?: "sm" | "lg",
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const Typography = ({
                         children,
                         variant = "p",
@@ -59,6 +47,18 @@ const Typography = ({
             {children}
         </Tag>
     )
+}
+
+type TTypography = {
+    children?: ReactNode,
+    variant?: "p" | "h1" | "h2" | "h3" | "h4" | "span"
+    size: TSizes,
+    color: TColors,
+    isBold?: boolean,
+    truncate?: 1 | 2 | 3,
+    lineHeight?: "sm" | "lg",
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default Typography;

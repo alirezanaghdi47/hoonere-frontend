@@ -31,7 +31,7 @@ const Content = () => {
     useLayoutEffect(() => {
         readAllProjectMemberAction.mutate({
             ...filter,
-            project_id: params?.id
+            project_id: params.id
         });
     }, []);
 

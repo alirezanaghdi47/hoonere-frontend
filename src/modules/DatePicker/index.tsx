@@ -13,23 +13,8 @@ import IconButton from "@/modules/IconButton";
 // styles
 import "./index.style.scss";
 
-type TDatePicker = {
-    id: string,
-    name: string,
-    value: string | null,
-    onChange?: (value: DateObject | DateObject[] | string) => void,
-    minDate?: string | null,
-    maxDate?: string | null,
-    range?: boolean,
-    disabled?: boolean,
-    readOnly?: boolean,
-    holidayDates?: string[]
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 // utils
-import { toEnglishDigits} from "@/utils/functions.ts";
+import {toEnglishDigits} from "@/utils/functions.ts";
 
 const RenderButton = ({direction, handleClick}) => {
     return (
@@ -122,6 +107,21 @@ const DatePicker = ({
             readOnly={readOnly}
         />
     )
+}
+
+type TDatePicker = {
+    id: string,
+    name: string,
+    value: string | null,
+    onChange?: (value: DateObject | DateObject[] | string) => void,
+    minDate?: string | null,
+    maxDate?: string | null,
+    range?: boolean,
+    disabled?: boolean,
+    readOnly?: boolean,
+    holidayDates?: string[]
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default DatePicker;

@@ -1,5 +1,6 @@
 // libraries
 import {useLayoutEffect} from "react";
+import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {LuSearch, LuX} from "react-icons/lu";
 
@@ -13,7 +14,16 @@ import SelectBox from "@/modules/SelectBox";
 // services
 import {readAllProjectMoodBoardTypeService} from "@/services/publicService.ts";
 
-const AdvanceFilter = ({readAllProjectMoodBoardAction, filter, initialFilter, changeFilter, hideFilter, resetFilter}) => {
+const AdvanceFilter = ({
+                           readAllProjectMoodBoardAction,
+                           filter,
+                           initialFilter,
+                           changeFilter,
+                           hideFilter,
+                           resetFilter
+                       }) => {
+    const params = useParams();
+
     const readAllProjectMoodBoardTypeAction = useMutation({
         mutationFn: () => readAllProjectMoodBoardTypeService(),
     });
@@ -69,7 +79,10 @@ const AdvanceFilter = ({readAllProjectMoodBoardAction, filter, initialFilter, ch
                     onClick={() => {
                         resetFilter();
                         hideFilter();
-                        readAllProjectMoodBoardAction.mutate(initialFilter);
+                        readAllProjectMoodBoardAction.mutate({
+                            ...initialFilter,
+                            project_id: params.id
+                        });
                     }}
                 >
                     انصراف
@@ -77,7 +90,10 @@ const AdvanceFilter = ({readAllProjectMoodBoardAction, filter, initialFilter, ch
 
                 <Button
                     color='light-info'
-                    onClick={() => readAllProjectMoodBoardAction.mutate(filter)}
+                    onClick={() => readAllProjectMoodBoardAction.mutate({
+                        ...filter,
+                        project_id: params.id
+                    })}
                 >
                     فیلتر
                 </Button>
@@ -87,6 +103,8 @@ const AdvanceFilter = ({readAllProjectMoodBoardAction, filter, initialFilter, ch
 }
 
 const SimpleFilter = ({readAllProjectMoodBoardAction, filter, changeFilter, showFilter}) => {
+    const params = useParams();
+
     return (
         <div className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-5">
             <div className="w-200px">
@@ -99,7 +117,10 @@ const SimpleFilter = ({readAllProjectMoodBoardAction, filter, changeFilter, show
                         <IconButton
                             size="sm"
                             color="light"
-                            onClick={() => readAllProjectMoodBoardAction.mutate(filter)}
+                            onClick={() => readAllProjectMoodBoardAction.mutate({
+                                ...filter,
+                                project_id: params.id
+                            })}
                         >
                             <LuSearch
                                 size={20}
@@ -114,7 +135,11 @@ const SimpleFilter = ({readAllProjectMoodBoardAction, filter, changeFilter, show
                                 textColor="danger"
                                 onClick={() => {
                                     changeFilter({title: ""});
-                                    readAllProjectMoodBoardAction.mutate({title: ""});
+                                    readAllProjectMoodBoardAction.mutate({
+                                        ...filter,
+                                        title: "",
+                                        project_id: params.id
+                                    });
                                 }}
                             >
                                 <LuX
@@ -139,15 +164,15 @@ const SimpleFilter = ({readAllProjectMoodBoardAction, filter, changeFilter, show
 }
 
 const MoodBoardFilter = ({
-                    readAllProjectMoodBoardAction,
-                    filter,
-                    initialFilter,
-                    changeFilter,
-                    isOpenFilter,
-                    showFilter,
-                    hideFilter,
-                    resetFilter,
-                }) => {
+                             readAllProjectMoodBoardAction,
+                             filter,
+                             initialFilter,
+                             changeFilter,
+                             isOpenFilter,
+                             showFilter,
+                             hideFilter,
+                             resetFilter,
+                         }) => {
     return (
         <>
             <div className='d-flex flex-column justify-content-start align-items-start w-100 gap-5'>

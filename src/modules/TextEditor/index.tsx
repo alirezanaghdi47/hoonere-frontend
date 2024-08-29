@@ -6,20 +6,6 @@ import classNames from "classnames";
 // styles
 import "./index.style.scss";
 
-type TTextEditor = {
-    id: string,
-    name: string,
-    value: string | null,
-    setupAddon?: any,
-    toolbarAddon?: string,
-    contextMenuAddon?: string,
-    placeholder?: string,
-    onChange?: (value: string | null) => string | null,
-    disabled?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const TextEditor = forwardRef(({
                                    name,
                                    value,
@@ -120,6 +106,20 @@ const TextEditor = forwardRef(({
             />
         </div>
     )
-})
+});
+
+type TTextEditor = {
+    id: string,
+    name: string,
+    value: string | null,
+    setupAddon?: any,
+    toolbarAddon?: string,
+    contextMenuAddon?: string,
+    placeholder?: string,
+    onChange?: (value: string | null) => string | null,
+    disabled?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
+}
 
 export default TextEditor;

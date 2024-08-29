@@ -2,18 +2,6 @@
 import {CSSProperties, HTMLProps} from "react";
 import classNames from "classnames";
 
-type TSwitchBox = {
-    id: string,
-    name: string,
-    value: string | number | null,
-    onChange?: (value: boolean) => boolean | void,
-    checked: boolean,
-    disabled?: boolean,
-    readOnly?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const SwitchBox = ({name, id, checked, value, onChange, disabled = false, readOnly = false, ...props}: TSwitchBox) => {
     return (
         <div
@@ -33,6 +21,18 @@ const SwitchBox = ({name, id, checked, value, onChange, disabled = false, readOn
             />
         </div>
     )
+}
+
+type TSwitchBox = {
+    id: string,
+    name: string,
+    value: string | number | null,
+    onChange?: (value: boolean) => boolean | void,
+    checked: boolean,
+    disabled?: boolean,
+    readOnly?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default SwitchBox;

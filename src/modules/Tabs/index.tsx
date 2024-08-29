@@ -2,22 +2,6 @@
 import {CSSProperties, HTMLProps, ReactNode} from "react";
 import classNames from "classnames";
 
-type TTabs = {
-    children: ReactNode,
-    variant?: "link" | "pill",
-    isVertical?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
-type TTabsItem = {
-    label: string,
-    isActive: boolean,
-    onClick: () => void
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const Tabs = ({children, variant = "link", isVertical = false, ...props}: TTabs) => {
     return (
         <ul
@@ -52,5 +36,21 @@ const TabsItem = ({label, isActive = false, onClick, ...props}: TTabsItem) => {
 }
 
 Tabs.Item = TabsItem;
+
+type TTabs = {
+    children: ReactNode,
+    variant?: "link" | "pill",
+    isVertical?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
+}
+
+type TTabsItem = {
+    label: string,
+    isActive: boolean,
+    onClick: () => void
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
+}
 
 export default Tabs;

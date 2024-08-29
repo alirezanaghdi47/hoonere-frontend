@@ -5,15 +5,6 @@ import classNames from "classnames";
 // types
 import {TColors} from "@/types/constant.ts";
 
-type TBadge = {
-    color: TColors,
-    size?: "sm" | "lg",
-    label: number,
-    placement: "top-end" | "top-start" | "bottom-end" | "bottom-start",
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const Badge = ({color, size = "sm", label, placement, ...props}: TBadge) => {
     return label > 0 && (
         <span
@@ -31,6 +22,15 @@ const Badge = ({color, size = "sm", label, placement, ...props}: TBadge) => {
             {label}
         </span>
     )
+}
+
+type TBadge = {
+    color: TColors,
+    size?: "sm" | "lg",
+    label: number,
+    placement: "top-end" | "top-start" | "bottom-end" | "bottom-start",
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default Badge;

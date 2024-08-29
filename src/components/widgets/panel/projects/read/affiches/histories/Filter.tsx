@@ -1,5 +1,6 @@
 // libraries
 import {useLayoutEffect} from "react";
+import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {LuSearch, LuX} from "react-icons/lu";
 
@@ -21,6 +22,8 @@ const AdvanceFilter = ({
                            resetFilter,
                            readAllProjectAfficheHistoryAction
                        }) => {
+    const params = useParams();
+
     const readAllProjectTypeAction = useMutation({
         mutationFn: () => readAllProjectTypeService(),
     });
@@ -71,7 +74,11 @@ const AdvanceFilter = ({
                     onClick={() => {
                         resetFilter();
                         hideFilter();
-                        readAllProjectAfficheHistoryAction.mutate(initialFilter);
+                        readAllProjectAfficheHistoryAction.mutate({
+                            ...initialFilter,
+                            project_id: params.id,
+                            affiche_id: params.subId,
+                        });
                     }}
                 >
                     انصراف
@@ -79,7 +86,11 @@ const AdvanceFilter = ({
 
                 <Button
                     color='light-info'
-                    onClick={() => readAllProjectAfficheHistoryAction.mutate(filter)}
+                    onClick={() => readAllProjectAfficheHistoryAction.mutate({
+                        ...filter,
+                        project_id: params.id,
+                        affiche_id: params.subId,
+                    })}
                 >
                     فیلتر
                 </Button>
@@ -89,6 +100,8 @@ const AdvanceFilter = ({
 }
 
 const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectAfficheHistoryAction}) => {
+    const params = useParams();
+
     return (
         <div className="d-flex flex-wrap justify-content-start align-items-center w-100 gap-5">
             <div className="w-200px">
@@ -101,7 +114,11 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectAfficheHi
                         <IconButton
                             size="sm"
                             color="light"
-                            onClick={() => readAllProjectAfficheHistoryAction.mutate(filter)}
+                            onClick={() => readAllProjectAfficheHistoryAction.mutate({
+                                ...filter,
+                                project_id: params.id,
+                                affiche_id: params.subId,
+                            })}
                         >
                             <LuSearch
                                 size={20}
@@ -116,7 +133,12 @@ const SimpleFilter = ({filter, changeFilter, showFilter, readAllProjectAfficheHi
                                 textColor="danger"
                                 onClick={() => {
                                     changeFilter({text: ""});
-                                    readAllProjectAfficheHistoryAction.mutate({...filter, text: ""});
+                                    readAllProjectAfficheHistoryAction.mutate({
+                                        ...filter,
+                                        text: "",
+                                        project_id: params.id,
+                                        affiche_id: params.subId,
+                                    });
                                 }}
                             >
                                 <LuX

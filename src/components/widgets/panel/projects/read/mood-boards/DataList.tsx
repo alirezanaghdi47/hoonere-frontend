@@ -35,7 +35,7 @@ const MoodBoardCard = ({moodBoard, readAllProjectMoodBoardAction , filter}) => {
 
                 readAllProjectMoodBoardAction.mutate({
                     ...filter,
-                    project_id: params?.id
+                    project_id: params.id
                 });
             } else {
                 Toast("error", data.message);
@@ -46,14 +46,14 @@ const MoodBoardCard = ({moodBoard, readAllProjectMoodBoardAction , filter}) => {
     return (
         <div className="col-12 col-sm-6 col-lg-4">
             <div
-                className="d-flex flex-column justify-content-center align-items-center w-100 min-h-200px border border-dashed border-secondary rounded-2 p-5">
+                className="d-flex flex-column justify-content-center align-items-center gap-5 w-100 min-h-200px border border-dashed border-secondary rounded-2 p-5">
                 {
                     moodBoard?.type === "1" && (
                         <LazyLoadImage
                             src={moodBoard?.content}
                             width={300}
                             height={150}
-                            className="w-100 h-100 min-h-150px mh-150px object-fit-cover rounded-2 mb-5"
+                            className="w-100 h-100 min-h-150px mh-150px object-fit-cover rounded-2"
                         />
                     )
                 }
@@ -63,7 +63,7 @@ const MoodBoardCard = ({moodBoard, readAllProjectMoodBoardAction , filter}) => {
                         <LuVideo
                             size={25}
                             color='currentColor'
-                            className="text-muted mb-5"
+                            className="text-muted"
                         />
                     )
                 }
@@ -73,7 +73,7 @@ const MoodBoardCard = ({moodBoard, readAllProjectMoodBoardAction , filter}) => {
                         <LuMusic
                             size={25}
                             color='currentColor'
-                            className="text-muted mb-5"
+                            className="text-muted"
                         />
                     )
                 }
@@ -83,7 +83,7 @@ const MoodBoardCard = ({moodBoard, readAllProjectMoodBoardAction , filter}) => {
                         <LuType
                             size={25}
                             color='currentColor'
-                            className="text-muted mb-5"
+                            className="text-muted"
                         />
                     )
                 }
@@ -91,7 +91,6 @@ const MoodBoardCard = ({moodBoard, readAllProjectMoodBoardAction , filter}) => {
                 <Typography
                     size="sm"
                     color="muted"
-                    className="mb-2"
                 >
                     {moodBoard?.title}
                 </Typography>
@@ -99,7 +98,6 @@ const MoodBoardCard = ({moodBoard, readAllProjectMoodBoardAction , filter}) => {
                 <Typography
                     size="xs"
                     color="muted"
-                    className="mb-5"
                 >
                     {moodBoard?.type === "1" ? "تصویر" : moodBoard?.type === "2" ? "فیلم" : moodBoard?.type === "3" ? "فایل صوتی" : "متن"}
                 </Typography>

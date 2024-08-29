@@ -10,18 +10,6 @@ import markerIcon from "../../../public/assets/images/icons/marker.svg";
 import "leaflet/dist/leaflet.css";
 import "./index.style.scss";
 
-type TLocationPicker = {
-    width?: string | number,
-    height: number,
-    location: {
-        lat: number,
-        lon: number
-    }
-    setLocation: (data: { lat: number, lon: number }) => void,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties,
-}
-
 const LocationPicker = ({width = "100%", height, location, setLocation, ...props}: TLocationPicker) => {
     const mapRef = useRef(null);
     const markerRef = useRef(null);
@@ -89,6 +77,18 @@ const LocationPicker = ({width = "100%", height, location, setLocation, ...props
             />
         </div>
     )
+}
+
+type TLocationPicker = {
+    width?: string | number,
+    height: number,
+    location: {
+        lat: number,
+        lon: number
+    }
+    setLocation: (data: { lat: number, lon: number }) => void,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties,
 }
 
 export default LocationPicker;

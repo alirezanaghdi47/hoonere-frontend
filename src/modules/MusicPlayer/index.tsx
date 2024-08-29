@@ -7,12 +7,6 @@ import classNames from "classnames";
 import "plyr-react/plyr.css";
 import "./index.style.scss";
 
-type TMusicPlayer = {
-    src: string,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const MusicPlayer = ({src, ...props}: TMusicPlayer) => {
     return (
         <div
@@ -30,6 +24,12 @@ const MusicPlayer = ({src, ...props}: TMusicPlayer) => {
             />
         </div>
     )
+}
+
+type TMusicPlayer = {
+    src: string,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default MusicPlayer;

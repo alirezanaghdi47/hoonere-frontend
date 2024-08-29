@@ -1,6 +1,7 @@
 // libraries
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {LuImage, LuInfo, LuMusic, LuType, LuVideo} from "react-icons/lu";
+import {LazyLoadImage} from "react-lazy-load-image-component";
+import {LuInfo, LuMusic, LuType, LuVideo} from "react-icons/lu";
 
 // components
 import MoodBoardFilter from "@/components/widgets/panel/projects/read/screen-plays/create/MoodBoardFilter.tsx";
@@ -23,7 +24,7 @@ const MoodBoardCard = ({moodBoard, attachProjectMoodBoardForm}) => {
     return (
         <div className="col-12 col-sm-6 col-lg-4">
             <div
-                className="d-flex flex-column justify-content-center align-items-center w-100 min-h-150px border border-dashed border-secondary rounded-2 p-5">
+                className="d-flex flex-column justify-content-center align-items-center gap-5 w-100 min-h-150px border border-dashed border-secondary rounded-2 p-5">
                 <div className='d-flex justify-content-between align-items-center w-100'>
                     <RadioBox
                         id={`moodboard-${moodBoard.id}`}
@@ -49,10 +50,11 @@ const MoodBoardCard = ({moodBoard, attachProjectMoodBoardForm}) => {
 
                 {
                     moodBoard?.type === "1" && (
-                        <LuImage
-                            size={25}
-                            color='currentColor'
-                            className="text-muted mb-5"
+                        <LazyLoadImage
+                            src={moodBoard?.content}
+                            width={300}
+                            height={150}
+                            className="w-100 h-100 min-h-150px mh-150px object-fit-cover rounded-2 "
                         />
                     )
                 }
@@ -62,7 +64,7 @@ const MoodBoardCard = ({moodBoard, attachProjectMoodBoardForm}) => {
                         <LuVideo
                             size={25}
                             color='currentColor'
-                            className="text-muted mb-5"
+                            className="text-muted "
                         />
                     )
                 }
@@ -72,7 +74,7 @@ const MoodBoardCard = ({moodBoard, attachProjectMoodBoardForm}) => {
                         <LuMusic
                             size={25}
                             color='currentColor'
-                            className="text-muted mb-5"
+                            className="text-muted "
                         />
                     )
                 }
@@ -82,7 +84,7 @@ const MoodBoardCard = ({moodBoard, attachProjectMoodBoardForm}) => {
                         <LuType
                             size={25}
                             color='currentColor'
-                            className="text-muted mb-5"
+                            className="text-muted "
                         />
                     )
                 }
@@ -90,7 +92,6 @@ const MoodBoardCard = ({moodBoard, attachProjectMoodBoardForm}) => {
                 <Typography
                     size="sm"
                     color="muted"
-                    className="mb-2"
                 >
                     {moodBoard?.title}
                 </Typography>
@@ -98,7 +99,6 @@ const MoodBoardCard = ({moodBoard, attachProjectMoodBoardForm}) => {
                 <Typography
                     size="xs"
                     color="muted"
-                    className="mb-5"
                 >
                     {moodBoard?.type === "1" ? "تصویر" : moodBoard?.type === "2" ? "فیلم" : moodBoard?.type === "3" ? "فایل صوتی" : "متن"}
                 </Typography>

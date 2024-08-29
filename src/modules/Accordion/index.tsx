@@ -9,21 +9,6 @@ import Typography from "@/modules/Typography";
 // styles
 import "./index.style.scss";
 
-type TAccordion = {
-    children: ReactNode,
-    allowMultiple?: boolean
-}
-
-type TAccordionItem = {
-    children: ReactNode,
-    title: string,
-    number?: string | number,
-    startAdornment?: ReactNode,
-    endAdornment?: ReactNode,
-    disabled?: boolean,
-    initialEntered?: boolean
-}
-
 const ReactAccordionHeader = ({title, number, startAdornment, endAdornment}: {
     title: string,
     number?: ReactNode,
@@ -117,5 +102,20 @@ const AccordionItem = ({
 }
 
 Accordion.Item = AccordionItem;
+
+type TAccordion = {
+    children: ReactNode,
+    allowMultiple?: boolean
+}
+
+type TAccordionItem = {
+    children: ReactNode,
+    title: string,
+    number?: string | number,
+    startAdornment?: ReactNode,
+    endAdornment?: ReactNode,
+    disabled?: boolean,
+    initialEntered?: boolean
+}
 
 export default Accordion;

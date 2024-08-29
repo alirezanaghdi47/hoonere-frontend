@@ -7,12 +7,6 @@ import classNames from "classnames";
 import "plyr-react/plyr.css";
 import "./index.style.scss";
 
-type TVideoPlayer = {
-    src: string,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const VideoPlayer = ({src , ...props}: TVideoPlayer) => {
     return (
         <div
@@ -32,6 +26,12 @@ const VideoPlayer = ({src , ...props}: TVideoPlayer) => {
             />
         </div>
     )
+}
+
+type TVideoPlayer = {
+    src: string,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default VideoPlayer;

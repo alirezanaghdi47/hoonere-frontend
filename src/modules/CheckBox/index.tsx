@@ -2,18 +2,6 @@
 import {CSSProperties, HTMLProps} from "react";
 import classNames from "classnames";
 
-type TCheckBox = {
-    id: string,
-    name: string,
-    checked: boolean,
-    value: string | number  | boolean| null,
-    onChange?: (value: string | number | boolean | null) => string | number | boolean | null | void,
-    disabled?: boolean,
-    readOnly?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const CheckBox = ({
                       name,
                       id,
@@ -42,6 +30,18 @@ const CheckBox = ({
             />
         </div>
     )
+}
+
+type TCheckBox = {
+    id: string,
+    name: string,
+    checked: boolean,
+    value: string | number  | boolean| null,
+    onChange?: (value: string | number | boolean | null) => string | number | boolean | null | void,
+    disabled?: boolean,
+    readOnly?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default CheckBox;

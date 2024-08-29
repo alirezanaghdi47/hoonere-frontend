@@ -8,12 +8,6 @@ import {
 } from '@tanstack/react-table';
 import {LuArrowDown, LuArrowUp} from "react-icons/lu";
 
-type TTable = {
-    data: unknown,
-    columns: unknown,
-    style?: CSSProperties
-}
-
 const Table = ({data, columns}: TTable) => {
     const [sorting, setSorting] = useState([]);
 
@@ -113,6 +107,12 @@ const Table = ({data, columns}: TTable) => {
             </table>
         </div>
     )
+}
+
+type TTable = {
+    data: unknown,
+    columns: unknown,
+    style?: CSSProperties
 }
 
 export default Table;

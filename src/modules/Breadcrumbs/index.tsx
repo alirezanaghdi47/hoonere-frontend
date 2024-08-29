@@ -3,13 +3,6 @@ import {CSSProperties, HTMLProps} from "react";
 import {Link} from "react-router-dom";
 import classNames from "classnames";
 
-type TBreadcrumbs = {
-    links: { id: number, label: string, href: string }[],
-    activeLink: string,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const Breadcrumbs = ({links, activeLink, ...props}: TBreadcrumbs) => {
     return (
         <ol className={classNames("breadcrumb breadcrumb-line", props.className)}>
@@ -38,6 +31,13 @@ const Breadcrumbs = ({links, activeLink, ...props}: TBreadcrumbs) => {
             }
         </ol>
     )
+}
+
+type TBreadcrumbs = {
+    links: { id: number, label: string, href: string }[],
+    activeLink: string,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default Breadcrumbs;

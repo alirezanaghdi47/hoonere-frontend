@@ -5,15 +5,6 @@ import classNames from "classnames";
 // types
 import {TColors} from "@/types/constant.ts";
 
-type TChip = {
-    label: string,
-    size?: "sm" | "lg",
-    color: TColors,
-    isCircle?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const Chip = ({label, size = "sm", color, isCircle = false, ...props}: TChip) => {
     return (
         <span
@@ -26,6 +17,15 @@ const Chip = ({label, size = "sm", color, isCircle = false, ...props}: TChip) =>
             {label}
         </span>
     )
+}
+
+type TChip = {
+    label: string,
+    size?: "sm" | "lg",
+    color: TColors,
+    isCircle?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default Chip;

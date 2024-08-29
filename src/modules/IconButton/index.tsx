@@ -7,22 +7,6 @@ import {BeatLoader} from "react-spinners";
 // types
 import {TColors, TSizes} from "@/types/constant.ts";
 
-type TIconButton = {
-    children: ReactNode,
-    size?: TSizes,
-    color?: TColors,
-    activeColor?: TColors,
-    bgColor?: TColors,
-    textColor?: TColors,
-    href?: string,
-    isDense?: boolean,
-    isLoading?: boolean,
-    disabled?: boolean,
-    onClick?: (e: any) => void,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties,
-}
-
 const IconButton = ({
                         size = "md",
                         color,
@@ -82,6 +66,22 @@ const IconButton = ({
             {children}
         </button>
     )
+}
+
+type TIconButton = {
+    children: ReactNode,
+    size?: TSizes,
+    color?: TColors,
+    activeColor?: TColors,
+    bgColor?: TColors,
+    textColor?: TColors,
+    href?: string,
+    isDense?: boolean,
+    isLoading?: boolean,
+    disabled?: boolean,
+    onClick?: (e: any) => void,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties,
 }
 
 export default IconButton;

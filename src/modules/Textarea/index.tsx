@@ -5,19 +5,6 @@ import classNames from "classnames";
 // utils
 import {toEnglishDigits} from "@/utils/functions.ts";
 
-type TTextarea = {
-    id: string,
-    name: string,
-    value: string | null,
-    placeholder?: string,
-    onChange?: (value: string | null) => void,
-    rows?: number,
-    disabled?: boolean,
-    readOnly?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const Textarea = ({
                       id,
                       name,
@@ -47,6 +34,19 @@ const Textarea = ({
             />
         </div>
     )
+}
+
+type TTextarea = {
+    id: string,
+    name: string,
+    value: string | null,
+    placeholder?: string,
+    onChange?: (value: string | null) => void,
+    rows?: number,
+    disabled?: boolean,
+    readOnly?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default Textarea;

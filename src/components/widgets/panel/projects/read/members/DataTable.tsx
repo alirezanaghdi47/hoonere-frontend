@@ -45,7 +45,7 @@ const DataTable = ({
 
                 readAllProjectMemberAction.mutate({
                     ...filter,
-                    project_id: params?.id
+                    project_id: params.id
                 });
             } else {
                 Toast("error", data.message);

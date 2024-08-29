@@ -10,19 +10,6 @@ import IconButton from "@/modules/IconButton";
 // utils
 import {toEnglishDigits} from "@/utils/functions.ts";
 
-type TPasswordInput = {
-    id: string,
-    name: string,
-    value: string | null,
-    placeholder?: string,
-    onChange?: (value: string | null) => void,
-    startAdornment?: ReactNode,
-    disabled?: boolean,
-    readOnly?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const PasswordInput = ({
                            id,
                            name,
@@ -92,6 +79,19 @@ const PasswordInput = ({
             </span>
         </div>
     )
+}
+
+type TPasswordInput = {
+    id: string,
+    name: string,
+    value: string | null,
+    placeholder?: string,
+    onChange?: (value: string | null) => void,
+    startAdornment?: ReactNode,
+    disabled?: boolean,
+    readOnly?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default PasswordInput;

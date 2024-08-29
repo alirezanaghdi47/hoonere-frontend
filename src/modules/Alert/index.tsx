@@ -8,15 +8,6 @@ import Typography from "@/modules/Typography";
 // types
 import {TColors, TSizes} from "@/types/constant.ts";
 
-type TAlert = {
-    color: TColors,
-    size?: TSizes,
-    icon?: ReactNode,
-    message: string,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const Alert = ({color, size = "md", icon = null, message, ...props}: TAlert) => {
     return (
         <div
@@ -38,6 +29,15 @@ const Alert = ({color, size = "md", icon = null, message, ...props}: TAlert) => 
             </Typography>
         </div>
     )
+}
+
+type TAlert = {
+    color: TColors,
+    size?: TSizes,
+    icon?: ReactNode,
+    message: string,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default Alert;

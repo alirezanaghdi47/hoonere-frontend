@@ -11,20 +11,6 @@ import IconButton from "@/modules/IconButton";
 // types
 import {IExtendedFile} from "@/types/constant.ts";
 
-type TFileInput = {
-    id: string,
-    name: string,
-    value: IExtendedFile | object,
-    preview?: string | null,
-    onChange?: (value: File | object) => void,
-    onRemove?: () => void,
-    disabled?: boolean,
-    readOnly?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
-
 const FileInput = ({
                        id,
                        name,
@@ -164,6 +150,19 @@ const FileInput = ({
             }
         </div>
     )
+}
+
+type TFileInput = {
+    id: string,
+    name: string,
+    value: IExtendedFile | object,
+    preview?: string | null,
+    onChange?: (value: File | object) => void,
+    onRemove?: () => void,
+    disabled?: boolean,
+    readOnly?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default FileInput;

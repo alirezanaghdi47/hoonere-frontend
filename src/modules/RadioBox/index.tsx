@@ -2,18 +2,6 @@
 import {CSSProperties, HTMLProps} from "react";
 import classNames from "classnames";
 
-type TRadioBox = {
-    id: string,
-    name: string,
-    value: string | null,
-    onChange?: (value: string | null) => string | null | void,
-    checked: boolean,
-    disabled?: boolean,
-    readOnly?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const RadioBox = ({name, id, checked, value, onChange, disabled = false, readOnly = false, ...props}: TRadioBox) => {
     return (
         <div
@@ -33,6 +21,18 @@ const RadioBox = ({name, id, checked, value, onChange, disabled = false, readOnl
             />
         </div>
     )
+}
+
+type TRadioBox = {
+    id: string,
+    name: string,
+    value: string | null,
+    onChange?: (value: string | null) => string | null | void,
+    checked: boolean,
+    disabled?: boolean,
+    readOnly?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default RadioBox;

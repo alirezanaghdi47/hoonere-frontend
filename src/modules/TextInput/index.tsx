@@ -6,23 +6,6 @@ import MoonLoader from "react-spinners/MoonLoader";
 // utils
 import {toEnglishDigits} from "@/utils/functions.ts";
 
-type TTextInput = {
-    id: string,
-    name: string,
-    value: string | null,
-    placeholder?: string,
-    onChange?: (value: string | null) => void,
-    onBlur?: (value: string | null) => void,
-    startAdornment?: ReactNode
-    endAdornment?: ReactNode,
-    isLoading?: boolean,
-    disabled?: boolean,
-    readOnly?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
-
 const TextInput = ({
                        id,
                        name,
@@ -96,6 +79,22 @@ const TextInput = ({
             }
         </div>
     )
+}
+
+type TTextInput = {
+    id: string,
+    name: string,
+    value: string | null,
+    placeholder?: string,
+    onChange?: (value: string | null) => void,
+    onBlur?: (value: string | null) => void,
+    startAdornment?: ReactNode
+    endAdornment?: ReactNode,
+    isLoading?: boolean,
+    disabled?: boolean,
+    readOnly?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default TextInput;

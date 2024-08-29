@@ -4,7 +4,7 @@ import {useLocation, useNavigate, useParams} from "react-router-dom";
 import Loadable from "@loadable/component";
 
 // components
-const MoodBoardsModal = Loadable(() => import("@/components/widgets/panel/projects/read/screen-plays/create/ReadMoodBoardsModal.tsx"));
+const MoodBoardsModal = Loadable(() => import("@/components/widgets/panel/projects/read/screen-plays/create/MoodBoardsModal.tsx"));
 
 // hooks
 import useModal from "@/hooks/useModal.tsx";

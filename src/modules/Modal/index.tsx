@@ -9,39 +9,6 @@ import Tooltip from "@/modules/Tooltip";
 // styles
 import "./index.style.scss";
 
-type TModal = {
-    children: ReactNode,
-    isOpen: boolean,
-    onClose: () => void,
-    width?: "sm" | "md" | "lg" | "xl" | "full",
-    height?: "content" | "full",
-    position?: "any" | "center" | "bottom",
-    className?: {
-        content: HTMLProps<HTMLElement>["className"],
-        overlay: HTMLProps<HTMLElement>["className"]
-    },
-    style?: CSSProperties
-}
-
-type TModalHeader = {
-    children: ReactNode,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
-type TModalBody = {
-    children: ReactNode,
-    isCenter?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
-type TModalFooter = {
-    children: ReactNode,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const styles = {
     width: {
         sm: "w-100 w-sm-250px",
@@ -135,5 +102,38 @@ const ModalFooter = ({children, ...props}: TModalFooter) => {
 Modal.Header = ModalHeader;
 Modal.Body = ModalBody;
 Modal.Footer = ModalFooter;
+
+type TModal = {
+    children: ReactNode,
+    isOpen: boolean,
+    onClose: () => void,
+    width?: "sm" | "md" | "lg" | "xl" | "full",
+    height?: "content" | "full",
+    position?: "any" | "center" | "bottom",
+    className?: {
+        content: HTMLProps<HTMLElement>["className"],
+        overlay: HTMLProps<HTMLElement>["className"]
+    },
+    style?: CSSProperties
+}
+
+type TModalHeader = {
+    children: ReactNode,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
+}
+
+type TModalBody = {
+    children: ReactNode,
+    isCenter?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
+}
+
+type TModalFooter = {
+    children: ReactNode,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
+}
 
 export default Modal;

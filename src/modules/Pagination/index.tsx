@@ -6,15 +6,6 @@ import {LuChevronLeft, LuChevronRight, LuMoreHorizontal} from "react-icons/lu";
 // styles
 import "./index.style.scss";
 
-type TPagination = {
-    current: number,
-    pageSize: number,
-    total: number,
-    onChange: (value: number) => void,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const PrevIcon = () => {
     return (
         <LuChevronRight
@@ -60,6 +51,15 @@ const Pagination = ({current, pageSize, total, onChange , ...props}: TPagination
             className={props.className}
         />
     )
+}
+
+type TPagination = {
+    current: number,
+    pageSize: number,
+    total: number,
+    onChange: (value: number) => void,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default Pagination;

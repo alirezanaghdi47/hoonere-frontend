@@ -6,18 +6,6 @@ import classNames from "classnames";
 // styles
 import "./index.style.scss";
 
-type TTagInput = {
-    id: string,
-    name: string,
-    value: string[] | null,
-    placeholder?: string,
-    onChange?: (value: string[] | null) => string[] | null,
-    disabled?: boolean,
-    readOnly?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const TagInput = ({name, value, placeholder = null, onChange, disabled = false , readOnly = false, ...props}: TTagInput) => {
     return (
         <div
@@ -33,6 +21,18 @@ const TagInput = ({name, value, placeholder = null, onChange, disabled = false ,
             />
         </div>
     )
+}
+
+type TTagInput = {
+    id: string,
+    name: string,
+    value: string[] | null,
+    placeholder?: string,
+    onChange?: (value: string[] | null) => string[] | null,
+    disabled?: boolean,
+    readOnly?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default TagInput;

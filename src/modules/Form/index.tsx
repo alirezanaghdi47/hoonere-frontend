@@ -8,29 +8,6 @@ import Typography from "@/modules/Typography";
 // types
 import {TColors, TSizes} from "@/types/constant.ts";
 
-type TFormGroup = {
-    children: ReactNode,
-    inline?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
-type TFormLabel = {
-    label: string,
-    size: TSizes,
-    color: TColors,
-    required?: boolean,
-    isBold?: boolean,
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
-type TFormError = {
-    error: any,
-    touched: any,
-    style?: CSSProperties
-}
-
 const FormGroup = ({children, inline = false, ...props}: TFormGroup) => {
     return (
         <div
@@ -101,5 +78,28 @@ Form.Group = FormGroup;
 Form.Control = FormControl;
 Form.Label = FormLabel;
 Form.Error = FormError;
+
+type TFormGroup = {
+    children: ReactNode,
+    inline?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
+}
+
+type TFormLabel = {
+    label: string,
+    size: TSizes,
+    color: TColors,
+    required?: boolean,
+    isBold?: boolean,
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
+}
+
+type TFormError = {
+    error: any,
+    touched: any,
+    style?: CSSProperties
+}
 
 export default Form;

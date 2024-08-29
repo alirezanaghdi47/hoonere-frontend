@@ -6,15 +6,6 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import "./index.style.scss";
 
-type TPopover = {
-    children: ReactNode,
-    content: ReactNode,
-    trigger: ("click" | "hover")[],
-    position?: 'center center' | 'top left' | 'top right' | 'bottom right' | 'bottom left' | 'right center' | 'left center' | 'top center' | 'bottom center'
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const Popover = ({children, content, trigger, position = 'center center' , ...props}: TPopover) => {
     return (
         <Popup
@@ -30,6 +21,15 @@ const Popover = ({children, content, trigger, position = 'center center' , ...pr
             {children}
         </Popup>
     )
+}
+
+type TPopover = {
+    children: ReactNode,
+    content: ReactNode,
+    trigger: ("click" | "hover")[],
+    position?: 'center center' | 'top left' | 'top right' | 'bottom right' | 'bottom left' | 'right center' | 'left center' | 'top center' | 'bottom center'
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default Popover;

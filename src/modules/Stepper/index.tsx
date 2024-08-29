@@ -6,13 +6,6 @@ import classNames from "classnames";
 // styles
 import "./index.style.scss";
 
-type TStepper = {
-    steps: { label: string }[],
-    activeStep: number
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const Stepper = ({steps, activeStep = 1, ...props}: TStepper) => {
     return (
         <ReactStepper
@@ -23,6 +16,13 @@ const Stepper = ({steps, activeStep = 1, ...props}: TStepper) => {
             style={{direction: "ltr" , ...props.style}}
         />
     )
+}
+
+type TStepper = {
+    steps: { label: string }[],
+    activeStep: number
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default Stepper;

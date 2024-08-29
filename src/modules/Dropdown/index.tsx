@@ -7,21 +7,6 @@ import classNames from "classnames";
 import '@szhsin/react-menu/dist/index.css';
 import "./index.style.scss";
 
-type TDropdown = {
-    button: ReactNode,
-    direction: "right" | "left" | "top" | "bottom",
-    alignment: "start" | "center" | "end",
-    gap: number,
-    options: {
-        id: number,
-        label: string,
-        onClick: () => void,
-        children?: { id: number, label: string, onClick: () => void }[]
-    }[],
-    className?: HTMLProps<HTMLElement>["className"],
-    style?: CSSProperties
-}
-
 const Dropdown = ({button, direction, alignment, gap, options , ...props}: TDropdown) => {
     const ref = useRef(null);
     const [isOpen, setOpen] = useState(false);
@@ -80,6 +65,21 @@ const Dropdown = ({button, direction, alignment, gap, options , ...props}: TDrop
             </ControlledMenu>
         </>
     )
+}
+
+type TDropdown = {
+    button: ReactNode,
+    direction: "right" | "left" | "top" | "bottom",
+    alignment: "start" | "center" | "end",
+    gap: number,
+    options: {
+        id: number,
+        label: string,
+        onClick: () => void,
+        children?: { id: number, label: string, onClick: () => void }[]
+    }[],
+    className?: HTMLProps<HTMLElement>["className"],
+    style?: CSSProperties
 }
 
 export default Dropdown;
