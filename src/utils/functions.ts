@@ -26,6 +26,8 @@ export const generateRandomString = (length: number): string => {
     return result;
 }
 
+export const generateRandomNumber = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1) + min);
+
 export const hexToRgba = (hex: string, alpha: number = 1): string => {
     let color;
 

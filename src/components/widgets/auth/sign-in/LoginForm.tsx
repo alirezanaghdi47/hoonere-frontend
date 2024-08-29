@@ -25,19 +25,21 @@ import {loginService, captchaService , ILogin} from "@/services/authService.ts";
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
+// utils
+import {generateRandomNumber} from "@/utils/functions.ts";
+
 const loginSchema = Yup.object().shape({
     username: Yup.string().trim().matches(/^[a-zA-Z0-9_.\-@]+$/, "نام کاربری می تواند ترکیبی از حروف ، اعداد و (-،.،_،@) باشد").min(8, "تعداد کاراکتر های نام کاربری باید بیشتر از 8 باشد").max(40, "تعداد کاراکتر های نام کاربری باید کمتر از 40 باشد").required("نام کاربری الزامی است"),
     password: Yup.string().trim().matches(/^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/, "رمز عبور باید حداقل 8 کاراکتر به همراه حروف بزرگ و کوچک و عدد و علائم باشد").required("رمز عبور الزامی است"),
     captcha: Yup.string().trim().required("کد کپچا الزامی است"),
 });
 
+const uniqueCode = Date.now() + "_" + generateRandomNumber(1, 1000);
+
 const LoginForm = () => {
     const navigate = useNavigate();
     const {login} = useAuthStore();
     const {uuid, regenerateUUID} = useId();
-
-    const generateRandomNumber = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1) + min);
-    const uniqueCode = Date.now() + "_" + generateRandomNumber(1, 1000);
 
     const loginAction = useMutation({
         mutationFn: (data: ILogin) => loginService(data),
