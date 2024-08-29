@@ -7,7 +7,7 @@ import {ErrorBoundary} from "react-error-boundary";
 import App from './App.tsx';
 
 // pages
-const Server = Loadable(() => import('@/pages/blank/ServerDownPage.tsx'));
+const Server = Loadable(() => import('@/pages/blank/server-down'));
 
 // providers
 import QueryProvider from "@/providers/QueryProvider.tsx";

@@ -6,7 +6,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import useAuthStore from "@/stores/authStore.ts";
 
 const WithRouteGuard = <P extends { [key: string]: unknown }>(WrappedComponent: ComponentType<P>): ComponentType<P> => {
-    const RouteGuardHoc = (props) => {
+    const RouteGuard = (props) => {
         const navigate = useNavigate();
         const location = useLocation();
         const {auth} = useAuthStore();
@@ -26,7 +26,7 @@ const WithRouteGuard = <P extends { [key: string]: unknown }>(WrappedComponent: 
         return <WrappedComponent {...props}/>
     }
 
-    return RouteGuardHoc;
+    return RouteGuard;
 }
 
 export default WithRouteGuard;
