@@ -14,25 +14,21 @@ import {
     readAllProjectAfficheReceptionService,
     readAllProjectAfficheScreenPlayService,
     readInvitedProjectAfficheService,
-} from "@/services/projectAfficheService.ts";
-
-// types
-import {
     IReadAllProjectAfficheActor,
     IReadAllProjectAfficheAddress,
     IReadAllProjectAfficheMember,
     IReadAllProjectAfficheReception,
     IReadAllProjectAfficheScreenPlay,
-} from "@/types/serviceType.ts";
+    IReadInvitedProjectAffiche,
+} from "@/services/projectAfficheService.ts";
 
 const Content = () => {
     const params = useParams();
     const [data , setData] = useState({});
 
     const readInvitedProjectAfficheAction = useMutation({
-        mutationFn: (data) => readInvitedProjectAfficheService(data),
+        mutationFn: (data: IReadInvitedProjectAffiche) => readInvitedProjectAfficheService(data),
         onSuccess: async (data) => {
-            console.log(data)
             if (!data.error) {
                 setData(prevState => ({...prevState , ...data?.data?.affiche_info , project_title: data?.data?.project_title}));
             }

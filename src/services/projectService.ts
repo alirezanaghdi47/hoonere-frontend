@@ -28,7 +28,7 @@ export const readAllProjectService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -53,7 +53,7 @@ export const readAllInvitedProjectService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -78,7 +78,7 @@ export const readProjectService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -103,7 +103,7 @@ export const readInvitedProjectService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -132,7 +132,7 @@ export const createProjectService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -161,7 +161,7 @@ export const updateProjectService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -186,12 +186,11 @@ export const deleteProjectService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const inviteConfirmationProjectService = async (data) => {
-    console.log(data)
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -212,7 +211,7 @@ export const inviteConfirmationProjectService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -237,6 +236,68 @@ export const readAllProjectMemberByFoaService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
+}
+
+
+
+export interface IReadAllProject {
+    text: string | null,
+    type_id: string | null,
+    page: number,
+    per_page: number,
+}
+
+export interface IReadAllInvitedProject {
+    text: string | null,
+    type_id: string | null,
+    page: number,
+    per_page: number,
+}
+
+export interface IReadProject {
+    project_id: string,
+}
+
+export interface IReadInvitedProject {
+    project_id: string,
+}
+
+export interface IInviteConfirmationProject {
+    project_id: string,
+    status_id: string,
+}
+
+export interface ICreateProject {
+    logo: File | object,
+    type_id: string | null,
+    title: string | null,
+    description: string | null,
+    producer: string | null,
+    count_of_parts: string,
+    time_of_parts: string,
+    location: string | null,
+}
+
+export interface IUpdateProject {
+    project_id: string,
+    logo: File | object,
+    type_id: string | null,
+    title: string | null,
+    description: string | null,
+    producer: string | null,
+    count_of_parts: number,
+    time_of_parts: number,
+    location: string | null,
+}
+
+export interface IDeleteProject {
+    project_id: string,
+}
+
+export interface IReadAllProjectMembersByFoa {
+    foa_parent_id: string,
+    foa_id: string,
+    project_id: string
 }

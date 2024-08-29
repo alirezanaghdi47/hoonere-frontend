@@ -1,7 +1,8 @@
 // libraries
 import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {LazyLoadImage} from "react-lazy-load-image-component";
 import {useMutation} from "@tanstack/react-query";
-import {LuImage, LuInfo, LuMusic, LuTrash2, LuType, LuVideo} from "react-icons/lu";
+import {LuInfo, LuMusic, LuTrash2, LuType, LuVideo} from "react-icons/lu";
 
 // components
 import Filter from "@/components/widgets/panel/projects/read/mood-boards/Filter.tsx";
@@ -15,14 +16,10 @@ import Dialog from "@/modules/Dialog";
 import Toast from "@/modules/Toast";
 
 // services
-import {deleteProjectMoodBoardsService} from "@/services/projectMoodBoardService.ts";
+import {deleteProjectMoodBoardsService , IDeleteProjectMoodBoard} from "@/services/projectMoodBoardService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
-
-// types
-import {IDeleteProjectMoodBoard} from "@/types/serviceType.ts";
-import {LazyLoadImage} from "react-lazy-load-image-component";
 
 const MoodBoardCard = ({moodBoard, readAllProjectMoodBoardAction , filter}) => {
     const params = useParams();

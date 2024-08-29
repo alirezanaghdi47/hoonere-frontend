@@ -3,6 +3,8 @@ import {CSSProperties, HTMLProps} from "react";
 import ReactDatePicker, {DateObject} from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
+import gregorian from "react-date-object/calendars/gregorian";
+import gregorian_en from "react-date-object/locales/gregorian_en";
 import {LuChevronLeft, LuChevronRight} from "react-icons/lu";
 
 // modules
@@ -27,7 +29,7 @@ type TDatePicker = {
 }
 
 // utils
-import {convertGregorianToJalali, convertJalaliToGregorian, toEnglishDigits} from "@/utils/functions.ts";
+import { toEnglishDigits} from "@/utils/functions.ts";
 
 const RenderButton = ({direction, handleClick}) => {
     return (
@@ -66,6 +68,20 @@ const DatePicker = ({
                         holidayDates = [],
                         ...props
                     }: TDatePicker) => {
+
+    const convertJalaliToGregorian = (date): string => new DateObject({
+        date: date,
+        format: "YYYY-MM-DD",
+        calendar: persian,
+        locale: persian_fa
+    }).convert(gregorian, gregorian_en).format("YYYY-MM-DD");
+
+    const convertGregorianToJalali = (date): string => new DateObject({
+        date: date,
+        format: "YYYY-MM-DD",
+        calendar: gregorian,
+        locale: gregorian_en
+    }).convert(persian, persian_fa).format("YYYY-MM-DD");
 
     const customizeDays = (date) => {
         let color;

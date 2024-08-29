@@ -8,6 +8,8 @@ import useAuthStore from "@/stores/authStore.ts";
 import {cleanObject, decodeData, encodeData} from "@/utils/functions.ts";
 
 export const readAllProjectAfficheService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -20,19 +22,21 @@ export const readAllProjectAfficheService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readAllInvitedProjectAfficheService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -45,19 +49,21 @@ export const readAllInvitedProjectAfficheService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readProjectAfficheService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -70,19 +76,21 @@ export const readProjectAfficheService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readInvitedProjectAfficheService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -95,19 +103,21 @@ export const readInvitedProjectAfficheService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readAllProjectAfficheAddressService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -120,19 +130,21 @@ export const readAllProjectAfficheAddressService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readAllProjectAfficheActorService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -145,19 +157,21 @@ export const readAllProjectAfficheActorService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readAllProjectAfficheMemberService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -170,19 +184,21 @@ export const readAllProjectAfficheMemberService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readAllProjectAfficheReceptionService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -195,19 +211,21 @@ export const readAllProjectAfficheReceptionService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readAllProjectAfficheScreenPlayService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -220,19 +238,21 @@ export const readAllProjectAfficheScreenPlayService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readAllProjectAfficheHistoryService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -245,15 +265,15 @@ export const readAllProjectAfficheHistoryService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -278,7 +298,7 @@ export const createProjectAfficheService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -303,7 +323,7 @@ export const updateProjectAfficheService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -328,6 +348,130 @@ export const deleteProjectAfficheService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
+}
+
+
+
+export interface IReadAllProjectAffiche {
+    project_id: string,
+    number_string: string,
+    type: string,
+    affiche_date: string,
+    page: number,
+    per_page: number,
+}
+
+export interface IReadAllInvitedProjectAffiche {
+    project_id: string,
+    number_string: string,
+    type: string,
+    affiche_date: string,
+    page: number,
+    per_page: number,
+}
+
+export interface IReadProjectAffiche {
+    project_id: string,
+    affiche_id: string,
+    get_last: number
+}
+
+export interface IReadInvitedProjectAffiche {
+    project_id: string,
+    affiche_id: string,
+    get_last: number
+}
+
+export interface IReadAllProjectAfficheAddress {
+    project_id: string,
+    affiche_id: string,
+    get_last: number
+}
+
+export interface IReadAllProjectAfficheActor {
+    project_id: string,
+    affiche_id: string,
+    get_last: number
+}
+
+export interface IReadAllProjectAfficheMember {
+    project_id: string,
+    affiche_id: string,
+    get_last: number
+}
+
+export interface IReadAllProjectAfficheReception {
+    project_id: string,
+    affiche_id: string,
+    get_last: number
+}
+
+export interface IReadAllProjectAfficheScreenPlay {
+    project_id: string,
+    affiche_id: string,
+    text?: string,
+    part?: string,
+    sequence?: string,
+    page: number,
+    per_page: number,
+    get_last: number
+}
+
+export interface ICreateProjectAffiche {
+    project_id: string,
+    title: string,
+    description: string,
+    time_type_id: string,
+    location_side_id: string,
+    type: string,
+    is_off: number,
+    affiche_date: string,
+    start_date: string,
+    coming_time: string,
+    start_time: string,
+    addresses: { address: string, lat: string, lon: string }[],
+    auto_motivation_sentence: number,
+    motivation_sentence: string,
+    actors: [],
+    members: [],
+    receptions: [],
+    screenplays: [],
+}
+
+export interface IUpdateProjectAffiche {
+    project_id: string,
+    affiche_id: string,
+    title: string,
+    description: string,
+    time_type_id: string,
+    location_side_id: string,
+    type: string,
+    is_off: number,
+    affiche_date: string,
+    start_date: string,
+    coming_time: string,
+    start_time: string,
+    addresses: { address: string, lat: string, lon: string }[],
+    auto_motivation_sentence: number,
+    motivation_sentence: string,
+    actors: [],
+    members: [],
+    receptions: [],
+    screenplays: [],
+}
+
+export interface IDeleteProjectAffiche {
+    project_id: string,
+    affiche_id: string,
+}
+
+export interface IReadAllProjectAfficheHistory {
+    project_id: string,
+    affiche_id: string,
+    text: string,
+    date: string,
+    page: number,
+    per_page: number,
 }

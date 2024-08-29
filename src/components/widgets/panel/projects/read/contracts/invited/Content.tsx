@@ -7,14 +7,14 @@ import {useMutation} from "@tanstack/react-query";
 import DataModal from "@/components/widgets/panel/projects/read/contracts/invited/DataModal.tsx";
 
 // services
-import {readInvitedProjectContractService,} from "@/services/projectContractService.ts";
+import {readInvitedProjectContractService, IReadInvitedProjectContract} from "@/services/projectContractService.ts";
 
 const Content = () => {
     const params = useParams();
     const [data, setData] = useState({});
 
     const readInvitedProjectContractAction = useMutation({
-        mutationFn: (data) => readInvitedProjectContractService(data),
+        mutationFn: (data: IReadInvitedProjectContract) => readInvitedProjectContractService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 setData(prevState => ({...prevState, ...data?.data?.contract_info , project_title: data?.data?.project_title}));

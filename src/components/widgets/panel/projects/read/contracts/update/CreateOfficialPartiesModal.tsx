@@ -3,6 +3,7 @@ import {useLayoutEffect} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 import {LuX} from "react-icons/lu";
 
 // modules
@@ -14,14 +15,14 @@ import Form from "@/modules/Form";
 import Button from "@/modules/Button";
 
 // services
-import {readAllProjectContractMemberService} from "@/services/projectContractService.ts";
+import {readAllProjectContractMemberService , IReadAllProjectContractMember} from "@/services/projectContractService.ts";
 import {readAllJobService} from "@/services/publicService.ts";
 
-// types
-import {IReadAllProjectContractMember} from "@/types/serviceType.ts";
-
-// utils
-import {createPartiesSchema} from "@/utils/validations.ts";
+const createPartiesSchema = Yup.object().shape({
+    foa_parent_id: Yup.string().trim().required("گروه شغلی الزامی است"),
+    foa_child_id: Yup.string().trim().required("عنوان شغلی الزامی است"),
+    user_info: Yup.object().test('has-one-key', 'کاربر الزامی است', value => value && Object.keys(value).length > 0)
+});
 
 const CreateOfficialPartiesModal = ({modal, _handleHideModal, updateProjectContractForm}) => {
     const params = useParams();

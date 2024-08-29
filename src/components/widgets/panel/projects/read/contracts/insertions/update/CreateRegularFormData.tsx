@@ -1,6 +1,9 @@
 // libraries
 import {LuPen, LuTrash} from "react-icons/lu";
 
+// ?????
+import {removeSectionForInsertion} from "@/components/widgets/panel/projects/read/contracts/insertions/Action.tsx";
+
 // components
 import {Section} from "@/components/widgets/panel/projects/read/contracts/insertions/update/Actions.tsx";
 
@@ -10,9 +13,6 @@ import usePart from "@/hooks/usePart.tsx";
 // modules
 import Typography from "@/modules/Typography";
 import IconButton from "@/modules/IconButton";
-
-// utils
-import {removeSectionForInsertion} from "@/utils/functions.ts";
 
 const CreateRegularFormData = ({article, section, updateProjectContractInsertionForm}) => {
     const {

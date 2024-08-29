@@ -1,89 +1,27 @@
 // libraries
 import {useMutation} from "@tanstack/react-query";
-import {LazyLoadImage} from "react-lazy-load-image-component";
 import {useFormik} from "formik";
+import * as Yup from "yup";
+
+// components
+import {PreviewBankCard} from "@/components/widgets/panel/profile/financial/BankCards.tsx";
 
 // modules
 import NumberInput from "@/modules/NumberInput";
 import Form from "@/modules/Form";
 import Button from "@/modules/Button";
 import TextInput from "@/modules/TextInput";
-import Typography from "@/modules/Typography";
 import Toast from "@/modules/Toast";
 
 // services
-import {updateBankCardService} from "@/services/profileService.ts";
+import {updateBankCardService , IUpdateBankCard} from "@/services/profileService.ts";
 
-// types
-import {IUpdateBankCard} from "@/types/serviceType.ts";
-
-// utils
-import {financialSchema} from "@/utils/validations.ts";
-import {getBankInfoFromCardNumber, hexToRgba} from "@/utils/functions.ts";
-
-export const PreviewBankCard = ({card}) => {
-    return (
-        <div className="row justify-content-center my-10">
-            <div className="col-12 col-md-6">
-                <div
-                    className="position-relative d-flex flex-column justify-content-between align-items-center gap-5 w-100 h-200px rounded-2 p-5"
-                    style={{background: getBankInfoFromCardNumber(card?.card_number) ? hexToRgba(getBankInfoFromCardNumber(card?.card_number)?.color, 0.25) : hexToRgba("#DBDFE9", 0.25)}}
-                >
-
-                    <div className='d-flex justify-content-between align-items-center gap-2 w-100'>
-                        <div className="d-flex justify-content-start align-items-center gap-2">
-                            <LazyLoadImage
-                                src={getBankInfoFromCardNumber(card?.card_number)?.bank ? `/assets/images/iranian-banks/${getBankInfoFromCardNumber(card?.card_number)?.bank}.png` : "/assets/images/placeholder.png"}
-                                width={50}
-                                height={50}
-                                className="object-fit-cover rounded-circle"
-                            />
-
-                            <Typography
-                                variant="p"
-                                size="xs"
-                                color="dark"
-                                isBold
-                            >
-                                {getBankInfoFromCardNumber(card?.card_number)?.title ? getBankInfoFromCardNumber(card?.card_number)?.title : 'نام بانک یا موسسه اعتباری'}
-                            </Typography>
-                        </div>
-                    </div>
-
-                    <div className='d-flex flex-column justify-content-center align-items-center gap-5 w-100'>
-                        <Typography
-                            variant="p"
-                            size="xs"
-                            color="dark"
-                        >
-                            {card?.card_shaba ? "IR-" + card?.card_shaba : "شماره شبا"}
-                        </Typography>
-
-                        <Typography
-                            variant="p"
-                            size="sm"
-                            color="dark"
-                            isBold
-                        >
-                            {card?.card_number ? card?.card_number : "شماره کارت"}
-                        </Typography>
-                    </div>
-
-                    <div className='d-flex justify-content-start align-items-center gap-5 w-100'>
-                        <Typography
-                            variant="p"
-                            size="xs"
-                            color="dark"
-                            isBold
-                        >
-                            {card?.name}
-                        </Typography>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
+const financialSchema = Yup.object().shape({
+    name: Yup.string().trim().required("نام و نام خانوادگی الزامی است"),
+    card_number: Yup.string().trim().required("شماره کارت الزامی است"),
+    card_shaba: Yup.string().trim().required("شماره شبا الزامی است"),
+    account_id: Yup.string().trim()
+});
 
 const UpdateBankFormData = ({readMyAllBankCardAction, readMyProfileAction, part, resetPart}) => {
     const updateBankCardAction = useMutation({

@@ -3,6 +3,9 @@ import {useLocation} from "react-router-dom";
 import Loadable from "@loadable/component";
 import {LuPen, LuTrash} from "react-icons/lu";
 
+// ?????
+import {removeNoteForContract} from "@/components/widgets/panel/projects/read/contracts/Action.tsx";
+
 // components
 const CreateOfficialPartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/update/CreateOfficialPartiesModal.tsx"));
 const CreateUnOfficialPartiesModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/update/CreateUnOfficialPartiesModal.tsx"));
@@ -17,9 +20,6 @@ import usePart from "@/hooks/usePart.tsx";
 import Typography from "@/modules/Typography";
 import Button from "@/modules/Button";
 import IconButton from "@/modules/IconButton";
-
-// utils
-import {removeNoteForContract} from "@/utils/functions.ts";
 
 const BlankEmployerCard = ({updateProjectContractForm}) => {
     const location = useLocation();

@@ -3,6 +3,7 @@ import {useLayoutEffect} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 import {LuX} from "react-icons/lu";
 
 // modules
@@ -15,10 +16,11 @@ import Button from "@/modules/Button";
 
 // services
 import {readAllProjectConfirmationService} from "@/services/publicService.ts";
-import {inviteConfirmationProjectService} from "@/services/projectService.ts";
+import {inviteConfirmationProjectService , IInviteConfirmationProject} from "@/services/projectService.ts";
 
-// utils
-import {inviteConfirmationProjectSchema} from "@/utils/validations.ts";
+const inviteConfirmationProjectSchema = Yup.object().shape({
+    status_id: Yup.string().trim().required("وضعیت دعوت نامه الزامی است"),
+});
 
 const InvitationModal = ({modal, _handleHideModal, readInvitedProjectAction}) => {
     const params = useParams();
@@ -28,9 +30,8 @@ const InvitationModal = ({modal, _handleHideModal, readInvitedProjectAction}) =>
     });
 
     const inviteConfirmationProjectAction = useMutation({
-        mutationFn: (data) => inviteConfirmationProjectService(data),
+        mutationFn: (data: IInviteConfirmationProject) => inviteConfirmationProjectService(data),
         onSuccess: async (data) => {
-            console.log(data)
             if (!data.error) {
                 readInvitedProjectAction.mutate({
                     project_id: params.id

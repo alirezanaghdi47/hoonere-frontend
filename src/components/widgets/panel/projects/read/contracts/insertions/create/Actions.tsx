@@ -1,6 +1,10 @@
 // libraries
 import {useFormik} from "formik";
+import * as Yup from "yup";
 import {LuPlus} from "react-icons/lu";
+
+// ?????
+import {addArticleForInsertion , addSectionForInsertion} from "@/components/widgets/panel/projects/read/contracts/insertions/Action.tsx";
 
 // hooks
 import usePart from "@/hooks/usePart.tsx";
@@ -12,9 +16,13 @@ import Textarea from "@/modules/Textarea";
 import Button from "@/modules/Button";
 import TextInput from "@/modules/TextInput";
 
-// utils
-import {createArticleSchema, createSectionSchema} from "@/utils/validations.ts";
-import {addArticleForInsertion, addSectionForInsertion} from "@/utils/functions.ts";
+const createArticleSchema = Yup.object().shape({
+    article: Yup.string().trim().required("ماده الزامی است"),
+});
+
+const createSectionSchema = Yup.object().shape({
+    section: Yup.string().trim().required("بند الزامی است"),
+});
 
 export const BlankArticle = ({changeCurrentPart}) => {
     const article = document.querySelector("div.szh-accordion__item-content");

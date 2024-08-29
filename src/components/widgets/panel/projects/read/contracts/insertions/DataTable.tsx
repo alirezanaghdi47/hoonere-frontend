@@ -21,14 +21,13 @@ import Toast from "@/modules/Toast"
 // services
 import {
     changeProjectContractInsertionStatusService,
-    deleteProjectContractInsertionService
+    deleteProjectContractInsertionService,
+    IChangeProjectContractInsertionStatus,
+    IDeleteProjectContractInsertion
 } from "@/services/projectContractService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
-
-// types
-import {IChangeProjectContractInsertionStatus, IDeleteProjectContractInsertion} from "@/types/serviceType.ts";
 
 const DataTable = ({
                        readAllProjectContractInsertionAction,

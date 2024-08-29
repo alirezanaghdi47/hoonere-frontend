@@ -7,10 +7,7 @@ import {useMutation} from "@tanstack/react-query";
 import DataModal from "@/components/widgets/panel/projects/read/contracts/insertions/read/DataModal.tsx";
 
 // services
-import {readProjectContractInsertionService} from "@/services/projectContractService.ts";
-
-// types
-import {IReadProjectContractInsertion} from "@/types/serviceType.ts";
+import {readProjectContractInsertionService , IReadProjectContractInsertion} from "@/services/projectContractService.ts";
 
 const Content = () => {
     const params = useParams();

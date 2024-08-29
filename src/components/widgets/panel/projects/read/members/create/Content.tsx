@@ -2,6 +2,7 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 import {useBoolean} from "usehooks-ts";
 
 // components
@@ -11,16 +12,22 @@ import FormData from "@/components/widgets/panel/projects/read/members/create/Fo
 import Toast from "@/modules/Toast"
 
 // services
-import {createProjectMemberService} from "@/services/projectMemberService.ts";
+import {createProjectMemberService , ICreateProjectMember} from "@/services/projectMemberService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-// types
-import {ICreateProjectMember} from "@/types/serviceType.ts";
+const createProjectMemberWithFullNameSchema = Yup.object().shape({
+    foa_parent_id: Yup.string().trim().required("گروه شغلی الزامی است"),
+    foa_child_id: Yup.string().trim().required("عنوان شغلی الزامی است"),
+    name: Yup.string().trim().required("نام و نام خانوادگی الزامی است")
+});
 
-// utils
-import {createProjectMemberWithFullNameSchema, createProjectMemberWithUserNameSchema} from "@/utils/validations.ts";
+const createProjectMemberWithUserNameSchema = Yup.object().shape({
+    foa_parent_id: Yup.string().trim().required("گروه شغلی الزامی است"),
+    foa_child_id: Yup.string().trim().required("عنوان شغلی الزامی است"),
+    user_id: Yup.string().trim().required("نام کاربری الزامی است")
+});
 
 const Content = () => {
     const params = useParams();

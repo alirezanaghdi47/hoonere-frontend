@@ -1,5 +1,6 @@
 // libraries
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // modules
 import Form from "@/modules/Form";
@@ -7,8 +8,11 @@ import Textarea from "@/modules/Textarea";
 import LocationPicker from "@/modules/LocationPicker";
 import Button from "@/modules/Button";
 
-// utils
-import {createAddressSchema} from "@/utils/validations.ts";
+const createAddressSchema = Yup.object().shape({
+    address: Yup.string().trim().required("آدرس آفیش الزامی است"),
+    lat: Yup.number(),
+    lon: Yup.number(),
+});
 
 const CreateAddressFormData = ({createProjectAfficheP1Form, resetPart}) => {
     const createAddressForm = useFormik({

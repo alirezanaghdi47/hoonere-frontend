@@ -20,7 +20,7 @@ export const authService = async (data) => {
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -37,7 +37,7 @@ export const verifyService = async (data) => {
             data: JSON.parse(decodeData(response.data.data)),
         }
     } catch (err) {
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -54,7 +54,7 @@ export const loginService = async (data) => {
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -76,7 +76,7 @@ export const registerService = async (data) => {
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -85,7 +85,7 @@ export const captchaService = async (data) => {
         await axios.get(process.env.API_URL + `/auth/getCaptcha/${data.code}?id=${data.id}`);
         return process.env.API_URL + `/auth/getCaptcha/${data.code}?id=${data.id}`;
     } catch (err) {
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -104,6 +104,30 @@ export const logoutService = async () => {
             data: JSON.parse(decodeData(response.data.data)),
         }
     } catch (err) {
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
+}
+
+
+
+export interface IAuth {
+    mobile: string,
+}
+
+export interface ILogin {
+    username: string,
+    password: string,
+    captcha: string
+    captcha_id: string,
+}
+
+export interface IRegister {
+    username: string,
+    password: string,
+    password_confirmation: string,
+}
+
+export interface IVerify {
+    code: string,
+    mobile: string,
 }

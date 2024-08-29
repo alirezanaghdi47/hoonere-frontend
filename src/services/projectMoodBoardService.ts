@@ -8,6 +8,8 @@ import useAuthStore from "@/stores/authStore.ts";
 import {cleanObject, decodeData, encodeData} from "@/utils/functions.ts";
 
 export const readAllProjectMoodBoardService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -20,19 +22,21 @@ export const readAllProjectMoodBoardService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readProjectMoodBoardService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -45,15 +49,15 @@ export const readProjectMoodBoardService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -85,7 +89,7 @@ export const createProjectMoodBoardService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -110,6 +114,33 @@ export const deleteProjectMoodBoardsService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
+}
+
+
+
+export interface IReadAllProjectMoodBoard {
+    project_id: string,
+    title: string | null,
+    type: string | null,
+    page: number,
+    per_page: number,
+}
+
+export interface IReadProjectMoodBoard {
+    project_id: string
+    moodboard_id: string,
+}
+
+export interface ICreateProjectMoodBoard {
+    project_id: string,
+    title: string | null,
+    type: string | null,
+    content: unknown
+}
+
+export interface IDeleteProjectMoodBoard {
+    project_id: string
+    moodboard_id: string,
 }

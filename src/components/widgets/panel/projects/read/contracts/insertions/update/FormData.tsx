@@ -2,6 +2,9 @@
 import {useLocation, useParams} from "react-router-dom";
 import {LuPen, LuTrash} from "react-icons/lu";
 
+// ?????
+import {removeArticleForInsertion} from "@/components/widgets/panel/projects/read/contracts/insertions/Action.tsx";
+
 // components
 import {Contract, Article} from "@/components/widgets/panel/projects/read/contracts/insertions/update/Actions.tsx";
 import CreateEmployerFormData from "@/components/widgets/panel/projects/read/contracts/insertions/update/CreateEmployerFormData.tsx";
@@ -21,9 +24,6 @@ import IconButton from "@/modules/IconButton";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
-
-// utils
-import {removeArticleForInsertion} from "@/utils/functions.ts";
 
 const FormData = ({updateProjectContractInsertionForm, updateProjectContractInsertionAction}) => {
     const location = useLocation();

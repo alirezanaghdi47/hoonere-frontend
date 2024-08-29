@@ -1,6 +1,7 @@
 // libraries
 import {useFormik} from "formik";
-import {LuFactory, LuHome, LuUser, LuX} from "react-icons/lu";
+import * as Yup from "yup";
+import {LuHome, LuUser, LuX} from "react-icons/lu";
 
 // components
 import Representatives from "@/components/widgets/panel/projects/read/contracts/create/Representatives.tsx";
@@ -21,11 +22,28 @@ import TextInput from "@/modules/TextInput";
 import Textarea from "@/modules/Textarea";
 import NumberInput from "@/modules/NumberInput";
 
-// utils
-import {
-    createUnOfficialRealPartiesSchema,
-    createUnOfficialLegalPartiesSchema,
-} from "@/utils/validations.ts";
+const createUnOfficialRealPartiesSchema = Yup.object().shape({
+    first_name: Yup.string().trim().required("نام الزامی است"),
+    last_name: Yup.string().trim().required("نام خانوادگی الزامی است"),
+    national_code: Yup.string().trim().required("کد ملی الزامی است"),
+    mobile: Yup.string().trim().matches(/^([0|+[0-9]{1,5})?([7-9][0-9]{9})$/, "فرمت شماره موبایل نادرست است").required("شماره موبایل الزامی است"),
+    postal_code: Yup.string().trim().required("کد پستی الزامی است"),
+    address: Yup.string().trim().required("آدرس الزامی است"),
+});
+
+const createUnOfficialLegalPartiesSchema = Yup.object().shape({
+    company_name: Yup.string().trim().required("نام شرکت الزامی است"),
+    register_code: Yup.string().trim().required("شماره ثبت الزامی است"),
+    economic_code: Yup.string().trim().required("شناسه ملی الزامی است"),
+    address: Yup.string().trim().required("آدرس الزامی است"),
+    postal_code: Yup.string().trim().required("کد پستی الزامی است"),
+    telephone: Yup.string().trim().required("شماره تماس الزامی است"),
+    representatives: Yup.array().of(Yup.object().shape({
+        full_name: Yup.string().trim().required("نام و نام خانوادگی الزامی است"),
+        national_code: Yup.string().trim().required("کد ملی الزامی است"),
+        post: Yup.string().trim().required("سمت کاری الزامی است"),
+    }))
+});
 
 const UnOfficialChangePartiesFormData = ({modal, _handleHideModal, changeCurrentPart}) => {
     return (
@@ -506,14 +524,20 @@ const CreateUnOfficialPartiesModal = ({modal, _handleHideModal, updateProjectCon
         validationSchema: createUnOfficialRealPartiesSchema,
         onSubmit: async (result, {resetForm}) => {
             if (modal?.data?.from === "employer") {
-                const newArray = [...updateProjectContractForm.values.articles[0].employers, {...result , user_type: "1"}];
+                const newArray = [...updateProjectContractForm.values.articles[0].employers, {
+                    ...result,
+                    user_type: "1"
+                }];
 
                 updateProjectContractForm.setFieldValue(`articles[0].employers`, newArray);
 
                 updateProjectContractForm.setFieldValue(`sections[${updateProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${updateProjectContractForm.values.articles.length} ماده و ${updateProjectContractForm.values.articles[0].employers.length + updateProjectContractForm.values.articles[0].contractors.length + 1} نسخه تنظیم گردیده و هر کدام از ${updateProjectContractForm.values.articles[0].employers.length + updateProjectContractForm.values.articles[0].contractors.length + 1} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
 
             } else if (modal?.data?.from === "contractor") {
-                const newArray = [...updateProjectContractForm.values.articles[0].contractors, {...result , user_type: "1"}];
+                const newArray = [...updateProjectContractForm.values.articles[0].contractors, {
+                    ...result,
+                    user_type: "1"
+                }];
 
                 updateProjectContractForm.setFieldValue(`articles[0].contractors`, newArray);
 
@@ -546,14 +570,20 @@ const CreateUnOfficialPartiesModal = ({modal, _handleHideModal, updateProjectCon
         validationSchema: createUnOfficialLegalPartiesSchema,
         onSubmit: async (result, {resetForm}) => {
             if (modal?.data?.from === "employer") {
-                const newArray = [...updateProjectContractForm.values.articles[0].employers, {...result , user_type: "2"}];
+                const newArray = [...updateProjectContractForm.values.articles[0].employers, {
+                    ...result,
+                    user_type: "2"
+                }];
 
                 updateProjectContractForm.setFieldValue(`articles[0].employers`, newArray);
 
                 updateProjectContractForm.setFieldValue(`sections[${updateProjectContractForm.values.sections.findIndex(section => section.last_article === "1")}].content`, ` این قرارداد در ${updateProjectContractForm.values.articles.length} ماده و ${updateProjectContractForm.values.articles[0].employers.length + updateProjectContractForm.values.articles[0].contractors.length + 1} نسخه تنظیم گردیده و هر کدام از ${updateProjectContractForm.values.articles[0].employers.length + updateProjectContractForm.values.articles[0].contractors.length + 1} نسخه پس از مهر و امضاء طرفین دارای ارزش و اعتبار واحد می باشد. `);
 
             } else if (modal?.data?.from === "contractor") {
-                const newArray = [...updateProjectContractForm.values.articles[0].contractors, {...result , user_type: "2"}];
+                const newArray = [...updateProjectContractForm.values.articles[0].contractors, {
+                    ...result,
+                    user_type: "2"
+                }];
 
                 updateProjectContractForm.setFieldValue(`articles[0].contractors`, newArray);
 

@@ -1,5 +1,6 @@
 // libraries
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // modules
 import Form from "@/modules/Form";
@@ -7,8 +8,11 @@ import TextInput from "@/modules/TextInput";
 import NumberInput from "@/modules/NumberInput";
 import Button from "@/modules/Button";
 
-// utils
-import {createRepresentativeSchema} from "@/utils/validations.ts";
+const createRepresentativeSchema = Yup.object().shape({
+    full_name: Yup.string().trim().required("نام و نام خانوادگی الزامی است"),
+    national_code: Yup.string().trim().required("کد ملی الزامی است"),
+    post: Yup.string().trim().required("سمت کاری الزامی است"),
+});
 
 const CreateRepresentativeFormData = ({updateProfileLegalForm, resetPart}) => {
     const createRepresentativeForm = useFormik({

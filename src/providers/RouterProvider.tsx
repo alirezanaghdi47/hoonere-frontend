@@ -2,49 +2,47 @@
 import {Navigate, Route, Routes, useLocation} from "react-router-dom";
 import Loadable from '@loadable/component';
 
-// layouts
-const Panel = Loadable(() => import('@/pages/panel'));
-const Auth = Loadable(() => import('@/pages/auth'));
-const Blank = Loadable(() => import('@/pages/blank'));
-
 // pages
-const Server = Loadable(() => import('@/pages/blank/server'));
-const Client = Loadable(() => import('@/pages/blank/client'));
-const SignIn = Loadable(() => import('@/pages/auth/sign-in'));
-const SignUp = Loadable(() => import('@/pages/auth/sign-up'));
-const Dashboard = Loadable(() => import('@/pages/panel/dashboard'));
-const Projects = Loadable(() => import('@/pages/panel/projects'));
-const Project = Loadable(() => import('@/pages/panel/projects/read'));
-const InvitedProject = Loadable(() => import('@/pages/panel/projects/invited'));
-const CreateProject = Loadable(() => import('@/pages/panel/projects/create'));
-const UpdateProject = Loadable(() => import('@/pages/panel/projects/update'));
-const ProjectMembers = Loadable(() => import('@/pages/panel/projects/read/members'));
-const CreateProjectMember = Loadable(() => import('@/pages/panel/projects/read/members/create'));
-const UpdateProjectMember = Loadable(() => import('@/pages/panel/projects/read/members/update'));
-const ProjectScreenPlays = Loadable(() => import('@/pages/panel/projects/read/screen-plays'));
-const ProjectScreenPlay = Loadable(() => import('@/pages/panel/projects/read/screen-plays/read'));
-const CreateProjectScreenPlay = Loadable(() => import('@/pages/panel/projects/read/screen-plays/create'));
-const UpdateProjectScreenPlay = Loadable(() => import('@/pages/panel/projects/read/screen-plays/update'));
-const ProjectAffiches = Loadable(() => import('@/pages/panel/projects/read/affiches'));
-const ProjectAffiche = Loadable(() => import('@/pages/panel/projects/read/affiches/read'));
-const InvitedProjectAffiche = Loadable(() => import('../pages/panel/projects/read/affiches/invited'));
-const CreateProjectAffiche = Loadable(() => import('@/pages/panel/projects/read/affiches/create'));
-const UpdateProjectAffiche = Loadable(() => import('@/pages/panel/projects/read/affiches/update'));
-const ProjectAfficheHistories = Loadable(() => import('@/pages/panel/projects/read/affiches/histories'));
-const ProjectAfficheHistory = Loadable(() => import('@/pages/panel/projects/read/affiches/histories/read'));
-const ProjectMoodBoards = Loadable(() => import('@/pages/panel/projects/read/mood-boards'));
-const ProjectMoodBoard = Loadable(() => import('@/pages/panel/projects/read/mood-boards/read'));
-const CreateProjectMoodBoard = Loadable(() => import('@/pages/panel/projects/read/mood-boards/create'));
-const ProjectContracts = Loadable(() => import('@/pages/panel/projects/read/contracts'));
-const ProjectContract = Loadable(() => import('@/pages/panel/projects/read/contracts/read'));
-const InvitedProjectContract = Loadable(() => import('../pages/panel/projects/read/contracts/invited'));
-const CreateProjectContract = Loadable(() => import('@/pages/panel/projects/read/contracts/create'));
-const UpdateProjectContract = Loadable(() => import('@/pages/panel/projects/read/contracts/update'));
-const ProjectContractInsertions = Loadable(() => import('@/pages/panel/projects/read/contracts/insertions'));
-const ProjectContractInsertion = Loadable(() => import('@/pages/panel/projects/read/contracts/insertions/read'));
-const CreateProjectContractInsertion = Loadable(() => import('@/pages/panel/projects/read/contracts/insertions/create'));
-const UpdateProjectContractInsertion = Loadable(() => import('@/pages/panel/projects/read/contracts/insertions/update'));
-const Profile = Loadable(() => import('@/pages/panel/profile'));
+const BlankPage = Loadable(() => import('@/pages/blank/BlankPage.tsx'));
+const ServerPage = Loadable(() => import('@/pages/blank/ServerDownPage.tsx'));
+const ClientPage = Loadable(() => import('@/pages/blank/NotFoundPage.tsx'));
+const AuthPage = Loadable(() => import('@/pages/auth/AuthPage.tsx'));
+const SignInPage = Loadable(() => import('@/pages/auth/SignInPage.tsx'));
+const SignUpPage = Loadable(() => import('@/pages/auth/SignUpPage.tsx'));
+const PanelPage = Loadable(() => import('@/pages/panel/PanelPage.tsx'));
+const DashboardPage = Loadable(() => import('@/pages/panel/DashboardPage.tsx'));
+const ProjectsPage = Loadable(() => import('@/pages/panel/ProjectsPage.tsx'));
+const ProjectPage = Loadable(() => import('@/pages/panel/ProjectPage.tsx'));
+const InvitedProjectPage = Loadable(() => import('@/pages/panel/InvitedProjectPage.tsx'));
+const CreateProjectPage = Loadable(() => import('@/pages/panel/CreateProjectPage.tsx'));
+const UpdateProjectPage = Loadable(() => import('@/pages/panel/UpdateProjectPage.tsx'));
+const ProjectMembersPage = Loadable(() => import('@/pages/panel/ProjectMembersPage.tsx'));
+const CreateProjectMemberPage = Loadable(() => import('@/pages/panel/CreateProjectMemberPage.tsx'));
+const UpdateProjectMemberPage = Loadable(() => import('@/pages/panel/UpdateProjectMemberPage.tsx'));
+const ProjectScreenPlaysPage = Loadable(() => import('@/pages/panel/ProjectScreenPlaysPage.tsx'));
+const ProjectScreenPlayPage = Loadable(() => import('@/pages/panel/ProjectScreenPlayPage.tsx'));
+const CreateProjectScreenPlayPage = Loadable(() => import('@/pages/panel/CreateProjectScreenPlayPage.tsx'));
+const UpdateProjectScreenPlayPage = Loadable(() => import('@/pages/panel/UpdateProjectScreenPlayPage.tsx'));
+const ProjectAffichesPage = Loadable(() => import('@/pages/panel/ProjectAffichesPage.tsx'));
+const ProjectAffichePage = Loadable(() => import('@/pages/panel/ProjectAffichePage.tsx'));
+const InvitedProjectAffichePage = Loadable(() => import('@/pages/panel/InvitedProjectAffichePage.tsx'));
+const CreateProjectAffichePage = Loadable(() => import('@/pages/panel/CreateProjectAffichePage.tsx'));
+const UpdateProjectAffichePage = Loadable(() => import('@/pages/panel/UpdateProjectAffichePage.tsx'));
+const ProjectAfficheHistoriesPage = Loadable(() => import('@/pages/panel/ProjectAfficheHistoriesPage.tsx'));
+const ProjectAfficheHistoryPage = Loadable(() => import('@/pages/panel/ProjectAfficheHistoryPage.tsx'));
+const ProjectMoodBoardsPage = Loadable(() => import('@/pages/panel/ProjectMoodBoardsPage.tsx'));
+const ProjectMoodBoardPage = Loadable(() => import('@/pages/panel/ProjectMoodBoardPage.tsx'));
+const CreateProjectMoodBoardPage = Loadable(() => import('@/pages/panel/CreateProjectMoodBoardPage.tsx'));
+const ProjectContractsPage = Loadable(() => import('@/pages/panel/ProjectContractsPage.tsx'));
+const ProjectContractPage = Loadable(() => import('@/pages/panel/ProjectContractPage.tsx'));
+const InvitedProjectContractPage = Loadable(() => import('@/pages/panel/InvitedProjectContractPage.tsx'));
+const CreateProjectContractPage = Loadable(() => import('@/pages/panel/CreateProjectContractPage.tsx'));
+const UpdateProjectContractPage = Loadable(() => import('@/pages/panel/UpdateProjectContractPage.tsx'));
+const ProjectContractInsertionsPage = Loadable(() => import('@/pages/panel/ProjectContractInsertionsPage.tsx'));
+const ProjectContractInsertionPage = Loadable(() => import('@/pages/panel/ProjectContractInsertionPage.tsx'));
+const CreateProjectContractInsertionPage = Loadable(() => import('@/pages/panel/CreateProjectContractInsertionPage.tsx'));
+const UpdateProjectContractInsertionPage = Loadable(() => import('@/pages/panel/UpdateProjectContractInsertionPage.tsx'));
+const ProfilePage = Loadable(() => import('@/pages/panel/ProfilePage.tsx'));
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
@@ -53,161 +51,161 @@ const pageRoutes = [
     {
         id: 1,
         path: "*",
-        component: Blank,
+        component: BlankPage,
         children: [
             {
                 id: 1,
-                path: "server-down",
-                component: Server,
+                path: "server-down-down",
+                component: ServerPage,
             },
             {
                 id: 2,
                 path: "*",
-                component: Client,
+                component: ClientPage,
             }
         ]
     },
     {
         id: 2,
         path: "auth",
-        component: Auth,
+        component: AuthPage,
         children: [
             {
                 id: 1,
                 path: "sign-in",
-                component: SignIn,
+                component: SignInPage,
             },
             {
                 id: 2,
                 path: "sign-up",
-                component: SignUp,
+                component: SignUpPage,
             }
         ]
     },
     {
         id: 3,
         path: "panel",
-        component: Panel,
+        component: PanelPage,
         children: [
             {
                 id: 1,
                 path: "dashboard",
-                component: Dashboard,
+                component: DashboardPage,
             },
             {
                 id: 2,
                 path: "projects",
-                component: Projects,
+                component: ProjectsPage,
             },
             {
                 id: 3,
                 path: "projects/:id",
-                component: Project,
+                component: ProjectPage,
             },
             {
                 id: 4,
                 path: "projects/create",
-                component: CreateProject,
+                component: CreateProjectPage,
             },
             {
                 id: 5,
                 path: "projects/:id/update",
-                component: UpdateProject,
+                component: UpdateProjectPage,
             },
             {
                 id: 6,
                 path: "projects/:id/members",
-                component: ProjectMembers,
+                component: ProjectMembersPage,
             },
             {
                 id: 7,
                 path: "projects/:id/members/create",
-                component: CreateProjectMember,
+                component: CreateProjectMemberPage,
             },
             {
                 id: 8,
                 path: "projects/:id/members/:subId/update",
-                component: UpdateProjectMember,
+                component: UpdateProjectMemberPage,
             },
             {
                 id: 9,
                 path: "projects/:id/screen-plays",
-                component: ProjectScreenPlays,
+                component: ProjectScreenPlaysPage,
             },
             {
                 id: 10,
                 path: "projects/:id/screen-plays/create",
-                component: CreateProjectScreenPlay,
+                component: CreateProjectScreenPlayPage,
             },
             {
                 id: 11,
                 path: "projects/:id/screen-plays/:subId/update",
-                component: UpdateProjectScreenPlay,
+                component: UpdateProjectScreenPlayPage,
             },
             {
                 id: 12,
                 path: "projects/:id/affiches",
-                component: ProjectAffiches,
+                component: ProjectAffichesPage,
             },
             {
                 id: 13,
                 path: "projects/:id/affiches/create",
-                component: CreateProjectAffiche,
+                component: CreateProjectAffichePage,
             },
             {
                 id: 14,
                 path: "projects/:id/affiches/:subId/update",
-                component: UpdateProjectAffiche,
+                component: UpdateProjectAffichePage,
             },
             {
                 id: 15,
                 path: "projects/:id/affiches/:subId/histories",
-                component: ProjectAfficheHistories,
+                component: ProjectAfficheHistoriesPage,
             },
             {
                 id: 16,
                 path: "projects/:id/mood-boards",
-                component: ProjectMoodBoards,
+                component: ProjectMoodBoardsPage,
             },
             {
                 id: 17,
                 path: "projects/:id/mood-boards/create",
-                component: CreateProjectMoodBoard,
+                component: CreateProjectMoodBoardPage,
             },
             {
                 id: 18,
                 path: "projects/:id/contracts",
-                component: ProjectContracts,
+                component: ProjectContractsPage,
             },
             {
                 id: 19,
                 path: "projects/:id/contracts/create",
-                component: CreateProjectContract,
+                component: CreateProjectContractPage,
             },
             {
                 id: 20,
                 path: "projects/:id/contracts/:subId/update",
-                component: UpdateProjectContract,
+                component: UpdateProjectContractPage,
             },
             {
                 id: 21,
                 path: "projects/:id/contracts/:subId/insertions",
-                component: ProjectContractInsertions,
+                component: ProjectContractInsertionsPage,
             },
             {
                 id: 22,
                 path: "projects/:id/contracts/:subId/insertions/create",
-                component: CreateProjectContractInsertion,
+                component: CreateProjectContractInsertionPage,
             },
             {
                 id: 23,
                 path: "projects/:id/contracts/:subId/insertions/:subSubId/update",
-                component: UpdateProjectContractInsertion,
+                component: UpdateProjectContractInsertionPage,
             },
             {
                 id: 40,
                 path: "profile",
-                component: Profile,
+                component: ProfilePage,
             },
         ]
     },
@@ -217,47 +215,47 @@ const modalRoutes = [
     {
         id: 2,
         path: "panel/projects/:id/invited",
-        component: InvitedProject,
+        component: InvitedProjectPage,
     },
     {
         id: 1,
         path: "panel/projects/:id/screen-plays/:subId",
-        component: ProjectScreenPlay,
+        component: ProjectScreenPlayPage,
     },
     {
         id: 2,
         path: "panel/projects/:id/affiches/:subId",
-        component: ProjectAffiche,
+        component: ProjectAffichePage,
     },
     {
         id: 2,
         path: "panel/projects/:id/affiches/:subId/invited",
-        component: InvitedProjectAffiche,
+        component: InvitedProjectAffichePage,
     },
     {
         id: 3,
         path: "panel/projects/:id/affiches/:subId/histories/:subSubId",
-        component: ProjectAfficheHistory,
+        component: ProjectAfficheHistoryPage,
     },
     {
         id: 4,
         path: "panel/projects/:id/mood-boards/:subId",
-        component: ProjectMoodBoard,
+        component: ProjectMoodBoardPage,
     },
     {
         id: 5,
         path: "panel/projects/:id/contracts/:subId",
-        component: ProjectContract,
+        component: ProjectContractPage,
     },
     {
         id: 5,
         path: "panel/projects/:id/contracts/:subId/invited",
-        component: InvitedProjectContract,
+        component: InvitedProjectContractPage,
     },
     {
         id: 6,
         path: "panel/projects/:id/contracts/:subId/insertions/:subSubId",
-        component: ProjectContractInsertion,
+        component: ProjectContractInsertionPage,
     },
 ];
 

@@ -2,20 +2,6 @@
 import {create} from 'zustand';
 import {persist} from 'zustand/middleware';
 
-interface IAuthState {
-    token: string | null,
-    username: string | null,
-    panel_url: string | null,
-    status_id: number | null
-}
-
-interface IAuthStore {
-    auth: IAuthState,
-    login: (data: IAuthState) => void,
-    changeStatusId: (status_id: number) => void,
-    logout: () => void,
-}
-
 const initialState: IAuthState = {
     token: null,
     username: null,
@@ -46,5 +32,21 @@ const useAuthStore = create<IAuthStore>()(persist((set) => ({
     }),
     {name: "panel-auth"}
 ));
+
+
+
+interface IAuthState {
+    token: string | null,
+    username: string | null,
+    panel_url: string | null,
+    status_id: number | null
+}
+
+interface IAuthStore {
+    auth: IAuthState,
+    login: (data: IAuthState) => void,
+    changeStatusId: (status_id: number) => void,
+    logout: () => void,
+}
 
 export default useAuthStore;

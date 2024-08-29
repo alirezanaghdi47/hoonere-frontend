@@ -2,18 +2,6 @@
 import {create} from 'zustand';
 import {persist} from "zustand/middleware";
 
-interface IAppState {
-    isOpenDrawer: boolean,
-    isDark: boolean,
-}
-
-interface IAppStore {
-    app: IAppState,
-    showDrawer: () => void,
-    hideDrawer: () => void,
-    toggleTheme: () => void,
-}
-
 const initialState: IAppState = {
     isOpenDrawer: false,
     isDark: false,
@@ -43,5 +31,19 @@ const useAppStore = create<IAppStore>()(persist((set) => ({
         name: "panel-app"
     }),
 );
+
+
+
+interface IAppState {
+    isOpenDrawer: boolean,
+    isDark: boolean,
+}
+
+interface IAppStore {
+    app: IAppState,
+    showDrawer: () => void,
+    hideDrawer: () => void,
+    toggleTheme: () => void,
+}
 
 export default useAppStore;

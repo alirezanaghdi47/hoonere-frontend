@@ -2,6 +2,9 @@
 import {useParams} from "react-router-dom";
 import {LuPen, LuTrash} from "react-icons/lu";
 
+// ?????
+import {removeArticleForContract} from "@/components/widgets/panel/projects/read/contracts/Action.tsx";
+
 // components
 import {Contract, Article} from "@/components/widgets/panel/projects/read/contracts/update/Actions.tsx";
 import CreateEmployerFormData
@@ -24,9 +27,6 @@ import IconButton from "@/modules/IconButton";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
-
-// utils
-import {removeArticleForContract} from "@/utils/functions.ts";
 
 const FormData = ({updateProjectContractForm, updateProjectContractAction}) => {
     const params = useParams();

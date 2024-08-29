@@ -20,13 +20,10 @@ import IconButton from "@/modules/IconButton";
 import Button from "@/modules/Button";
 
 // services
-import {readAllProjectMoodBoardService} from "@/services/projectMoodBoardService.ts";
+import {readAllProjectMoodBoardService , IReadAllProjectMoodBoard} from "@/services/projectMoodBoardService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
-
-// types
-import {IReadAllProjectMoodBoard} from "@/types/serviceType.ts";
 
 const ReadMoodBoardsModal = ({modal, _handleHideModal}) => {
     const params = useParams();

@@ -11,10 +11,7 @@ import Loading from "@/components/partials/panel/Loading.tsx";
 import useFilter from "@/hooks/useFilter.tsx";
 
 // services
-import {readAllProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
-
-// types
-import {IReadAllProjectScreenPlay} from "@/types/serviceType.ts";
+import {readAllProjectScreenPlayService , IReadAllProjectScreenPlay} from "@/services/projectScreenPlayService.ts";
 
 const Content = () => {
     const params = useParams();

@@ -1,10 +1,11 @@
 // libraries
 import {useNavigate} from "react-router-dom";
+import Loadable from "@loadable/component";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {LuFileSignature, LuX} from "react-icons/lu";
 
 // components
-import InvitationModal from "@/components/widgets/panel/projects/invited/InvitationModal.tsx";
+const InvitationModal = Loadable(() => import("@/components/widgets/panel/projects/invited/InvitationModal.tsx"));
 
 // hooks
 import useModal from "@/hooks/useModal.tsx";
@@ -25,7 +26,7 @@ const DataModal = ({project , readInvitedProjectAction}) => {
                 isOpen={true}
                 onClose={() => navigate(-1)}
                 position='center'
-                width="lg"
+                width="md"
             >
                 <Modal.Header>
                     <Typography
@@ -88,7 +89,7 @@ const DataModal = ({project , readInvitedProjectAction}) => {
                             {project?.description}
                         </Typography>
 
-                        <div className='d-flex justify-content-start align-items-center gap-5 w-100'>
+                        <div className='d-flex flex-wrap justify-content-center align-items-center gap-5 w-75'>
                             <Chip
                                 size="lg"
                                 label={` پروژه ${project?.type_info?.title} `}

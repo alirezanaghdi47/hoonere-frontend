@@ -3,6 +3,7 @@ import {useLayoutEffect} from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // components
 import FormData from "@/components/widgets/panel/projects/read/contracts/create/FormData.tsx";
@@ -12,18 +13,25 @@ import Loading from "@/components/partials/panel/Loading.tsx";
 import Toast from "@/modules/Toast"
 
 // services
-import {createProjectOfficialContractService, createProjectUnOfficialContractService} from "@/services/projectContractService.ts";
+import {
+    createProjectOfficialContractService,
+    createProjectUnOfficialContractService,
+    ICreateProjectOfficialContract,
+    ICreateProjectUnOfficialContract
+} from "@/services/projectContractService.ts";
 import {readAllProjectContractArticleService, readAllProjectContractSectionService} from "@/services/publicService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-// types
-import {ICreateProjectOfficialContract, ICreateProjectUnOfficialContract} from "@/types/serviceType.ts";
-
 // utils
-import {createProjectContractSchema} from "@/utils/validations.ts";
 import {getObjectValueByKey} from "@/utils/functions.ts";
+
+const createProjectContractSchema = Yup.object().shape({
+    articles: Yup.array(),
+    sections: Yup.array(),
+    notes: Yup.array(),
+});
 
 const Content = () => {
     const location = useLocation();

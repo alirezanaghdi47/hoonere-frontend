@@ -8,6 +8,8 @@ import useAuthStore from "@/stores/authStore.ts";
 import {cleanObject, decodeData, encodeData} from "@/utils/functions.ts";
 
 export const readAllProjectContractService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -20,19 +22,21 @@ export const readAllProjectContractService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readAllInvitedProjectContractService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -45,19 +49,21 @@ export const readAllInvitedProjectContractService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readProjectOfficialContractService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -70,19 +76,21 @@ export const readProjectOfficialContractService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readProjectUnOfficialContractService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -95,19 +103,21 @@ export const readProjectUnOfficialContractService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readInvitedProjectContractService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -120,15 +130,15 @@ export const readInvitedProjectContractService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -153,7 +163,7 @@ export const createProjectOfficialContractService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -178,7 +188,7 @@ export const createProjectUnOfficialContractService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -203,7 +213,7 @@ export const updateProjectOfficialContractService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -228,7 +238,7 @@ export const updateProjectUnOfficialContractService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -253,7 +263,7 @@ export const deleteProjectOfficialContractService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -278,7 +288,7 @@ export const deleteProjectUnOfficialContractService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -303,11 +313,13 @@ export const changeProjectContractStatusService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readAllProjectContractMemberService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -320,19 +332,21 @@ export const readAllProjectContractMemberService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readProjectContractForInsertionService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -345,19 +359,21 @@ export const readProjectContractForInsertionService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readAllProjectContractInsertionService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -370,19 +386,21 @@ export const readAllProjectContractInsertionService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readProjectContractInsertionService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -395,15 +413,15 @@ export const readProjectContractInsertionService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -428,7 +446,7 @@ export const createProjectContractInsertionService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -453,7 +471,7 @@ export const updateProjectContractInsertionService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -478,7 +496,7 @@ export const deleteProjectContractInsertionService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -503,7 +521,7 @@ export const changeProjectContractInsertionStatusService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -528,7 +546,7 @@ export const checkProjectContractHasSupplementService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -553,7 +571,7 @@ export const sendProjectContractSignatureConfirmCodeService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -578,8 +596,294 @@ export const checkProjectContractSignatureConfirmCodeService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+    }
+}
+
+export const readAllProjectContractCommentService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/comments/index", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+    }
+}
+
+export const readProjectContractCommentService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/comments/show", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+    }
+}
+
+export const createProjectContractCommentService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/contracts/comments/create", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 
+
+export interface IReadAllProjectContract {
+    project_id: string,
+    contract_number: string | null,
+    start_date: string | null,
+    end_date: string | null,
+    page: number,
+    per_page: number,
+}
+
+export interface IReadAllInvitedProjectContract {
+    project_id: string,
+    contract_number: string | null,
+    start_date: string | null,
+    end_date: string | null,
+    page: number,
+    per_page: number,
+}
+
+export interface IReadProjectOfficialContract {
+    project_id: string,
+    contract_id: string,
+    get_last: number,
+}
+
+export interface IReadProjectUnOfficialContract {
+    project_id: string,
+    contract_id: string,
+    get_last: number,
+}
+
+export interface IReadInvitedProjectContract {
+    project_id: string,
+    contract_id: string,
+    get_last: number,
+}
+
+export interface ICreateProjectOfficialContract {
+    project_id: string,
+    articles: unknown,
+    sections: unknown,
+    notes: unknown,
+    employers: unknown,
+    contractors: unknown,
+    start_date: string,
+    end_date: string,
+    total_price: string | number,
+    payment_state: string,
+    payments: unknown
+}
+
+export interface ICreateProjectUnOfficialContract {
+    project_id: string,
+    articles: unknown,
+    sections: unknown,
+    notes: unknown,
+    employers: unknown,
+    contractors: unknown,
+    start_date: string,
+    end_date: string,
+    total_price: string | number,
+    payment_state: string,
+    payments: unknown
+}
+
+export interface IUpdateProjectOfficialContract {
+    project_id: string,
+    contract_id: string,
+    articles: unknown,
+    sections: unknown,
+    notes: unknown,
+    employers: unknown,
+    contractors: unknown,
+    start_date: string,
+    end_date: string,
+    total_price: string | number,
+    payment_state: string,
+    payments: unknown
+}
+
+export interface IUpdateProjectUnOfficialContract {
+    project_id: string,
+    contract_id: string,
+    articles: unknown,
+    sections: unknown,
+    notes: unknown,
+    employers: unknown,
+    contractors: unknown,
+    start_date: string,
+    end_date: string,
+    total_price: string | number,
+    payment_state: string,
+    payments: unknown
+}
+
+export interface IReadAllProjectContractMember {
+    project_id: string,
+    foa_parent_id: string,
+    foa_child_id: string
+}
+
+export interface IChangeProjectContractStatus {
+    project_id: string,
+    contract_id: string,
+}
+
+export interface IDeleteProjectOfficialContract {
+    project_id: string,
+    contract_id: string,
+}
+
+export interface IDeleteProjectUnOfficialContract {
+    project_id: string,
+    contract_id: string,
+}
+
+export interface IReadAllProjectContractInsertion {
+    project_id: string,
+    contract_id: string,
+    insertion_number: string | null,
+    start_date: string | null,
+    end_date: string | null,
+    page: number,
+    per_page: number,
+}
+
+export interface IReadProjectContractInsertion {
+    project_id: string,
+    contract_id: string,
+    insertion_id: string,
+    get_last: number,
+}
+
+export interface IReadProjectContractForInsertion {
+    project_id: string,
+    contract_id: string,
+}
+
+export interface ICreateProjectContractInsertion {
+    project_id: string,
+    contract_id: string,
+    articles: unknown,
+    sections: unknown,
+    is_supplement: number,
+    employers: unknown,
+    contractors: unknown,
+    start_date: string,
+    end_date: string,
+    total_price: string | number,
+    payment_state: string,
+    payments: unknown
+}
+
+export interface IUpdateProjectContractInsertion {
+    project_id: string,
+    contract_id: string,
+    insertion_id: string,
+    articles: unknown,
+    sections: unknown,
+    employers: unknown,
+    contractors: unknown,
+    start_date: string,
+    end_date: string,
+    total_price: string | number,
+    payment_state: string,
+    payments: unknown
+}
+
+export interface IChangeProjectContractInsertionStatus {
+    project_id: string,
+    contract_id: string,
+    insertion_id: string,
+}
+
+export interface ICheckProjectContractHasSupplementAction {
+    project_id: string,
+    contract_id: string,
+}
+
+export interface IDeleteProjectContractInsertion {
+    project_id: string,
+    contract_id: string,
+    insertion_id: string,
+}
+
+export interface ISendProjectContractSignatureConfirmCode {
+    project_id: string,
+    contract_id: string,
+}
+
+export interface ICheckProjectContractSignatureConfirmCode {
+    project_id: string,
+    contract_id: string,
+    code: string
+}
+
+export interface IReadAllProjectContractComment {
+    project_id: string,
+    contract_id: string,
+}
+
+export interface ICreateProjectContractComment {
+    project_id: string,
+    contract_id: string,
+    parent_id: string,
+    content: string
+}

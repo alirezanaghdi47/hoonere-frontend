@@ -12,10 +12,7 @@ import Loading from "@/components/partials/panel/Loading.tsx";
 import useFilter from "@/hooks/useFilter.tsx";
 
 // services
-import {readAllInvitedProjectAfficheService, readAllProjectAfficheService} from "@/services/projectAfficheService.ts";
-
-// types
-import {IReadAllProjectAffiche} from "@/types/serviceType.ts";
+import {readAllInvitedProjectAfficheService, readAllProjectAfficheService , IReadAllInvitedProjectAffiche , IReadAllProjectAffiche} from "@/services/projectAfficheService.ts";
 
 const Content = () => {
     const params = useParams();
@@ -29,7 +26,7 @@ const Content = () => {
         hideFilter,
         resetFilter,
         changeFilter
-    } = useFilter<IReadAllProjectAffiche>({
+    } = useFilter<IReadAllProjectAffiche | IReadAllInvitedProjectAffiche>({
         number_string: "",
         type: "",
         affiche_date: "",
@@ -38,7 +35,7 @@ const Content = () => {
     });
 
     const readAllProjectAfficheAction = useMutation({
-        mutationFn: (data: IReadAllProjectAffiche) => location.hash === "#is_invited=0" ? readAllProjectAfficheService(data) : readAllInvitedProjectAfficheService(data),
+        mutationFn: (data: IReadAllProjectAffiche | IReadAllInvitedProjectAffiche) => location.hash === "#is_invited=0" ? readAllProjectAfficheService(data) : readAllInvitedProjectAfficheService(data),
     });
 
     useLayoutEffect(() => {

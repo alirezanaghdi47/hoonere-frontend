@@ -5,6 +5,7 @@ import Loadable from '@loadable/component';
 import {useMutation} from "@tanstack/react-query";
 import {format} from "date-fns";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // components
 const FormDataP2 = Loadable(() => import('@/components/widgets/panel/projects/read/affiches/create/FormDataP2.tsx'));
@@ -22,21 +23,59 @@ import useFilter from "@/hooks/useFilter.tsx";
 import Toast from "@/modules/Toast"
 
 // services
-import {createProjectAfficheService} from "@/services/projectAfficheService.ts";
-import {readAllProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
+import {createProjectAfficheService , ICreateProjectAffiche} from "@/services/projectAfficheService.ts";
+import {readAllProjectScreenPlayService , IReadAllProjectScreenPlay} from "@/services/projectScreenPlayService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-// types
-import {ICreateProjectAffiche, IReadAllProjectScreenPlay} from "@/types/serviceType.ts";
+const createProjectAfficheP1Schema = Yup.object().shape({
+    title: Yup.string().trim().required("عنوان آفیش الزامی است"),
+    description: Yup.string().trim().required("توضیحات آفیش الزامی است"),
+    time_type_id: Yup.string().trim().required("زمان اجرا آفیش الزامی است"),
+    location_side_id: Yup.string().trim().required("سمت مکان آفیش الزامی است"),
+    is_off: Yup.number(),
+    type: Yup.string().trim().required("نوع فنی آفیش الزامی است"),
+    affiche_date: Yup.string().trim().required("تاریخ آفیش الزامی است"),
+    start_date: Yup.string().trim().required("تاریخ اجرای آفیش الزامی است"),
+    coming_time: Yup.string().trim().required("ساعت حضور آفیش الزامی است"),
+    start_time: Yup.string().trim().required("ساعت کلید آفیش الزامی است"),
+    addresses: Yup.array().of(Yup.object().shape({
+        address: Yup.string().trim(),
+        lat: Yup.number(),
+        lon: Yup.number(),
+    })).min(1, "آدرس آفیش الزامی است"),
+    auto_motivation_sentence: Yup.number(),
+    motivation_sentence: Yup.string().when("auto_motivation_sentence", {
+        is: (value) => value === 0,
+        then: (schema) => schema.trim().required("جمله انگیزشی آفیش الزامی است")
+    }),
+});
 
-// utils
-import {
-    createProjectAfficheP1Schema,
-    createProjectAfficheP2Schema,
-    createProjectAfficheP3Schema
-} from "@/utils/validations.ts";
+const createProjectAfficheP2Schema = Yup.object().shape({
+    actors: Yup.array().of(Yup.object().shape({
+        actor_id: Yup.string().trim().required("بازیگر الزامی است"),
+        full_name: Yup.string(),
+        role: Yup.string().trim().required("نقش بازیگر الزامی است"),
+        coming_time: Yup.string().trim().required("ساعت حضور بازیگر الزامی است"),
+        makeup_time: Yup.string().trim().required("ساعت گریم بازیگر الزامی است"),
+    })),
+    members: Yup.array().of(Yup.object().shape({
+        member_id: Yup.string().trim().required("عوامل الزامی است"),
+        full_name: Yup.string(),
+        coming_time: Yup.string().trim().required("ساعت حضور عوامل الزامی است"),
+        description: Yup.string().trim(),
+    })),
+    receptions: Yup.array().of(Yup.object().shape({
+        member_id: Yup.string().trim().required("عوامل پذیرایی الزامی است"),
+        full_name: Yup.string().trim(),
+        reception_type: Yup.string().trim().required("نوع پذیرایی الزامی است"),
+    })),
+});
+
+const createProjectAfficheP3Schema = Yup.object().shape({
+    screenplays: Yup.array().of(Yup.string().trim())
+});
 
 const Content = () => {
     const params = useParams();

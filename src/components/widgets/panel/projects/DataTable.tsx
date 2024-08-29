@@ -20,13 +20,10 @@ import Dialog from "@/modules/Dialog";
 import Toast from "@/modules/Toast";
 
 // services
-import {deleteProjectService} from "@/services/projectService.ts";
+import {deleteProjectService , IDeleteProject} from "@/services/projectService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
-
-// types
-import {IDeleteProject} from "@/types/serviceType.ts";
 
 const DataTable = ({
                        readAllProjectAction,

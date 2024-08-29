@@ -3,6 +3,7 @@ import {useEffect, useLayoutEffect} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // modules
 import Form from "@/modules/Form";
@@ -12,14 +13,19 @@ import TimePicker from "@/modules/TimePicker";
 import Textarea from "@/modules/Textarea";
 
 // services
-import {readAllProjectMemberByFoaService} from "@/services/projectService.ts";
+import {readAllProjectMemberByFoaService , IReadAllProjectMembersByFoa} from "@/services/projectService.ts";
 import {readAllJobService} from "@/services/publicService.ts";
 
-// types
-import {IReadAllProjectMembersByFoa} from "@/types/serviceType.ts";
+const createProjectAfficheUserSchema = Yup.object().shape({
+    foa_parent_id: Yup.string().trim().required("گروه شغلی الزامی است"),
+    foa_id: Yup.string().trim(),
+});
 
-// utils
-import {createProjectAfficheMemberSchema, createProjectAfficheUserSchema} from "@/utils/validations.ts";
+const createProjectAfficheMemberSchema = Yup.object().shape({
+    member_id: Yup.string().trim().required("عوامل الزامی است"),
+    coming_time: Yup.string().trim().required("ساعت حضور عوامل الزامی است"),
+    description: Yup.string().trim(),
+});
 
 const CreateMemberFormData = ({updateProjectAfficheP2Form, resetPart}) => {
     const params = useParams();

@@ -3,6 +3,7 @@ import {useLayoutEffect} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // modules
 import Form from "@/modules/Form";
@@ -12,13 +13,14 @@ import TimePicker from "@/modules/TimePicker";
 import TextInput from "@/modules/TextInput";
 
 // services
-import {readAllProjectMemberByFoaService} from "@/services/projectService.ts";
+import {readAllProjectMemberByFoaService , IReadAllProjectMembersByFoa} from "@/services/projectService.ts";
 
-// types
-import {IReadAllProjectMembersByFoa} from "@/types/serviceType.ts";
-
-// utils
-import {createProjectAfficheActorSchema} from "@/utils/validations.ts";
+const createProjectAfficheActorSchema = Yup.object().shape({
+    actor_id: Yup.string().trim().required("بازیگر الزامی است"),
+    role: Yup.string().trim().required("نقش بازیگر الزامی است"),
+    coming_time: Yup.string().trim().required("ساعت حضور بازیگر الزامی است"),
+    makeup_time: Yup.string().trim().required("ساعت گریم بازیگر الزامی است"),
+});
 
 const CreateActorFormData = ({updateProjectAfficheP2Form, resetPart}) => {
     const params = useParams();

@@ -2,6 +2,7 @@
 import {useNavigate} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // modules
 import TextInput from "@/modules/TextInput";
@@ -12,16 +13,16 @@ import Form from "@/modules/Form";
 import Toast from "@/modules/Toast";
 
 // services
-import {registerService} from "@/services/authService.ts";
+import {registerService , IRegister} from "@/services/authService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-// types
-import {IRegister} from "@/types/serviceType.ts";
-
-// utils
-import {registerSchema} from "@/utils/validations.ts";
+const registerSchema = Yup.object().shape({
+    username: Yup.string().trim().matches(/^[a-zA-Z0-9_.\-@]+$/, "نام کاربری می تواند ترکیبی از حروف ، اعداد و (-،.،_،@) باشد").min(8, "تعداد کاراکتر های نام کاربری باید بیشتر از 8 باشد").max(40, "تعداد کاراکتر های نام کاربری باید کمتر از 40 باشد").required("نامک کاربری الزامی است"),
+    password: Yup.string().trim().matches(/^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/, "رمز عبور باید حداقل 8 کاراکتر به همراه حروف بزرگ و کوچک و عدد و علائم باشد").required("رمز عبور الزامی است"),
+    password_confirmation: Yup.string().trim().matches(/^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/, "تکرار رمز عبور باید حداقل 8 کاراکتر به همراه حروف بزرگ و کوچک و عدد و علائم باشد").oneOf([Yup.ref('password'), null], "رمز عبور با تکرار آن یکسان نیست").required("تکرار رمز عبور الزامی است"),
+});
 
 const RegisterForm = ({resetStep}) => {
     const navigate = useNavigate();

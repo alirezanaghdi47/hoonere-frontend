@@ -11,10 +11,7 @@ import Loading from "@/components/partials/panel/Loading.tsx";
 import useFilter from "@/hooks/useFilter.tsx";
 
 // services
-import {readAllProjectAfficheHistoryService} from "@/services/projectAfficheService.ts";
-
-// types
-import {IReadAllProjectAfficheHistory} from "@/types/serviceType.ts";
+import {readAllProjectAfficheHistoryService , IReadAllProjectAfficheHistory} from "@/services/projectAfficheService.ts";
 
 const Content = () => {
     const params = useParams();

@@ -2,6 +2,7 @@
 import {useNavigate} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // modules
 import Button from "@/modules/Button";
@@ -11,16 +12,14 @@ import Form from "@/modules/Form";
 import Toast from "@/modules/Toast";
 
 // services
-import {verifyService, authService} from "@/services/authService.ts";
+import {verifyService, authService , IVerify , IAuth} from "@/services/authService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-// types
-import {IAuth, IVerify} from "@/types/serviceType.ts";
-
-// utils
-import {verifySchema} from "@/utils/validations.ts";
+const verifySchema = Yup.object().shape({
+    code: Yup.string().trim().min(5, "کد اعتبارسنجی باید 5 کاراکتری باشد").max(5, "کد اعتبارسنجی باید 5 کاراکتری باشد").required("کد اعتبارسنجی الزامی است"),
+});
 
 const VerifyCode = ({nextStep, resetStep, step}) => {
     const navigate = useNavigate();

@@ -3,6 +3,7 @@ import {useLayoutEffect} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 import {LuInfo} from "react-icons/lu";
 
 // modules
@@ -15,16 +16,16 @@ import SwitchBox from "@/modules/SwitchBox";
 import Typography from "@/modules/Typography";
 
 // services
-import {readAllJobService, readUserInquiryService} from "@/services/publicService.ts";
+import {readAllJobService, readUserInquiryService , IReadUserInquiry} from "@/services/publicService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-// types
-import {IReadUserInquiry} from "@/types/serviceType.ts";
-
-// utils
-import {readUserInquirySchema} from "@/utils/validations.ts";
+const readUserInquirySchema = Yup.object().shape({
+    username: Yup.string().trim().required("نام کاربری الزامی است"),
+    foa_parent_id: Yup.number().nullable(),
+    foa_id: Yup.number().required("عنوان شغلی الزامی است"),
+});
 
 const FormDataWithUserName = ({readAllJobAction, createProjectMemberFormWithUserName}) => {
     const readUserInquiryAction = useMutation({

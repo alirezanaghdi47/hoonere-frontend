@@ -1,20 +1,26 @@
 // libraries
 import {useMemo} from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
+import Loadable from "@loadable/component";
 import {useMutation} from "@tanstack/react-query";
 import {format} from "date-fns-jalali";
 import {
     LuFilePlus,
-    LuInfo,
+    LuInfo, LuMessageCircle,
     LuPen,
     LuThumbsUp,
     LuTrash2
 } from "react-icons/lu";
 
 // components
+const CommentsModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/CommentsModal.tsx"));
+
 import Finder from "@/components/widgets/panel/projects/read/contracts/Finder.tsx";
 import Filter from "@/components/widgets/panel/projects/read/contracts/Filter.tsx";
 import Empty from "@/components/partials/panel/Empty.tsx";
+
+// hooks
+import useModal from "@/hooks/useModal.tsx";
 
 // modules
 import Table from "@/modules/Table";
@@ -29,17 +35,13 @@ import {
     changeProjectContractStatusService,
     deleteProjectUnOfficialContractService,
     deleteProjectOfficialContractService,
+    IChangeProjectContractStatus,
+    IDeleteProjectOfficialContract,
+    IDeleteProjectUnOfficialContract,
 } from "@/services/projectContractService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
-
-// types
-import {
-    IChangeProjectContractStatus,
-    IDeleteProjectOfficialContract,
-    IDeleteProjectUnOfficialContract,
-} from "@/types/serviceType.ts";
 
 const DataTable = ({
                        readAllProjectContractAction,
@@ -55,6 +57,7 @@ const DataTable = ({
     const location = useLocation();
     const params = useParams();
     const {auth} = useAuthStore();
+    const {modal, _handleShowModal, _handleHideModal} = useModal();
 
     const changeProjectContractStatusAction = useMutation({
         mutationFn: (data: IChangeProjectContractStatus) => changeProjectContractStatusService(data),
@@ -248,6 +251,19 @@ const DataTable = ({
                 cell: ({row}) =>
                     location.hash === "#is_invited=0" ? (
                         <div className="d-flex justify-content-end align-items-center gap-2 w-100">
+                            <IconButton
+                                color="light-info"
+                                size="sm"
+                                onClick={() => _handleShowModal(row.original)}
+                                data-tooltip-id="my-tooltip"
+                                data-tooltip-content="دیدگاه ها"
+                            >
+                                <LuMessageCircle
+                                    size={20}
+                                    color="currentColor"
+                                />
+                            </IconButton>
+
                             {
                                 row.original.type_id === "1" && row.original.status_id === "1" && (
                                     <IconButton
@@ -383,45 +399,56 @@ const DataTable = ({
     );
 
     return (
-        <div className="card w-100">
-            <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
-                <Filter
-                    readAllProjectContractAction={readAllProjectContractAction}
-                    filter={filter}
-                    initialFilter={initialFilter}
-                    changeFilter={changeFilter}
-                    isOpenFilter={isOpenFilter}
-                    showFilter={showFilter}
-                    hideFilter={hideFilter}
-                    resetFilter={resetFilter}
-                />
+        <>
+            <div className="card w-100">
+                <div className="card-body d-flex flex-column justify-content-center align-items-center gap-5">
+                    <Filter
+                        readAllProjectContractAction={readAllProjectContractAction}
+                        filter={filter}
+                        initialFilter={initialFilter}
+                        changeFilter={changeFilter}
+                        isOpenFilter={isOpenFilter}
+                        showFilter={showFilter}
+                        hideFilter={hideFilter}
+                        resetFilter={resetFilter}
+                    />
 
-                {
-                    readAllProjectContractAction.data?.data?.contracts.length > 0 && (
-                        <Table
-                            data={readAllProjectContractAction?.data?.data?.contracts}
-                            columns={tableColumns}
-                        />
-                    )
-                }
+                    {
+                        readAllProjectContractAction.data?.data?.contracts.length > 0 && (
+                            <Table
+                                data={readAllProjectContractAction?.data?.data?.contracts}
+                                columns={tableColumns}
+                            />
+                        )
+                    }
 
-                {
-                    readAllProjectContractAction.data?.data?.contracts.length === 0 && (
-                        <Empty
-                            title="قرارداد یافت نشد"
-                            width="100%"
-                            height={300}
-                        />
-                    )
-                }
+                    {
+                        readAllProjectContractAction.data?.data?.contracts.length === 0 && (
+                            <Empty
+                                title="قرارداد یافت نشد"
+                                width="100%"
+                                height={300}
+                            />
+                        )
+                    }
 
-                <Finder
-                    readAllProjectContractAction={readAllProjectContractAction}
-                    filter={filter}
-                    changeFilter={changeFilter}
-                />
+                    <Finder
+                        readAllProjectContractAction={readAllProjectContractAction}
+                        filter={filter}
+                        changeFilter={changeFilter}
+                    />
+                </div>
             </div>
-        </div>
+
+            {
+                modal.isOpen && (
+                    <CommentsModal
+                        modal={modal}
+                        _handleHideModal={_handleHideModal}
+                    />
+                )
+            }
+        </>
     )
 }
 

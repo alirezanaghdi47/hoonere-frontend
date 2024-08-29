@@ -8,6 +8,8 @@ import useAuthStore from "@/stores/authStore.ts";
 import {cleanObject, decodeData, encodeData} from "@/utils/functions.ts";
 
 export const readAllProjectScreenPlayService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -20,19 +22,21 @@ export const readAllProjectScreenPlayService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readProjectScreenPlayService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const formData = new FormData();
         const {token} = useAuthStore.getState().auth;
@@ -45,15 +49,15 @@ export const readProjectScreenPlayService = async (data) => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -78,7 +82,7 @@ export const createProjectScreenPlayService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -103,7 +107,7 @@ export const updateProjectScreenPlayService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -128,6 +132,49 @@ export const deleteProjectScreenPlayService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
+}
+
+
+
+export interface IReadAllProjectScreenPlay {
+    project_id: string,
+    page: number,
+    per_page: number,
+    text: string,
+    part: string,
+    sequence: string,
+}
+
+export interface IReadProjectScreenPlay {
+    project_id: string,
+    screenplay_id: string,
+}
+
+export interface ICreateProjectScreenPlay {
+    project_id: string,
+    description: string,
+    address: string,
+    time_type_id: string,
+    location_side_id: string,
+    part: string,
+    sequence: string,
+    fields: { title: string, value: string }[]
+}
+
+export interface IUpdateProjectScreenPlay {
+    project_id: string,
+    screenplay_id: string,
+    description: string,
+    address: string,
+    time_type_id: string,
+    location_side_id: string,
+    part: string,
+    sequence: string,
+    fields: { title: string, value: string }[]
+}
+
+export interface IDeleteProjectScreenPlay {
+    screenplay_id: string,
 }

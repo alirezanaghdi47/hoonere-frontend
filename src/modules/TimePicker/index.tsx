@@ -6,9 +6,6 @@ import ReactTimePicker from "react-multi-date-picker/plugins/time_picker";
 // styles
 import "./index.style.scss";
 
-// utils
-import {generateTimeWithoutSecond, generateTimeWithSecond} from "@/utils/functions.ts";
-
 type TTimePicker = {
     id: string,
     name: string,
@@ -29,6 +26,13 @@ const TimePicker = ({
                         readOnly = false,
                         ...props
                     }: TTimePicker) => {
+
+    const generateTimeWithSecond = (time) => {
+        const [hour, minute] = time.split(":");
+        return new DateObject(time).setHour(Number(hour)).setMinute(Number(minute));
+    }
+
+    const generateTimeWithoutSecond = (time) => new DateObject(time).setSecond(0).format("HH:mm:ss");
 
     return (
         <ReactDatePicker

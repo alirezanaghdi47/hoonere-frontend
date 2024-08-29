@@ -3,6 +3,7 @@ import {useEffect, useLayoutEffect} from "react";
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // modules
 import Form from "@/modules/Form";
@@ -10,14 +11,18 @@ import SelectBox from "@/modules/SelectBox";
 import Button from "@/modules/Button";
 
 // services
-import {readAllProjectMemberByFoaService} from "@/services/projectService.ts";
+import {readAllProjectMemberByFoaService , IReadAllProjectMembersByFoa} from "@/services/projectService.ts";
 import {readAllJobService, readAllReceptionTypeService} from "@/services/publicService.ts";
 
-// types
-import {IReadAllProjectMembersByFoa} from "@/types/serviceType.ts";
+const createProjectAfficheUserSchema = Yup.object().shape({
+    foa_parent_id: Yup.string().trim().required("گروه شغلی الزامی است"),
+    foa_id: Yup.string().trim(),
+});
 
-// utils
-import {createProjectAfficheReceptionSchema, createProjectAfficheUserSchema} from "@/utils/validations.ts";
+const createProjectAfficheReceptionSchema = Yup.object().shape({
+    member_id: Yup.string().trim().required("عوامل پذیرایی الزامی است"),
+    reception_type: Yup.string().trim().required("نوع پذیرایی الزامی است"),
+});
 
 const CreateReceptionFormData = ({createProjectAfficheP2Form, resetPart}) => {
     const params = useParams();

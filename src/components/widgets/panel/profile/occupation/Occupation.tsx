@@ -2,6 +2,7 @@
 import {useEffect, useLayoutEffect} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // components
 import CreateJobFormData from "@/components/widgets/panel/profile/occupation/CreateJobFormData.tsx";
@@ -16,14 +17,29 @@ import usePart from "@/hooks/usePart.tsx";
 import Toast from "@/modules/Toast";
 
 // services
-import {readAllMyJobService, updateOccupationService} from "@/services/profileService.ts";
+import {readAllMyJobService, updateOccupationService , IUpdateOccupation} from "@/services/profileService.ts";
 import {readAllJobService} from "@/services/publicService.ts";
 
-// types
-import {IUpdateOccupation} from "@/types/serviceType.ts";
-
-// utils
-import {occupationSchema} from "@/utils/validations.ts";
+const occupationSchema = Yup.object().shape({
+    fields_of_activity: Yup.array().of(Yup.object().shape({
+        foa_parent_id: Yup.number(),
+        foa_child_id: Yup.number(),
+    })).min(1, "حداقل یک زمینه شغلی باید انتخاب شود"),
+    resume_file: Yup.mixed().nullable().test("fileSize", "حجم تصویر حداکثر 2 مگابایت باشد", (value: File) => {
+        if (Object.keys(value).length === 0) {
+            return true;
+        } else {
+            return value.size <= 2 * 1_024_000;
+        }
+    }).test("fileType", "فرمت تصویر یا فایل ارسالی باید از نوع (png , jpg , jpeg) و یا pdf باشد", (value: File) => {
+        if (Object.keys(value).length === 0) {
+            return true;
+        } else {
+            return ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'].includes(value.type);
+        }
+    }),
+    resume_text: Yup.string().trim().required("رزومه متنی الزامی است")
+});
 
 const Occupation = ({readMyProfileAction}) => {
     const {currentPart, resetPart, changeCurrentPart} = usePart(null , "read");

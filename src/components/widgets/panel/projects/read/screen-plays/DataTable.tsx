@@ -17,13 +17,15 @@ import Dialog from "@/modules/Dialog";
 import Toast from "@/modules/Toast";
 
 // services
-import {deleteProjectScreenPlayService, readProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
+import {
+    deleteProjectScreenPlayService,
+    readProjectScreenPlayService,
+    IDeleteProjectScreenPlay,
+    IReadProjectScreenPlay
+} from "@/services/projectScreenPlayService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
-
-// types
-import {IDeleteProjectScreenPlay, IReadProjectScreenPlay} from "@/types/serviceType.ts";
 
 const DataTable = ({
                        readAllProjectScreenPlayAction,

@@ -1,6 +1,7 @@
 // libraries
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // modules
 import Button from "@/modules/Button";
@@ -10,13 +11,11 @@ import Form from "@/modules/Form";
 import Toast from "@/modules/Toast";
 
 // services
-import {authService} from "@/services/authService.ts";
+import {authService , IAuth} from "@/services/authService.ts";
 
-// types
-import {IAuth} from "@/types/serviceType.ts";
-
-// utils
-import {authSchema} from "@/utils/validations.ts";
+const authSchema = Yup.object().shape({
+    mobile: Yup.string().trim().matches(/^([0|+[0-9]{1,5})?([7-9][0-9]{9})$/, "فرمت شماره موبایل نادرست است").required("شماره موبایل الزامی است"),
+});
 
 const Authentication = ({unSetOtpWay, nextStep, changeStep}) => {
     const authAction = useMutation({

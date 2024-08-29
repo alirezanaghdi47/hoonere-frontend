@@ -11,9 +11,6 @@ import IconButton from "@/modules/IconButton";
 // types
 import {IExtendedFile} from "@/types/constant.ts";
 
-// utils
-import {formattedSize} from "@/utils/functions.ts";
-
 type TFileInput = {
     id: string,
     name: string,
@@ -49,6 +46,16 @@ const FileInput = ({
             onChange(acceptedFiles[0]);
         },
     });
+
+    const formattedSize = (bytes: number): string => {
+        if (!bytes) return '0 Bytes';
+
+        const k = 1024;
+        const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+        return `${Number((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
+    }
 
     useEffect(() => {
         // @ts-ignore

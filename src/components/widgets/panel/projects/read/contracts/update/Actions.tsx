@@ -1,7 +1,11 @@
 // libraries
 import {useEffect} from "react";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 import {LuPlus} from "react-icons/lu";
+
+// ?????
+import {addArticleForContract, addNoteForContract, addSectionForContract} from "@/components/widgets/panel/projects/read/contracts/Action.tsx";
 
 // hooks
 import usePart from "@/hooks/usePart.tsx";
@@ -13,9 +17,17 @@ import Textarea from "@/modules/Textarea";
 import Button from "@/modules/Button";
 import TextInput from "@/modules/TextInput";
 
-//utils
-import {createArticleSchema, createSectionSchema, createNoteSchema} from "@/utils/validations.ts";
-import {addArticleForContract, addNoteForContract, addSectionForContract} from "@/utils/functions.ts";
+const createArticleSchema = Yup.object().shape({
+    article: Yup.string().trim().required("ماده الزامی است"),
+});
+
+const createSectionSchema = Yup.object().shape({
+    section: Yup.string().trim().required("بند الزامی است"),
+});
+
+const createNoteSchema = Yup.object().shape({
+    note: Yup.string().trim().required("تبصره الزامی است"),
+});
 
 export const BlankArticle = ({changeCurrentPart}) => {
     const article = document.querySelector("div.szh-accordion__item-content");
@@ -98,8 +110,8 @@ export const BlankNote = ({changeCurrentPart}) => {
     )
 }
 
-export const Contract = ({children , updateProjectContractForm}) => {
-    const {part, currentPart, changePart, resetPart , changeCurrentPart} = usePart(null, "read");
+export const Contract = ({children, updateProjectContractForm}) => {
+    const {part, currentPart, changePart, resetPart, changeCurrentPart} = usePart(null, "read");
 
     useEffect(() => {
         changePart({
@@ -133,7 +145,15 @@ export const Contract = ({children , updateProjectContractForm}) => {
     )
 }
 
-export const Article = ({children, article, part, currentPart, resetPart , changeCurrentPart, updateProjectContractForm}) => {
+export const Article = ({
+                            children,
+                            article,
+                            part,
+                            currentPart,
+                            resetPart,
+                            changeCurrentPart,
+                            updateProjectContractForm
+                        }) => {
     return (
         <div className="d-flex flex-column justify-content-start items-center gap-5 w-100">
             {
@@ -173,7 +193,16 @@ export const Article = ({children, article, part, currentPart, resetPart , chang
     )
 }
 
-export const Section = ({children, article, section, part, currentPart, resetPart , changeCurrentPart, updateProjectContractForm}) => {
+export const Section = ({
+                            children,
+                            article,
+                            section,
+                            part,
+                            currentPart,
+                            resetPart,
+                            changeCurrentPart,
+                            updateProjectContractForm
+                        }) => {
     return (
         <div
             className="d-flex flex-column justify-content-start items-center gap-5 w-100">
@@ -236,14 +265,14 @@ export const Note = ({children, article, section, note, part, currentPart, reset
     )
 }
 
-export const CreateArticle = ({articles , sections , notes, resetPart, updateProjectContractForm}) => {
+export const CreateArticle = ({articles, sections, notes, resetPart, updateProjectContractForm}) => {
     const createArticleForm = useFormik({
         initialValues: {
             article: "",
         },
         validationSchema: createArticleSchema,
         onSubmit: async (result, {resetForm}) => {
-            const data = addArticleForContract(articles, sections , notes, result.article);
+            const data = addArticleForContract(articles, sections, notes, result.article);
 
             updateProjectContractForm.setFieldValue("articles", data.articles);
             updateProjectContractForm.setFieldValue("sections", data.sections);
@@ -305,7 +334,7 @@ export const CreateArticle = ({articles , sections , notes, resetPart, updatePro
 export const UpdateArticle = ({article, resetPart, updateProjectContractForm}) => {
     const createArticleForm = useFormik({
         initialValues: {
-            article: article?.content? article.content :"",
+            article: article?.content ? article.content : "",
         },
         validationSchema: createArticleSchema,
         onSubmit: async (result, {resetForm}) => {
@@ -362,7 +391,7 @@ export const UpdateArticle = ({article, resetPart, updateProjectContractForm}) =
     )
 }
 
-export const CreateSection = ({article,  sections , lastArticleSection, resetPart, updateProjectContractForm}) => {
+export const CreateSection = ({article, sections, lastArticleSection, resetPart, updateProjectContractForm}) => {
     const createSectionForm = useFormik({
         initialValues: {
             section: "",
@@ -485,7 +514,7 @@ export const UpdateSection = ({section, resetPart, updateProjectContractForm}) =
     )
 }
 
-export const CreateNote = ({article , section , notes, resetPart, updateProjectContractForm}) => {
+export const CreateNote = ({article, section, notes, resetPart, updateProjectContractForm}) => {
     const createNoteForm = useFormik({
         initialValues: {
             note: "",

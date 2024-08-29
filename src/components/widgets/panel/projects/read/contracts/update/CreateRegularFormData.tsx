@@ -1,6 +1,9 @@
 // libraries
 import {LuPen, LuTrash} from "react-icons/lu";
 
+// ?????
+import {removeNoteForContract , removeSectionForContract , toggleSectionForContract} from "@/components/widgets/panel/projects/read/contracts/Action.tsx";
+
 // components
 import {Note, Section} from "@/components/widgets/panel/projects/read/contracts/update/Actions.tsx";
 
@@ -10,9 +13,6 @@ import usePart from "@/hooks/usePart.tsx";
 // modules
 import Typography from "@/modules/Typography";
 import IconButton from "@/modules/IconButton";
-
-// utils
-import {removeNoteForContract, removeSectionForContract} from "@/utils/functions.ts";
 
 const CreateRegularFormData = ({article, section, updateProjectContractForm}) => {
     const {

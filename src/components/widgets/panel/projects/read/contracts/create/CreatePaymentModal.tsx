@@ -1,6 +1,7 @@
 // libraries
 import {LuX} from "react-icons/lu";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // modules
 import Modal from "@/modules/Modal";
@@ -12,8 +13,10 @@ import Form from "@/modules/Form";
 import Button from "@/modules/Button";
 import Toast from "@/modules/Toast"
 
-// utils
-import {createPaymentSchema} from "@/utils/validations.ts";
+const createPaymentSchema = Yup.object().shape({
+    percent: Yup.number().min(1, "مقدار درصد نادرست است").max(100, "مقدار درصد نادرست است").required("درصد الزامی است"),
+    date: Yup.string().trim().required("تاریخ الزامی است"),
+});
 
 const CreatePaymentModal = ({modal, _handleHideModal, createProjectContractForm}) => {
     const createPaymentModal = useFormik({

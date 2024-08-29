@@ -2,6 +2,7 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // components
 import FormData from "@/components/widgets/panel/projects/read/screen-plays/create/FormData.tsx";
@@ -10,16 +11,23 @@ import FormData from "@/components/widgets/panel/projects/read/screen-plays/crea
 import Toast from "@/modules/Toast"
 
 // services
-import {createProjectScreenPlayService} from "@/services/projectScreenPlayService.ts";
+import {createProjectScreenPlayService , ICreateProjectScreenPlay} from "@/services/projectScreenPlayService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-// types
-import {ICreateProjectScreenPlay} from "@/types/serviceType.ts";
-
-// utils
-import {createProjectScreenPlaySchema} from "@/utils/validations.ts";
+const createProjectScreenPlaySchema = Yup.object().shape({
+    description: Yup.string().trim().required("توضیحات فیلم نامه الزامی است"),
+    address: Yup.string().trim().required("موقعیت فیلم نامه الزامی است"),
+    time_type_id: Yup.string().trim().required("زمان اجرا فیلم نامه الزامی است"),
+    location_side_id: Yup.string().trim().required("سمت مکان فیلم نامه الزامی است"),
+    part: Yup.number().min(1, "قسمت فیلم نامه از 1 باید بیشتر باشد").required("قسمت فیلم نامه الزامی است"),
+    sequence: Yup.number().min(1, "سکانس فیلم نامه از 1 باید بیشتر باشد").required("سکانس فیلم نامه الزامی است"),
+    fields: Yup.array().of(Yup.object().shape({
+        title: Yup.string().trim(),
+        value: Yup.string().trim(),
+    })),
+});
 
 const Content = () => {
     const params = useParams();

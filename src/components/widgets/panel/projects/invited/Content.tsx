@@ -7,14 +7,14 @@ import {useMutation} from "@tanstack/react-query";
 import DataModal from "@/components/widgets/panel/projects/invited/DataModal.tsx";
 
 // services
-import {readInvitedProjectService} from "@/services/projectService.ts";
+import {readInvitedProjectService , IReadInvitedProject} from "@/services/projectService.ts";
 
 const Content = () => {
     const params = useParams();
     const [data, setData] = useState({});
 
     const readInvitedProjectAction = useMutation({
-        mutationFn: (data) => readInvitedProjectService(data),
+        mutationFn: (data: IReadInvitedProject) => readInvitedProjectService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 setData(prevState => ({...prevState, ...data?.data?.project_info}));

@@ -12,13 +12,10 @@ import Breadcrumbs from "@/modules/Breadcrumbs";
 import Button from "@/modules/Button";
 
 // services
-import {checkProjectContractHasSupplementService,} from "@/services/projectContractService.ts";
+import {checkProjectContractHasSupplementService, ICheckProjectContractHasSupplementAction} from "@/services/projectContractService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
-
-// types
-import {ICheckProjectContractHasSupplementAction} from "@/types/serviceType.ts";
 
 const Header = () => {
     const params = useParams();

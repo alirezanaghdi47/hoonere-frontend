@@ -1,15 +1,15 @@
 // libraries
 import {LuTrash} from "react-icons/lu";
 
+// ?????
+import {removeSectionForInsertion} from "@/components/widgets/panel/projects/read/contracts/insertions/Action.tsx";
+
 // components
 import {Section} from "@/components/widgets/panel/projects/read/contracts/insertions/create/Actions.tsx";
 
 // modules
 import Typography from "@/modules/Typography";
 import IconButton from "@/modules/IconButton";
-
-// utils
-import {removeSectionForInsertion} from "@/utils/functions.ts";
 
 const CreateRegularFormData = ({article, section, createProjectContractInsertionForm}) => {
     return (

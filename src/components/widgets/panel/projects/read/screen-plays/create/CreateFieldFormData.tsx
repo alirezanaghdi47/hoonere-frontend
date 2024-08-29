@@ -1,13 +1,16 @@
 // libraries
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // modules
 import Form from "@/modules/Form";
 import TextInput from "@/modules/TextInput";
 import Button from "@/modules/Button";
 
-// utils
-import {createFieldSchema} from "@/utils/validations.ts";
+const createFieldSchema = Yup.object().shape({
+    title: Yup.string().trim().required("عنوان الزامی است"),
+    value: Yup.string().trim().required("مقدار الزامی است"),
+});
 
 const CreateFieldFormData = ({createProjectScreenPlayForm, resetPart}) => {
     const createFieldForm = useFormik({

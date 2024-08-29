@@ -1,6 +1,10 @@
 // libraries
 import {useFormik} from "formik";
+import * as Yup from "yup";
 import {LuPlus} from "react-icons/lu";
+
+// ?????
+import {addArticleForContract, addNoteForContract, addSectionForContract} from "@/components/widgets/panel/projects/read/contracts/Action.tsx";
 
 // hooks
 import usePart from "@/hooks/usePart.tsx";
@@ -12,9 +16,17 @@ import Textarea from "@/modules/Textarea";
 import Button from "@/modules/Button";
 import TextInput from "@/modules/TextInput";
 
-// utils
-import {createArticleSchema, createSectionSchema, createNoteSchema} from "@/utils/validations.ts";
-import {addArticleForContract, addNoteForContract, addSectionForContract} from "@/utils/functions.ts";
+const createArticleSchema = Yup.object().shape({
+    article: Yup.string().trim().required("ماده الزامی است"),
+});
+
+const createSectionSchema = Yup.object().shape({
+    section: Yup.string().trim().required("بند الزامی است"),
+});
+
+const createNoteSchema = Yup.object().shape({
+    note: Yup.string().trim().required("تبصره الزامی است"),
+});
 
 export const BlankArticle = ({changeCurrentPart}) => {
     const article = document.querySelector("div.szh-accordion__item-content");
@@ -182,7 +194,7 @@ export const Section = ({children, article, section, createProjectContractForm})
     )
 }
 
-export const Note = ({children , article , section , note , createProjectContractForm}) => {
+export const Note = ({children, article, section, note, createProjectContractForm}) => {
     return (
         <div className="d-flex flex-column justify-content-start items-center gap-5 w-95 ms-auto">
             {children}
@@ -190,14 +202,14 @@ export const Note = ({children , article , section , note , createProjectContrac
     )
 }
 
-export const CreateArticle = ({articles , sections , notes, resetPart, createProjectContractForm}) => {
+export const CreateArticle = ({articles, sections, notes, resetPart, createProjectContractForm}) => {
     const createArticleForm = useFormik({
         initialValues: {
             article: "",
         },
         validationSchema: createArticleSchema,
         onSubmit: async (result, {resetForm}) => {
-            const data = addArticleForContract(articles, sections , notes, result.article);
+            const data = addArticleForContract(articles, sections, notes, result.article);
 
             createProjectContractForm.setFieldValue("articles", data.articles);
             createProjectContractForm.setFieldValue("sections", data.sections);
@@ -256,14 +268,14 @@ export const CreateArticle = ({articles , sections , notes, resetPart, createPro
     )
 }
 
-export const CreateSection = ({article , sections , lastArticleSection, resetPart, createProjectContractForm}) => {
+export const CreateSection = ({article, sections, lastArticleSection, resetPart, createProjectContractForm}) => {
     const createSectionForm = useFormik({
         initialValues: {
             section: "",
         },
         validationSchema: createSectionSchema,
         onSubmit: async (result, {resetForm}) => {
-            const data = addSectionForContract(sections, result.section, article.number , lastArticleSection.article_number);
+            const data = addSectionForContract(sections, result.section, article.number, lastArticleSection.article_number);
 
             createProjectContractForm.setFieldValue("sections", data);
 
@@ -318,7 +330,7 @@ export const CreateSection = ({article , sections , lastArticleSection, resetPar
     )
 }
 
-export const CreateNote = ({article , section , notes, resetPart, createProjectContractForm}) => {
+export const CreateNote = ({article, section, notes, resetPart, createProjectContractForm}) => {
     const createNoteForm = useFormik({
         initialValues: {
             note: "",

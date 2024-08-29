@@ -11,10 +11,7 @@ import Loading from "@/components/partials/panel/Loading.tsx";
 import useFilter from "@/hooks/useFilter.tsx";
 
 // services
-import {readAllProjectMemberService} from "@/services/projectMemberService.ts";
-
-// types
-import {IReadAllProjectMember} from "@/types/serviceType.ts";
+import {readAllProjectMemberService , IReadAllProjectMember} from "@/services/projectMemberService.ts";
 
 const Content = () => {
     const params = useParams();

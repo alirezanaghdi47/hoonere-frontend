@@ -14,7 +14,7 @@ import Popover from "@/modules/Popover";
 import Typography from "@/modules/Typography";
 
 // services
-import {readAllProjectMoodBoardTypeService} from "@/services/publicService.ts";
+// import {readAllProjectMoodBoardTypeService} from "@/services/publicService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
@@ -25,13 +25,13 @@ const ActionBar = ({children}: { children?: ReactNode }) => {
     const {auth} = useAuthStore();
     const {app: {isDark}, toggleTheme} = useAppStore();
 
-    const readAllProjectAfficheAction = useMutation({
-        mutationFn: () => readAllProjectMoodBoardTypeService(),
-    });
+    // const readAllProjectAfficheAction = useMutation({
+    //     mutationFn: () => readAllProjectMoodBoardTypeService(),
+    // });
 
-    useEffect(() => {
-        readAllProjectAfficheAction.mutate();
-    }, [location.key]);
+    // useEffect(() => {
+    //     readAllProjectAfficheAction.mutate();
+    // }, [location.key]);
 
     return (
         <div className="order-1 order-md-2 col-12 col-md-8 d-flex justify-content-end align-items-center gap-2">

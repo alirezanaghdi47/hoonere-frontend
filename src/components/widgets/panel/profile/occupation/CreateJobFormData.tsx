@@ -2,6 +2,7 @@
 import {useLayoutEffect} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // modules
 import Form from "@/modules/Form";
@@ -11,8 +12,10 @@ import Button from "@/modules/Button";
 // services
 import {readAllJobService} from "@/services/publicService.ts";
 
-// utils
-import {createJobSchema} from "@/utils/validations.ts";
+const createJobSchema = Yup.object().shape({
+    foa_parent_id: Yup.number().required("گروه شغلی الزامی است"),
+    foa_child_id: Yup.number().required("عنوان شغلی الزامی است"),
+});
 
 const CreateJobFormData = ({updateOccupationForm, resetPart}) => {
     const readAllJobAction = useMutation({

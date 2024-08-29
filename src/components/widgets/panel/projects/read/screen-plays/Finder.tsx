@@ -5,15 +5,15 @@ import {useParams} from "react-router-dom";
 import SelectBox from "@/modules/SelectBox";
 import Pagination from "@/modules/Pagination";
 
-const options = [
-    {value: 12, label: '12'},
-    {value: 24, label: '24'},
-    {value: 48, label: '48'},
-    {value: 96, label: '96'}
-];
-
 const Finder = ({readAllProjectScreenPlayAction, filter, changeFilter}) => {
     const params = useParams();
+
+    const pageSizeList = [
+        {value: 12, label: '12'},
+        {value: 24, label: '24'},
+        {value: 48, label: '48'},
+        {value: 96, label: '96'}
+    ];
 
     return (
         <div
@@ -23,7 +23,7 @@ const Finder = ({readAllProjectScreenPlayAction, filter, changeFilter}) => {
                     id='pageSize'
                     name='pageSize'
                     value={filter.per_page}
-                    options={options}
+                    options={pageSizeList}
                     onChange={(value) => {
                         changeFilter({per_page: value});
                         readAllProjectScreenPlayAction.mutate({

@@ -12,15 +12,12 @@ import Loading from "@/components/partials/panel/Loading.tsx";
 import useFilter from "@/hooks/useFilter.tsx";
 
 // services
-import {readAllInvitedProjectService, readAllProjectService} from "@/services/projectService.ts";
-
-// types
-import {IReadAllProject} from "@/types/serviceType.ts";
+import {readAllInvitedProjectService, readAllProjectService , IReadAllInvitedProject, IReadAllProject} from "@/services/projectService.ts";
 
 const Content = () => {
     const location = useLocation();
 
-    const {filter, initialFilter, isOpenFilter, showFilter, hideFilter, resetFilter, changeFilter} = useFilter<IReadAllProject>({
+    const {filter, initialFilter, isOpenFilter, showFilter, hideFilter, resetFilter, changeFilter} = useFilter<IReadAllProject | IReadAllInvitedProject>({
         text: "",
         type_id: "",
         page: 1,
@@ -28,7 +25,7 @@ const Content = () => {
     });
 
     const readAllProjectAction = useMutation({
-        mutationFn: (data: IReadAllProject) => location.hash === "#is_invited=0" ? readAllProjectService(data) : readAllInvitedProjectService(data),
+        mutationFn: (data: IReadAllProject | IReadAllInvitedProject) => location.hash === "#is_invited=0" ? readAllProjectService(data) : readAllInvitedProjectService(data),
     });
 
     useLayoutEffect(() => {

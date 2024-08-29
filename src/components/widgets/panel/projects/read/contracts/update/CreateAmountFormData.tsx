@@ -2,6 +2,9 @@
 import Num2persian from 'num2persian';
 import {LuPen, LuTrash} from "react-icons/lu";
 
+// ?????
+import {removeNoteForContract} from "@/components/widgets/panel/projects/read/contracts/Action.tsx";
+
 // components
 import {Section , Note} from "@/components/widgets/panel/projects/read/contracts/update/Actions.tsx";
 
@@ -12,9 +15,6 @@ import usePart from "@/hooks/usePart.tsx";
 import Typography from "@/modules/Typography";
 import NumberInput from "@/modules/NumberInput";
 import IconButton from "@/modules/IconButton";
-
-// utils
-import {removeNoteForContract} from "@/utils/functions.ts";
 
 const CreateAmountFormData = ({article, section, updateProjectContractForm}) => {
     const {

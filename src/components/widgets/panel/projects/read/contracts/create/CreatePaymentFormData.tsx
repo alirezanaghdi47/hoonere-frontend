@@ -3,6 +3,9 @@ import Loadable from "@loadable/component";
 import {format} from "date-fns-jalali";
 import {LuTrash} from "react-icons/lu";
 
+// ?????
+import {removeNoteForContract} from "@/components/widgets/panel/projects/read/contracts/Action.tsx";
+
 // components
 const CreatePaymentModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/create/CreatePaymentModal.tsx"));
 
@@ -18,18 +21,15 @@ import Typography from "@/modules/Typography";
 import IconButton from "@/modules/IconButton";
 import Button from "@/modules/Button";
 
-// utils
-import {removeNoteForContract} from "@/utils/functions.ts";
-
-const options = [
-    {id: 1, label: "پرداخت بر اساس فاز بندی", value: "1"},
-    {id: 2, label: "پرداخت بر اساس فاکتور", value: "2"},
-    {id: 3, label: "پرداخت دقیقه ای", value: "3"},
-    {id: 4, label: "پرداخت روزانه", value: "4"},
-    {id: 5, label: "پرداخت ماهانه", value: "5"}
-];
-
 const PaymentActionBar = ({article, section, createProjectContractForm}) => {
+    const paymentStateList = [
+        {id: 1, label: "پرداخت بر اساس فاز بندی", value: "1"},
+        {id: 2, label: "پرداخت بر اساس فاکتور", value: "2"},
+        {id: 3, label: "پرداخت دقیقه ای", value: "3"},
+        {id: 4, label: "پرداخت روزانه", value: "4"},
+        {id: 5, label: "پرداخت ماهانه", value: "5"}
+    ];
+
     return (
         <div className="hstack justify-content-start gap-5 p-0 m-0">
             <div className='d-flex justify-content-start align-items-center gap-5 w-300px'>
@@ -44,7 +44,7 @@ const PaymentActionBar = ({article, section, createProjectContractForm}) => {
                 <SelectBox
                     id="payment_state"
                     name="payment_state"
-                    options={options}
+                    options={paymentStateList}
                     value={createProjectContractForm.values.articles.find(item => item.number === article.number)?.payment_state}
                     onChange={(value) => {
                         createProjectContractForm.setFieldValue(`articles[${createProjectContractForm.values.articles.findIndex(item => item.number === article.number)}].payment_state`, value);

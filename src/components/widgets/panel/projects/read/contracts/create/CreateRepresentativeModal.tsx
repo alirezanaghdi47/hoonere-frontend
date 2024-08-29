@@ -1,5 +1,6 @@
 // libraries
 import {useFormik} from "formik";
+import * as Yup from "yup";
 import {LuX} from "react-icons/lu";
 
 // modules
@@ -11,8 +12,11 @@ import Typography from "@/modules/Typography";
 import IconButton from "@/modules/IconButton";
 import Modal from "@/modules/Modal";
 
-// utils
-import {createRepresentativeSchema} from "@/utils/validations.ts";
+const createRepresentativeSchema = Yup.object().shape({
+    full_name: Yup.string().trim().required("نام و نام خانوادگی الزامی است"),
+    national_code: Yup.string().trim().required("کد ملی الزامی است"),
+    post: Yup.string().trim().required("سمت کاری الزامی است"),
+});
 
 const CreateRepresentativeModal = ({modal, _handleHideModal , createUnOfficialLegalPartiesForm}) => {
     const createRepresentativeForm = useFormik({

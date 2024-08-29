@@ -11,6 +11,7 @@ import Addresses from "@/components/widgets/panel/projects/read/affiches/update/
 
 // hooks
 import usePart from "@/hooks/usePart.tsx";
+
 // modules
 import Form from "@/modules/Form";
 import TextInput from "@/modules/TextInput";

@@ -3,6 +3,9 @@ import {useEffect} from "react";
 import {format} from "date-fns-jalali";
 import {LuTrash} from "react-icons/lu";
 
+// ?????
+import {removeNoteForContract} from "@/components/widgets/panel/projects/read/contracts/Action.tsx";
+
 // components
 import {Section, Note} from "@/components/widgets/panel/projects/read/contracts/create/Actions.tsx";
 
@@ -10,9 +13,6 @@ import {Section, Note} from "@/components/widgets/panel/projects/read/contracts/
 import Typography from "@/modules/Typography";
 import DatePicker from "@/modules/DatePicker";
 import IconButton from "@/modules/IconButton";
-
-// utils
-import {removeNoteForContract} from "@/utils/functions.ts";
 
 const CreateExecutionTimeFormData = ({article, section, createProjectContractForm}) => {
 

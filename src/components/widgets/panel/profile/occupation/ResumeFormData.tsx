@@ -11,11 +11,11 @@ import Dialog from "@/modules/Dialog";
 import Toast from "@/modules/Toast";
 
 // services
-import {deleteProfileFileService} from "@/services/profileService.ts";
+import {deleteProfileFileService , IDeleteProfileFile} from "@/services/profileService.ts";
 
 const ResumeFormData = ({readMyProfileAction ,updateOccupationForm , updateOccupationAction}) => {
     const deleteProfileFileAction = useMutation({
-        mutationFn: (data) => deleteProfileFileService(data),
+        mutationFn: (data: IDeleteProfileFile) => deleteProfileFileService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 Toast("success", data.message);

@@ -12,6 +12,7 @@ import Receptions from "@/components/widgets/panel/projects/read/affiches/create
 
 // hooks
 import usePart from "@/hooks/usePart.tsx";
+
 // modules
 import Button from "@/modules/Button";
 

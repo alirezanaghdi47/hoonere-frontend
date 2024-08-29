@@ -2,6 +2,7 @@
 import {useLayoutEffect} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // modules
 import Form from "@/modules/Form";
@@ -14,16 +15,16 @@ import ImageInput from "@/modules/ImageInput";
 import Alert from "@/modules/Alert";
 
 // services
-import {readAllProjectTypeService, readUserInquiryService} from "@/services/publicService.ts";
+import {readAllProjectTypeService, readUserInquiryService, IReadUserInquiry} from "@/services/publicService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-// types
-import {IReadUserInquiry} from "@/types/serviceType.ts";
-
-// utils
-import {readUserInquirySchema} from "@/utils/validations.ts";
+const readUserInquirySchema = Yup.object().shape({
+    username: Yup.string().trim().required("نام کاربری الزامی است"),
+    foa_parent_id: Yup.number().nullable(),
+    foa_id: Yup.number().required("عنوان شغلی الزامی است"),
+});
 
 const FormData = ({createProjectForm, createProjectAction}) => {
     const {auth} = useAuthStore();

@@ -1,13 +1,15 @@
 // libraries
 import {useRef} from "react";
 import {useNavigate, useParams} from "react-router-dom";
+import Loadable from "@loadable/component";
 import {useMutation} from "@tanstack/react-query";
 import {useReactToPrint} from 'react-to-print';
 import {format} from "date-fns-jalali";
 import {LuDownload, LuFileSignature, LuMessageCircle, LuX} from "react-icons/lu";
 
 // components
-import SignatureModal from "@/components/widgets/panel/projects/read/contracts/invited/SignatureModal.tsx";
+const SignatureModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/invited/SignatureModal.tsx"));
+const SendCommentModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/invited/SendCommentModal.tsx"));
 
 // hooks
 import useModal from "@/hooks/useModal.tsx";
@@ -18,7 +20,7 @@ import Modal from "@/modules/Modal";
 import IconButton from "@/modules/IconButton";
 
 // services
-import {sendProjectContractSignatureConfirmCodeService} from "@/services/projectContractService.ts";
+import {sendProjectContractSignatureConfirmCodeService , ISendProjectContractSignatureConfirmCode} from "@/services/projectContractService.ts";
 
 const Contract = ({children}) => {
     return (
@@ -896,9 +898,9 @@ const DataModal = ({contract}) => {
         _handleHideModal: _handleHideSignatureModal
     } = useModal();
     const {
-        modal: commentModal,
-        _handleShowModal: _handleShowCommentModal,
-        _handleHideModal: _handleHideCommentModal
+        modal: sendCommentModal,
+        _handleShowModal: _handleShowSendCommentModal,
+        _handleHideModal: _handleHideSendCommentModal
     } = useModal();
 
     const _handlePrint = useReactToPrint({
@@ -907,16 +909,13 @@ const DataModal = ({contract}) => {
     });
 
     const sendProjectContractSignatureConfirmCodeAction = useMutation({
-        mutationFn: (data) => sendProjectContractSignatureConfirmCodeService(data),
+        mutationFn: (data: ISendProjectContractSignatureConfirmCode) => sendProjectContractSignatureConfirmCodeService(data),
         onSuccess: async (data) => {
-            console.log(data)
             if (!data.error) {
                 _handleShowSignatureModal(contract);
             }
         }
     });
-
-    console.log(contract)
 
     return (
         <>
@@ -969,7 +968,7 @@ const DataModal = ({contract}) => {
                             color="light-info"
                             data-tooltip-id="my-tooltip"
                             data-tooltip-content="کامنت گذاری"
-                            onClick={() => console.log("commentModal")}
+                            onClick={() => _handleShowSendCommentModal(contract)}
                         >
                             <LuMessageCircle size={20}/>
                         </IconButton>
@@ -1318,6 +1317,15 @@ const DataModal = ({contract}) => {
                         modal={signatureModal}
                         _handleHideModal={_handleHideSignatureModal}
                         sendProjectContractSignatureConfirmCodeAction={sendProjectContractSignatureConfirmCodeAction}
+                    />
+                )
+            }
+
+            {
+                sendCommentModal.isOpen && (
+                    <SendCommentModal
+                        modal={sendCommentModal}
+                        _handleHideModal={_handleHideSendCommentModal}
                     />
                 )
             }

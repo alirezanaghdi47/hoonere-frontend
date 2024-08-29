@@ -13,18 +13,14 @@ import {
     readAllProjectAfficheMemberService,
     readAllProjectAfficheReceptionService,
     readAllProjectAfficheScreenPlayService,
-    readProjectAfficheService
-} from "@/services/projectAfficheService.ts";
-
-// types
-import {
+    readProjectAfficheService,
     IReadAllProjectAfficheActor,
     IReadAllProjectAfficheAddress,
     IReadAllProjectAfficheMember,
     IReadAllProjectAfficheReception,
     IReadAllProjectAfficheScreenPlay,
     IReadProjectAffiche
-} from "@/types/serviceType.ts";
+} from "@/services/projectAfficheService.ts";
 
 const Content = () => {
     const params = useParams();

@@ -14,18 +14,15 @@ import Empty from "@/components/partials/panel/Empty.tsx";
 import Table from "@/modules/Table";
 import IconButton from "@/modules/IconButton";
 import Typography from "@/modules/Typography";
+import Chip from "@/modules/Chip";
 import Dialog from "@/modules/Dialog";
 import Toast from "@/modules/Toast";
 
 // services
-import {deleteProjectMemberService} from "@/services/projectMemberService.ts";
+import {deleteProjectMemberService , IDeleteProjectMember} from "@/services/projectMemberService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
-
-// types
-import {IDeleteProjectMember} from "@/types/serviceType.ts";
-import Chip from "@/modules/Chip";
 
 const DataTable = ({
                        readAllProjectMemberAction,

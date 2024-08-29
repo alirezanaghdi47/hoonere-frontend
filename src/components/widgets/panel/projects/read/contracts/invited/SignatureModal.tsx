@@ -2,6 +2,7 @@
 import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 import {LuX} from "react-icons/lu";
 
 // modules
@@ -13,18 +14,18 @@ import Form from "@/modules/Form";
 import Button from "@/modules/Button";
 
 // services
-import {checkProjectContractSignatureConfirmCodeService} from "@/services/projectContractService.ts";
+import {checkProjectContractSignatureConfirmCodeService , ICheckProjectContractSignatureConfirmCode} from "@/services/projectContractService.ts";
 
-// utils
-import {checkProjectContractSignatureConfirmCodeSchema} from "@/utils/validations.ts";
+const checkProjectContractSignatureConfirmCodeSchema = Yup.object().shape({
+    code: Yup.string().trim().required("کد ارسالی الزامی است"),
+});
 
 const SignatureModal = ({modal, _handleHideModal , sendProjectContractSignatureConfirmCodeAction}) => {
     const params = useParams();
 
     const checkProjectContractSignatureConfirmCodeAction = useMutation({
-        mutationFn: (data) => checkProjectContractSignatureConfirmCodeService(data),
+        mutationFn: (data: ICheckProjectContractSignatureConfirmCode) => checkProjectContractSignatureConfirmCodeService(data),
         onSuccess: async (data) => {
-            console.log(data)
             if (!data.error) {
                 _handleHideModal();
             }

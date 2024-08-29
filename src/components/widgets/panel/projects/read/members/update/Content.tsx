@@ -3,6 +3,7 @@ import {useLayoutEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // components
 import FormData from "@/components/widgets/panel/projects/read/members/update/FormData.tsx";
@@ -12,16 +13,22 @@ import Loading from "@/components/partials/panel/Loading.tsx";
 import Toast from "@/modules/Toast"
 
 // services
-import {updateProjectMemberService, readProjectMemberService} from "@/services/projectMemberService.ts";
+import {updateProjectMemberService, readProjectMemberService , IUpdateProjectMember, IReadProjectMember} from "@/services/projectMemberService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-// types
-import {IUpdateProjectMember, IReadProjectMember} from "@/types/serviceType.ts";
+const updateProjectMemberWithFullNameSchema = Yup.object().shape({
+    foa_parent_id: Yup.string().trim().required("گروه شغلی الزامی است"),
+    foa_child_id: Yup.string().trim().required("عنوان شغلی الزامی است"),
+    name: Yup.string().trim().required("نام و نام خانوادگی الزامی است")
+});
 
-// utils
-import {updateProjectMemberWithUserNameSchema, updateProjectMemberWithFullNameSchema} from "@/utils/validations.ts";
+const updateProjectMemberWithUserNameSchema = Yup.object().shape({
+    foa_parent_id: Yup.string().trim().required("گروه شغلی الزامی است"),
+    foa_child_id: Yup.string().trim().required("عنوان شغلی الزامی است"),
+    user_id: Yup.string().trim().required("نام کاربری الزامی است")
+});
 
 const Content = () => {
     const params = useParams();

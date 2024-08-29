@@ -11,10 +11,7 @@ import Loading from "@/components/partials/panel/Loading.tsx";
 import useFilter from "@/hooks/useFilter.tsx";
 
 // services
-import {readAllProjectMoodBoardService} from "@/services/projectMoodBoardService.ts";
-
-// types
-import {IReadAllProjectMoodBoard} from "@/types/serviceType.ts";
+import {readAllProjectMoodBoardService , IReadAllProjectMoodBoard} from "@/services/projectMoodBoardService.ts";
 
 const Content = () => {
     const params = useParams();

@@ -43,11 +43,13 @@ export const updateProfileIdentityService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readMyProfileService = async () => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const {token} = useAuthStore.getState().auth;
 
@@ -57,15 +59,15 @@ export const readMyProfileService = async () => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -90,7 +92,7 @@ export const deleteProfileFileService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -115,11 +117,13 @@ export const createBankCardService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readMyAllBankCardService = async () => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const {token} = useAuthStore.getState().auth;
 
@@ -129,15 +133,15 @@ export const readMyAllBankCardService = async () => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -162,7 +166,7 @@ export const updateBankCardService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -187,7 +191,7 @@ export const deleteBankCardService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -212,11 +216,13 @@ export const changeStatusOfBankCardService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
 export const readAllMyJobService = async () => {
+    const {logout} = useAuthStore.getState();
+
     try {
         const {token} = useAuthStore.getState().auth;
 
@@ -226,15 +232,15 @@ export const readAllMyJobService = async () => {
             }
         });
 
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
         return {
             ...response.data,
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        const {logout} = useAuthStore.getState();
-
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
 }
 
@@ -263,6 +269,70 @@ export const updateOccupationService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
     }
+}
+
+
+export interface IUpdateProfileIdentityReal {
+    profile_img: File | object,
+    national_card: File | object,
+    username: string | null,
+    first_name: string | null,
+    last_name: string | null,
+    national_code: string | null,
+    id_code: string | null,
+    birthdate: string | null,
+    email: string | null,
+    address: string | null,
+    postal_code: string | null,
+    user_type: string,
+}
+
+export interface IUpdateProfileIdentityLegal {
+    profile_img: File | object,
+    newspaper_file: File | object,
+    username: string | null,
+    company_name: string | null,
+    register_code: string | null,
+    economic_code: string | null,
+    address: string | null,
+    postal_code: string | null,
+    telephone: string | null,
+    email: string | null,
+    representatives: unknown
+    user_type: string,
+}
+
+export interface IUpdateOccupation {
+    fields_of_activity: unknown,
+    resume_file: File | object,
+    resume_text: string | null,
+}
+
+export interface ICreateBankCard {
+    name: string | null,
+    card_number: string,
+    card_shaba: string,
+    account_id: string
+}
+
+export interface IUpdateBankCard {
+    card_id: string,
+    name: string | null,
+    card_number: string,
+    card_shaba: string,
+    account_id: string
+}
+
+export interface IChangeStatusOfBankCard {
+    card_id: string
+}
+
+export interface IDeleteBankCard {
+    card_id: string
+}
+
+export interface IDeleteProfileFile {
+    file_type: string
 }

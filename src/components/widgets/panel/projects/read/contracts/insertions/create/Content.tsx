@@ -3,6 +3,7 @@ import {useLayoutEffect} from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {useFormik} from "formik";
+import * as Yup from "yup";
 
 // components
 import FormData from "@/components/widgets/panel/projects/read/contracts/insertions/create/FormData.tsx";
@@ -12,21 +13,27 @@ import Loading from "@/components/partials/panel/Loading.tsx";
 import Toast from "@/modules/Toast"
 
 // services
-import {createProjectContractInsertionService, readProjectContractForInsertionService} from "@/services/projectContractService.ts";
-import {readAllProjectContractInsertionArticleService, readAllProjectContractInsertionSectionService} from "@/services/publicService.ts";
+import {
+    createProjectContractInsertionService,
+    readProjectContractForInsertionService,
+    ICreateProjectContractInsertion,
+    IReadProjectContractForInsertion
+} from "@/services/projectContractService.ts";
+import {
+    readAllProjectContractInsertionArticleService,
+    readAllProjectContractInsertionSectionService
+} from "@/services/publicService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
 
-// types
-import {
-    ICreateProjectContractInsertion,
-    IReadProjectContractForInsertion
-} from "@/types/serviceType.ts";
-
 // utils
-import {createProjectContractInsertionSchema} from "@/utils/validations.ts";
 import {getObjectValueByKey} from "@/utils/functions.ts";
+
+const createProjectContractInsertionSchema = Yup.object().shape({
+    articles: Yup.array(),
+    sections: Yup.array(),
+});
 
 const Content = () => {
     const location = useLocation();
@@ -47,7 +54,7 @@ const Content = () => {
     });
 
     const createProjectContractInsertionAction = useMutation({
-        mutationFn: (data : ICreateProjectContractInsertion) => createProjectContractInsertionService(data),
+        mutationFn: (data: ICreateProjectContractInsertion) => createProjectContractInsertionService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 Toast("success", data.message);

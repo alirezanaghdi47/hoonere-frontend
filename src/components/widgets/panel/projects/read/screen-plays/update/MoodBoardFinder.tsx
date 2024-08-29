@@ -2,14 +2,14 @@
 import SelectBox from "@/modules/SelectBox";
 import Pagination from "@/modules/Pagination";
 
-const options = [
-    {value: 12, label: '12'},
-    {value: 24, label: '24'},
-    {value: 48, label: '48'},
-    {value: 96, label: '96'}
-];
-
 const MoodBoardFinder = ({readAllProjectMoodBoardAction, filter, changeFilter}) => {
+    const pageSizeList = [
+        {value: 12, label: '12'},
+        {value: 24, label: '24'},
+        {value: 48, label: '48'},
+        {value: 96, label: '96'}
+    ];
+
     return (
         <div
             className={`d-flex flex-wrap ${readAllProjectMoodBoardAction.data?.data?.pagination?.total > filter.per_page ? "justify-content-center justify-content-sm-between" : "justify-content-start"} align-items-center w-100 gap-5`}>
@@ -18,7 +18,7 @@ const MoodBoardFinder = ({readAllProjectMoodBoardAction, filter, changeFilter}) 
                     id='pageSize'
                     name='pageSize'
                     value={filter.per_page}
-                    options={options}
+                    options={pageSizeList}
                     onChange={(value) => {
                         changeFilter({per_page: value});
                         readAllProjectMoodBoardAction.mutate({per_page: value});
