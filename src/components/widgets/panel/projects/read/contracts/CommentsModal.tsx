@@ -7,7 +7,7 @@ import {useMutation} from "@tanstack/react-query";
 import {LuCornerDownLeft, LuX} from "react-icons/lu";
 
 // components
-const ReplyCommentModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/ReplyCommentModal.tsx"));
+const ReplyCommentModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/read/ReplyCommentModal.tsx"));
 
 import Empty from "@/components/partials/panel/Empty.tsx";
 import Loading from "@/components/partials/panel/Loading.tsx";
@@ -144,25 +144,19 @@ const CommentsModal = ({modal, _handleHideModal}) => {
                         )
                     }
 
-                    {/*{*/}
-                    {/*    !readAllProjectContractCommentAction.isPending && readAllProjectContractCommentAction.data?.data?.comments.length > 0 && (*/}
-                    {/*        <ul className="vstack justify-content-center gap-5 w-100 p-0 m-0">*/}
-                    {/*            <li>*/}
-                    {/*                <CommentItem comment={null}/>*/}
-                    {/*            </li>*/}
-                    {/*        </ul>*/}
-                    {/*    )*/}
-                    {/*}*/}
-
-                    <ul className="vstack justify-content-center gap-5 w-100 p-0 m-0">
-                        <li className='d-flex flex-column justify-content-start align-items-center gap-5 w-100'>
-                            <CommentItem comment={null}/>
-
-                            <div className="w-100 ps-20">
-                                <CommentItem comment={null}/>
-                            </div>
-                        </li>
-                    </ul>
+                    {
+                        !readAllProjectContractCommentAction.isPending && readAllProjectContractCommentAction.data?.data?.comments.length > 0 && (
+                            <ul className="vstack justify-content-center gap-5 w-100 p-0 m-0">
+                                {
+                                    readAllProjectContractCommentAction.data?.data?.comments.map(comment =>
+                                        <li key={comment.id}>
+                                            <CommentItem comment={comment}/>
+                                        </li>
+                                    )
+                                }
+                            </ul>
+                        )
+                    }
 
                     {
                         !readAllProjectContractCommentAction.isPending && readAllProjectContractCommentAction.data?.data?.comments.length === 0 && (
