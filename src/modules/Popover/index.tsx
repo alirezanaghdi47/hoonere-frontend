@@ -26,7 +26,7 @@ const Popover = ({children, content, trigger, position = 'center center' , ...pr
 type TPopover = {
     children: ReactNode,
     content: ReactNode,
-    trigger: ("click" | "hover")[],
+    trigger: ("click" | "hover" | "focus")[],
     position?: 'center center' | 'top left' | 'top right' | 'bottom right' | 'bottom left' | 'right center' | 'left center' | 'top center' | 'bottom center'
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties

@@ -13,6 +13,7 @@ import IconButton from "@/modules/IconButton";
 import SelectBox from "@/modules/SelectBox";
 import Form from "@/modules/Form";
 import Button from "@/modules/Button";
+import Toast from "@/modules/Toast";
 
 // services
 import {readAllProjectConfirmationService} from "@/services/publicService.ts";
@@ -33,11 +34,15 @@ const InvitationModal = ({modal, _handleHideModal, readInvitedProjectAction}) =>
         mutationFn: (data: IInviteConfirmationProject) => inviteConfirmationProjectService(data),
         onSuccess: async (data) => {
             if (!data.error) {
+                Toast("success", data.message);
+
                 readInvitedProjectAction.mutate({
                     project_id: params.id
                 });
 
                 _handleHideModal();
+            } else {
+                Toast("error", data.message);
             }
         }
     });
@@ -135,7 +140,7 @@ const InvitationModal = ({modal, _handleHideModal, readInvitedProjectAction}) =>
                     onClick={inviteConfirmationProjectForm.handleSubmit}
                     isLoading={inviteConfirmationProjectAction.isPending}
                 >
-                    ذخیره
+                    تایید
                 </Button>
             </Modal.Footer>
         </Modal>

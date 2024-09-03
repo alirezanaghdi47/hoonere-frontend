@@ -13,9 +13,11 @@ import IconButton from "@/modules/IconButton";
 import Form from "@/modules/Form";
 import Button from "@/modules/Button";
 import Textarea from "@/modules/Textarea";
+import Toast from "@/modules/Toast";
 
 // services
 import {createProjectContractCommentService , ICreateProjectContractComment} from "@/services/projectContractService.ts";
+import {format} from "date-fns-jalali";
 
 const createProjectContractCommentSchema = Yup.object().shape({
     content: Yup.string().trim().required("متن دیدگاه الزامی است"),
@@ -26,7 +28,7 @@ const CommentItem = ({comment}) => {
         <div className="d-flex flex-column justify-content-start align-items-start gap-5 w-100 bg-light rounded-2 p-5">
             <div className='d-flex justify-content-start align-items-center gap-5 w-100'>
                 <LazyLoadImage
-                    src="/assets/images/logo.svg"
+                    src={comment?.profile_img}
                     alt="logo"
                     width={25}
                     height={25}
@@ -39,14 +41,14 @@ const CommentItem = ({comment}) => {
                         color="dark"
                         isBold
                     >
-                        علیرضا نقدی
+                        {comment?.user_info?.user_type === "1" ? comment?.user_info.first_name + " " + comment?.user_info.last_name : comment?.user_info.company_name}
                     </Typography>
 
                     <Typography
                         size="xxs"
                         color="dark"
                     >
-                        1400/11/11 | 12:40
+                        {format(comment?.created_at, "HH:mm | yyyy-MM-dd")}
                     </Typography>
                 </div>
             </div>
@@ -56,21 +58,30 @@ const CommentItem = ({comment}) => {
                     size="xs"
                     color="dark"
                 >
-                    متن دیدگاه
+                    {comment?.content}
                 </Typography>
             </div>
         </div>
     )
 }
 
-const ReplyCommentModal = ({modal, _handleHideModal}) => {
+const ReplyCommentModal = ({modal, _handleHideModal , readAllProjectContractCommentAction}) => {
     const params = useParams();
 
     const createProjectContractCommentAction = useMutation({
         mutationFn: (data: ICreateProjectContractComment) => createProjectContractCommentService(data),
         onSuccess: async (data) => {
             if (!data.error) {
+                Toast("success", data.message);
+
+                readAllProjectContractCommentAction.mutate({
+                    project_id: params.id,
+                    contract_id: modal?.data?.contract_id
+                });
+
                 _handleHideModal();
+            } else {
+                Toast("error", data.message);
             }
         }
     });
@@ -84,8 +95,8 @@ const ReplyCommentModal = ({modal, _handleHideModal}) => {
             createProjectContractCommentAction.mutate({
                 ...result,
                 project_id: params.id,
-                contract_id: modal?.data?.id.toString(),
-                parent_id: modal?.data?.parent_id.toString()
+                contract_id: modal?.data?.contract_id,
+                parent_id: modal?.data?.id.toString()
             });
         },
         onReset: async () => {
@@ -123,7 +134,7 @@ const ReplyCommentModal = ({modal, _handleHideModal}) => {
 
             <Modal.Body>
                 <div className='d-flex flex-column justify-content-start align-items-start gap-5 w-100 h-100 p-5'>
-                    <CommentItem comment={null}/>
+                    <CommentItem comment={modal?.data}/>
 
                     <Form.Group>
                         <Form.Label

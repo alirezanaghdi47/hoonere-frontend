@@ -12,22 +12,41 @@ import IconButton from "@/modules/IconButton";
 import CodeInput from "@/modules/CodeInput";
 import Form from "@/modules/Form";
 import Button from "@/modules/Button";
+import Toast from "@/modules/Toast";
 
 // services
-import {checkProjectContractSignatureConfirmCodeService , ICheckProjectContractSignatureConfirmCode} from "@/services/projectContractService.ts";
+import {
+    checkProjectContractSignatureConfirmCodeService,
+    ICheckProjectContractSignatureConfirmCode
+} from "@/services/projectContractService.ts";
 
 const checkProjectContractSignatureConfirmCodeSchema = Yup.object().shape({
-    code: Yup.string().trim().required("کد ارسالی الزامی است"),
+    code: Yup.string().trim().required("کد اعتبارسنجی الزامی است"),
 });
 
-const SignatureModal = ({modal, _handleHideModal , sendProjectContractSignatureConfirmCodeAction}) => {
+const SignatureModal = ({
+                            modal,
+                            _handleHideModal,
+                            readAllProjectContractAction,
+                            initialFilter,
+                            sendProjectContractSignatureConfirmCodeAction
+                        }) => {
     const params = useParams();
 
     const checkProjectContractSignatureConfirmCodeAction = useMutation({
         mutationFn: (data: ICheckProjectContractSignatureConfirmCode) => checkProjectContractSignatureConfirmCodeService(data),
         onSuccess: async (data) => {
             if (!data.error) {
+                Toast("success", data.message);
+
+                readAllProjectContractAction.mutate({
+                    ...initialFilter,
+                    project_id: params.id
+                });
+
                 _handleHideModal();
+            } else {
+                Toast("error", data.message);
             }
         }
     });
@@ -82,7 +101,7 @@ const SignatureModal = ({modal, _handleHideModal , sendProjectContractSignatureC
                     className='d-flex flex-column justify-content-start align-items-start gap-5 w-100 h-100 p-5'>
                     <Form.Group>
                         <Form.Label
-                            label="کد ارسالی"
+                            label="کد اعتبارسنجی"
                             required
                             size="sm"
                             color="dark"
@@ -91,12 +110,11 @@ const SignatureModal = ({modal, _handleHideModal , sendProjectContractSignatureC
                         <CodeInput
                             id="code"
                             name="code"
-                            placeholder="کد اعتبارسنجی"
                             value={checkProjectContractSignatureConfirmCodeForm.values.code}
                             onChange={(value) => checkProjectContractSignatureConfirmCodeForm.setFieldValue("code", value)}
                             onResend={() => sendProjectContractSignatureConfirmCodeAction.mutate({
                                 project_id: params.id,
-                                contract_id: modal?.data?.contract.id.toString()
+                                contract_id: modal?.data?.id.toString()
                             })}
                         />
 
@@ -121,7 +139,7 @@ const SignatureModal = ({modal, _handleHideModal , sendProjectContractSignatureC
                     onClick={checkProjectContractSignatureConfirmCodeForm.handleSubmit}
                     isLoading={checkProjectContractSignatureConfirmCodeAction.isPending}
                 >
-                    ذخیره
+                    تایید
                 </Button>
             </Modal.Footer>
         </Modal>

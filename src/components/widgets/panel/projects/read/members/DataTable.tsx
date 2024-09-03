@@ -186,7 +186,12 @@ const DataTable = ({
                                         text: "انصراف",
                                         color: "light-dark",
                                     },
-                                    async () => deleteProjectMemberAction.mutate({member_id: row.original.id.toString()})
+                                    async () => deleteProjectMemberAction.mutate({
+                                        project_id: params.id,
+                                        member_id: row.original.id.toString(),
+                                        foa_parent_id: row.original.foa_parent_id,
+                                        foa_child_id: row.original.foa_child_id,
+                                    })
                                 )
                             }}
                             data-tooltip-id="my-tooltip"

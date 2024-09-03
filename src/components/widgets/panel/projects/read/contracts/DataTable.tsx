@@ -5,8 +5,11 @@ import Loadable from "@loadable/component";
 import {useMutation} from "@tanstack/react-query";
 import {format} from "date-fns-jalali";
 import {
+    LuFileCheck2,
     LuFilePlus,
-    LuInfo, LuMessageCircle,
+    LuFileSignature,
+    LuInfo,
+    LuMessageCircle,
     LuPen,
     LuThumbsUp,
     LuTrash2
@@ -14,6 +17,7 @@ import {
 
 // components
 const CommentsModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/CommentsModal.tsx"));
+const SignatureModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/SignatureModal.tsx"));
 
 import Finder from "@/components/widgets/panel/projects/read/contracts/Finder.tsx";
 import Filter from "@/components/widgets/panel/projects/read/contracts/Filter.tsx";
@@ -35,9 +39,11 @@ import {
     changeProjectContractStatusService,
     deleteProjectUnOfficialContractService,
     deleteProjectOfficialContractService,
+    sendProjectContractSignatureConfirmCodeService,
     IChangeProjectContractStatus,
     IDeleteProjectOfficialContract,
     IDeleteProjectUnOfficialContract,
+    ISendProjectContractSignatureConfirmCode,
 } from "@/services/projectContractService.ts";
 
 // stores
@@ -57,7 +63,16 @@ const DataTable = ({
     const location = useLocation();
     const params = useParams();
     const {auth} = useAuthStore();
-    const {modal, _handleShowModal, _handleHideModal} = useModal();
+    const {
+        modal: commentsModal,
+        _handleShowModal: _handleShowCommentsModal,
+        _handleHideModal: _handleHideCommentsModal
+    } = useModal();
+    const {
+        modal: signatureModal,
+        _handleShowModal: _handleShowSignatureModal,
+        _handleHideModal: _handleHideSignatureModal
+    } = useModal();
 
     const changeProjectContractStatusAction = useMutation({
         mutationFn: (data: IChangeProjectContractStatus) => changeProjectContractStatusService(data),
@@ -69,6 +84,18 @@ const DataTable = ({
                     ...filter,
                     project_id: params.id
                 });
+            } else {
+                Toast("error", data.message);
+            }
+        }
+    });
+
+
+    const sendProjectContractSignatureConfirmCodeAction = useMutation({
+        mutationFn: (data: ISendProjectContractSignatureConfirmCode) => sendProjectContractSignatureConfirmCodeService(data),
+        onSuccess: async (data) => {
+            if (!data.error) {
+                Toast("success", data.message);
             } else {
                 Toast("error", data.message);
             }
@@ -251,21 +278,8 @@ const DataTable = ({
                 cell: ({row}) =>
                     location.hash === "#is_invited=0" ? (
                         <div className="d-flex justify-content-end align-items-center gap-2 w-100">
-                            <IconButton
-                                color="light-info"
-                                size="sm"
-                                onClick={() => _handleShowModal(row.original)}
-                                data-tooltip-id="my-tooltip"
-                                data-tooltip-content="دیدگاه ها"
-                            >
-                                <LuMessageCircle
-                                    size={20}
-                                    color="currentColor"
-                                />
-                            </IconButton>
-
                             {
-                                row.original.type_id === "1" && row.original.status_id === "1" && (
+                                row.original?.Im_in === "1" && row.original.type_id === "1" && row.original.status_id === "1" && (
                                     <IconButton
                                         color="light-success"
                                         size="sm"
@@ -301,6 +315,27 @@ const DataTable = ({
                                 )
                             }
 
+                            {
+                                row.original?.Im_in === "1" && row.original?.status_id === "2" && row.original?.signed === "0" && (
+                                    <IconButton
+                                        size="sm"
+                                        color="light-success"
+                                        data-tooltip-id="my-tooltip"
+                                        data-tooltip-content="امضای دیجیتال"
+                                        onClick={() => {
+                                            sendProjectContractSignatureConfirmCodeAction.mutate({
+                                                project_id: params.id,
+                                                contract_id: row.original.id.toString()
+                                            });
+
+                                            _handleShowSignatureModal(row.original);
+                                        }}
+                                    >
+                                        <LuFileSignature size={20}/>
+                                    </IconButton>
+                                )
+                            }
+
                             <IconButton
                                 href={auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/insertions"}
                                 color="light-info"
@@ -313,6 +348,23 @@ const DataTable = ({
                                     color="currentColor"
                                 />
                             </IconButton>
+
+                            {
+                                row.original?.status_id === "1" && row.original?.signed === "0" && (
+                                    <IconButton
+                                        color="light-dark"
+                                        size="sm"
+                                        onClick={() => _handleShowCommentsModal(row.original)}
+                                        data-tooltip-id="my-tooltip"
+                                        data-tooltip-content="دیدگاه ها"
+                                    >
+                                        <LuMessageCircle
+                                            size={20}
+                                            color="currentColor"
+                                        />
+                                    </IconButton>
+                                )
+                            }
 
                             <IconButton
                                 color="light-info"
@@ -327,18 +379,22 @@ const DataTable = ({
                                 />
                             </IconButton>
 
-                            <IconButton
-                                href={row.original.type_id === "1" ? auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/update#official" : auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/update#un-official"}
-                                color="light-warning"
-                                size="sm"
-                                data-tooltip-id="my-tooltip"
-                                data-tooltip-content="ویرایش"
-                            >
-                                <LuPen
-                                    size={20}
-                                    color="currentColor"
-                                />
-                            </IconButton>
+                            {
+                                row.original?.status_id === "1" && (
+                                    <IconButton
+                                        href={row.original.type_id === "1" ? auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/update#official" : auth.panel_url + "projects/" + row.original.project_id + "/contracts/" + row.original.id + "/update#un-official"}
+                                        color="light-warning"
+                                        size="sm"
+                                        data-tooltip-id="my-tooltip"
+                                        data-tooltip-content="ویرایش"
+                                    >
+                                        <LuPen
+                                            size={20}
+                                            color="currentColor"
+                                        />
+                                    </IconButton>
+                                )
+                            }
 
                             <IconButton
                                 color="light-danger"
@@ -378,10 +434,60 @@ const DataTable = ({
                         </div>
                     ) : (
                         <div className="d-flex justify-content-end align-items-center gap-2 w-100">
+                            {
+                                row.original?.status_id === "2" && row.original?.signed === "0" && (
+                                    <IconButton
+                                        size="sm"
+                                        color="light-success"
+                                        data-tooltip-id="my-tooltip"
+                                        data-tooltip-content="امضای دیجیتال"
+                                        onClick={() => {
+                                            sendProjectContractSignatureConfirmCodeAction.mutate({
+                                                project_id: params.id,
+                                                contract_id: row.original.id.toString()
+                                            });
+
+                                            _handleShowSignatureModal(row.original);
+                                        }}
+                                    >
+                                        <LuFileSignature size={20}/>
+                                    </IconButton>
+                                )
+                            }
+
+                            {
+                                row.original?.signed === "1" && (
+                                    <div
+                                        className="d-flex justify-content-center align-items-center w-35px h-35px bg-success text-light-success rounded"
+                                        data-tooltip-id="my-tooltip"
+                                        data-tooltip-content="شما قرارداد را امضا کرده اید"
+                                    >
+                                        <LuFileCheck2 size={20}/>
+                                    </div>
+                                )
+                            }
+
+                            {
+                                row.original?.status_id === "1" && row.original?.signed === "0" && (
+                                    <IconButton
+                                        color="light-dark"
+                                        size="sm"
+                                        onClick={() => _handleShowCommentsModal(row.original)}
+                                        data-tooltip-id="my-tooltip"
+                                        data-tooltip-content="دیدگاه ها"
+                                    >
+                                        <LuMessageCircle
+                                            size={20}
+                                            color="currentColor"
+                                        />
+                                    </IconButton>
+                                )
+                            }
+
                             <IconButton
                                 color="light-info"
                                 size="sm"
-                                onClick={() => navigate( auth.panel_url + "projects/" + params.id + "/contracts/" + row.original.id + "/invited", {state: {background: location}})}
+                                onClick={() => navigate(auth.panel_url + "projects/" + params.id + "/contracts/" + row.original.id + "/invited", {state: {background: location}})}
                                 data-tooltip-id="my-tooltip"
                                 data-tooltip-content="جزییات"
                             >
@@ -441,10 +547,22 @@ const DataTable = ({
             </div>
 
             {
-                modal.isOpen && (
+                commentsModal.isOpen && (
                     <CommentsModal
-                        modal={modal}
-                        _handleHideModal={_handleHideModal}
+                        modal={commentsModal}
+                        _handleHideModal={_handleHideCommentsModal}
+                    />
+                )
+            }
+
+            {
+                signatureModal.isOpen && (
+                    <SignatureModal
+                        modal={signatureModal}
+                        _handleHideModal={_handleHideSignatureModal}
+                        readAllProjectContractAction={readAllProjectContractAction}
+                        initialFilter={initialFilter}
+                        sendProjectContractSignatureConfirmCodeAction={sendProjectContractSignatureConfirmCodeAction}
                     />
                 )
             }

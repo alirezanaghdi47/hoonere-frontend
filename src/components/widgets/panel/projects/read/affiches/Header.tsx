@@ -1,5 +1,5 @@
 // libraries
-import {useState} from "react";
+import {useLayoutEffect, useState} from "react";
 import {useLocation, useParams} from "react-router-dom";
 
 // components
@@ -18,11 +18,22 @@ const Header = () => {
     const location = useLocation();
     const {auth} = useAuthStore();
 
-    const [breadcrumbLinks, setBreadcrumbLinks] = useState([
-        {id: 1, label: "داشبورد", href: auth.panel_url + "dashboard"},
-        {id: 2, label: "پروژه ها", href: auth.panel_url + "projects"},
-        {id: 3, label: ` پروژه ${params.id} `, href: auth.panel_url + `projects/${params.id}`},
-    ]);
+    const [breadcrumbLinks, setBreadcrumbLinks] = useState([]);
+
+    useLayoutEffect(() => {
+        if(location.hash === "#is_invited=0"){
+            setBreadcrumbLinks([
+                {id: 1, label: "داشبورد", href: auth.panel_url + "dashboard"},
+                {id: 2, label: "پروژه ها", href: auth.panel_url + "projects"},
+                {id: 3, label: ` پروژه ${params.id} `, href: auth.panel_url + `projects/${params.id}`},
+            ]);
+        } else if(location.hash === "#is_invited=1") {
+            setBreadcrumbLinks([
+                {id: 1, label: "داشبورد", href: auth.panel_url + "dashboard"},
+                {id: 2, label: "پروژه ها", href: auth.panel_url + "projects"},
+            ]);
+        }
+    } , [location.key]);
 
     return (
         <div className="d-flex justify-content-center align-items-center w-100 bg-primary">

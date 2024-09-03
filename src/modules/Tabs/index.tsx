@@ -17,7 +17,7 @@ const Tabs = ({children, variant = "link", isVertical = false, ...props}: TTabs)
     )
 }
 
-const TabsItem = ({label, isActive = false, onClick, ...props}: TTabsItem) => {
+const TabsItem = ({label, isActive = false, onClick , isDisabled, ...props}: TTabsItem) => {
     return (
         <li
             {...props}
@@ -27,7 +27,7 @@ const TabsItem = ({label, isActive = false, onClick, ...props}: TTabsItem) => {
                 className={classNames("nav-link fs-5 text-active-primary fw-bold ms-0 me-10 py-5 cursor-pointer", props.className, {
                     "active": isActive
                 })}
-                onClick={onClick}
+                onClick={() => !isDisabled ? onClick() : null}
             >
                 {label}
             </span>
@@ -48,6 +48,7 @@ type TTabs = {
 type TTabsItem = {
     label: string,
     isActive: boolean,
+    isDisabled: boolean,
     onClick: () => void
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties

@@ -5,11 +5,10 @@ import Loadable from "@loadable/component";
 import {useMutation} from "@tanstack/react-query";
 import {useReactToPrint} from 'react-to-print';
 import {format} from "date-fns-jalali";
-import {LuDownload, LuFileSignature, LuMessageCircle, LuX} from "react-icons/lu";
+import {LuDownload, LuFileSignature, LuX} from "react-icons/lu";
 
 // components
-const SignatureModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/invited/SignatureModal.tsx"));
-const SendCommentModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/invited/SendCommentModal.tsx"));
+const SignatureModal = Loadable(() => import("@/components/widgets/panel/projects/read/contracts/SignatureModal.tsx"));
 
 // hooks
 import useModal from "@/hooks/useModal.tsx";
@@ -18,6 +17,7 @@ import useModal from "@/hooks/useModal.tsx";
 import Typography from "@/modules/Typography";
 import Modal from "@/modules/Modal";
 import IconButton from "@/modules/IconButton";
+import Toast from "@/modules/Toast";
 
 // services
 import {sendProjectContractSignatureConfirmCodeService , ISendProjectContractSignatureConfirmCode} from "@/services/projectContractService.ts";
@@ -889,32 +889,12 @@ const RegularSection = ({section}) => {
 }
 
 const DataModal = ({contract}) => {
-    const params = useParams();
     const navigate = useNavigate();
     const printRef = useRef(null);
-    const {
-        modal: signatureModal,
-        _handleShowModal: _handleShowSignatureModal,
-        _handleHideModal: _handleHideSignatureModal
-    } = useModal();
-    const {
-        modal: sendCommentModal,
-        _handleShowModal: _handleShowSendCommentModal,
-        _handleHideModal: _handleHideSendCommentModal
-    } = useModal();
 
     const _handlePrint = useReactToPrint({
         documentTitle: `contract`,
         content: () => printRef.current,
-    });
-
-    const sendProjectContractSignatureConfirmCodeAction = useMutation({
-        mutationFn: (data: ISendProjectContractSignatureConfirmCode) => sendProjectContractSignatureConfirmCodeService(data),
-        onSuccess: async (data) => {
-            if (!data.error) {
-                _handleShowSignatureModal(contract);
-            }
-        }
     });
 
     return (
@@ -946,33 +926,6 @@ const DataModal = ({contract}) => {
                     </Typography>
 
                     <div className='d-flex justify-content-end align-items-center gap-5'>
-                        {
-                            contract?.status_id === "2" && (
-                                <IconButton
-                                    size="sm"
-                                    color="light-success"
-                                    data-tooltip-id="my-tooltip"
-                                    data-tooltip-content="امضای دیجیتال"
-                                    onClick={() => sendProjectContractSignatureConfirmCodeAction.mutate({
-                                        project_id: params.id,
-                                        contract_id: params.subId
-                                    })}
-                                >
-                                    <LuFileSignature size={20}/>
-                                </IconButton>
-                            )
-                        }
-
-                        <IconButton
-                            size="sm"
-                            color="light-info"
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="کامنت گذاری"
-                            onClick={() => _handleShowSendCommentModal(contract)}
-                        >
-                            <LuMessageCircle size={20}/>
-                        </IconButton>
-
                         <IconButton
                             size="sm"
                             color="light-dark"
@@ -1310,25 +1263,6 @@ const DataModal = ({contract}) => {
                     </div>
                 </Modal.Body>
             </Modal>
-
-            {
-                signatureModal.isOpen && (
-                    <SignatureModal
-                        modal={signatureModal}
-                        _handleHideModal={_handleHideSignatureModal}
-                        sendProjectContractSignatureConfirmCodeAction={sendProjectContractSignatureConfirmCodeAction}
-                    />
-                )
-            }
-
-            {
-                sendCommentModal.isOpen && (
-                    <SendCommentModal
-                        modal={sendCommentModal}
-                        _handleHideModal={_handleHideSendCommentModal}
-                    />
-                )
-            }
         </>
     )
 }

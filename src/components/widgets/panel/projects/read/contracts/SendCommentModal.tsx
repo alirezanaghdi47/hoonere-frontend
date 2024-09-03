@@ -12,6 +12,7 @@ import IconButton from "@/modules/IconButton";
 import Form from "@/modules/Form";
 import Button from "@/modules/Button";
 import Textarea from "@/modules/Textarea";
+import Toast from "@/modules/Toast";
 
 // services
 import {createProjectContractCommentService , ICreateProjectContractComment} from "@/services/projectContractService.ts";
@@ -20,14 +21,23 @@ const createProjectContractCommentSchema = Yup.object().shape({
     content: Yup.string().trim().required("متن دیدگاه الزامی است"),
 });
 
-const SendCommentModal = ({modal, _handleHideModal}) => {
+const SendCommentModal = ({modal, _handleHideModal , readAllProjectContractCommentAction}) => {
     const params = useParams();
 
     const createProjectContractCommentAction = useMutation({
         mutationFn: (data: ICreateProjectContractComment) => createProjectContractCommentService(data),
         onSuccess: async (data) => {
             if (!data.error) {
+                Toast("success", data.message);
+
+                readAllProjectContractCommentAction.mutate({
+                    project_id: params.id,
+                    contract_id: modal?.data?.id.toString()
+                });
+
                 _handleHideModal();
+            } else {
+                Toast("error", data.message);
             }
         }
     });
@@ -41,7 +51,7 @@ const SendCommentModal = ({modal, _handleHideModal}) => {
             createProjectContractCommentAction.mutate({
                 ...result,
                 project_id: params.id,
-                contract_id: params.subId,
+                contract_id: modal?.data?.id.toString(),
                 parent_id: ""
             });
         },

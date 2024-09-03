@@ -8,18 +8,18 @@ import DataModal from "@/components/widgets/panel/projects/read/affiches/invited
 
 // services
 import {
-    readAllProjectAfficheActorService,
-    readAllProjectAfficheAddressService,
-    readAllProjectAfficheMemberService,
-    readAllProjectAfficheReceptionService,
-    readAllProjectAfficheScreenPlayService,
     readInvitedProjectAfficheService,
-    IReadAllProjectAfficheActor,
-    IReadAllProjectAfficheAddress,
-    IReadAllProjectAfficheMember,
-    IReadAllProjectAfficheReception,
-    IReadAllProjectAfficheScreenPlay,
+    readAllInvitedProjectAfficheActorService,
+    readAllInvitedProjectAfficheAddressService,
+    readAllInvitedProjectAfficheMemberService,
+    readAllInvitedProjectAfficheReceptionService,
+    readAllInvitedProjectAfficheScreenPlayService,
     IReadInvitedProjectAffiche,
+    IReadAllInvitedProjectAfficheActor,
+    IReadAllInvitedProjectAfficheAddress,
+    IReadAllInvitedProjectAfficheMember,
+    IReadAllInvitedProjectAfficheReception,
+    IReadAllInvitedProjectAfficheScreenPlay,
 } from "@/services/projectAfficheService.ts";
 
 const Content = () => {
@@ -36,7 +36,7 @@ const Content = () => {
     });
 
     const readAllProjectAfficheActorAction = useMutation({
-        mutationFn: (data: IReadAllProjectAfficheActor) => readAllProjectAfficheActorService(data),
+        mutationFn: (data: IReadAllInvitedProjectAfficheActor) => readAllInvitedProjectAfficheActorService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 setData(prevState => ({...prevState , actors: data?.data?.actors || []}));
@@ -45,7 +45,7 @@ const Content = () => {
     });
 
     const readAllProjectAfficheMemberAction = useMutation({
-        mutationFn: (data: IReadAllProjectAfficheMember) => readAllProjectAfficheMemberService(data),
+        mutationFn: (data: IReadAllInvitedProjectAfficheMember) => readAllInvitedProjectAfficheMemberService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 setData(prevState => ({...prevState , members: data?.data?.members || []}));
@@ -53,8 +53,8 @@ const Content = () => {
         }
     });
 
-    const readAllProjectAfficheReceptionAction = useMutation({
-        mutationFn: (data: IReadAllProjectAfficheReception) => readAllProjectAfficheReceptionService(data),
+    const readAllInvitedProjectAfficheReceptionAction = useMutation({
+        mutationFn: (data: IReadAllInvitedProjectAfficheReception) => readAllInvitedProjectAfficheReceptionService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 setData(prevState => ({...prevState , receptions: data?.data?.receptions || []}));
@@ -62,8 +62,8 @@ const Content = () => {
         }
     });
 
-    const readAllProjectAfficheScreenPlayAction = useMutation({
-        mutationFn: (data: IReadAllProjectAfficheScreenPlay) => readAllProjectAfficheScreenPlayService(data),
+    const readAllInvitedProjectAfficheScreenPlayAction = useMutation({
+        mutationFn: (data: IReadAllInvitedProjectAfficheScreenPlay) => readAllInvitedProjectAfficheScreenPlayService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 setData(prevState => ({...prevState , screenplays: data?.data?.screenplays || []}));
@@ -71,8 +71,8 @@ const Content = () => {
         }
     });
 
-    const readAllProjectAfficheAddressAction = useMutation({
-        mutationFn: (data: IReadAllProjectAfficheAddress) => readAllProjectAfficheAddressService(data),
+    const readAllInvitedProjectAfficheAddressAction = useMutation({
+        mutationFn: (data: IReadAllInvitedProjectAfficheAddress) => readAllInvitedProjectAfficheAddressService(data),
         onSuccess: async (data) => {
             if (!data.error) {
                 setData(prevState => ({...prevState , addresses: data?.data?.addresses || []}));
@@ -105,7 +105,7 @@ const Content = () => {
     }, []);
 
     useLayoutEffect(() => {
-        readAllProjectAfficheReceptionAction.mutate({
+        readAllInvitedProjectAfficheReceptionAction.mutate({
             project_id: params.id,
             affiche_id: params.subId,
             get_last: 1
@@ -113,7 +113,7 @@ const Content = () => {
     }, []);
 
     useLayoutEffect(() => {
-        readAllProjectAfficheScreenPlayAction.mutate({
+        readAllInvitedProjectAfficheScreenPlayAction.mutate({
             project_id: params.id,
             affiche_id: params.subId,
             page: 1,
@@ -123,7 +123,7 @@ const Content = () => {
     }, []);
 
     useLayoutEffect(() => {
-        readAllProjectAfficheAddressAction.mutate({
+        readAllInvitedProjectAfficheAddressAction.mutate({
             project_id: params.id,
             affiche_id: params.subId,
             get_last: 1,
@@ -133,8 +133,8 @@ const Content = () => {
     return !readInvitedProjectAfficheAction.isPending && readInvitedProjectAfficheAction.data?.data?.affiche_info && Object.keys(readInvitedProjectAfficheAction.data?.data?.affiche_info).length > 0 &&
         !readAllProjectAfficheActorAction.isPending &&
         !readAllProjectAfficheMemberAction.isPending &&
-        !readAllProjectAfficheReceptionAction.isPending &&
-        !readAllProjectAfficheScreenPlayAction.isPending && (
+        !readAllInvitedProjectAfficheReceptionAction.isPending &&
+        !readAllInvitedProjectAfficheScreenPlayAction.isPending && (
             <DataModal affiche={data}/>
         )
 }

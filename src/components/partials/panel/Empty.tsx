@@ -13,13 +13,13 @@ const Empty = ({title, width, height , withCard = false}) => {
             <LazyLoadImage
                 src="/assets/images/illustrations/no-data.svg"
                 alt="no-data"
-                width={100}
-                height={100}
+                width={height / 3}
+                height={height / 3}
             />
 
             <Typography
                 color="muted"
-                size="md"
+                size="sm"
                 isBold
             >
                 {title ? title : "داده ای یافت نشد"}

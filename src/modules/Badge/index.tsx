@@ -6,7 +6,7 @@ import classNames from "classnames";
 import {TColors} from "@/types/constant.ts";
 
 const Badge = ({color, size = "sm", label, placement, ...props}: TBadge) => {
-    return label > 0 && (
+    return (
         <span
             {...props}
             className={classNames("badge badge-circle", props.className, {
@@ -27,7 +27,7 @@ const Badge = ({color, size = "sm", label, placement, ...props}: TBadge) => {
 type TBadge = {
     color: TColors,
     size?: "sm" | "lg",
-    label: number,
+    label: number | string,
     placement: "top-end" | "top-start" | "bottom-end" | "bottom-start",
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties

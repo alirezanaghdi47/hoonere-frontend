@@ -52,9 +52,9 @@ const MoodBoardCard = ({moodBoard, attachProjectMoodBoardForm}) => {
                     moodBoard?.type === "1" && (
                         <LazyLoadImage
                             src={moodBoard?.content}
-                            width={300}
-                            height={150}
-                            className="w-100 h-100 min-h-150px mh-150px object-fit-cover rounded-2"
+                            width={25}
+                            height={25}
+                            className="w-50px h-50px object-fit-cover rounded-2"
                         />
                     )
                 }

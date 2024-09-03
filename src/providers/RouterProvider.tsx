@@ -55,7 +55,7 @@ const pageRoutes = [
         children: [
             {
                 id: 1,
-                path: "server-down-down",
+                path: "server-down",
                 component: ServerPage,
             },
             {

@@ -30,7 +30,7 @@ export const readAllProjectMemberService = async (data) => {
         }
     } catch (err) {
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -59,7 +59,7 @@ export const readProjectMemberService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -84,7 +84,7 @@ export const createProjectMemberService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -109,7 +109,7 @@ export const updateProjectMemberService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -134,7 +134,7 @@ export const deleteProjectMemberService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -172,8 +172,8 @@ export interface IUpdateProjectMember {
 }
 
 export interface IDeleteProjectMember {
+    project_id: string,
     member_id: string,
-    project_id?: string,
-    foa_parent_id?: string,
-    foa_child_id?: string,
+    foa_parent_id: string,
+    foa_child_id: string,
 }

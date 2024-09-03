@@ -471,7 +471,7 @@ const CreatePaymentFormData = ({article, section, updateProjectContractForm}) =>
         <Forbidden
             title="ابتدا بند های از پیش تعریف شده را کامل نمایید"
             width="100%"
-            height={200}
+            height={300}
         />
     )
 }

@@ -19,7 +19,7 @@ const WithRouteGuard = <P extends { [key: string]: unknown }>(WrappedComponent: 
             }
 
             if (isAuth && location.pathname.startsWith("/auth")) {
-                navigate(auth.panel_url + "dashboard", {replace: true});
+                navigate(auth.panel_url ? auth.panel_url + "dashboard" : "/panel/dashboard", {replace: true});
             }
         }, [isAuth]);
 

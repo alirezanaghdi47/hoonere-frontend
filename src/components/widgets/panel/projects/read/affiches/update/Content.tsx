@@ -195,6 +195,8 @@ const Content = () => {
                 member_id: member.info?.member_id,
                 coming_time: member.info?.coming_time,
                 description: member.info?.description,
+                foa_child_id: member?.foa_child_id,
+                foa_id: member?.foa_id,
                 full_name: member.info?.is_fake === "0" ? member.info?.user_type ? member.info?.user_type === "1" ? member.info?.first_name + " " + member.info?.last_name : member.info?.company_name : member.info?.company_name ? member.info?.company_name : member.info?.first_name + " " + member.info?.last_name : member.info?.first_name + " " + member.info?.last_name,
                 is_fake: member.info?.is_fake
             })) : [],
@@ -202,6 +204,8 @@ const Content = () => {
                 member_id: reception.info?.member_id,
                 reception_type: reception.info?.reception_type,
                 reception_name: reception.info?.reception_name,
+                foa_child_id: reception?.foa_child_id,
+                foa_id: reception?.foa_id,
                 full_name: reception.info?.is_fake === "0" ? reception.info?.user_type ? reception.info?.user_type === "1" ? reception.info?.first_name + " " + reception.info?.last_name : reception.info?.company_name : reception.info?.company_name ? reception.info?.company_name : reception.info?.first_name + " " + reception.info?.last_name : reception.info?.first_name + " " + reception.info?.last_name,
                 is_fake: reception.info?.is_fake
             })) : [],

@@ -13,13 +13,13 @@ const Forbidden = ({title, width, height , withCard = false}) => {
             <LazyLoadImage
                 src="/assets/images/illustrations/forbidden.svg"
                 alt="forbidden"
-                width={150}
-                height={150}
+                width={height / 2}
+                height={height / 2}
             />
 
             <Typography
                 color="muted"
-                size="md"
+                size="sm"
                 isBold
             >
                 {title ? title : "شما دسترسی ندارید"}

@@ -30,7 +30,7 @@ export const readAllProjectAfficheService = async (data) => {
         }
     } catch (err) {
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -57,7 +57,7 @@ export const readAllInvitedProjectAfficheService = async (data) => {
         }
     } catch (err) {
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -84,7 +84,7 @@ export const readProjectAfficheService = async (data) => {
         }
     } catch (err) {
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -111,7 +111,7 @@ export const readInvitedProjectAfficheService = async (data) => {
         }
     } catch (err) {
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -138,7 +138,7 @@ export const readAllProjectAfficheAddressService = async (data) => {
         }
     } catch (err) {
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -165,7 +165,7 @@ export const readAllProjectAfficheActorService = async (data) => {
         }
     } catch (err) {
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -192,7 +192,7 @@ export const readAllProjectAfficheMemberService = async (data) => {
         }
     } catch (err) {
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -219,7 +219,7 @@ export const readAllProjectAfficheReceptionService = async (data) => {
         }
     } catch (err) {
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -246,7 +246,142 @@ export const readAllProjectAfficheScreenPlayService = async (data) => {
         }
     } catch (err) {
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readAllInvitedProjectAfficheAddressService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/affiches/invited/preview/getAddresses", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readAllInvitedProjectAfficheActorService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/affiches/invited/preview/getActors", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readAllInvitedProjectAfficheMemberService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/affiches/invited/preview/getMembers", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readAllInvitedProjectAfficheReceptionService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/affiches/invited/preview/getReceptions", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
+export const readAllInvitedProjectAfficheScreenPlayService = async (data) => {
+    const {logout} = useAuthStore.getState();
+
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(cleanObject(data))));
+
+        const response = await axios.post(process.env.API_URL + "/panel/projects/affiches/invited/preview/getScreenplays", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        if (response.data?.error && JSON.parse(decodeData(response.data.data)).length === 0) return logout();
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        if (err?.response.status === 401) return logout();
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -273,7 +408,7 @@ export const readAllProjectAfficheHistoryService = async (data) => {
         }
     } catch (err) {
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -298,7 +433,7 @@ export const createProjectAfficheService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -323,7 +458,7 @@ export const updateProjectAfficheService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -348,7 +483,7 @@ export const deleteProjectAfficheService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -409,6 +544,41 @@ export interface IReadAllProjectAfficheReception {
 }
 
 export interface IReadAllProjectAfficheScreenPlay {
+    project_id: string,
+    affiche_id: string,
+    text?: string,
+    part?: string,
+    sequence?: string,
+    page: number,
+    per_page: number,
+    get_last: number
+}
+
+export interface IReadAllInvitedProjectAfficheAddress {
+    project_id: string,
+    affiche_id: string,
+    get_last: number
+}
+
+export interface IReadAllInvitedProjectAfficheActor {
+    project_id: string,
+    affiche_id: string,
+    get_last: number
+}
+
+export interface IReadAllInvitedProjectAfficheMember {
+    project_id: string,
+    affiche_id: string,
+    get_last: number
+}
+
+export interface IReadAllInvitedProjectAfficheReception {
+    project_id: string,
+    affiche_id: string,
+    get_last: number
+}
+
+export interface IReadAllInvitedProjectAfficheScreenPlay {
     project_id: string,
     affiche_id: string,
     text?: string,

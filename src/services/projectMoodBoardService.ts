@@ -30,7 +30,7 @@ export const readAllProjectMoodBoardService = async (data) => {
         }
     } catch (err) {
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -57,7 +57,7 @@ export const readProjectMoodBoardService = async (data) => {
         }
     } catch (err) {
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -89,7 +89,7 @@ export const createProjectMoodBoardService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -114,7 +114,7 @@ export const deleteProjectMoodBoardsService = async (data) => {
         const {logout} = useAuthStore.getState();
 
         if (err?.response.status === 401) return logout();
-        // if (err?.response.status === 500) return window.location.replace("/server-down-down");
+        // if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
