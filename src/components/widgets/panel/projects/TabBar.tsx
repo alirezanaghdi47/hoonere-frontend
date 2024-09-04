@@ -23,7 +23,7 @@ const TabBar = () => {
                     onClick={() => navigate(auth.panel_url + "projects#is_invited=0")}
                 >
                     {
-                        notifications.filter(notification => ["project" , "affiche" , "contract" , "contract_comment"] && notification.sub_type === "index").length > 0 && (
+                        notifications.filter(notification => ["project" , "affiche" , "contract" , "contract_comment"].includes(notification.type) && notification.sub_type === "index").length > 0 && (
                             <Badge
                                 size="xs"
                                 color="danger"
