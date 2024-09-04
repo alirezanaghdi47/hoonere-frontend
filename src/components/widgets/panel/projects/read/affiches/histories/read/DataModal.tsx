@@ -73,7 +73,7 @@ const DataModal = ({history}) => {
                 <Modal.Body>
                     <div
                         ref={printRef}
-                        className="min-w-900px w-100 h-100"
+                        className="d-flex flex-column justify-content-start align-items-start min-w-900px w-100 h-100"
                     >
                         <table className="table table-borderless border-2 border-solid border-secondary mb-0">
                             <colgroup>
@@ -1462,6 +1462,19 @@ const DataModal = ({history}) => {
                             </tr>
                             </tbody>
                         </table>
+
+                        {
+                            history?.motivation_sentence && (
+                                <Typography
+                                    size="xs"
+                                    color="dark"
+                                    lineHeight="lg"
+                                    className='p-5 mx-auto'
+                                >
+                                    {history?.motivation_sentence}
+                                </Typography>
+                            )
+                        }
                     </div>
                 </Modal.Body>
             </Modal>

@@ -96,3 +96,39 @@ export const getObjectValueByKey = (array, key: string, subKey?: string) => {
 
     return null;
 }
+
+export const formattedNotifications = (notifications) => {
+    const tempCounter = {
+        project: {
+            index: 0,
+            invited: 0,
+        },
+        affiche: {
+            index: 0,
+            invited: 0,
+        },
+        contract: {
+            index: 0,
+            invited: 0,
+        },
+        contract_comment: {
+            index: 0,
+            invited: 0,
+        },
+    };
+
+    notifications.forEach(notification => {
+        const type = notification.type;
+        const subType = notification.sub_type;
+
+        if (tempCounter[type]) {
+            if (subType === "invited") {
+                tempCounter[type].invited += 1;
+            } else {
+                tempCounter[type].index += 1;
+            }
+        }
+    });
+    
+    return tempCounter;
+}

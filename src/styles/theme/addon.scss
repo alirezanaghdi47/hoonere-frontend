@@ -87,10 +87,34 @@
   }
 }
 
+@for $i from 1 through 10 {
+  .-mt-#{$i} {
+    margin-top: -#{$i}px !important;
+  }
+  .-ms-#{$i} {
+    margin-left: -#{$i}px !important;
+  }
+  .-me-#{$i} {
+    margin-right: -#{$i}px !important;
+  }
+  .-mb-#{$i} {
+    margin-bottom: -#{$i}px !important;
+  }
+}
+
 .bg-opacity-90 {
   background-color: rgba(var(--bs-bg-rgb-color), 0.9) !important;
 }
 
 .pe-30 {
   padding-left: 10rem !important;
+}
+
+.badge-xs {
+  font-size: 0.6rem !important;
+
+  &.badge-circle {
+    width: 10px !important;
+    height: 10px !important;
+  }
 }

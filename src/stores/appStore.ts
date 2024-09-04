@@ -5,24 +5,7 @@ import {persist} from "zustand/middleware";
 const initialState: IAppState = {
     isOpenDrawer: false,
     isDark: false,
-    notifications: {
-        project: {
-            index: 0,
-            invited: 0,
-        },
-        affiche: {
-            index: 0,
-            invited: 0,
-        },
-        contract: {
-            index: 0,
-            invited: 0,
-        },
-        contract_comment: {
-            index: 0,
-            invited: 0,
-        },
-    }
+    notifications: []
 }
 
 const useAppStore = create<IAppStore>()(persist((set) => ({
@@ -48,24 +31,7 @@ const useAppStore = create<IAppStore>()(persist((set) => ({
         setNotifications: (data) => set((state) => ({
             app: {
                 ...state.app,
-                notifications: {
-                    project: {
-                        index: data.project.index,
-                        invited: data.project.invited,
-                    },
-                    affiche: {
-                        index: data.affiche.index,
-                        invited: data.affiche.invited,
-                    },
-                    contract: {
-                        index: data.contract.index,
-                        invited: data.contract.invited,
-                    },
-                    contract_comment: {
-                        index: data.contract_comment.index,
-                        invited: data.contract_comment.invited,
-                    },
-                }
+                notifications: data
             }
         })),
     }), {
@@ -78,23 +44,13 @@ interface IAppState {
     isOpenDrawer: boolean,
     isDark: boolean,
     notifications: {
-        project: {
-            index: number,
-            invited: number,
-        },
-        affiche: {
-            index: number,
-            invited: number,
-        },
-        contract: {
-            index: number,
-            invited: number,
-        },
-        contract_comment: {
-            index: number,
-            invited: number,
-        },
-    }
+        id: number,
+        project_id: string,
+        message: string,
+        type: string,
+        sub_type: string,
+        target_id: string
+    }[]
 }
 
 interface IAppStore {

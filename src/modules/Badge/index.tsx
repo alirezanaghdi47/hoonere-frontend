@@ -5,30 +5,32 @@ import classNames from "classnames";
 // types
 import {TColors} from "@/types/constant.ts";
 
-const Badge = ({color, size = "sm", label, placement, ...props}: TBadge) => {
+const Badge = ({color, size = "sm", label , isCircle = false, placement, ...props}: TBadge) => {
     return (
         <span
             {...props}
-            className={classNames("badge badge-circle", props.className, {
+            className={classNames("badge z-index-3", props.className, {
                 [`badge-${color}`]: true,
                 [`badge-${size}`]: true,
+                "badge-circle": isCircle,
                 "position-absolute translate-middle": placement,
-                "top-0 start-100": placement === "top-end",
-                "top-0 start-0": placement === "top-start",
-                "bottom-0 start-100": placement === "bottom-end",
-                "bottom-0 start-0": placement === "bottom-start",
+                "top-0 start-100 mt-1 -me-5": placement === "top-end",
+                "top-0 start-0 mt-1 -ms-5": placement === "top-start",
+                "bottom-0 start-100 mb-1 -me-5": placement === "bottom-end",
+                "bottom-0 start-0 mb-1 -ms-5": placement === "bottom-start",
             })}
         >
-            {label}
+            {label && label}
         </span>
     )
 }
 
 type TBadge = {
     color: TColors,
-    size?: "sm" | "lg",
-    label: number | string,
+    size?: "xs" | "sm" | "lg",
+    label?: number | string,
     placement: "top-end" | "top-start" | "bottom-end" | "bottom-start",
+    isCircle?: boolean,
     className?: HTMLProps<HTMLElement>["className"],
     style?: CSSProperties
 }

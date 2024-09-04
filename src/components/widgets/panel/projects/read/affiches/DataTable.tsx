@@ -16,12 +16,14 @@ import IconButton from "@/modules/IconButton";
 import Typography from "@/modules/Typography";
 import Dialog from "@/modules/Dialog";
 import Toast from "@/modules/Toast";
+import Badge from "@/modules/Badge";
 
 // services
-import {deleteProjectAfficheService , IDeleteProjectAffiche} from "@/services/projectAfficheService.ts";
+import {deleteProjectAfficheService, IDeleteProjectAffiche} from "@/services/projectAfficheService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
+import useAppStore from "@/stores/appStore.ts";
 
 const DataTable = ({
                        readAllProjectAfficheAction,
@@ -37,6 +39,7 @@ const DataTable = ({
     const location = useLocation();
     const navigate = useNavigate();
     const {auth} = useAuthStore();
+    const {app: {notifications}} = useAppStore();
 
     const deleteProjectAfficheAction = useMutation({
         mutationFn: (data: IDeleteProjectAffiche) => deleteProjectAfficheService(data),
@@ -198,6 +201,17 @@ const DataTable = ({
                                 data-tooltip-id="my-tooltip"
                                 data-tooltip-content="جزییات"
                             >
+                                {
+                                    notifications.filter(notification => notification.type === "affiche" && notification.target_id === row.original.id.toString()).length > 0 && (
+                                        <Badge
+                                            size="xs"
+                                            color="danger"
+                                            isCircle
+                                            placement="top-end"
+                                        />
+                                    )
+                                }
+
                                 <LuInfo
                                     size={20}
                                     color="currentColor"

@@ -1,6 +1,6 @@
 // libraries
 import {useState} from "react";
-import {Link , useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {useMediaQuery} from "usehooks-ts";
@@ -9,6 +9,7 @@ import {LuLayers, LuLogOut, LuPieChart} from "react-icons/lu";
 // modules
 import IconButton from "@/modules/IconButton";
 import Toast from "@/modules/Toast"
+import Badge from "@/modules/Badge";
 
 // services
 import {logoutService} from "@/services/authService.ts";
@@ -19,22 +20,24 @@ import useAuthStore from "@/stores/authStore.ts";
 
 const Sidebar = () => {
     const navigate = useNavigate();
-    const {app: {isOpenDrawer}, hideDrawer} = useAppStore();
+    const {app: {isOpenDrawer, notifications}, hideDrawer} = useAppStore();
     const {logout, auth} = useAuthStore();
     const isDesktop = useMediaQuery("(min-width: 992px)");
 
-    const [sidebarLinks , setSidebarLinks] = useState([
+    const [sidebarLinks, setSidebarLinks] = useState([
         {
             id: 1,
             label: "داشبورد",
+            value: "dashboard",
             href: auth.panel_url + "dashboard",
-            icon: LuPieChart({size: 20, color: 'currentColor'})
+            icon: LuPieChart({size: 20, color: 'currentColor'}),
         },
         {
             id: 2,
             label: "پروژه ها",
+            value: "projects",
             href: auth.panel_url + "projects",
-            icon: LuLayers({size: 20, color: 'currentColor'})
+            icon: LuLayers({size: 20, color: 'currentColor'}),
         },
     ]);
 
@@ -86,6 +89,16 @@ const Sidebar = () => {
                                     activeColor="light-success"
                                     onClick={hideDrawer}
                                 >
+                                    {
+                                        sidebarLink.value === "projects" && notifications.filter(notification => ["project", "affiche", "contract", "contract_comment"].includes(notification.type)).length > 0 && (
+                                            <Badge
+                                                size="xs"
+                                                color="danger"
+                                                isCircle
+                                                placement="top-end"
+                                            />)
+                                    }
+
                                     {sidebarLink.icon}
                                 </IconButton>
                             </li>

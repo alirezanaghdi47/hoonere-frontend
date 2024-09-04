@@ -27,8 +27,8 @@ const ActionBar = ({children}: { children?: ReactNode }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const {auth} = useAuthStore();
-    const {app: {isDark}, toggleTheme, setNotifications} = useAppStore();
-    const isMobile = useMediaQuery("(max-width: 576px)")
+    const {app: {isDark, notifications}, toggleTheme, setNotifications} = useAppStore();
+    const isMobile = useMediaQuery("(max-width: 576px)");
 
     const generateNotificationLink = (notification) => {
         switch (notification.type) {
@@ -49,21 +49,7 @@ const ActionBar = ({children}: { children?: ReactNode }) => {
         mutationFn: () => readAllNotificationService(),
         onSuccess: async (data) => {
             if (!data.error) {
-                const notifications = data?.data?.notifications;
-                const tempCounter = {};
-
-                for (let i = 0; i <= notifications.length; i++) {
-                    if (Object.keys(tempCounter).includes(notifications[i].type)) {
-                        if (Object.keys(tempCounter[notifications[i]]).includes(notifications[i].sub_type)) {
-                            tempCounter[notifications[i].type][notifications[i].sub_type] += 1;
-                        } else {
-                            tempCounter[notifications[i].type][notifications[i].sub_type] = 0;
-                        }
-                    }
-                }
-
-                console.log(data?.data?.notifications)
-                console.log(tempCounter)
+                setNotifications(data?.data?.notifications);
             }
         }
     });
@@ -79,12 +65,12 @@ const ActionBar = ({children}: { children?: ReactNode }) => {
                 content={
                     <IconButton textColor="light">
                         {
-                            !readAllNotificationAction.isPending && readAllNotificationAction.data?.data?.notifications.length > 0 && (
+                            notifications.length > 0 && (
                                 <Badge
-                                    color="light-success"
                                     size="sm"
+                                    color="danger"
                                     placement="top-start"
-                                    label={readAllNotificationAction.data?.data?.notifications.length > 9 ? "9+" : readAllNotificationAction.data?.data?.notifications.length}
+                                    label={notifications.length}
                                 />
                             )
                         }

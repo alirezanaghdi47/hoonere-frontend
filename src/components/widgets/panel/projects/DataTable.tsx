@@ -18,12 +18,14 @@ import Typography from "@/modules/Typography";
 import Chip from "@/modules/Chip";
 import Dialog from "@/modules/Dialog";
 import Toast from "@/modules/Toast";
+import Badge from "@/modules/Badge";
 
 // services
-import {deleteProjectService , IDeleteProject} from "@/services/projectService.ts";
+import {deleteProjectService, IDeleteProject} from "@/services/projectService.ts";
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
+import useAppStore from "@/stores/appStore.ts";
 
 const DataTable = ({
                        readAllProjectAction,
@@ -38,6 +40,7 @@ const DataTable = ({
     const navigate = useNavigate();
     const location = useLocation();
     const {auth} = useAuthStore();
+    const {app: {notifications}} = useAppStore();
 
     const deleteProjectAction = useMutation({
         mutationFn: (data: IDeleteProject) => deleteProjectService(data),
@@ -89,6 +92,15 @@ const DataTable = ({
                                 direction='start'
                                 isDense
                             >
+                                {
+                                    notifications.filter(notification => notification.type === "project" && notification.project_id === row.original.id.toString()).length > 0 && (
+                                        <Chip
+                                            color="danger"
+                                            label={notifications.filter(notification => notification.type === "project" && notification.project_id === row.original.id.toString()).length}
+                                        />
+                                    )
+                                }
+
                                 {row.original.title}
                             </Button>
                         </div>
@@ -211,6 +223,17 @@ const DataTable = ({
                                 data-tooltip-id="my-tooltip"
                                 data-tooltip-content="آفیش ها"
                             >
+                                {
+                                    notifications.filter(notification => notification.type === "affiche" && notification.project_id === row.original.id.toString()).length > 0 && (
+                                        <Badge
+                                            size="xs"
+                                            color="danger"
+                                            isCircle
+                                            placement="top-end"
+                                        />
+                                    )
+                                }
+
                                 <LuBriefcase
                                     size={20}
                                     color="currentColor"
@@ -224,6 +247,17 @@ const DataTable = ({
                                 data-tooltip-id="my-tooltip"
                                 data-tooltip-content="قرارداد ها"
                             >
+                                {
+                                    notifications.filter(notification => notification.type === "contract" && notification.project_id === row.original.id.toString()).length > 0 && (
+                                        <Badge
+                                            size="xs"
+                                            color="danger"
+                                            isCircle
+                                            placement="top-end"
+                                        />
+                                    )
+                                }
+
                                 <LuScale
                                     size={20}
                                     color="currentColor"
@@ -237,6 +271,17 @@ const DataTable = ({
                                 data-tooltip-id="my-tooltip"
                                 data-tooltip-content="جزییات"
                             >
+                                {
+                                    notifications.filter(notification => notification.type === "project" && notification.project_id === row.original.id.toString()).length > 0 && (
+                                        <Badge
+                                            size="xs"
+                                            color="danger"
+                                            isCircle
+                                            placement="top-end"
+                                        />
+                                    )
+                                }
+
                                 <LuInfo
                                     size={20}
                                     color="currentColor"

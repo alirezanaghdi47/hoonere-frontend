@@ -20,7 +20,7 @@ const Chip = ({label, size = "sm", color, isCircle = false, ...props}: TChip) =>
 }
 
 type TChip = {
-    label: string,
+    label: string | number,
     size?: "sm" | "lg",
     color: TColors,
     isCircle?: boolean,

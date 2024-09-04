@@ -33,6 +33,7 @@ import Typography from "@/modules/Typography";
 import Chip from "@/modules/Chip";
 import Dialog from "@/modules/Dialog";
 import Toast from "@/modules/Toast";
+import Badge from "@/modules/Badge";
 
 // services
 import {
@@ -48,6 +49,7 @@ import {
 
 // stores
 import useAuthStore from "@/stores/authStore.ts";
+import useAppStore from "@/stores/appStore.ts";
 
 const DataTable = ({
                        readAllProjectContractAction,
@@ -63,6 +65,7 @@ const DataTable = ({
     const location = useLocation();
     const params = useParams();
     const {auth} = useAuthStore();
+    const {app: {notifications}} = useAppStore();
     const {
         modal: commentsModal,
         _handleShowModal: _handleShowCommentsModal,
@@ -358,6 +361,17 @@ const DataTable = ({
                                         data-tooltip-id="my-tooltip"
                                         data-tooltip-content="دیدگاه ها"
                                     >
+                                        {
+                                            notifications.filter(notification => notification.type === "contract_comment" && notification.target_id === row.original.id.toString()).length > 0 && (
+                                                <Badge
+                                                    size="xs"
+                                                    color="danger"
+                                                    isCircle
+                                                    placement="top-end"
+                                                />
+                                            )
+                                        }
+
                                         <LuMessageCircle
                                             size={20}
                                             color="currentColor"
@@ -476,6 +490,17 @@ const DataTable = ({
                                         data-tooltip-id="my-tooltip"
                                         data-tooltip-content="دیدگاه ها"
                                     >
+                                        {
+                                            notifications.filter(notification => notification.type === "contract_comment" && notification.target_id === row.original.id.toString()).length > 0 && (
+                                                <Badge
+                                                    size="xs"
+                                                    color="danger"
+                                                    isCircle
+                                                    placement="top-end"
+                                                />
+                                            )
+                                        }
+
                                         <LuMessageCircle
                                             size={20}
                                             color="currentColor"
@@ -501,7 +526,7 @@ const DataTable = ({
                     ),
                 enableSorting: false
             },
-        ], [location.hash]
+        ], [location.hash, notifications]
     );
 
     return (
