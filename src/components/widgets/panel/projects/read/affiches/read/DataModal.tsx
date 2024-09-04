@@ -1466,10 +1466,11 @@ const DataModal = ({affiche}) => {
                         {
                             affiche?.motivation_sentence && (
                                 <Typography
-                                    size="xs"
+                                    size="xxs"
                                     color="dark"
+                                    isBold
                                     lineHeight="lg"
-                                    className='p-5 mx-auto'
+                                    className='py-5 mx-auto'
                                 >
                                     {affiche?.motivation_sentence}
                                 </Typography>
