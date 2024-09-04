@@ -20,7 +20,7 @@ export const authService = async (data) => {
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -37,7 +37,7 @@ export const verifyService = async (data) => {
             data: JSON.parse(decodeData(response.data.data)),
         }
     } catch (err) {
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -54,7 +54,7 @@ export const loginService = async (data) => {
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -76,7 +76,7 @@ export const registerService = async (data) => {
             data: JSON.parse(decodeData(response.data.data))
         }
     } catch (err) {
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -85,7 +85,7 @@ export const captchaService = async (data) => {
         await axios.get(process.env.API_URL + `/auth/getCaptcha/${data.code}?id=${data.id}`);
         return process.env.API_URL + `/auth/getCaptcha/${data.code}?id=${data.id}`;
     } catch (err) {
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 
@@ -104,7 +104,7 @@ export const logoutService = async () => {
             data: JSON.parse(decodeData(response.data.data)),
         }
     } catch (err) {
-        // if (err?.response.status === 500) return window.location.replace("/server-down");
+        if (err?.response.status === 500) return window.location.replace("/server-down");
     }
 }
 

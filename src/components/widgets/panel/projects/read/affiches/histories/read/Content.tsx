@@ -83,7 +83,7 @@ const Content = () => {
     useLayoutEffect(() => {
         readProjectAfficheAction.mutate({
             project_id: params.id,
-            affiche_id: params.subId,
+            affiche_id: params.subSubId,
             get_last: 0
         });
     }, []);
@@ -91,7 +91,7 @@ const Content = () => {
     useLayoutEffect(() => {
         readAllProjectAfficheActorAction.mutate({
             project_id: params.id,
-            affiche_id: params.subId,
+            affiche_id: params.subSubId,
             get_last: 0
         });
     }, []);
@@ -99,7 +99,7 @@ const Content = () => {
     useLayoutEffect(() => {
         readAllProjectAfficheMemberAction.mutate({
             project_id: params.id,
-            affiche_id: params.subId,
+            affiche_id: params.subSubId,
             get_last: 0
         });
     }, []);
@@ -107,7 +107,7 @@ const Content = () => {
     useLayoutEffect(() => {
         readAllProjectAfficheReceptionAction.mutate({
             project_id: params.id,
-            affiche_id: params.subId,
+            affiche_id: params.subSubId,
             get_last: 0
         });
     }, []);
@@ -115,7 +115,7 @@ const Content = () => {
     useLayoutEffect(() => {
         readAllProjectAfficheScreenPlayAction.mutate({
             project_id: params.id,
-            affiche_id: params.subId,
+            affiche_id: params.subSubId,
             page: 1,
             per_page: 96,
             get_last: 0
@@ -125,7 +125,7 @@ const Content = () => {
     useLayoutEffect(() => {
         readAllProjectAfficheAddressAction.mutate({
             project_id: params.id,
-            affiche_id: params.subId,
+            affiche_id: params.subSubId,
             get_last: 0,
         });
     }, []);
