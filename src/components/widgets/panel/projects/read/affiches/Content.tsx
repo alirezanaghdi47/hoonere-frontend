@@ -1,6 +1,6 @@
 // libraries
 import {useLayoutEffect} from "react";
-import {useLocation, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 
 // components
@@ -14,9 +14,8 @@ import useFilter from "@/hooks/useFilter.tsx";
 // services
 import {readAllInvitedProjectAfficheService, readAllProjectAfficheService , IReadAllInvitedProjectAffiche , IReadAllProjectAffiche} from "@/services/projectAfficheService.ts";
 
-const Content = () => {
+const Content = ({checkProjectIsMineAction}) => {
     const params = useParams();
-    const location = useLocation();
 
     const {
         filter,
@@ -35,22 +34,24 @@ const Content = () => {
     });
 
     const readAllProjectAfficheAction = useMutation({
-        mutationFn: (data: IReadAllProjectAffiche | IReadAllInvitedProjectAffiche) => location.hash === "#is_invited=0" ? readAllProjectAfficheService(data) : readAllInvitedProjectAfficheService(data),
+        mutationFn: (data: IReadAllProjectAffiche | IReadAllInvitedProjectAffiche) => (!checkProjectIsMineAction.isPending && checkProjectIsMineAction.data?.data?.result === "1") ? readAllProjectAfficheService(data) : (!checkProjectIsMineAction.isPending && checkProjectIsMineAction.data?.data?.result === "0") ? readAllInvitedProjectAfficheService(data) : null,
     });
 
     useLayoutEffect(() => {
-        readAllProjectAfficheAction.mutate({
-            ...filter,
-            project_id: params.id
-        });
-    }, [location.hash]);
+        if (!checkProjectIsMineAction.isPending && checkProjectIsMineAction.data?.data?.result){
+            readAllProjectAfficheAction.mutate({
+                ...filter,
+                project_id: params.id
+            });
+        }
+    }, [checkProjectIsMineAction]);
 
     return (
         <div
             className="d-flex flex-column flex-lg-row justify-content-start align-items-start gap-5 w-100 mw-950px p-5">
             <div className="d-flex flex-wrap justify-content-center gap-5 w-100 mt-lg-n20">
                 {
-                    readAllProjectAfficheAction.isPending && (
+                    (checkProjectIsMineAction.isPending || readAllProjectAfficheAction.isPending) && (
                         <Loading
                             withCard
                             width="100%"
@@ -60,14 +61,15 @@ const Content = () => {
                 }
 
                 {
-                    !readAllProjectAfficheAction.isPending && (
-                        <TabBar/>
+                    (!checkProjectIsMineAction.isPending && !readAllProjectAfficheAction.isPending) && (
+                        <TabBar checkProjectIsMineAction={checkProjectIsMineAction}/>
                     )
                 }
 
                 {
-                    !readAllProjectAfficheAction.isPending && (
+                    (!checkProjectIsMineAction.isPending && !readAllProjectAfficheAction.isPending) && (
                         <DataTable
+                            checkProjectIsMineAction={checkProjectIsMineAction}
                             readAllProjectAfficheAction={readAllProjectAfficheAction}
                             filter={filter}
                             initialFilter={initialFilter}

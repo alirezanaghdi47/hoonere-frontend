@@ -5,7 +5,7 @@ import axios from "axios";
 import useAuthStore from "@/stores/authStore.ts";
 
 // utils
-import {decodeData, encodeData} from "@/utils/functions.ts";
+import {cleanObject, decodeData, encodeData} from "@/utils/functions.ts";
 
 export const readAllJobService = async () => {
     try {
@@ -340,8 +340,37 @@ export const readAllNotificationService = async () => {
     }
 }
 
+export const checkProjectIsMineService = async (data) => {
+    try {
+        const formData = new FormData();
+        const {token} = useAuthStore.getState().auth;
+
+        formData.append("data", encodeData(JSON.stringify(data)));
+
+        const response = await axios.post(process.env.API_URL + "/panel/public/checkProjectIsMineOrNot", formData, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        return {
+            ...response.data,
+            data: JSON.parse(decodeData(response.data.data))
+        }
+    } catch (err) {
+        const {logout} = useAuthStore.getState();
+
+        if (err?.response.status === 401) return logout();
+        if (err?.response.status === 500) return window.location.replace("/server-down");
+    }
+}
+
 export interface IReadUserInquiry {
     username: string | null,
     foa_id: string,
     foa_parent_id: string,
+}
+
+export interface ICheckProjectIsMine {
+    project_id: string,
 }

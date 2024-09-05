@@ -26,6 +26,7 @@ import useAuthStore from "@/stores/authStore.ts";
 import useAppStore from "@/stores/appStore.ts";
 
 const DataTable = ({
+                       checkProjectIsMineAction,
                        readAllProjectAfficheAction,
                        filter,
                        initialFilter,
@@ -118,7 +119,7 @@ const DataTable = ({
                 accessorKey: 'actions',
                 header: () => 'ابزار',
                 cell: ({row}) =>
-                    location.hash === "#is_invited=0" ? (
+                    checkProjectIsMineAction.data?.data?.result === "1" ? (
                         <div className="d-flex justify-content-start align-items-center gap-2 w-100">
                             <IconButton
                                 href={auth.panel_url + "projects/" + row.original.project_id + "/affiches/" + row.original.id + "/histories"}
@@ -221,7 +222,7 @@ const DataTable = ({
                     ),
                 enableSorting: false
             },
-        ], [location.hash]
+        ], [checkProjectIsMineAction , notifications]
     );
 
     return (

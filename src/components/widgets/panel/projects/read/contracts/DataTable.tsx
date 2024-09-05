@@ -52,6 +52,7 @@ import useAuthStore from "@/stores/authStore.ts";
 import useAppStore from "@/stores/appStore.ts";
 
 const DataTable = ({
+                       checkProjectIsMineAction,
                        readAllProjectContractAction,
                        filter,
                        initialFilter,
@@ -279,7 +280,7 @@ const DataTable = ({
                 accessorKey: 'actions',
                 header: () => 'ابزار',
                 cell: ({row}) =>
-                    location.hash === "#is_invited=0" ? (
+                    checkProjectIsMineAction.data?.data?.result === "1" ? (
                         <div className="d-flex justify-content-end align-items-center gap-2 w-100">
                             {
                                 row.original?.Im_in === "1" && row.original.type_id === "1" && row.original.status_id === "1" && (
@@ -526,7 +527,7 @@ const DataTable = ({
                     ),
                 enableSorting: false
             },
-        ], [location.hash, notifications]
+        ], [checkProjectIsMineAction , notifications]
     );
 
     return (

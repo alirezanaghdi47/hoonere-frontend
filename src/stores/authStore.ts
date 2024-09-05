@@ -30,7 +30,10 @@ const useAuthStore = create<IAuthStore>()(persist((set) => ({
             auth: initialState
         }),
     }),
-    {name: "panel-auth"}
+    {
+        name: "panel-auth",
+        version: 1
+    }
 ));
 
 

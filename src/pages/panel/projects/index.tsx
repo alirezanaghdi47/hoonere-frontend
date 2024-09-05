@@ -21,7 +21,7 @@ const Projects = () => {
         if (!["#is_invited=0", "#is_invited=1"].includes(location.hash)) {
             navigate(auth.panel_url + "projects#is_invited=0");
         }
-    }, [location.key]);
+    }, [location.key , location.hash]);
 
     return (
         <>

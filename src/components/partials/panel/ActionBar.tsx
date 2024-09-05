@@ -61,7 +61,7 @@ const ActionBar = ({children}: { children?: ReactNode }) => {
     return (
         <div className="order-1 order-md-2 col-12 col-md-8 d-flex justify-content-end align-items-center gap-2">
             <Popover
-                position={isMobile ? "bottom right" : "bottom left"}
+                position={isMobile ? "bottom center" : "bottom left"}
                 content={
                     <IconButton textColor="light">
                         {

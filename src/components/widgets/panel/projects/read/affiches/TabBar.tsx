@@ -9,7 +9,7 @@ import Badge from "@/modules/Badge";
 import useAuthStore from "@/stores/authStore.ts";
 import useAppStore from "@/stores/appStore.ts";
 
-const TabBar = () => {
+const TabBar = ({checkProjectIsMineAction}) => {
     const navigate = useNavigate();
     const params = useParams();
     const location = useLocation();
@@ -20,8 +20,9 @@ const TabBar = () => {
         <div className="card w-100">
             <div className="card-body d-flex justify-content-start align-items-center gap-5">
                 <Button
-                    color={location.hash === "#is_invited=0" ? "primary" : "light"}
-                    onClick={() => navigate(auth.panel_url + "projects/" + params.id + "/affiches#is_invited=0")}
+                    color={checkProjectIsMineAction.data?.data?.result === "1" ? "primary" : "light"}
+                    onClick={() => location.pathname + location.hash !== `/panel/projects/${params.id}/affiches#is_invited=0` ? navigate(auth.panel_url + "projects/" + params.id + "/affiches#is_invited=0"): null}
+                    disabled={checkProjectIsMineAction.data?.data?.result === "0"}
                 >
                     {
                         notifications.filter(notification => notification.type === "affiche" && notification.sub_type === "index").length > 0 && (
@@ -38,8 +39,9 @@ const TabBar = () => {
                 </Button>
 
                 <Button
-                    color={location.hash === "#is_invited=1" ? "primary" : "light"}
-                    onClick={() => navigate(auth.panel_url + "projects/" + params.id + "/affiches#is_invited=1")}
+                    color={checkProjectIsMineAction.data?.data?.result === "0" ? "primary" : "light"}
+                    onClick={() => location.pathname + location.hash !== `/panel/projects/${params.id}/affiches#is_invited=1` ? navigate(auth.panel_url + "projects/" + params.id + "/affiches#is_invited=1"): null}
+                    disabled={checkProjectIsMineAction.data?.data?.result === "1"}
                 >
                     {
                         notifications.filter(notification => notification.type === "affiche" && notification.sub_type === "invited").length > 0 && (

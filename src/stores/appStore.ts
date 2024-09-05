@@ -35,7 +35,8 @@ const useAppStore = create<IAppStore>()(persist((set) => ({
             }
         })),
     }), {
-        name: "panel-app"
+        name: "panel-app",
+        version: 1
     }),
 );
 

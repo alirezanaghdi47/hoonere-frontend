@@ -2,7 +2,7 @@
   "name": "hoonere-frontend",
   "homepage": "https://panel.hoonere.com",
   "private": true,
-  "version": "0.10.96",
+  "version": "0.11.00",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -72,6 +72,7 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "sass": "^1.72.0",
     "typescript": "^5.2.2",
-    "vite": "^5.1.4"
+    "vite": "^5.1.4",
+    "vite-plugin-pwa": "^0.20.5"
   }
 }
